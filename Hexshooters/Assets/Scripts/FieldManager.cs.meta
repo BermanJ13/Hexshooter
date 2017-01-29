@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 32d724d5bb99900478da92fe9d9439ee
+timeCreated: 1485612821
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - playerPanel: {fileID: 449076, guid: 90ade92e40923c143bc25ad371b7e6c8, type: 2}
+  - enemyPanel: {fileID: 419374, guid: 8d6a1d64b15a6ca4aba7713e2d361104, type: 2}
+  - player: {fileID: 440106, guid: 626b36e7383ec9f40b87d2f307d44ec6, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
