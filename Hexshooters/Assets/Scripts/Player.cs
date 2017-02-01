@@ -15,6 +15,7 @@ public class Player : MonoBehaviour {
 	{
 
 	}
+
 	void FixedUpdate() 
 	{
 		//Moves the character
@@ -31,8 +32,8 @@ public class Player : MonoBehaviour {
 		//Checks for Left and RIght Movement
 		if (Input.GetKeyDown (KeyCode.RightArrow)) 
 		{
-			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector3(transform.position.x + 1, transform.position.y),0.2f);
-			//Checks whether or not something is in the way or if the desired spot is within the player.
+			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x + 1, transform.position.y),0.2f);
+			//Checks whether or not something is in the way or if the desired spot is within the player area.
 			foreach( Collider2D c in hitColliders)
 			{
 				if (c.gameObject.tag == "playerZone")
@@ -60,7 +61,7 @@ public class Player : MonoBehaviour {
 		} 
 		else if (Input.GetKeyDown (KeyCode.LeftArrow)) 
 		{
-			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector3(transform.position.x - 1, transform.position.y),0.2f);
+			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x - 1, transform.position.y),0.2f);
 			foreach( Collider2D c in hitColliders)
 			{
 				//Checks whether or not something is in the way or if the desired spot is within the player.
@@ -90,7 +91,7 @@ public class Player : MonoBehaviour {
 		//Checks for Up and Down Movement
 		if (Input.GetKeyDown (KeyCode.UpArrow)) 
 		{
-			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector3(transform.position.x, transform.position.y + 1),0.2f);
+			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y + 1),0.2f);
 			foreach( Collider2D c in hitColliders)
 			{
 				//Checks whether or not something is in the way or if the desired spot is within the player.
@@ -119,7 +120,7 @@ public class Player : MonoBehaviour {
 		} 
 		else if (Input.GetKeyDown (KeyCode.DownArrow)) 
 		{
-			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector3(transform.position.x, transform.position.y - 1),0.2f);
+			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y - 1),0.2f);
 			foreach( Collider2D c in hitColliders)
 			{
 				//Checks whether or not something is in the way or if the desired spot is within the player.
