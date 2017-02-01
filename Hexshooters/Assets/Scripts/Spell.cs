@@ -7,7 +7,7 @@ public class Spell : MonoBehaviour {
 	public string[] attributes;
 	public string[] effects;
 	public int damage;
-	private List<GameObject> enemies;
+	private GameObject[] enemies; 
 	private List<Collider2D> enemyColliders;
 	private int damageTier;
 	private int weaponUsed;
@@ -37,9 +37,9 @@ public class Spell : MonoBehaviour {
 	void Update () 
 	{
 		movement (weaponUsed);
-		foreach(GameObject enemy in enemyColliders)
+		foreach(Collider2D enemy in enemyColliders)
 		{
-			if(Collider2D.IsTouching(enemy))
+			if(GetComponent<Collider2D>().IsTouching(enemy))
 			{
 				hitBehavior();
 			}
