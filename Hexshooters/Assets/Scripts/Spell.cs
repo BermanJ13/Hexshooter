@@ -9,19 +9,10 @@ public class Spell : MonoBehaviour {
 	public int damage;
 	private GameObject[] enemies; 
 	private List<Collider2D> enemyColliders;
-	private int damageTier;
-	private int weaponUsed;
-	private Vector2 direction;
-	private int hitNum;
-
-	//Constructor
-	public Spell(int _damageTier, int _weaponUsed, Vector2 _direction, int _hitNum)
-	{
-		damageTier = _damageTier;
-		weaponUsed = _weaponUsed;
-		direction = _direction;
-		hitNum = _hitNum;
-	}
+	public int damageTier;
+	public int weaponUsed;
+	public Vector2 direction;
+	public int hitNum;
 
 	// Use this for initialization
 	void Start () 
