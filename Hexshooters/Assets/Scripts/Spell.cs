@@ -13,10 +13,17 @@ public class Spell : MonoBehaviour {
 	public int weaponUsed;
 	public Vector2 direction;
 	public int hitNum;
+	private bool markedForDeletion;
+	public bool MarkedForDeletion
+	{
+		get { return markedForDeletion;}
+	}
+
 
 	// Use this for initialization
-	void Start () 
+	public void Start () 
 	{
+		markedForDeletion = false;
 		enemies = GameObject.FindGameObjectsWithTag ("Enemy");
 		foreach(GameObject enemy in enemies)
 		{
@@ -25,46 +32,50 @@ public class Spell : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () 
+	public void Update () 
 	{
 		movement (weaponUsed);
-		foreach(Collider2D enemy in enemyColliders)
+		if(enemyColliders != null)
 		{
-			if(GetComponent<Collider2D>().IsTouching(enemy))
+			foreach(Collider2D enemy in enemyColliders)
 			{
-				hitBehavior();
+				if(GetComponent<Collider2D>().IsTouching(enemy))
+				{
+					hitBehavior();
+				}
 			}
 		}
+		Debug.Log (markedForDeletion);
 	}
 
 	//Movement of the bullets through the grid. Split up by weapon if necessary.
-	void movement(int weapon)
+	public virtual void movement(int weapon)
 	{
-
 
 	}
 
 	//Calculates the damage based on the bullet type and the spell damage
-	int damageCalc(int tier, int hitNum)
+	public virtual int damageCalc(int tier, int hitNum)
 	{
 		return damage*tier*hitNum;
 	}
 
 	//Dictatees any effects that happen wqhen the bullet hits an enemy
-	void hitBehavior()
+	public virtual void hitBehavior()
 	{
 
 	}
 
 	//Dictates bullet beavior on the player
-	void selfStatus()
+	public virtual void selfStatus()
 	{
 
 	}
 
 	//Destroys the spell when it exits the camera view.
-	void OnBecameInvisible() 
+	public void OnBecameInvisible() 
 	{
-		DestroyObject(this);	
+		markedForDeletion = true;
+
 	}
 }

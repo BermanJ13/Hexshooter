@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
-	public LayerMask mask = LayerMask.NameToLayer("PlayerPanel");
+	public Transform spell;
 	// Use this for initialization
 	void Start () 
 	{
@@ -13,7 +13,15 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		if (Input.GetKeyDown (KeyCode.Space)) 
+		{
 
+			initiateSpell ();
+
+			// Transform earth = Instantiate(variable, position, Identity)
+			//Spell earth2 = earth.GetComponent<Spell>();
+			//earth2 = weaponNumber;
+		}
 	}
 
 	void FixedUpdate() 
@@ -147,5 +155,15 @@ public class Player : MonoBehaviour {
 			if(moveDown)
 				transform.position = new Vector2 (transform.position.x, transform.position.y - 1);
 		}
+	}
+	void initiateSpell()
+	{
+		Transform go = Instantiate(spell,new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+		////get the thing component on your instantiated object
+		Spell mything = go.GetComponent<Spell>();
+
+		////set a member variable (must be PUBLIC)
+		mything.weaponUsed = 1; 
 	}
 }

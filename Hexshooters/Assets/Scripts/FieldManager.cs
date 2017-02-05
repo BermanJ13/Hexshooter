@@ -32,6 +32,25 @@ public class FieldManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-	
+		deleteSpells ();
+	}
+
+	void deleteSpells()
+	{
+
+		GameObject[] spells = GameObject.FindGameObjectsWithTag ("Spell");
+		if (spells != null) 
+		{
+			foreach (GameObject spell in spells) 
+			{
+				//Debug.Log (spell.GetComponent<Spell> ().MarkedForDeletion);
+				if (spell.GetComponent<Spell> ().MarkedForDeletion) 
+				{
+					Debug.Log ("blah");
+					Destroy (spell);
+				}
+			}
+		}
+
 	}
 }
