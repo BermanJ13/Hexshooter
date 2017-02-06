@@ -8,12 +8,12 @@ public class Spell : MonoBehaviour {
 	public string[] effects;
 	public int damage;
 	private GameObject[] enemies; 
-	private List<Collider2D> enemyColliders;
+	protected List<Collider2D> enemyColliders;
 	public int damageTier;
 	public int weaponUsed;
 	public Vector2 direction;
 	public int hitNum;
-	private bool markedForDeletion;
+	protected bool markedForDeletion;
 	public bool MarkedForDeletion
 	{
 		get { return markedForDeletion;}
@@ -41,7 +41,7 @@ public class Spell : MonoBehaviour {
 			{
 				if(GetComponent<Collider2D>().IsTouching(enemy))
 				{
-					hitBehavior();
+					hitBehavior(weaponUsed);
 				}
 			}
 		}
@@ -61,7 +61,7 @@ public class Spell : MonoBehaviour {
 	}
 
 	//Dictatees any effects that happen wqhen the bullet hits an enemy
-	public virtual void hitBehavior()
+	public virtual void hitBehavior(int weapon)
 	{
 
 	}
