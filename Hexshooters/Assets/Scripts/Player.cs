@@ -164,6 +164,6 @@ public class Player : MonoBehaviour {
 		Spell mything = go.GetComponent<Spell>();
 
 		////set a member variable (must be PUBLIC)
-		mything.weaponUsed = 1; 
+		mything.weaponUsed = 3; 
 	}
 }

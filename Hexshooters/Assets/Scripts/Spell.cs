@@ -7,8 +7,8 @@ public class Spell : MonoBehaviour {
 	public string[] attributes;
 	public string[] effects;
 	public int damage;
-	private GameObject[] enemies; 
-	protected List<Collider2D> enemyColliders;
+	protected GameObject[] enemies; 
+	protected List<Collider2D> enemyColliders = new List<Collider2D> ();
 	public int damageTier;
 	public int weaponUsed;
 	public Vector2 direction;
@@ -19,12 +19,14 @@ public class Spell : MonoBehaviour {
 		get { return markedForDeletion;}
 	}
 
-
 	// Use this for initialization
 	public void Start () 
 	{
 		markedForDeletion = false;
+		//we never init the list
+		//List<Collider2D> enemyColliders = new List<Collider2D> ();
 		enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+
 		foreach(GameObject enemy in enemies)
 		{
 			enemyColliders.Add(enemy.GetComponent<Collider2D>());
@@ -45,7 +47,6 @@ public class Spell : MonoBehaviour {
 				}
 			}
 		}
-		Debug.Log (markedForDeletion);
 	}
 
 	//Movement of the bullets through the grid. Split up by weapon if necessary.
@@ -55,9 +56,12 @@ public class Spell : MonoBehaviour {
 	}
 
 	//Calculates the damage based on the bullet type and the spell damage
-	public virtual int damageCalc(int tier, int hitNum)
+	public virtual int damageCalc(int tier, int hits)
 	{
-		return damage*tier*hitNum;
+		Debug.Log ("tier "+tier);
+		Debug.Log ("Num"+hits);
+		Debug.Log ("dmg"+damage);
+		return (damage*tier)*hits;
 	}
 
 	//Dictatees any effects that happen wqhen the bullet hits an enemy
