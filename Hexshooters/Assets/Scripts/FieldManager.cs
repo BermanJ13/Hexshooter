@@ -6,10 +6,12 @@ public class FieldManager : MonoBehaviour
 	public Transform playerPanel;
 	public Transform enemyPanel;
 	public Transform player;
-	
+	public Transform Testdummy;
+
 	// Use this for initialization
 	void Start () 
 	{
+
 		//Creates the Grid
 		for (int y = 0; y < 5; y++) 
 		{
@@ -27,12 +29,24 @@ public class FieldManager : MonoBehaviour
 					Instantiate(enemyPanel, new Vector3(x, y, 0), Quaternion.identity);
 			}
 		}
+
+		//test Dummy
+		Instantiate (Testdummy,new Vector3(5,3,0),Quaternion.identity);
+
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
 		deleteSpells ();
+		GameObject[] spells = GameObject.FindGameObjectsWithTag ("Enemy");
+		if (spells != null) 
+		{
+			foreach (GameObject spell in spells) 
+			{
+				spell.GetComponent<Enemy> ().Update ();
+			}
+		}
 	}
 
 	void deleteSpells()
@@ -46,7 +60,6 @@ public class FieldManager : MonoBehaviour
 				//Debug.Log (spell.GetComponent<Spell> ().MarkedForDeletion);
 				if (spell.GetComponent<Spell> ().MarkedForDeletion) 
 				{
-					Debug.Log ("blah");
 					Destroy (spell);
 				}
 			}
