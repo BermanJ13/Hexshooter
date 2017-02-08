@@ -6,9 +6,10 @@ public class Enemy : MonoBehaviour {
 
 	//health 
 	public int health;
+	public int armorWeakness;
 	System.Timers.Timer timeCount = new System.Timers.Timer ();
 	int burnTime =3;
-	string stat;
+	public string stat;
 
 
 	// Use this for initialization
@@ -16,6 +17,7 @@ public class Enemy : MonoBehaviour {
 		health = 100;
 		Debug.Log (health);
 		stat = "normal";
+		armorWeakness = 0;
 	}
 	
 	// Update is called once per frame

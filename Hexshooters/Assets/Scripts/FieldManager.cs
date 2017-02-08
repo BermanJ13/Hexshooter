@@ -31,7 +31,9 @@ public class FieldManager : MonoBehaviour
 		}
 
 		//test Dummy
-		Instantiate (Testdummy,new Vector3(5,3,0),Quaternion.identity);
+		Instantiate (Testdummy,new Vector3(9,3,0),Quaternion.identity);
+
+		Instantiate (Testdummy,new Vector3(5,4,0),Quaternion.identity);
 
 	}
 	
