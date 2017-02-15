@@ -27,11 +27,11 @@ public class FieldManager : MonoBehaviour
 				}
 				else
 					Instantiate(enemyPanel, new Vector3(x, y, 0), Quaternion.identity);
-			}
+            }
 		}
 
 		//test Dummy
-		Instantiate (Testdummy,new Vector3(5,3,0),Quaternion.identity);
+		Instantiate (Testdummy,new Vector3(6,3,0),Quaternion.identity);
 
 	}
 	

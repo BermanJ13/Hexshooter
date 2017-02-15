@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Water : Spell {
+public class Wind : Spell {
 
     // Use this for initialization
     new void Start()
@@ -29,32 +29,31 @@ public class Water : Spell {
 
             //rifle
             case 2:
-                Vector2 target = new Vector2(transform.position.x, transform.position.y) + direction;
-                Vector2 position = Vector2.Lerp(transform.position, target, Time.deltaTime);
+                target = new Vector2(transform.position.x, transform.position.y) + direction;
+                position = Vector2.Lerp(transform.position, target, Time.deltaTime);
                 transform.position = position;
                 break;
 
             //shotgun
             case 3:
-                Vector2 target = new Vector2(transform.position.x, transform.position.y) + direction;
-                Vector2 position = Vector2.Lerp(transform.position, target, Time.deltaTime);
+                target = new Vector2(transform.position.x, transform.position.y) + direction;
+                position = Vector2.Lerp(transform.position, target, Time.deltaTime);
                 transform.position = position;
                 break;
 
             //gatling
             case 4:
-                Vector2 target = new Vector2(transform.position.x, transform.position.y) + direction;
-                Vector2 position = Vector2.Lerp(transform.position, target, Time.deltaTime);
+                target = new Vector2(transform.position.x, transform.position.y) + direction;
+                position = Vector2.Lerp(transform.position, target, Time.deltaTime);
                 transform.position = position;
                 break;
 
             //cane gun - not priority
             case 5:
-                Vector2 target = new Vector2(transform.position.x, transform.position.y) + direction;
-                Vector2 position = Vector2.Lerp(transform.position, target, Time.deltaTime);
+                target = new Vector2(transform.position.x, transform.position.y) + direction;
+                position = Vector2.Lerp(transform.position, target, Time.deltaTime);
                 transform.position = position;
                 break;
-
         }
     }
 }

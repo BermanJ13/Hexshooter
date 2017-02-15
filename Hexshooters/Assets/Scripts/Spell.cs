@@ -7,6 +7,8 @@ public class Spell : MonoBehaviour {
 	public string[] attributes;
 	public string[] effects;
 	public int damage;
+    protected GameObject player;
+    protected Collider2D playerCollider;
 	protected GameObject[] enemies; 
 	protected List<Collider2D> enemyColliders = new List<Collider2D> ();
 	public int damageTier;
@@ -31,13 +33,25 @@ public class Spell : MonoBehaviour {
 		{
 			enemyColliders.Add(enemy.GetComponent<Collider2D>());
 		}
+
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerCollider = player.GetComponent<Collider2D>();
 	}
 	
 	// Update is called once per frame
 	public void Update () 
 	{
 		movement (weaponUsed);
-		if(enemyColliders != null)
+
+        if (playerCollider != null)
+        {
+            if (GetComponent<Collider2D>().IsTouching(playerCollider))
+            {
+                hitBehavior(weaponUsed);
+            }
+        }
+
+        if (enemyColliders != null)
 		{
 			foreach(Collider2D enemy in enemyColliders)
 			{
