@@ -109,7 +109,7 @@ public class Fire : Spell {
 				{
 					if(c.GetComponent<Collider2D>().IsTouching(GetComponent<Collider2D>()))
 						{
-							c.GetComponent<Enemy>().health -= damageCalc(damageTier,damage);
+							c.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
 							Debug.Log ("hp"+c.GetComponent<Enemy>().health);
 							c.GetComponent<Enemy>().Status("burn");
 							Debug.Log ("hp"+c.GetComponent<Enemy>().health);

@@ -20,20 +20,22 @@ public class FieldManager : MonoBehaviour
 				//Checks whether the current panel is for the enmy or player side
 				if(x<5)
 				{
-					Instantiate(playerPanel, new Vector3(x, y, 0), Quaternion.identity);
+					Instantiate(Resources.Load("Player_Panel"), new Vector3(x, y, 0), Quaternion.identity);
 					//sPawns the Player
 					if(y==2 && x==0)
-						Instantiate(player, new Vector3(x, y, 0), Quaternion.identity);
+						Instantiate(Resources.Load("Player"), new Vector3(x, y, 0), Quaternion.identity);
 				}
 				else
-					Instantiate(enemyPanel, new Vector3(x, y, 0), Quaternion.identity);
+					Instantiate(Resources.Load("Enemy_Panel"), new Vector3(x, y, 0), Quaternion.identity);
 			}
 		}
 
 		//test Dummy
-		Instantiate (Testdummy,new Vector3(9,3,0),Quaternion.identity);
+		Instantiate (Resources.Load("TestDummy"),new Vector3(6,3,0),Quaternion.identity);
 
-		Instantiate (Testdummy,new Vector3(5,4,0),Quaternion.identity);
+		Instantiate (Resources.Load("TestDummy"),new Vector3(5,4,0),Quaternion.identity);
+
+		Instantiate (Resources.Load("TestDummy"),new Vector3(7,2,0),Quaternion.identity);
 
 	}
 	
@@ -53,7 +55,7 @@ public class FieldManager : MonoBehaviour
 
 	void deleteSpells()
 	{
-
+		
 		GameObject[] spells = GameObject.FindGameObjectsWithTag ("Spell");
 		if (spells != null) 
 		{

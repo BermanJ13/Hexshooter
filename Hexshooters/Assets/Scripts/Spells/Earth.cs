@@ -42,6 +42,7 @@ public class Earth : Spell {
 		{
 		//Revolver
 		case 1:
+			//HIts a square three spaces ahead
 			if (targetNeeded)
 			{
 				target = new Vector2 (transform.position.x + 3, transform.position.y);
@@ -57,7 +58,8 @@ public class Earth : Spell {
 			break;
 		//Rifle
 		case 2:
-
+			//Moves Forward indefinitely and has an effect if it goes out of bounds
+			inBounds = false;
 			target = new Vector2 (transform.position.x, transform.position.y) + direction;
 			position = Vector2.Lerp (transform.position, target, Time.deltaTime * 8);
 			transform.position = position;
@@ -77,12 +79,14 @@ public class Earth : Spell {
 			break;
 		//Gatling
 		case 4:
+			// Moves FOrward Indefinitely
 			target = new Vector2 (transform.position.x, transform.position.y) + direction;
 			position = Vector2.Lerp (transform.position, target, Time.deltaTime*8);
 			transform.position = position;
 			break;
 		//Shotgun
 		case 3:
+			//Targets one space ahead
 			if (targetNeeded)
 			{
 				target = new Vector2 (transform.position.x + 1, transform.position.y);
@@ -96,11 +100,6 @@ public class Earth : Spell {
 				hitBehavior (3);
 			}
 			break;
-		//Cane Gun
-		case 5:
-			colliders = Physics2D.OverlapAreaAll (new Vector2 (transform.position.x+1, transform.position.y - 1.2f), new Vector2 (transform.position.x+1, transform.position.y + 1.2f));
-			hitBehavior (5);
-			break;
 		}
 	}
 
@@ -110,21 +109,23 @@ public class Earth : Spell {
 		{
 		//Revolver
 		case 1:
+			//Makes an obstacle and pushes back an enemy on the target square
 			foreach (GameObject c in enemies)
 			{
 				if (c.GetComponent<Collider2D> ().IsTouching (GetComponent<Collider2D> ()))
 				{
 					c.GetComponent<Enemy> ().health -= damageCalc (damageTier, hitNum);
 					c.transform.position += new Vector3 (1, 0,0);
-					Instantiate(obstacle,  transform.position, Quaternion.identity);
+					Instantiate(Resources.Load("Obstacle"),  transform.position, Quaternion.identity);
 					markedForDeletion = true;
 				}
 			}
-			Instantiate(obstacle,  transform.position, Quaternion.identity);
+			Instantiate(Resources.Load("Obstacle"),  transform.position, Quaternion.identity);
 			markedForDeletion = true;
 			break;
 		//Rifle
 		case 2:
+			//Hits the whole back row if it goes out of bounds
 				foreach (GameObject c in enemies)
 				{
 					if (c.GetComponent<Collider2D> ().IsTouching (GetComponent<Collider2D> ()))
@@ -138,13 +139,19 @@ public class Earth : Spell {
 				colliders = Physics2D.OverlapAreaAll (new Vector2 (9, -1), new Vector2 (9, 6));
 				foreach(Collider2D c in colliders)
 				{
-					c.gameObject.GetComponent<Enemy> ().health -= damageCalc (damageTier, hitNum);
+					if(c.gameObject.tag == "Enemy")
+					{
+						Debug.Log (damageCalc (damageTier, hitNum));
+						c.gameObject.GetComponent<Enemy> ().health -= damageCalc (damageTier, hitNum);
+						markedForDeletion = true;
+					}
 				}
 			}
 					
 			break;
 		//Shotgun
 		case 3:
+			//HIts the whole row ahead of the player
 			colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x + 10, transform.position.y));
 			foreach (Collider2D c in colliders) 
 			{
@@ -161,11 +168,12 @@ public class Earth : Spell {
 			break;
 		//Gatling
 		case 4:
+			//Stacking damage with each hit.
 			foreach(GameObject c in enemies)
 			{
 				if(c.GetComponent<Collider2D>().IsTouching(GetComponent<Collider2D>()))
 				{
-					c.GetComponent<Enemy>().health -= damageCalc(damageTier,damage);
+					c.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
 					c.GetComponent<Enemy>().health -= c.GetComponent<Enemy>().armorWeakness;
 					c.GetComponent<Enemy> ().armorWeakness++;
 					markedForDeletion = true;

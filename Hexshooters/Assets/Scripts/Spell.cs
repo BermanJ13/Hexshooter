@@ -14,6 +14,7 @@ public class Spell : MonoBehaviour {
 	public Vector2 direction;
 	public int hitNum;
 	protected bool markedForDeletion;
+	public List<GameObject> hitEnemies= new List<GameObject> (); 
 	public bool MarkedForDeletion
 	{
 		get { return markedForDeletion;}
@@ -36,7 +37,7 @@ public class Spell : MonoBehaviour {
 	// Update is called once per frame
 	public void Update () 
 	{
-		movement (weaponUsed);
+		this.movement (weaponUsed);
 		if(enemyColliders != null)
 		{
 			foreach(Collider2D enemy in enemyColliders)

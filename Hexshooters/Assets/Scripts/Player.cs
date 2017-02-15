@@ -4,32 +4,46 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
 	public Transform spell;
+	public int weapon;
+	private System.Collections.Generic.List<Object> Handful = new System.Collections.Generic.List<Object>();
+	private System.Collections.Generic.List<Object> Chamber = new System.Collections.Generic.List<Object>();
+	private static Random rng = new Random();  
+
 	// Use this for initialization
 	void Start () 
 	{
-		
+		//Hnadful= Deck
+		//Pass Deck In from Overworld Scene
+		//Placeholder Fils Deck with Lighnin and Eart Spells
+		for (int i = 0; i < 30; i++)
+		{
+			if (i % 2 == 0)
+			{
+				Handful.Add(Resources.Load ("Lightning"));
+			} 
+			else
+			{
+				Handful.Add(Resources.Load ("Earth"));
+			}
+		}
+
+		reload();
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+		//Moves the character
+		movement();
+
 		if (Input.GetKeyDown (KeyCode.Space)) 
 		{
 
 			initiateSpell ();
-
 			// Transform earth = Instantiate(variable, position, Identity)
 			//Spell earth2 = earth.GetComponent<Spell>();
 			//earth2 = weaponNumber;
 		}
-	}
-
-	void FixedUpdate() 
-	{
-		//Moves the character
-		movement();
-
-
 	}
 	void movement()
 	{
@@ -64,7 +78,7 @@ public class Player : MonoBehaviour {
 				}
 			}
 			//Performs the movement if possible
-			if(moveRight)
+			if (moveRight)
 				transform.position = new Vector2 (transform.position.x + 1, transform.position.y);
 		} 
 		else if (Input.GetKeyDown (KeyCode.LeftArrow)) 
@@ -155,15 +169,34 @@ public class Player : MonoBehaviour {
 			if(moveDown)
 				transform.position = new Vector2 (transform.position.x, transform.position.y - 1);
 		}
+		Debug.Log (moveRight);
 	}
 	void initiateSpell()
 	{
-		Transform go = Instantiate(spell,new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+		GameObject go = (GameObject)Instantiate(Handful[0],new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
 
 		////get the thing component on your instantiated object
 		Spell mything = go.GetComponent<Spell>();
 
 		////set a member variable (must be PUBLIC)
 		mything.weaponUsed = 4; 
+
+		Handful.RemoveAt (0);
+	}
+	void reload()
+	{
+		//Placholder - Reload the chamber
+		for (int i = 0; i < 30; i++)
+		{
+			if (i % 2 == 0)
+			{
+				Handful.Add(Resources.Load ("Lightning"));
+			} 
+			else
+			{
+				Handful.Add(Resources.Load ("Earth"));
+			}
+		}
 	}
 }
