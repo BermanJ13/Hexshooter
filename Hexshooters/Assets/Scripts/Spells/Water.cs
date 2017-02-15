@@ -5,12 +5,15 @@ using UnityEngine;
 public class Water : Spell {
 
     protected bool revolverMove;
-
+    protected Vector2 rifleOrigin;
+    private int rifleTimer;
     // Use this for initialization
     new void Start()
     {
         base.Start();
         revolverMove = false;
+        rifleOrigin = transform.position;
+        rifleTimer = 50;
     }
 
     // Update is called once per frame
@@ -36,9 +39,22 @@ public class Water : Spell {
 
             //rifle
             case 2:
-                target = new Vector2(transform.position.x, transform.position.y) + direction;
-                position = Vector2.Lerp(transform.position, target, Time.deltaTime);
-                transform.position = position;
+                if ((transform.position.x - rifleOrigin.x) < 3)
+                {
+                    target = new Vector2(transform.position.x + 2, transform.position.y) + direction;
+                    position = Vector2.Lerp(transform.position, target, Time.deltaTime);
+                    transform.position = position;
+                }
+                else
+                {
+                    hitBehavior(2);
+                    rifleTimer--;
+                    if (rifleTimer <= 0)
+                    {
+                        markedForDeletion = true;
+                        rifleTimer = 50;
+                    }
+                }
                 break;
 
             //shotgun
@@ -91,6 +107,24 @@ public class Water : Spell {
                     if (c.gameObject.tag == "Obstacle")
                     {
                         //c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
+                    }
+                }
+                break;
+            case 2:
+                colliders = Physics2D.OverlapCircleAll(transform.position, 1.5f);
+                foreach (Collider2D c in colliders)
+                {
+                  
+                    if (c.gameObject.tag == "Enemy")
+                    {
+                        //in future call Enemy move to this position so they don't just warp
+                        c.transform.position = transform.position;
+                        markedForDeletion = true;
+                    }
+                    if (c.gameObject.tag == "Obstacle")
+                    {
+                        //c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
+                        markedForDeletion = true;
                     }
                 }
                 break;
