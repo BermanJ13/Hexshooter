@@ -59,7 +59,7 @@ public class Water : Spell {
 
             //shotgun
             case 3:
-                target = new Vector2(transform.position.x, transform.position.y) + direction;
+                target = new Vector2(transform.position.x+1, transform.position.y) + direction;
                 position = Vector2.Lerp(transform.position, target, Time.deltaTime);
                 transform.position = position;
                 break;
@@ -85,7 +85,7 @@ public class Water : Spell {
     {
         switch (weapon)
         {
-            case 1:
+            case 1: //shot damages enemy, bounces off and then heals player if it hits them
                 Collider2D[] colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
                 foreach (Collider2D c in colliders)
                 {
@@ -110,7 +110,7 @@ public class Water : Spell {
                     }
                 }
                 break;
-            case 2:
+            case 2: //whirlpool shoots 3 squares ahead and drags enemy from adjacent squares
                 colliders = Physics2D.OverlapCircleAll(transform.position, 1.5f);
                 foreach (Collider2D c in colliders)
                 {
@@ -128,7 +128,26 @@ public class Water : Spell {
                     }
                 }
                 break;
+            case 3:
+                colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
+                foreach (Collider2D c in colliders)
+                {
+                    if (c.gameObject.tag == "Enemy")
+                    {
+                        c.gameObject.GetComponent<Enemy>().takeDamage(3);
 
+                        if (c.gameObject.GetComponent<Enemy>().stat == "normal")
+                            c.gameObject.GetComponent<Enemy>().Status("break");
+                        markedForDeletion = true;
+                        //c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
+                    }
+                    if (c.gameObject.tag == "Obstacle")
+                    {
+                        markedForDeletion = true;
+                        //c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
+                    }
+                }
+                break;
         }
     }
 }
