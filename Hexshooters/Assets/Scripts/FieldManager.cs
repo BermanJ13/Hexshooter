@@ -1,38 +1,67 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
+using System.IO;
 public class FieldManager : MonoBehaviour 
 {
-	public Transform playerPanel;
-	public Transform enemyPanel;
-	public Transform player;
-	public Transform Testdummy;
+    public string mapFile;
+    [SerializeField]
+    public Transform[] gamePieces;
+    public Dictionary<string, Transform> things = new Dictionary<string, Transform>();
+    private StreamReader reader;
+    private List<string> rows = new List<string>();
+
 
 	// Use this for initialization
 	void Start () 
 	{
+        //creates a dictionary out of the list of objects made in the inspector
+        foreach(Transform trns in gamePieces)
+        {
+            things.Add(trns.name, trns);
+        }
 
-		//Creates the Grid
-		for (int y = 0; y < 5; y++) 
-		{
-			for (int x = 0; x < 10; x++) 
-			{
-				//Checks whether the current panel is for the enmy or player side
-				if(x<5)
-				{
-					Instantiate(playerPanel, new Vector3(x, y, 0), Quaternion.identity);
-					//sPawns the Player
-					if(y==2 && x==0)
-						Instantiate(player, new Vector3(x, y, 0), Quaternion.identity);
-				}
-				else
-					Instantiate(enemyPanel, new Vector3(x, y, 0), Quaternion.identity);
-			}
-		}
+        //open ups the streamreader then reads every line and adds it to the rows list
+        reader = new StreamReader("Assets/Maps/"+mapFile+".txt");
+        string line = null;
+        line = reader.ReadLine();
+        while (line!=null)
+        {
+            rows.Add(line);
+            line = reader.ReadLine();
+        }
 
-		//test Dummy
-		Instantiate (Testdummy,new Vector3(5,3,0),Quaternion.identity);
+        //use this in the foreach loop to hold the first two values
+        //which is the position of the objects
+        Vector2 place;
+        //for each string in rows split the string into tiles
+        foreach (string a in rows)
+        {
+            string[] tiles = a.Split(' ');
+            //foreach string in tiles split it into entries
+            foreach(string b in tiles)
+            {
+                string[] entry = b.Split(',');
+                //set the place vector from before from the first two enties in the tile
+                place = new Vector2(float.Parse(entry[0]), float.Parse(entry[1]));
 
+                //put down either a player or enemy panel based on whether or not 
+                //the third data entry is p or e
+                if (entry[2]=="p")
+                {
+                    Instantiate(things["Player_Panel"], new Vector3(place.x, place.y, 0), Quaternion.identity);
+                }
+                else if (entry[2] == "e")
+                {
+                    Instantiate(things["Enemy_Panel"], new Vector3(place.x, place.y, 0), Quaternion.identity);
+                }
+                //put anything else on the tile that belongs there
+                for (int i =0; i<entry.Length-3;i++)
+                {
+                    Instantiate(things[entry[i+3]], new Vector3(place.x, place.y, 0), Quaternion.identity);
+                }
+            }
+        }
 	}
 	
 	// Update is called once per frame
@@ -48,6 +77,9 @@ public class FieldManager : MonoBehaviour
 			}
 		}
 	}
+    
+
+
 
 	void deleteSpells()
 	{
