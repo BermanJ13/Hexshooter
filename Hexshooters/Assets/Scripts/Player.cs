@@ -28,8 +28,6 @@ public class Player : MonoBehaviour {
 	{
 		//Moves the character
 		movement();
-
-
 	}
 	void movement()
 	{
