@@ -6,14 +6,14 @@ public class Water : Spell {
 
     protected bool revolverMove;
     protected Vector2 rifleOrigin;
-    private int rifleTimer;
+    private int spellTimer;
     // Use this for initialization
     new void Start()
     {
         base.Start();
         revolverMove = false;
         rifleOrigin = transform.position;
-        rifleTimer = 50;
+        spellTimer = 50;
     }
 
     // Update is called once per frame
@@ -48,11 +48,11 @@ public class Water : Spell {
                 else
                 {
                     hitBehavior(2);
-                    rifleTimer--;
-                    if (rifleTimer <= 0)
+                    spellTimer--;
+                    if (spellTimer <= 0)
                     {
                         markedForDeletion = true;
-                        rifleTimer = 50;
+                        spellTimer = 50;
                     }
                 }
                 break;
@@ -128,7 +128,7 @@ public class Water : Spell {
                     }
                 }
                 break;
-            case 3:
+            case 3: //shotgun makes them vulnerable to next attack
                 colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
                 foreach (Collider2D c in colliders)
                 {
@@ -146,6 +146,31 @@ public class Water : Spell {
                         markedForDeletion = true;
                         //c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
                     }
+                }
+                break;
+            case 4: //Fire hose
+                colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x + 10, transform.position.y));
+                foreach (Collider2D c in colliders)
+                {
+                    if (c.gameObject.tag == "Enemy")
+                    {
+                        if (spellTimer % 10 == 0) //modulo ensures that enemy not immediately pushed to back
+                        {
+                            if (c.gameObject.GetComponent<Enemy>().transform.position.x <= 8)
+                                c.gameObject.GetComponent<Enemy>().transform.position = new Vector2(c.gameObject.GetComponent<Enemy>().transform.position.x + 1, c.gameObject.GetComponent<Enemy>().transform.position.y);
+                        }
+                        spellTimer--;
+                        if (spellTimer <= 0)
+                        {
+                            markedForDeletion = true;
+                            spellTimer = 50;
+                        }
+                    }
+                    if (c.gameObject.tag == "Obstacle")
+                    {
+                        //c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
+                    }
+                    
                 }
                 break;
         }
