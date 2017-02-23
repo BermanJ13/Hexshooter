@@ -10,18 +10,19 @@ public class Enemy : MonoBehaviour {
 	System.Timers.Timer timeCount = new System.Timers.Timer ();
 	int burnTime =3;
 	public string stat;
-
+	public bool reload;
 
 	// Use this for initialization
 	void Start () {
 		health = 100;
-		Debug.Log (health);
+		//Debug.Log (health);
 		stat = "normal";
 		armorWeakness = 0;
+		reload = true;
 	}
 	
 	// Update is called once per frame
-	public void Update () 
+	public void enemyUpdate () 
 	{
 		
 		Status (stat);
@@ -42,11 +43,11 @@ public class Enemy : MonoBehaviour {
 			int wait = 1 - (System.DateTime.Now.Second % 1);
 			timeCount.Interval = wait * 1000;
 			timeCount.Start();
-			Debug.Log (burnTime);
+			//Debug.Log (burnTime);
 			if(burnTime>0)
 			{
 				health -= 3;
-				Debug.Log (health);
+				//Debug.Log (health);
 				burnTime--;
 			}
 			else if(burnTime<=0)

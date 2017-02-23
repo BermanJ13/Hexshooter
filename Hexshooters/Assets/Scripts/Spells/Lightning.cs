@@ -19,12 +19,12 @@ public class Lightning : Spell {
 	}
 
 	// Update is called once per frame
-	new void Update() {
-		base.Update ();
+	new void spellUpdate() {
+		base.spellUpdate ();
 
 		foreach (GameObject p in enemyPanels) 
 		{
-			Debug.Log(p.GetComponent<Collider2D> ());
+			//Debug.Log(p.GetComponent<Collider2D> ());
 			if (GetComponent<Collider2D> ().IsTouching (p.GetComponent<Collider2D> ())  && weaponUsed == 1) 
 			{
 				hitBehavior (1);
@@ -76,20 +76,21 @@ public class Lightning : Spell {
 		case 1:
 			// Hits the entire row ahead once it strikes and enemy object or enters the enemy side of the field. 
 			colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x + 10, transform.position.y));
-			foreach (Collider2D c in colliders) 
+			foreach (Collider2D c in colliders)
 			{
-				if (c.gameObject.tag == "Enemy" ) 
+				if (c.gameObject.tag == "Enemy")
 				{
-					Debug.Log (c.gameObject.GetComponent<Enemy> ().health);
-					c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
-					Debug.Log (c.gameObject.GetComponent<Enemy> ().health);
+					//Debug.Log (c.gameObject.GetComponent<Enemy> ().health);
+					c.gameObject.GetComponent<Enemy> ().health -= damageCalc (damageTier, hitNum);
+					//Debug.Log (c.gameObject.GetComponent<Enemy> ().health);
 				}
-				if (c.gameObject.tag == "Obstacle" ) 
+				if (c.gameObject.tag == "Obstacle")
 				{
 					//c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
 				}
 				markedForDeletion = true;
 			}
+			break;
 		//Rifle
 		case 2:
 			//Inflicts Disable if it stirkes the enemy
@@ -107,7 +108,7 @@ public class Lightning : Spell {
 				{
 					c.GetComponent<Enemy> ().health -= damageCalc (damageTier, hitNum);
 					c.GetComponent<Enemy> ().Status ("disabled");
-					Debug.Log (c.gameObject.GetComponent<Enemy> ().stat);
+					//Debug.Log (c.gameObject.GetComponent<Enemy> ().stat);
 					markedForDeletion = true;
 				}
 				if (c.gameObject.tag == "Obstacle")
@@ -133,7 +134,7 @@ public class Lightning : Spell {
 				}
 				if (c.gameObject.tag == "Enemy" && hit) 
 				{
-					Debug.Log (damageCalc (damageTier, hitNum));
+					//Debug.Log (damageCalc (damageTier, hitNum));
 					c.GetComponent<Enemy> ().health -= damageCalc (damageTier, damage);
 					markedForDeletion = true;
 					GameObject spread = (GameObject)Instantiate (Resources.Load("Lightning"), c.gameObject.transform.position, Quaternion.identity);

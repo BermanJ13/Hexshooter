@@ -35,7 +35,7 @@ public class Spell : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	public void Update () 
+	public void spellUpdate () 
 	{
 		this.movement (weaponUsed);
 		if(enemyColliders != null)
@@ -59,9 +59,9 @@ public class Spell : MonoBehaviour {
 	//Calculates the damage based on the bullet type and the spell damage
 	public virtual int damageCalc(int tier, int hits)
 	{
-		Debug.Log ("tier "+tier);
-		Debug.Log ("Num"+hits);
-		Debug.Log ("dmg"+damage);
+		//Debug.Log ("tier "+tier);
+		//Debug.Log ("Num"+hits);
+		//Debug.Log ("dmg"+damage);
 		return (damage*tier)*hits;
 	}
 

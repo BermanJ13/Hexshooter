@@ -23,12 +23,12 @@ public class Earth : Spell {
 	}
 
 	// Update is called once per frame
-	new void Update() {
-		base.Update ();
+	new void spellUpdate() {
+		base.spellUpdate ();
 
 		foreach (GameObject p in enemyPanels) 
 		{
-			Debug.Log(p.GetComponent<Collider2D> ());
+			//Debug.Log(p.GetComponent<Collider2D> ());
 			if (GetComponent<Collider2D> ().IsTouching (p.GetComponent<Collider2D> ())  && weaponUsed == 1) 
 			{
 				hitBehavior (1);
@@ -67,12 +67,12 @@ public class Earth : Spell {
 			Collider2D[] hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x, transform.position.y), 0.2f);
 			foreach (Collider2D c in hitColliders)
 			{
-				Debug.Log (c);
+				//Debug.Log (c);
 				if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
 					inBounds = true;
 			}
 
-			Debug.Log (inBounds);
+			//Debug.Log (inBounds);
 
 			if (!inBounds)
 				hitBehavior (2);
@@ -141,7 +141,7 @@ public class Earth : Spell {
 				{
 					if(c.gameObject.tag == "Enemy")
 					{
-						Debug.Log (damageCalc (damageTier, hitNum));
+						//Debug.Log (damageCalc (damageTier, hitNum));
 						c.gameObject.GetComponent<Enemy> ().health -= damageCalc (damageTier, hitNum);
 						markedForDeletion = true;
 					}
