@@ -3,11 +3,13 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
-	public Transform spell;
+    public int health;
+
+    public Transform spell;
 	// Use this for initialization
 	void Start () 
 	{
-		
+        health = 100;
 	}
 	
 	// Update is called once per frame
@@ -22,12 +24,15 @@ public class Player : MonoBehaviour {
 			//Spell earth2 = earth.GetComponent<Spell>();
 			//earth2 = weaponNumber;
 		}
-	}
+
+        //Moves the character
+        movement();
+
+        Debug.Log("Player hp: " + health);
+    }
 
 	void FixedUpdate() 
 	{
-		//Moves the character
-		movement();
 
 
 	}

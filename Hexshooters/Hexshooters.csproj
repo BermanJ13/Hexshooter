@@ -81,12 +81,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\FieldManager.cs" />
     <Compile Include="Assets\Scripts\Fire.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\Spell.cs" />
-    <Compile Include="Assets\Scripts\Water.cs" />
-    <Compile Include="Assets\Scripts\Wind.cs" />
+    <Compile Include="Assets\Scripts\Spells\Ice.cs" />
+    <Compile Include="Assets\Scripts\Spells\Lightning.cs" />
+    <Compile Include="Assets\Scripts\Spells\Water.cs" />
+    <Compile Include="Assets\Scripts\Spells\Wind.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ProjectSettings\ProjectVersion.txt" />
