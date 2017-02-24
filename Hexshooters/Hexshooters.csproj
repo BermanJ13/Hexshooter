@@ -90,6 +90,7 @@
     <Compile Include="Assets\Scripts\Spells\Lightning.cs" />
     <Compile Include="Assets\Scripts\Spells\Water.cs" />
     <Compile Include="Assets\Scripts\Spells\Wind.cs" />
+    <Compile Include="Assets\Scripts\StatusManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ProjectSettings\ProjectVersion.txt" />

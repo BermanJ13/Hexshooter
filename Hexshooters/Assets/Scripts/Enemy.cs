@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour {
 	public string stat;
     bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
 
+    public StatusManager statMngr = new StatusManager();
+    
 
 	// Use this for initialization
 	void Start () {
@@ -24,7 +26,13 @@ public class Enemy : MonoBehaviour {
 	public void Update () 
 	{
         Debug.Log(health);
-		Status (stat);
+        foreach (StatusEffect s in statMngr.m_effects)
+        {
+            if (statMngr.IsAffected(s.m_type))
+            {
+                Status(s.m_type);
+            }
+        }
 	}
 
 	//health
@@ -34,8 +42,50 @@ public class Enemy : MonoBehaviour {
 	}
 
 	//Dictates bullet beavior on the player
-	public void Status(string status)
+	public void Status(StatusType status)
 	{
+        if (status == StatusType.Burn)
+        {
+            timeCount.Elapsed += timer_Elapsed;
+            int wait = 1 - (System.DateTime.Now.Second % 1);
+            timeCount.Interval = wait * 1000;
+            timeCount.Start();
+            Debug.Log(burnTime);
+            if (burnTime > 0)
+            {
+                health -= 3;
+                Debug.Log(health);
+                burnTime--;
+            }
+            else if (burnTime <= 0)
+            {
+                //status = "normal";
+                burnTime = 3;
+            }
+
+        }
+
+        if (status == StatusType.Break)
+        {
+            if (!breakImmune)
+            {
+                stat = "break";
+            }
+            else
+            {
+                breakImmune = false;
+            }
+        }
+
+        if (status == StatusType.Slow)
+        {
+
+        }
+
+	}
+
+    public void Status(string status)
+    {
         if (status == "burn")
         {
             timeCount.Elapsed += timer_Elapsed;
@@ -69,8 +119,7 @@ public class Enemy : MonoBehaviour {
             }
         }
 
-	}
-
+    }
 
     public void takeDamage(int damage) //created for "break" status
     {

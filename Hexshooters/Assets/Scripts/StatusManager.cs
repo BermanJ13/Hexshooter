@@ -9,7 +9,9 @@ public enum StatusType
 {
     Burn,
     Poison,
-    Freeze
+    Freeze,
+    Break,
+    Slow
 }
 
 /// <summary>
@@ -30,7 +32,7 @@ public class StatusEffect
 public class StatusManager : MonoBehaviour
 {
 
-    List<StatusEffect> m_effects;
+    public List<StatusEffect> m_effects;
 
     // Use this for initialization
     void Start()
@@ -59,6 +61,8 @@ public class StatusManager : MonoBehaviour
             case StatusType.Burn:
             case StatusType.Freeze:
             case StatusType.Poison:
+            case StatusType.Break:
+            case StatusType.Slow:
             default:
                 m_effects.Add(effect);
                 break;
