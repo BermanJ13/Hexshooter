@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class FieldManager : MonoBehaviour 
 {
@@ -9,14 +11,19 @@ public class FieldManager : MonoBehaviour
 	public Player player;
 	public bool pause = false;
 	public List<Object> Handful = new List<Object>();
+	public List<Object> Temp = new List<Object>();
+	public List<int> TempNum = new List<int>();
 	private static System.Random rand = new System.Random();  
 	static GameObject[] pauseObjects;
+	SpellHolder spellHold;
 
 	// Use this for initialization
 	void Start () 
 	{
+		spellHold = GameObject.Find ("SpellHolder").GetComponent<SpellHolder>();
 		pauseObjects = GameObject.FindGameObjectsWithTag ("ShowOnPause");
-		Debug.Log (pauseObjects[0]);
+
+		//Debug.Log (pauseObjects[0]);
 		//Hnadful= Deck
 		//Pass Deck In from Overworld Scene
 		//Placeholder Fils Deck with Lighnin and Eart Spells
@@ -31,6 +38,7 @@ public class FieldManager : MonoBehaviour
 				Handful.Add(Resources.Load ("Earth"));
 			}
 		}
+		Shuffle(Handful);
 
 		//Creates the Grid
 		for (int y = 0; y < 5; y++) 
@@ -65,19 +73,11 @@ public class FieldManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		if (Input.GetKeyDown (KeyCode.P))
+		if (Input.GetKeyDown (KeyCode.Escape))
 		{
-
-			if(!pause)
+			if (Temp.Count > 0)
 			{
-				showReloadScreen ();
-				pause = true;
-			}
-			else if(pause)
-			{
-
-				showBattleScreen ();
-				pause = false;
+				removeBullet ();
 			}
 		}
 		if (!pause)
@@ -150,23 +150,52 @@ public class FieldManager : MonoBehaviour
 	}
 	void showReloadScreen()
 	{
-		foreach (GameObject g in pauseObjects)
+		foreach (int i  in TempNum)
 		{
-			g.SetActive (true);
+			Debug.Log (i);
 		}
-		pause = false;
-		//Placholder - Reload the chamber
-		Shuffle(Handful);
-		while (player.Chamber.Count < 6 || Handful.Count >0)
+		for(int i=Temp.Count-1;i>-1;i--)
 		{
-			player.Chamber.Add (Handful [0]);
-			Handful.RemoveAt (0);
+			if (Temp [i] != null)
+			{
+				Temp.RemoveAt (i);
+			}
+			if (TempNum [i] != null)
+			{
+				Handful.RemoveAt (TempNum [i]);
+				TempNum.RemoveAt (i);
+			}
 		}
-
+		foreach (int i  in TempNum)
+		{
+			Debug.Log (i);
+		}
+		for (int i = 0; i< pauseObjects.Length;i++)
+		{
+			if(i <= Handful.Count)
+			{
+				pauseObjects[i].SetActive (true);
+			}
+		}
+		selectButton ();
+		pause = true;
+		for (int i = 0; i < spellHold.children.Count; i++)
+		{
+			Button b = spellHold.children [i].gameObject.GetComponent<Button> ();
+			int currentHolder = i;
+			b.onClick.RemoveAllListeners ();
+			b.onClick.AddListener (delegate{addBullet(currentHolder);});
+			Debug.Log (Handful [i].name);
+			b.GetComponent<Image>().color = ((GameObject)Resources.Load ( Handful [i].name)).GetComponent<SpriteRenderer>().color;
+		}
 		player.reload = false;
 	}
 	public void showBattleScreen()
 	{
+		for (int i = 0; i < Temp.Count; i++)
+		{
+			player.Chamber.Add(Temp [i]);
+		}
 		foreach (GameObject g in pauseObjects)
 		{
 			g.SetActive (false);
@@ -185,5 +214,49 @@ public class FieldManager : MonoBehaviour
 			Handful[i] = value;
 		}
 	}
-
+	void addBullet(int num)
+	{
+		
+		if (Temp.Count < 6)
+		{
+			Temp.Add (Handful [num]);
+			spellHold.deactivateSpell ("Spell " + num + "");
+			TempNum.Add (num);
+			selectButton ();
+			if(Temp.Count == 6)
+				EventSystem.current.SetSelectedGameObject(GameObject.Find("BattleButton"));
+			//Debug.Log (num);
+		} 
+		else
+		{
+			EventSystem.current.SetSelectedGameObject(GameObject.Find("BattleButton"));
+		}
+	}
+	void removeBullet()
+	{
+		spellHold.activateSpell ("Spell " +TempNum[TempNum.Count-1]+ "");
+		Temp.RemoveAt (Temp.Count - 1);
+		TempNum.RemoveAt (TempNum.Count - 1);
+	}
+	void selectButton ()
+	{
+		bool found = false;
+		for (int i = 0; i < 9; i++)
+		{
+			bool used = false;
+			foreach(int j in TempNum)
+			{
+				if (j == i)
+					used = true;
+			}
+			if(GameObject.Find("Spell " +i+ "") != null && !found && !used)
+			{
+				EventSystem.current.SetSelectedGameObject(GameObject.Find("Spell " +i+ ""));
+				found = true;
+			}
+			else if(!found)
+				EventSystem.current.SetSelectedGameObject(GameObject.Find("BattleButton"));
+				
+		}
+	}
 }
