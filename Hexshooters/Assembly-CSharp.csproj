@@ -55,9 +55,11 @@
      <Compile Include="Assets\Scripts\Spell.cs" />
      <Compile Include="Assets\Scripts\SpellHolder.cs" />
      <Compile Include="Assets\Scripts\Spells\Earth.cs" />
+     <Compile Include="Assets\Scripts\Spells\Ice.cs" />
      <Compile Include="Assets\Scripts\Spells\Lightning.cs" />
-     <Compile Include="Assets\Scripts\Water.cs" />
-     <Compile Include="Assets\Scripts\Wind.cs" />
+     <Compile Include="Assets\Scripts\Spells\Water.cs" />
+     <Compile Include="Assets\Scripts\Spells\Wind.cs" />
+     <Compile Include="Assets\Scripts\StatusManager.cs" />
      <None Include="Assets\ProjectSettings\ProjectVersion.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

@@ -27,16 +27,11 @@ public class FieldManager : MonoBehaviour
 		//Hnadful= Deck
 		//Pass Deck In from Overworld Scene
 		//Placeholder Fils Deck with Lighnin and Eart Spells
-		for (int i = 0; i < 30; i++)
+		for (int i = 0; i < 10; i++)
 		{
-			if (i % 2 == 0)
-			{
-				Handful.Add(Resources.Load ("Lightning"));
-			} 
-			else
-			{
-				Handful.Add(Resources.Load ("Earth"));
-			}
+			Handful.Add(Resources.Load ("Lightning"));
+			Handful.Add(Resources.Load ("Earth"));
+			Handful.Add(Resources.Load ("Water"));
 		}
 		Shuffle(Handful);
 

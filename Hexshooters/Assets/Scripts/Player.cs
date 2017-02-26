@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
 
+    	public int health;
 	public Transform spell;
 	public int weapon;
 	public List<Object> Chamber = new List<Object>();
@@ -15,6 +16,7 @@ public class Player : MonoBehaviour {
 	{
 		field = GameObject.FindGameObjectWithTag ("FieldManager").GetComponent<FieldManager>();
 		reload = true;
+        	health = 100;
 	}
 	
 	// Update is called once per frame
@@ -26,11 +28,17 @@ public class Player : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Space) && Chamber.Count >0) 
 		{
 			initiateSpell ();
-		}
 
-		if (Chamber.Count == 0 && field.Handful.Count > 0)
+			// Transform earth = Instantiate(variable, position, Identity)
+			//Spell earth2 = earth.GetComponent<Spell>();
+			//earth2 = weaponNumber;
+		}
+if (Chamber.Count == 0 && field.Handful.Count > 0)
 			reload = true;
 	}
+
+		
+	
 	void movement()
 	{
 		bool moveRight = false;
@@ -166,7 +174,7 @@ public class Player : MonoBehaviour {
 		Spell mything = go.GetComponent<Spell>();
 
 		////set a member variable (must be PUBLIC)
-		mything.weaponUsed = 3; 
+		mything.weaponUsed = 1; 
 
 		Chamber.RemoveAt (0);
 

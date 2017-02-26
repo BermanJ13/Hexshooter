@@ -116,11 +116,11 @@ public class Earth : Spell {
 				{
 					c.GetComponent<Enemy> ().health -= damageCalc (damageTier, hitNum);
 					c.transform.position += new Vector3 (1, 0,0);
-					Instantiate(Resources.Load("Obstacle"),  transform.position, Quaternion.identity);
+					Instantiate(Resources.Load("TestObstacle"),  transform.position, Quaternion.identity);
 					markedForDeletion = true;
 				}
 			}
-			Instantiate(Resources.Load("Obstacle"),  transform.position, Quaternion.identity);
+			Instantiate(Resources.Load("TestObstacle"),  transform.position, Quaternion.identity);
 			markedForDeletion = true;
 			break;
 		//Rifle
