@@ -2,6 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Direction
+{
+    Up,
+    Right,
+    Down,
+    Left
+}
+
+public enum EnemyState
+{
+    IShouldRunUp,
+    IShouldRunDown
+}
+
 public class Enemy : MonoBehaviour {
 
 	//health 
@@ -11,9 +25,19 @@ public class Enemy : MonoBehaviour {
 	int burnTime =3;
 	public string stat;
 	public bool reload;
-    	bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
+	bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
 
-    	public StatusManager statMngr = new StatusManager();
+    public bool isMoving;
+    private Direction directionMoving;
+    public float speed;
+    private float distanceToMove;
+    public float frozenModifier;
+    public StatusManager myStatus;
+
+    public EnemyState myState;
+
+
+    public StatusManager statMngr = new StatusManager();
     
 
 	// Use this for initialization
@@ -23,7 +47,15 @@ public class Enemy : MonoBehaviour {
 		stat = "normal";
 		armorWeakness = 0;
 		reload = true;
-        	breakImmune = false;
+        breakImmune = false;
+
+        isMoving = false;
+        speed = 0.03f;
+        distanceToMove = 0;
+        frozenModifier = 0.3f;
+        myState = EnemyState.IShouldRunUp;
+
+        this.myStatus = this.GetComponent<StatusManager>();
 	}
 	
 	// Update is called once per frame
@@ -146,4 +178,68 @@ public class Enemy : MonoBehaviour {
 		timeCount.Interval = wait * 1000;
 		timeCount.Start ();
 	}
+
+    void FixedUpdate()
+    {
+        // Handles movement.
+        if (isMoving)
+        {
+            Vector3 movementVector = new Vector3(0, 0, 0);
+            float movementMag = speed;
+
+            switch (directionMoving)
+            {
+                case Direction.Down:
+                    movementVector = new Vector3(0, -1, 0);
+                    break;
+                case Direction.Left:
+                    movementVector = new Vector3(-1, 0, 0);
+                    break;
+                case Direction.Right:
+                    movementVector = new Vector3(1, 0, 0);
+                    break;
+                case Direction.Up:
+                    movementVector = new Vector3(0, 1, 0);
+                    break;
+            }
+
+            if (myStatus.IsAffected(StatusType.Freeze))
+            {
+                movementMag *= frozenModifier;
+            }
+            if(movementMag > distanceToMove)
+            {
+                movementMag = distanceToMove;
+            }
+
+            movementVector *= movementMag;
+
+            this.transform.position += movementVector;
+            distanceToMove -= movementMag;
+            if(distanceToMove < 0.0001f)
+            {
+                distanceToMove = 0;
+                isMoving = false;
+            }
+        }
+        else //Normal actions.
+        {
+            switch (myState)
+            {
+                case EnemyState.IShouldRunDown:
+                    directionMoving = Direction.Up;
+                    isMoving = true;
+                    distanceToMove = 1.0f;
+                    myState = EnemyState.IShouldRunUp;
+                    break;
+                case EnemyState.IShouldRunUp:
+                    //Finished running up, run down.
+                    directionMoving = Direction.Down;
+                    isMoving = true;
+                    distanceToMove = 1.0f;
+                    myState = EnemyState.IShouldRunDown;
+                    break;
+            }
+        }
+    }
 }
