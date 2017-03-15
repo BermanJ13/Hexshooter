@@ -11,9 +11,8 @@ public class Enemy : MonoBehaviour {
 	int burnTime =3;
 	public string stat;
 	public bool reload;
-    	bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
-
-    	public StatusManager statMngr = new StatusManager();
+    bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
+	public StatusManager statMngr = new StatusManager();
     
 
 	// Use this for initialization
