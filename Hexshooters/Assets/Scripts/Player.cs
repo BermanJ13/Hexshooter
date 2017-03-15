@@ -6,8 +6,11 @@ public class Player : MonoBehaviour {
     public int health;
 
     public Transform spell;
-	// Use this for initialization
-	void Start () 
+    // Use this for initialization
+
+    public StatusManager statMngr = new StatusManager();
+
+    void Start () 
 	{
         health = 100;
 	}

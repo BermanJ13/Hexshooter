@@ -82,6 +82,11 @@ public class Enemy : MonoBehaviour {
 
         }
 
+        if (status == StatusType.Freeze)
+        {
+
+        }
+
 	}
 
     public void Status(string status)

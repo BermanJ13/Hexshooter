@@ -94,7 +94,7 @@ public class Ice : Spell {
                     }
                 }
                 break;
-            case 2: //
+            case 2: //freeze
                 colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
                 foreach (Collider2D c in colliders)
                 {
@@ -104,7 +104,9 @@ public class Ice : Spell {
                     }
                     else if (c.gameObject.tag == "Enemy")
                     {
-
+                        StatusEffect freeze = new StatusEffect(8);
+                        freeze.m_type = StatusType.Freeze;
+                        c.gameObject.GetComponent<Enemy>().statMngr.AddEffect(freeze);
                         //c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
                     }
                     if (c.gameObject.tag == "Obstacle")
@@ -113,7 +115,7 @@ public class Ice : Spell {
                     }
                 }
                 break;
-            case 3: //
+            case 3: //Shield
                 colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
                 foreach (Collider2D c in colliders)
                 {
@@ -129,7 +131,7 @@ public class Ice : Spell {
                     }
                 }
                 break;
-            case 4: //
+            case 4: //Stacking Damage
                 colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
                 foreach (Collider2D c in colliders)
                 {

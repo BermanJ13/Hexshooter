@@ -11,7 +11,8 @@ public enum StatusType
     Poison,
     Freeze,
     Break,
-    Slow
+    Slow,
+    Shield
 }
 
 /// <summary>
@@ -63,6 +64,7 @@ public class StatusManager : MonoBehaviour
             case StatusType.Poison:
             case StatusType.Break:
             case StatusType.Slow:
+            case StatusType.Shield:
             default:
                 m_effects.Add(effect);
                 break;
