@@ -11,9 +11,9 @@ public class Wind : Spell {
     }
 
     // Update is called once per frame
-    new void Update()
+    new void spellUpdate()
     {
-        base.Update();
+        base.spellUpdate();
     }
 
     public override void movement(int weapon)

@@ -15,8 +15,8 @@ public class Fire : Spell {
 	}
 
 	// Update is called once per frame
-	new void Update() {
-		base.Update ();
+	new void spellUpdate() {
+		base.spellUpdate ();
 	}
 
 	public override void movement(int weapon)
@@ -94,9 +94,9 @@ public class Fire : Spell {
 				{
 					if(c.GetComponent<Collider2D>().IsTouching(GetComponent<Collider2D>()))
 					{
-						Debug.Log ("dmg"+damageCalc(damageTier,damage));
+						//Debug.Log ("dmg"+damageCalc(damageTier,damage));
 						c.GetComponent<Enemy>().health -= damageCalc(damageTier,damage);
-						Debug.Log ("hp"+c.GetComponent<Enemy>().health);
+						//Debug.Log ("hp"+c.GetComponent<Enemy>().health);
 						markedForDeletion = true;
 					}
 
@@ -109,10 +109,10 @@ public class Fire : Spell {
 				{
 					if(c.GetComponent<Collider2D>().IsTouching(GetComponent<Collider2D>()))
 						{
-							c.GetComponent<Enemy>().health -= damageCalc(damageTier,damage);
-							Debug.Log ("hp"+c.GetComponent<Enemy>().health);
+							c.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
+							//Debug.Log ("hp"+c.GetComponent<Enemy>().health);
 							c.GetComponent<Enemy>().Status("burn");
-							Debug.Log ("hp"+c.GetComponent<Enemy>().health);
+							//Debug.Log ("hp"+c.GetComponent<Enemy>().health);
 							markedForDeletion = true;
 						}
 					

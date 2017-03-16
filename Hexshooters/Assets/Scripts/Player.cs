@@ -1,44 +1,44 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
 
-    public int health;
+    	public int health;
+	public Transform spell;
+	public int weapon;
+	public List<Object> Chamber = new List<Object>();
+	public FieldManager field;
+	public bool reload;
 
-    public Transform spell;
-    // Use this for initialization
-
-    public StatusManager statMngr = new StatusManager();
-
-    void Start () 
+	// Use this for initialization
+	void Start () 
 	{
-        health = 100;
+		field = GameObject.FindGameObjectWithTag ("FieldManager").GetComponent<FieldManager>();
+		reload = true;
+        	health = 100;
 	}
 	
 	// Update is called once per frame
-	void Update () 
+	public void playerUpdate () 
 	{
-		if (Input.GetKeyDown (KeyCode.Space)) 
-		{
+		//Moves the character
+		movement();
 
+		if (Input.GetKeyDown (KeyCode.Space) && Chamber.Count >0) 
+		{
 			initiateSpell ();
 
 			// Transform earth = Instantiate(variable, position, Identity)
 			//Spell earth2 = earth.GetComponent<Spell>();
 			//earth2 = weaponNumber;
 		}
-
-        //Moves the character
-        movement();
-
-        Debug.Log("Player hp: " + health);
-    }
-
-	void FixedUpdate() 
-	{
-
-
+if (Chamber.Count == 0 && field.Handful.Count > 0)
+			reload = true;
 	}
+
+		
+	
 	void movement()
 	{
 		bool moveRight = false;
@@ -72,7 +72,7 @@ public class Player : MonoBehaviour {
 				}
 			}
 			//Performs the movement if possible
-			if(moveRight)
+			if (moveRight)
 				transform.position = new Vector2 (transform.position.x + 1, transform.position.y);
 		} 
 		else if (Input.GetKeyDown (KeyCode.LeftArrow)) 
@@ -163,15 +163,22 @@ public class Player : MonoBehaviour {
 			if(moveDown)
 				transform.position = new Vector2 (transform.position.x, transform.position.y - 1);
 		}
+		//Debug.Log (moveRight);
 	}
 	void initiateSpell()
 	{
-		Transform go = Instantiate(spell,new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+		GameObject go = (GameObject)Instantiate(Chamber[0],new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
 
 		////get the thing component on your instantiated object
 		Spell mything = go.GetComponent<Spell>();
 
 		////set a member variable (must be PUBLIC)
 		mything.weaponUsed = 1; 
+
+		Chamber.RemoveAt (0);
+
 	}
+
+
 }

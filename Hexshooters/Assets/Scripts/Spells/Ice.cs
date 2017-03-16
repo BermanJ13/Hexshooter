@@ -14,8 +14,8 @@ public class Ice : Spell {
 	}
 	
 	// Update is called once per frame
-	new void Update () {
-        base.Update();
+	new void spellUpdate () {
+        base.spellUpdate();
 	}
 
     public override void movement(int weapon)
