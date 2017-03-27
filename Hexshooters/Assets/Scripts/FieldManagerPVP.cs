@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
-public class FieldManager : MonoBehaviour 
+public class FieldManagerPVP : MonoBehaviour 
 {
 	public Spell[] spells;
 	public Enemy[] enemies;
@@ -96,7 +96,7 @@ public class FieldManager : MonoBehaviour
 		updateSpellList ();
 		//showHealth ();
 	}
-	
+
 	// Update is called once per frame
 	void Update () 
 	{
@@ -218,7 +218,7 @@ public class FieldManager : MonoBehaviour
 		}
 		for (int i = 0; i< pauseUI.Length;i++)
 		{
-				pauseUI [i].SetActive (true);
+			pauseUI [i].SetActive (true);
 		}
 		selectButton ();
 		pause = true;
@@ -274,7 +274,7 @@ public class FieldManager : MonoBehaviour
 	}
 	void addBullet(int num)
 	{
-		
+
 		if (Temp.Count < 6)
 		{
 			Temp.Add (Handful [num]);
