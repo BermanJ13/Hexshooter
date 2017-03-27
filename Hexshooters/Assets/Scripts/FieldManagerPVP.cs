@@ -2,21 +2,10 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine.EventSystems;
 
-public class FieldManager : MonoBehaviour
+public class FieldManagerPVP : MonoBehaviour 
 {
-    public string mapFile;
-    [SerializeField]public Transform[] gamePieces;
-    public Dictionary<string, Transform> things = new Dictionary<string, Transform>();
-    private StreamReader reader;
-    private List<string> rows = new List<string>();
-
-	public Transform playerPanel;
-	public Transform enemyPanel;
-	public Transform player;
-	public Transform Testdummy;
 	public Spell[] spells;
 	public Enemy[] enemies;
 	public Player player;
@@ -75,14 +64,7 @@ public class FieldManager : MonoBehaviour
 			Handful.Add(Resources.Load ("Earth"));
 			Handful.Add(Resources.Load ("Water"));
 		}
-		Shuffle(Handful);*
-        //creates a dictionary out of the list of objects made in the inspector
-        foreach (Transform trns in gamePieces)
-        {
-            things.Add(trns.name, trns);
-        }
-        things.Add("p", gamePieces[0]);
-        things.Add("e", gamePieces[1]);
+		Shuffle(Handful);
 
 		//Creates the Grid
 		for (int y = 0; y < 5; y++) 
@@ -114,7 +96,7 @@ public class FieldManager : MonoBehaviour
 		updateSpellList ();
 		//showHealth ();
 	}
-	
+
 	// Update is called once per frame
 	void Update () 
 	{
@@ -236,7 +218,7 @@ public class FieldManager : MonoBehaviour
 		}
 		for (int i = 0; i< pauseUI.Length;i++)
 		{
-				pauseUI [i].SetActive (true);
+			pauseUI [i].SetActive (true);
 		}
 		selectButton ();
 		pause = true;
@@ -292,7 +274,7 @@ public class FieldManager : MonoBehaviour
 	}
 	void addBullet(int num)
 	{
-		
+
 		if (Temp.Count < 6)
 		{
 			Temp.Add (Handful [num]);

@@ -57,19 +57,6 @@ public class Enemy : MonoBehaviour {
 
         this.myStatus = this.GetComponent<StatusManager>();
 	}
-	
-	// Update is called once per frame
-	public void enemyUpdate () 
-	{
-        Debug.Log(health);
-        //foreach (StatusEffect s in statMngr.m_effects)
-        //{
-        //    if (statMngr.IsAffected(s.m_type))
-        //    {
-        //        Status(s.m_type);
-        //    }
-        //}
-	}
 
 	//health
 	public int Health()
@@ -184,7 +171,7 @@ public class Enemy : MonoBehaviour {
 		timeCount.Start ();
 	}
 
-    void FixedUpdate()
+    public void enemyUpdate()
     {
         // Handles movement.
         if (isMoving)
