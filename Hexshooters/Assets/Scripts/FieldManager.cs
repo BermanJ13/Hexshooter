@@ -15,7 +15,7 @@ public class FieldManager : MonoBehaviour
 
 	public Transform playerPanel;
 	public Transform enemyPanel;
-	public Transform player;
+	//public Transform player;
 	public Transform Testdummy;
 	public Spell[] spells;
 	public Enemy[] enemies;
@@ -75,7 +75,7 @@ public class FieldManager : MonoBehaviour
 			Handful.Add(Resources.Load ("Earth"));
 			Handful.Add(Resources.Load ("Water"));
 		}
-		Shuffle(Handful);*
+		Shuffle(Handful);
         //creates a dictionary out of the list of objects made in the inspector
         foreach (Transform trns in gamePieces)
         {

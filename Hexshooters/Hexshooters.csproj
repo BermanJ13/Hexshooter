@@ -82,11 +82,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\ControllerRefocus.cs" />
+    <Compile Include="Assets\Scripts\DialogueManager.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\FieldManager.cs" />
+    <Compile Include="Assets\Scripts\FieldManagerPVP.cs" />
     <Compile Include="Assets\Scripts\Fire.cs" />
     <Compile Include="Assets\Scripts\Obstacle.cs" />
+    <Compile Include="Assets\Scripts\OverPlayer.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\Player2.cs" />
+    <Compile Include="Assets\Scripts\RuneInfo.cs" />
     <Compile Include="Assets\Scripts\Spell.cs" />
     <Compile Include="Assets\Scripts\SpellHolder.cs" />
     <Compile Include="Assets\Scripts\Spells\Earth.cs" />
@@ -97,7 +102,10 @@
     <Compile Include="Assets\Scripts\StatusManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Dialogue\Text\Test.txt" />
+    <None Include="Assets\Dialogue\Text\TestCutscene.txt" />
+    <None Include="Assets\Dialogue\Text\TestTalk.txt" />
+    <None Include="Assets\Maps\base.txt" />
+    <None Include="Assets\Maps\testmap.txt" />
     <None Include="Assets\ProjectSettings\ProjectVersion.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
