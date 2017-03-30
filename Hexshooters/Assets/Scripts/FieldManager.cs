@@ -2,10 +2,21 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine.EventSystems;
 
-public class FieldManager : MonoBehaviour 
+public class FieldManager : MonoBehaviour
 {
+    public string mapFile;
+    [SerializeField]public Transform[] gamePieces;
+    public Dictionary<string, Transform> things = new Dictionary<string, Transform>();
+    private StreamReader reader;
+    private List<string> rows = new List<string>();
+
+	public Transform playerPanel;
+	public Transform enemyPanel;
+	//public Transform player;
+	public Transform Testdummy;
 	public Spell[] spells;
 	public Enemy[] enemies;
 	public Player player;
@@ -65,6 +76,13 @@ public class FieldManager : MonoBehaviour
 			Handful.Add(Resources.Load ("Water"));
 		}
 		Shuffle(Handful);
+        //creates a dictionary out of the list of objects made in the inspector
+        foreach (Transform trns in gamePieces)
+        {
+            things.Add(trns.name, trns);
+        }
+        things.Add("p", gamePieces[0]);
+        things.Add("e", gamePieces[1]);
 
 		//Creates the Grid
 		for (int y = 0; y < 5; y++) 
