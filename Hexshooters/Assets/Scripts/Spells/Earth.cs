@@ -42,25 +42,45 @@ public class Earth : Spell {
 		{
 		//Revolver
 		case 1:
-			//HIts a square three spaces ahead
-			if (targetNeeded)
+			if (PlayerNum == 1)
 			{
-				target = new Vector2 (transform.position.x + 3, transform.position.y);
-				targetNeeded = false;
+				//HIts a square three spaces ahead
+				if (targetNeeded)
+				{
+					target = new Vector2 (transform.position.x + 3, transform.position.y);
+					targetNeeded = false;
+				}
 			}
-			position = Vector2.Lerp (transform.position, target, (Time.deltaTime * 8));
-			transform.position = position;
+			else
+			{
+				//HIts a square three spaces ahead
+				if (targetNeeded)
+				{
+					target = new Vector2 (transform.position.x - 3, transform.position.y);
+					targetNeeded = false;
+				}
+			}
+				position = Vector2.Lerp (transform.position, target, (Time.deltaTime * 8));
+				transform.position = position;
 
-			if (transform.position == new Vector3(target.x,target.y,0))
-			{
-				hitBehavior (1);
-			}
+				if (transform.position == new Vector3 (target.x, target.y, 0))
+				{
+					hitBehavior (1);
+				}
 			break;
 		//Rifle
 		case 2:
 			//Moves Forward indefinitely and has an effect if it goes out of bounds
 			inBounds = false;
-			target = new Vector2 (transform.position.x, transform.position.y) + direction;
+			if (PlayerNum == 1)
+			{
+				target = new Vector2 (transform.position.x, transform.position.y) + direction;
+			} 
+			else
+			{
+				target = new Vector2 (transform.position.x, transform.position.y) - direction;
+
+			}
 			position = Vector2.Lerp (transform.position, target, Time.deltaTime * 8);
 			transform.position = position;
 
@@ -80,17 +100,38 @@ public class Earth : Spell {
 		//Gatling
 		case 4:
 			// Moves FOrward Indefinitely
-			target = new Vector2 (transform.position.x, transform.position.y) + direction;
+			if (PlayerNum == 1)
+			{
+				target = new Vector2 (transform.position.x, transform.position.y) + direction;
+			} 
+			else
+			{
+				target = new Vector2 (transform.position.x, transform.position.y) - direction;
+
+			}
 			position = Vector2.Lerp (transform.position, target, Time.deltaTime*8);
 			transform.position = position;
 			break;
 		//Shotgun
 		case 3:
 			//Targets one space ahead
-			if (targetNeeded)
+			if (PlayerNum == 1)
 			{
-				target = new Vector2 (transform.position.x + 1, transform.position.y);
-				targetNeeded = false;
+				//HIts a square three spaces ahead
+				if (targetNeeded)
+				{
+					target = new Vector2 (transform.position.x + 1, transform.position.y);
+					targetNeeded = false;
+				}
+			}
+			else
+			{
+				//HIts a square three spaces ahead
+				if (targetNeeded)
+				{
+					target = new Vector2 (transform.position.x - 1, transform.position.y);
+					targetNeeded = false;
+				}
 			}
 			position = Vector2.Lerp (transform.position, target, (Time.deltaTime * 8));
 			transform.position = position;

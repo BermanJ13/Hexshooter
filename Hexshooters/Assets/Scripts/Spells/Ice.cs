@@ -20,40 +20,75 @@ public class Ice : Spell {
 
     public override void movement(int weapon)
     {
+		Vector2 target;
         switch (weapon)
         {
             //revolver
             case 1:
-
-                Vector2 target = new Vector2(transform.position.x, transform.position.y) + direction;
-                Vector2 position = Vector2.Lerp(transform.position, target, Time.deltaTime);
-                transform.position = position;
-                break;
+				if(PlayerNum ==1)
+				{
+					target = new Vector2(transform.position.x, transform.position.y) + direction;
+				}
+				else
+				{				
+					target = new Vector2(transform.position.x, transform.position.y) - direction;
+				}
+				Vector2 position = Vector2.Lerp(transform.position, target, Time.deltaTime);
+            	transform.position = position;                
+				break;
 
             //rifle
-            case 2:
-                target = new Vector2(transform.position.x + 1, transform.position.y) + direction;
+		case 2:
+				if(PlayerNum ==1)
+				{
+					target = new Vector2(transform.position.x + 1, transform.position.y) + direction;
+				}
+				else
+				{				
+					target = new Vector2(transform.position.x - 1, transform.position.y) - direction;
+				}
                 position = Vector2.Lerp(transform.position, target, Time.deltaTime);
                 transform.position = position;
                 break;
 
             //shotgun
             case 3:
-                target = new Vector2(transform.position.x + 1, transform.position.y) + direction;
+				if(PlayerNum ==1)
+				{
+					target = new Vector2(transform.position.x + 1, transform.position.y) + direction;
+				}
+				else
+				{				
+					target = new Vector2(transform.position.x - 1, transform.position.y) - direction;
+				}
                 position = Vector2.Lerp(transform.position, target, Time.deltaTime);
                 transform.position = position;
                 break;
 
             //gatling
             case 4:
-                target = new Vector2(transform.position.x, transform.position.y) + direction;
+				if(PlayerNum ==1)
+				{
+					target = new Vector2(transform.position.x, transform.position.y) + direction;
+				}
+				else
+				{				
+					target = new Vector2(transform.position.x, transform.position.y) - direction;
+				}
                 position = Vector2.Lerp(transform.position, target, Time.deltaTime);
                 transform.position = position;
                 break;
 
             //cane gun - not priority
             case 5:
-                target = new Vector2(transform.position.x, transform.position.y) + direction;
+				if(PlayerNum ==1)
+				{
+					target = new Vector2(transform.position.x, transform.position.y) + direction;
+				}
+				else
+				{				
+					target = new Vector2(transform.position.x, transform.position.y) - direction;
+				}
                 position = Vector2.Lerp(transform.position, target, Time.deltaTime);
                 transform.position = position;
                 break;

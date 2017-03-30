@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour {
 
@@ -10,11 +12,52 @@ public class Player : MonoBehaviour {
 	public List<Object> Chamber = new List<Object>();
 	public FieldManager field;
 	public bool reload;
+	public int PlayerNum;
+	private bool yAxisInUse = false;
+	private bool xAxisInUse = false;
+	GameObject[] bulletIndicators;
+	Text currentBullet;
 
 	// Use this for initialization
 	void Start () 
 	{
-		field = GameObject.FindGameObjectWithTag ("FieldManager").GetComponent<FieldManager>();
+		if (PlayerNum == 1)
+		{
+			currentBullet = GameObject.Find("Current Bullet").GetComponent<Text>();
+		}
+		else
+		{
+			currentBullet = GameObject.Find("Current Bullet_P2").GetComponent<Text>();
+		}
+
+		bulletIndicators = new GameObject[8];
+		if (PlayerNum == 1)
+		{
+			bulletIndicators [0] = GameObject.Find ("Player 1 Bottle 1");
+			bulletIndicators [1] = GameObject.Find ("Player 1 Bottle 2");
+			bulletIndicators [2] = GameObject.Find ("Player 1 Bottle 3");
+			bulletIndicators [3] = GameObject.Find ("Player 1 Bottle 4");
+			bulletIndicators [4] = GameObject.Find ("Player 1 Bottle 5");
+			bulletIndicators [5] = GameObject.Find ("Player 1 Bottle 6");
+			bulletIndicators [6] = GameObject.Find ("Player 1 Bottle 7");
+			bulletIndicators [7] = GameObject.Find ("Player 1 Bottle 8");
+		} 
+		else
+		{
+			bulletIndicators [0] = GameObject.Find ("Player 2 Bottle 1");
+			bulletIndicators [1] = GameObject.Find ("Player 2 Bottle 2");
+			bulletIndicators [2] = GameObject.Find ("Player 2 Bottle 3");
+			bulletIndicators [3] = GameObject.Find ("Player 2 Bottle 4");
+			bulletIndicators [4] = GameObject.Find ("Player 2 Bottle 5");
+			bulletIndicators [5] = GameObject.Find ("Player 2 Bottle 6");
+			bulletIndicators [6] = GameObject.Find ("Player 2 Bottle 7");
+			bulletIndicators [7] = GameObject.Find ("Player 2 Bottle 8");
+		}
+		GameObject p2 = GameObject.FindGameObjectWithTag("Player2");
+		if(p2 != null || PlayerNum != 1)
+			field = GameObject.FindGameObjectWithTag ("FieldManager").GetComponent<FieldManagerPVP>();
+		else
+			field = GameObject.FindGameObjectWithTag ("FieldManager").GetComponent<FieldManager>();
 		reload = true;
         	health = 100;
 	}
@@ -22,10 +65,11 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	public void playerUpdate () 
 	{
+		hideEmpty ();
+		updateCurrentSpell ();
 		//Moves the character
 		movement();
-
-		if (Input.GetKeyDown (KeyCode.Space) && Chamber.Count >0) 
+		if (Input.GetButtonDown("Fire1") && Chamber.Count >0) 
 		{
 			initiateSpell ();
 
@@ -33,137 +77,206 @@ public class Player : MonoBehaviour {
 			//Spell earth2 = earth.GetComponent<Spell>();
 			//earth2 = weaponNumber;
 		}
-if (Chamber.Count == 0 && field.Handful.Count > 0)
+		if (Chamber.Count == 0 && field.Handful.Count > 0)
+		{
+			Debug.Log ("Check");
 			reload = true;
+		}
 	}
 
 		
 	
 	void movement()
 	{
-		bool moveRight = false;
-		bool moveLeft  = false;
-		bool moveUp  = false;
-		bool moveDown = false;
-		//Checks for Left and RIght Movement
-		if (Input.GetKeyDown (KeyCode.RightArrow)) 
+		bool inbounds = false;
+		bool moveRight = true;
+		bool moveLeft  = true;
+		bool moveUp  = true;
+		bool moveDown = true;
+
+		float Horizontal = 0.0f;
+		float vertical = 0.0f;
+		string playerArea = "";
+		string enemyArea = "";
+
+		if (PlayerNum == 1)
 		{
-			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x + 1, transform.position.y),0.2f);
-			//Checks whether or not something is in the way or if the desired spot is within the player area.
-			foreach( Collider2D c in hitColliders)
-			{
-				if (c.gameObject.tag == "playerZone")
-				{
-					moveRight = true;
-				}
-				if(c.gameObject.tag == "obstacle")
-				{
-					moveRight = false;
-				}
-				
-				if(c.gameObject.tag == "enemyZone")
-				{
-					moveRight = false;
-				}
-				
-				if(c.gameObject.tag == "enemy")
-				{
-					moveRight = false;
-				}
-			}
-			//Performs the movement if possible
-			if (moveRight)
-				transform.position = new Vector2 (transform.position.x + 1, transform.position.y);
+			Horizontal = Input.GetAxisRaw ("Horizontal_P1");
+			vertical = Input.GetAxisRaw ("Vertical_P1");
+			playerArea = "playerZone";
+			enemyArea = "enemyZone";
+		} else if (PlayerNum == 2)
+		{
+			Horizontal = Input.GetAxisRaw ("Horizontal_P2");
+			vertical = Input.GetAxisRaw ("Vertical_P2");
+			playerArea = "enemyZone";
+			enemyArea = "playerZone";
 		} 
-		else if (Input.GetKeyDown (KeyCode.LeftArrow)) 
+		else
 		{
-			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x - 1, transform.position.y),0.2f);
-			foreach( Collider2D c in hitColliders)
+			Horizontal = Input.GetAxisRaw ("Horizontal_P1");
+			vertical = Input.GetAxisRaw ("Vertical_P1");
+			playerArea = "playerZone";
+			enemyArea = "enemyZone";
+		}
+		//Checks for Left and RIght Movement
+		if (Horizontal > 0) 
+		{
+			if (!xAxisInUse)
 			{
-				//Checks whether or not something is in the way or if the desired spot is within the player.
-				if (c.gameObject.tag == "playerZone")
+				xAxisInUse = true;
+				Collider2D[] hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x + 1, transform.position.y), 0.2f);
+				//Checks whether or not something is in the way or if the desired spot is within the player area.
+				foreach (Collider2D c in hitColliders)
 				{
-					moveLeft = true;
-				}
-				if(c.gameObject.tag == "obstacle")
-				{
-					moveLeft = false;
-				}
+					if (c.gameObject.tag == playerArea)
+					{
+						inbounds = true;
+					}
+					if (c.gameObject.tag == "Obstacle")
+					{
+						moveRight = false;
+					}
 				
-				if(c.gameObject.tag == "enemyZone")
-				{
-					moveLeft = false;
-				}
+					if (c.gameObject.tag == enemyArea)
+					{
+						moveRight = false;
+					}
 				
-				if(c.gameObject.tag == "enemy")
+					if (c.gameObject.tag == "enemy")
+					{
+						moveRight = false;
+					}
+				}
+				//Performs the movement if possible
+				if (inbounds)
+				if (moveRight)
 				{
-					moveLeft = false;
+					transform.position = new Vector2 (transform.position.x + 1, transform.position.y);
 				}
 			}
-			//Performs the movement if possible
-			if(moveLeft)
-				transform.position = new Vector2 (transform.position.x - 1, transform.position.y);
+		} 
+		else if (Horizontal < 0) 
+		{
+			if (!xAxisInUse)
+			{
+				xAxisInUse = true;
+				Collider2D[] hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x - 1, transform.position.y), 0.2f);
+				foreach (Collider2D c in hitColliders)
+				{
+					//Checks whether or not something is in the way or if the desired spot is within the player.
+					if (c.gameObject.tag == playerArea)
+					{
+						inbounds = true;
+					}
+					if (c.gameObject.tag == "Obstacle")
+					{
+						moveLeft = false;
+					}
+				
+					if (c.gameObject.tag == enemyArea)
+					{
+						moveLeft = false;
+					}
+				
+					if (c.gameObject.tag == "enemy")
+					{
+						moveLeft = false;
+					}
+				}
+				//Performs the movement if possible
+				if (inbounds)
+				if (moveLeft)
+					transform.position = new Vector2 (transform.position.x - 1, transform.position.y);
+			}
 		}
 		//Checks for Up and Down Movement
-		if (Input.GetKeyDown (KeyCode.UpArrow)) 
+		if (vertical > 0)
 		{
-			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y + 1),0.2f);
-			foreach( Collider2D c in hitColliders)
+			if (!yAxisInUse)
 			{
-				//Checks whether or not something is in the way or if the desired spot is within the player.
-				if (c.gameObject.tag == "playerZone")
+				yAxisInUse = true;
+				Collider2D[] hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x, transform.position.y + 1), 0.2f);
+				foreach (Collider2D c in hitColliders)
 				{
-					moveUp = true;
-				}
-				if(c.gameObject.tag == "obstacle")
-				{
-					moveUp = false;
-				}
+					//Checks whether or not something is in the way or if the desired spot is within the player.
+					if (c.gameObject.tag == playerArea)
+					{
+						inbounds = true;
+					}
+					if (c.gameObject.tag == "Obstacle")
+					{
+						moveUp = false;
+					}
 				
-				if(c.gameObject.tag == "enemyZone")
-				{
-					moveUp = false;
-				}
+					if (c.gameObject.tag == enemyArea)
+					{
+						moveUp = false;
+					}
 				
-				if(c.gameObject.tag == "enemy")
-				{
-					moveUp = false;
+					if (c.gameObject.tag == "enemy")
+					{
+						moveUp = false;
+					}
 				}
-			}
-			//Performs the movement if possible
-			if(moveUp)
-				transform.position = new Vector2 (transform.position.x, transform.position.y + 1);
-		} 
-		else if (Input.GetKeyDown (KeyCode.DownArrow)) 
+				//Performs the movement if possible
+				if (inbounds)
+				if (moveUp)
+					transform.position = new Vector2 (transform.position.x, transform.position.y + 1);
+			} 
+		} else if (vertical < 0)
 		{
-			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y - 1),0.2f);
-			foreach( Collider2D c in hitColliders)
+			if (!yAxisInUse)
 			{
-				//Checks whether or not something is in the way or if the desired spot is within the player.
-				if (c.gameObject.tag == "playerZone")
+				yAxisInUse = true;
+				Collider2D[] hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x, transform.position.y - 1), 0.2f);
+				foreach (Collider2D c in hitColliders)
 				{
-					moveDown = true;
-				}
-				if(c.gameObject.tag == "obstacle")
-				{
-					moveDown = false;
-				}
+					//Checks whether or not something is in the way or if the desired spot is within the player.
+					if (c.gameObject.tag == playerArea)
+					{
+						inbounds = true;
+					}
+					if (c.gameObject.tag == "Obstacle")
+					{
+						moveDown = false;
+					}
 				
-				if(c.gameObject.tag == "enemyZone")
-				{
-					moveDown = false;
-				}
+					if (c.gameObject.tag == enemyArea)
+					{
+						moveDown = false;
+					}
 				
-				if(c.gameObject.tag == "enemy")
-				{
-					moveDown = false;
+					if (c.gameObject.tag == "enemy")
+					{
+						moveDown = false;
+					}
 				}
+				//Performs the movement if possible
+				if (inbounds)
+				if (moveDown)
+					transform.position = new Vector2 (transform.position.x, transform.position.y - 1);
 			}
-			//Performs the movement if possible
-			if(moveDown)
-				transform.position = new Vector2 (transform.position.x, transform.position.y - 1);
 		}
-		//Debug.Log (moveRight);
+
+		if (Input.GetAxisRaw ("Vertical_P1") == 0)
+		{
+			yAxisInUse = false;
+		}
+		else if(Input.GetAxisRaw ("Vertical_P2") == 0)
+		{
+			yAxisInUse = false;
+		}
+
+		if (Input.GetAxisRaw ("Horizontal_P1") == 0)
+		{
+			xAxisInUse = false;
+		}
+		else if(Input.GetAxisRaw ("Horizontal_P2") == 0)
+		{
+			xAxisInUse = false;
+		}
+
 	}
 	void initiateSpell()
 	{
@@ -174,11 +287,24 @@ if (Chamber.Count == 0 && field.Handful.Count > 0)
 		Spell mything = go.GetComponent<Spell>();
 
 		////set a member variable (must be PUBLIC)
-		mything.weaponUsed = 1; 
-
+		mything.weaponUsed = weapon; 
+		mything.PlayerNum = PlayerNum;
 		Chamber.RemoveAt (0);
-
 	}
 
-
+	void hideEmpty()
+	{
+		for (int i = bulletIndicators.Length - 1; i >= Chamber.Count; i--)
+		{
+			bulletIndicators [i].SetActive (false);
+		}
+	}
+	void updateCurrentSpell()
+	{
+		if(Chamber.Count>0)
+		{
+			Spell curSpell = ((GameObject)Resources.Load (Chamber [0].name)).GetComponent<Spell>();
+			currentBullet.text = curSpell.name + ": " + curSpell.damage;
+		}
+	}
 }

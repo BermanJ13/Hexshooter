@@ -41,17 +41,39 @@ public class Lightning : Spell {
 		case 1:
 		case 2:
 		case 4:
-			target = new Vector2 (transform.position.x, transform.position.y) + direction;
-			position = Vector2.Lerp (transform.position, target, Time.deltaTime*8);
-			transform.position = position;
+			if (PlayerNum == 1)
+			{
+				target = new Vector2 (transform.position.x, transform.position.y) + direction;
+				position = Vector2.Lerp (transform.position, target, Time.deltaTime * 8);
+				transform.position = position;
+			} 
+			else
+			{
+				target = new Vector2 (transform.position.x, transform.position.y) - direction;
+				position = Vector2.Lerp (transform.position, target, Time.deltaTime * 8);
+				transform.position = position;
+			}
 			break;
 		//Shotgun
 		case 3:
-			//Picks a target square to lerp to before activating effect
-			if (targetNeeded) {
-				target = new Vector2 (transform.position.x+1, transform.position.y);
-				targetNeeded= false;
+
+			if (PlayerNum == 1)
+			{
+				//Picks a target square to lerp to before activating effect
+				if (targetNeeded) {
+					target = new Vector2 (transform.position.x+1, transform.position.y);
+					targetNeeded= false;
+				}
+			} 
+			else
+			{
+				//Picks a target square to lerp to before activating effect
+				if (targetNeeded) {
+					target = new Vector2 (transform.position.x-1, transform.position.y);
+					targetNeeded= false;
+				}
 			}
+
 			position = Vector2.Lerp (transform.position,target, (Time.deltaTime*8));
 			transform.position = position;
 			if (transform.position == new Vector3(target.x, target.y,0))
@@ -62,7 +84,15 @@ public class Lightning : Spell {
 		//Cane Gun
 		//Hits a rectangular Area 3 squares tall in front of the user
 		case 5:
-			colliders = Physics2D.OverlapAreaAll (new Vector2 (transform.position.x+1, transform.position.y - 1.2f), new Vector2 (transform.position.x+1, transform.position.y + 1.2f));
+
+			if (PlayerNum == 1)
+			{
+				colliders = Physics2D.OverlapAreaAll (new Vector2 (transform.position.x+1, transform.position.y - 1.2f), new Vector2 (transform.position.x+1, transform.position.y + 1.2f));
+			} 
+			else
+			{
+				colliders = Physics2D.OverlapAreaAll (new Vector2 (transform.position.x-1, transform.position.y - 1.2f), new Vector2 (transform.position.x-1, transform.position.y + 1.2f));
+			}
 			hitBehavior (5);
 			break;
 		}

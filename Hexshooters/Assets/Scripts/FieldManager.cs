@@ -13,10 +13,10 @@ public class FieldManager : MonoBehaviour
 	public List<Object> Handful = new List<Object>();
 	public List<Object> Temp = new List<Object>();
 	public List<int> TempNum = new List<int>();
-	private static System.Random rand = new System.Random();  
-	static GameObject[] pauseObjects;
-	static GameObject[] pauseUI;
-	SpellHolder spellHold;
+	protected  static System.Random rand = new System.Random();  
+	protected static GameObject[] pauseObjects;
+	protected static GameObject[] pauseUI;
+	protected SpellHolder spellHold;
 	public List<GameObject> spellSlots = new List<GameObject>();
 	public Sprite defaultSlot;
 	public GameObject runeDisplay;
@@ -320,25 +320,6 @@ public class FieldManager : MonoBehaviour
 			}
 			else if(!found)
 				EventSystem.current.SetSelectedGameObject(GameObject.Find("BattleButton"));
-		}
-	}
-	void showHealth()
-	{
-		for (int i =0;i<enemies.Length;i++)
-		{
-			GameObject enemyText = new GameObject ("eText" + i);
-			Text ehealth = enemyText.AddComponent<Text> ();
-			ehealth.transform.position = new Vector3 (enemies[i].transform.position.x, enemies[i].transform.position.y + 10, enemies[i].transform.position.z);
-			ehealth.text = enemies[i].health.ToString();
-		}
-	}
-	void updateHealth()
-	{
-		for (int i =0; i<enemies.Length;i++)
-		{
-			GameObject enemyText = GameObject.Find("eText" + i);
-			Text ehealth = enemyText.GetComponent<Text> ();
-			ehealth.text = enemies[i].health.ToString();
 		}
 	}
 }

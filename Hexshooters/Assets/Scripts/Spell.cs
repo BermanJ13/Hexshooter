@@ -17,6 +17,7 @@ public class Spell : MonoBehaviour {
 	public List<GameObject> hitEnemies= new List<GameObject> (); 
 	public Sprite bulletImage;
 	public Sprite runeImage;
+	public int PlayerNum;
 	public bool MarkedForDeletion
 	{
 		get { return markedForDeletion;}

@@ -18,39 +18,27 @@ public class Wind : Spell {
 
     public override void movement(int weapon)
     {
+		Vector2 target, position;
         switch (weapon)
         {
             //revolver
-            case 1:
-                Vector2 target = new Vector2(transform.position.x, transform.position.y) + direction;
-                Vector2 position = Vector2.Lerp(transform.position, target, Time.deltaTime);
-                transform.position = position;
-                break;
-
+		case 1:
             //rifle
-            case 2:
-                target = new Vector2(transform.position.x, transform.position.y) + direction;
-                position = Vector2.Lerp(transform.position, target, Time.deltaTime);
-                transform.position = position;
-                break;
-
+		case 2:
             //shotgun
-            case 3:
-                target = new Vector2(transform.position.x, transform.position.y) + direction;
-                position = Vector2.Lerp(transform.position, target, Time.deltaTime);
-                transform.position = position;
-                break;
-
+		case 3:
             //gatling
-            case 4:
-                target = new Vector2(transform.position.x, transform.position.y) + direction;
-                position = Vector2.Lerp(transform.position, target, Time.deltaTime);
-                transform.position = position;
-                break;
-
+		case 4:
             //cane gun - not priority
-            case 5:
-                target = new Vector2(transform.position.x, transform.position.y) + direction;
+		case 5:
+			if (PlayerNum == 1)
+			{
+				target = new Vector2(transform.position.x, transform.position.y) + direction;
+			} 
+			else
+			{
+				target = new Vector2(transform.position.x, transform.position.y) - direction;
+			}
                 position = Vector2.Lerp(transform.position, target, Time.deltaTime);
                 transform.position = position;
                 break;
