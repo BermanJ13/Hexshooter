@@ -6,25 +6,22 @@ using UnityEngine.EventSystems;
 
 public class FieldManagerPVP : FieldManager
 {
-	public Player player2;
+	protected Player player2;
 	public List<Object> Handful_2 = new List<Object>();
-	public List<Object> Temp_2 = new List<Object>();
-	public List<int> TempNum_2 = new List<int>();
+	protected List<Object> Temp_2 = new List<Object>();
+	protected List<int> TempNum_2 = new List<int>();
 	private static System.Random rand = new System.Random();  
-	static GameObject[] pauseObjects;
 	static GameObject[] pauseObjects_p2;
-	static GameObject[] pauseUI;
 	SpellHolder spellHold_2;
-	public List<GameObject> spellSlots_2 = new List<GameObject>();
-	public GameObject runeDisplay_2;
-	public Text runeDamage_2;
-	public Text runeName_2;
-	public EventSystem ES_P1;
+	protected List<GameObject> spellSlots_2 = new List<GameObject>();
+	protected GameObject runeDisplay_2;
+	protected Text runeDamage_2;
+	protected Text runeName_2;
+	protected Text runeDesc_2;
 	public EventSystem ES_P2;
-	public bool p1Ready,p2Ready;
-	GameObject p1Gun;
+	protected bool p1Ready,p2Ready;
 	GameObject p2Gun;
-	GameObject[] bulletIndicators;
+	protected Text curBullet_2;
 	
 	// Use this for initialization
 	void Start () 
@@ -67,20 +64,25 @@ public class FieldManagerPVP : FieldManager
 		//updateHealth ();
 		if (pause)
 		{
-			if(ES_P1.currentSelectedGameObject.tag != null)
+			if (ES_P1.currentSelectedGameObject != null)
 			{
-				if (ES_P1.currentSelectedGameObject.tag == "SpellHolder")
+				if (ES_P1.currentSelectedGameObject.tag != null)
 				{
-					runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
-					runeDamage.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
-					runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
+					if (ES_P1.currentSelectedGameObject.tag == "SpellHolder")
+					{
+						runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
+						runeDamage.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
+						runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
+						runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
+					}
 				}
-			}
-			if (ES_P2.currentSelectedGameObject.tag == "SpellHolder")
-			{
-				runeName_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
-				runeDamage_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
-				runeDisplay_2.GetComponent<Image> ().sprite = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
+				if (ES_P2.currentSelectedGameObject.tag == "SpellHolder")
+				{
+					runeName_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
+					runeDamage_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
+					runeDesc_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
+					runeDisplay_2.GetComponent<Image> ().sprite = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
+				}
 			}
 		}
 		if (pause && Input.GetButtonDown("Cancel_P1"))
@@ -99,7 +101,6 @@ public class FieldManagerPVP : FieldManager
 		}
 		if (pause)
 		{
-			Debug.Log ("P1 Ready " + p1Ready + " P2 Ready " + p2Ready);
 			if (p1Ready && p2Ready)
 			{
 				showBattleScreen ();
@@ -143,46 +144,7 @@ public class FieldManagerPVP : FieldManager
 
 		}
 	}
-	
-	void deleteSpells()
-	{
-		if (spells != null) 
-		{
-			foreach (Spell spell in spells) 
-			{
-				////Debug.Log (spell.GetComponent<Spell> ().MarkedForDeletion);
-				if (spell != null)
-				{
-					if (spell.MarkedForDeletion)
-					{
-						Destroy (spell.gameObject);
-					}
-				}
-			}
-		}
-	}
-	public void updateEnemyList()
-	{
-		GameObject[] temp = GameObject.FindGameObjectsWithTag ("Enemy");
-		enemies = new Enemy[temp.Length];
-		int count = 0;
-		foreach(GameObject t in temp)
-		{
-			enemies [count] = t.GetComponent<Enemy> ();
-			count++;
-		}
-	}
-	public void updateSpellList()
-	{
-		GameObject[] temp = GameObject.FindGameObjectsWithTag ("Spell");
-		spells = new Spell[temp.Length];
-		int count = 0;
-		foreach(GameObject t in temp)
-		{
-			spells [count] = t.GetComponent<Spell> ();
-			count++;
-		}
-	}
+
 	void showReloadScreen()
 	{
 		p1Ready = false;
@@ -247,6 +209,11 @@ public class FieldManagerPVP : FieldManager
 				pauseObjects_p2 [pauseObjects.Length-1].SetActive (true);
 			}
 		}
+		for (int i = 0; i< battleObjects.Length;i++)
+		{
+			if(battleObjects[i] != null)
+			battleObjects [i].SetActive (false);
+		}
 		for (int i = 0; i< pauseUI.Length;i++)
 		{
 			pauseUI [i].SetActive (true);
@@ -263,15 +230,19 @@ public class FieldManagerPVP : FieldManager
 			if (Handful.Count > i)
 			{
 				GameObject curSpell = ((GameObject)Resources.Load (Handful [i].name));
+				curSpell.GetComponent<Spell> ().setDescription (player.weapon);
 				b.GetComponent<Image> ().sprite = curSpell.GetComponent<Spell> ().bulletImage;
+
 				if (b.GetComponent<Image> ().sprite.name == "Knob")
 					b.GetComponent<Image> ().color = curSpell.GetComponent<SpriteRenderer> ().color;
 				else
 					b.GetComponent<Image> ().color = Color.white;
+				
 				RuneInfo r = spellHold.children [i].gameObject.GetComponent<RuneInfo> ();
 				r.runeName = curSpell.GetComponent<Spell>().name;
 				r.runeImage = curSpell.GetComponent<Spell> ().runeImage;
 				r.runeDamage = curSpell.GetComponent<Spell>().damage.ToString();
+				r.runeDesc = curSpell.GetComponent<Spell> ().description;
 			}
 		}
 		for (int i = 0; i < spellHold_2.children.Count; i++)
@@ -283,15 +254,19 @@ public class FieldManagerPVP : FieldManager
 			if (Handful_2.Count > i)
 			{
 				GameObject curSpell = ((GameObject)Resources.Load (Handful_2 [i].name));
+				curSpell.GetComponent<Spell> ().setDescription (player2.weapon);
 				b.GetComponent<Image> ().sprite = curSpell.GetComponent<Spell> ().bulletImage;
+
 				if (b.GetComponent<Image> ().sprite.name == "Knob")
 					b.GetComponent<Image> ().color = curSpell.GetComponent<SpriteRenderer> ().color;
 				else
-					b.GetComponent<Image> ().color = Color.white;
+				{b.GetComponent<Image> ().color = Color.white;}
+
 				RuneInfo r = spellHold_2.children [i].gameObject.GetComponent<RuneInfo> ();
 				r.runeName = curSpell.GetComponent<Spell>().name;
 				r.runeImage = curSpell.GetComponent<Spell> ().runeImage;
 				r.runeDamage = curSpell.GetComponent<Spell>().damage.ToString();
+				r.runeDesc = curSpell.GetComponent<Spell> ().description;
 			}
 		}
 		pause = true;
@@ -317,47 +292,19 @@ public class FieldManagerPVP : FieldManager
 		{
 			g.SetActive (false);
 		}
+		for (int i = 0; i< battleObjects.Length;i++)
+		{
+			if(battleObjects[i] != null)
+			battleObjects [i].SetActive (true);
+		}
 		for (int i = 0; i< pauseUI.Length;i++)
 		{
 			pauseUI [i].SetActive (false);
 		}
 		pause = false;
 	}
-	
-	public void Shuffle(List<Object> list) 
-	{
-		for(int i = Handful.Count -1; i > 1; i--)
-		{
-			int k = (rand.Next(0, i));
-			Object value = Handful[k];
-			Handful[k] = Handful[i];
-			Handful[i] = value;
-		}
-	}
-	void addBullet(int num)
-	{
 
-		if (Temp.Count < 6)
-		{
-			Temp.Add (Handful [num]);
-			Image slot = spellSlots [Temp.Count - 1].GetComponent<Image> ();
-			Image rune = spellHold.children [num].gameObject.GetComponent<Image> ();
-			slot.sprite = rune.sprite;
-			slot.color = rune.color;
-			spellHold.deactivateSpell ("Spell " + num + "");
-			TempNum.Add (num);
-			selectButton ();
-			p1Gun.transform.Rotate (new Vector3 (0.0f,0.0f,60.0f));
-			//p1Gun.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x,transform.rotation.y,transform.rotation.z + 60), Time.time*0.1f);
-			if(Temp.Count == 6)
-				ES_P1.SetSelectedGameObject(GameObject.Find("BattleButton"));
-			//Debug.Log (num);
-		} 
-		else
-		{
-			ES_P1.SetSelectedGameObject(GameObject.Find("BattleButton"));
-		}
-	}
+
 	void addBullet_2(int num)
 	{
 
@@ -382,16 +329,6 @@ public class FieldManagerPVP : FieldManager
 			ES_P2.SetSelectedGameObject(GameObject.Find("BattleButton_2"));
 		}
 	}
-	void removeBullet()
-	{
-		spellHold.activateSpell ("Spell " +TempNum[TempNum.Count-1]+ "");
-		spellSlots[Temp.Count-1].GetComponent<Image>().sprite = defaultSlot;
-		spellSlots[Temp.Count-1].GetComponent<Image>().color = Color.white;
-		Temp.RemoveAt (Temp.Count - 1);
-		TempNum.RemoveAt (TempNum.Count - 1);
-		p1Gun.transform.Rotate (new Vector3 (0.0f,0.0f,-60.0f));
-		//p1Gun.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x,transform.rotation.y,transform.rotation.z - 60), Time.time*0.1f);
-	}
 	void removeBullet_P2()
 	{
 		spellHold_2.activateSpell ("Spell " +TempNum_2[TempNum_2.Count-1]+ "_2");
@@ -402,26 +339,6 @@ public class FieldManagerPVP : FieldManager
 		p2Gun.transform.Rotate (new Vector3 (0.0f,0.0f,-60.0f));
 		//p2Gun.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x,transform.rotation.y,transform.rotation.z - 60), Time.time*0.1f);
 
-	}
-	void selectButton ()
-	{
-		bool found = false;
-		for (int i = 0; i < 9; i++)
-		{
-			bool used = false;
-			foreach(int j in TempNum)
-			{
-				if (j == i)
-					used = true;
-			}
-			if(GameObject.Find("Spell " +i+ "") != null && !found && !used)
-			{
-				ES_P1.SetSelectedGameObject(GameObject.Find("Spell " +i+ ""));
-				found = true;
-			}
-			else if(!found)
-				ES_P1.SetSelectedGameObject(GameObject.Find("BattleButton"));
-		}
 	}
 	void selectButton_2 ()
 	{
@@ -453,22 +370,8 @@ public class FieldManagerPVP : FieldManager
 	}
 	public void getUI()
 	{
-
-		can = GameObject.Find ("Canvas");
-		spellHold = GameObject.Find ("SpellHolder").GetComponent<SpellHolder>();
+		base.getUI ();
 		spellHold_2 = GameObject.Find ("SpellHolder_2").GetComponent<SpellHolder>();
-		pauseObjects = new GameObject[11];
-		pauseObjects[0] = GameObject.Find("Spell 0");
-		pauseObjects[1] = GameObject.Find("Spell 1");
-		pauseObjects[2] = GameObject.Find("Spell 2");
-		pauseObjects[3] = GameObject.Find("Spell 3");
-		pauseObjects[4] = GameObject.Find("Spell 4");
-		pauseObjects[5] = GameObject.Find("Spell 5");
-		pauseObjects[6] = GameObject.Find("Spell 6");
-		pauseObjects[7] = GameObject.Find("Spell 7");
-		pauseObjects[8] = GameObject.Find("Spell 8");
-		pauseObjects[9] = GameObject.Find("Spell 9");
-		pauseObjects[10] = GameObject.Find("BattleButton");
 
 		pauseObjects_p2 = new GameObject[11];
 		pauseObjects_p2[0] = GameObject.Find("Spell 0_2");
@@ -483,13 +386,6 @@ public class FieldManagerPVP : FieldManager
 		pauseObjects_p2[9] = GameObject.Find("Spell 9_2");
 		pauseObjects_p2[10] = GameObject.Find("BattleButton_2");
 		pauseUI = GameObject.FindGameObjectsWithTag ("PauseUI");
-
-		spellSlots.Add (GameObject.Find("SpellSlot1"));
-		spellSlots.Add (GameObject.Find("SpellSlot2"));
-		spellSlots.Add (GameObject.Find("SpellSlot3"));
-		spellSlots.Add (GameObject.Find("SpellSlot4"));
-		spellSlots.Add (GameObject.Find("SpellSlot5"));
-		spellSlots.Add (GameObject.Find("SpellSlot6"));
 
 		spellSlots_2.Add (GameObject.Find("SpellSlot1_2"));
 		spellSlots_2.Add (GameObject.Find("SpellSlot2_2"));
@@ -517,16 +413,15 @@ public class FieldManagerPVP : FieldManager
 		bulletIndicators [14] = GameObject.Find ("Player 2 Bottle 7");
 		bulletIndicators [15] = GameObject.Find ("Player 2 Bottle 8");
 
-		runeDisplay = GameObject.Find ("RuneHolder");
-		runeDamage = GameObject.Find ("RuneDamage").GetComponent<Text>();
-		runeName = GameObject.Find ("Rune Name").GetComponent<Text>();
-
 		runeDisplay_2 = GameObject.Find ("RuneHolder_2");
 		runeDamage_2 = GameObject.Find ("RuneDamage_2").GetComponent<Text>();
 		runeName_2 = GameObject.Find ("Rune Name_2").GetComponent<Text>();
+		runeDesc_2 = GameObject.Find ("Rune Description_2").GetComponent<Text>();
 
 		p1Gun = GameObject.Find ("UI_GunCylinder");
 		p2Gun = GameObject.Find ("UI_GunCylinder_2");
+
+		battleObjects[1] = GameObject.Find("Current Bullet_2");
 	}
 	void createGrid()
 	{

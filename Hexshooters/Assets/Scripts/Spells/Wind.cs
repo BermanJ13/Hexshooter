@@ -44,4 +44,30 @@ public class Wind : Spell {
                 break;
         }
     }
+	public override void setDescription(int weapon)
+	{
+		switch (weapon)
+		{
+			//Revolver
+			case 1:
+			description = "Knocks the enmy up or down one tile.";
+			break;
+			//Rifle
+			case 2:
+			description = "";
+			break;
+			//Shotgun
+			case 3:
+			description = "Knocks the enemy back with a burst of compressed air.";
+			break;
+			//Gatling
+			case 4:
+			description = "Pulls enemies toward the column it lands in.";
+			break;
+			//Cane Gun
+			case 5:
+			description = "";
+			break;
+		}
+	}
 }

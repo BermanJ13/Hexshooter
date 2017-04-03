@@ -47,9 +47,9 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\ControllerRefocus.cs" />
+     <Compile Include="Assets\Scripts\DialogueManager.cs" />
      <Compile Include="Assets\Scripts\Enemy.cs" />
      <Compile Include="Assets\Scripts\FieldManager.cs" />
-     <Compile Include="Assets\Scripts\Fire.cs" />
      <Compile Include="Assets\Scripts\Obstacle.cs" />
      <Compile Include="Assets\Scripts\OverPlayer.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
@@ -62,12 +62,17 @@
      <Compile Include="Assets\Scripts\Spell.cs" />
      <Compile Include="Assets\Scripts\SpellHolder.cs" />
      <Compile Include="Assets\Scripts\Spells\Earth.cs" />
+     <Compile Include="Assets\Scripts\Spells\Fire.cs" />
      <Compile Include="Assets\Scripts\Spells\Ice.cs" />
      <Compile Include="Assets\Scripts\Spells\Lightning.cs" />
      <Compile Include="Assets\Scripts\Spells\Water.cs" />
      <Compile Include="Assets\Scripts\Spells\Wind.cs" />
      <Compile Include="Assets\Scripts\StatusManager.cs" />
+     <None Include="Assets\Maps\testmap.txt" />
+     <None Include="Assets\Dialogue\Text\TestCutscene.txt" />
      <None Include="Assets\ProjectSettings\ProjectVersion.txt" />
+     <None Include="Assets\Dialogue\Text\TestTalk.txt" />
+     <None Include="Assets\Maps\base.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

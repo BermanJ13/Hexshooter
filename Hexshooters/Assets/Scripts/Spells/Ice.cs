@@ -97,94 +97,179 @@ public class Ice : Spell {
     }
 
     public override void hitBehavior(int weapon)
-    {
-        switch (weapon)
-        {
-            case 1: //freeze row
-                Collider2D[] colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x+10, transform.position.y));
-                foreach (Collider2D c in colliders)
-                {
-                    if (c.gameObject.tag == "Player")
-                    {
-                       
-                    }
-                    else if (c.gameObject.tag == "Enemy")
-                    {
-                        StatusEffect slow = new StatusEffect(5);
-                        slow.m_type = StatusType.Slow;
-                        c.gameObject.GetComponent<Enemy>().statMngr.AddEffect(slow);
+	{
+		switch (weapon)
+		{
+		case 1: //freeze row
+			Collider2D[] colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x + 10, transform.position.y));
+			foreach (Collider2D c in colliders)
+			{
+				if(c.gameObject.tag == "Enemy")
+				{
+					StatusEffect slow = new StatusEffect (5);
+					slow.m_type = StatusType.Slow;
+					c.gameObject.GetComponent<Enemy> ().statMngr.AddEffect (slow);
 
-                        spellTimer--;
-                        if (spellTimer <= 0)
-                        {
-                            markedForDeletion = true;
-                            spellTimer = 50;
-                        }
+					spellTimer--;
+					if (spellTimer <= 0)
+					{
+						markedForDeletion = true;
+						spellTimer = 50;
+					}
 
-                        //c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
-                    }
-                    if (c.gameObject.tag == "Obstacle")
-                    {
-                        //c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
-                    }
-                }
-                break;
-            case 2: //freeze
-                colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
-                foreach (Collider2D c in colliders)
-                {
-                    if (c.gameObject.tag == "Player")
-                    {
+					//c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
+				}
+				else if(c.gameObject.tag == "Obstacle")
+				{
+					c.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
+					markedForDeletion = true;
+				}
+				else if(c.gameObject.tag == "Player" && PlayerNum == 2)
+				{
+					c.GetComponent<Player>().health -= damageCalc(damageTier,hitNum);
+					markedForDeletion = true;
+					StatusEffect slow = new StatusEffect (5);
+					slow.m_type = StatusType.Slow;
+					c.gameObject.GetComponent<Player> ().statMngr.AddEffect (slow);
 
-                    }
-                    else if (c.gameObject.tag == "Enemy")
-                    {
-                        StatusEffect freeze = new StatusEffect(8);
-                        freeze.m_type = StatusType.Freeze;
-                        c.gameObject.GetComponent<Enemy>().statMngr.AddEffect(freeze);
-                        //c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
-                    }
-                    if (c.gameObject.tag == "Obstacle")
-                    {
-                        //c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
-                    }
-                }
-                break;
-            case 3: //Shield
-                colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
-                foreach (Collider2D c in colliders)
-                {
-                    if (c.gameObject.tag == "Enemy")
-                    {
-                       
-                        //c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
-                    }
-                    if (c.gameObject.tag == "Obstacle")
-                    {
-                        markedForDeletion = true;
-                        //c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
-                    }
-                }
-                break;
-            case 4: //Stacking Damage
-                colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
-                foreach (Collider2D c in colliders)
-                {
-                    if (c.gameObject.tag == "Player")
-                    {
+					spellTimer--;
+					if (spellTimer <= 0)
+					{
+						markedForDeletion = true;
+						spellTimer = 50;
+					}
+				}
+				else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
+				{
+					c.GetComponent<Player>().health -= damageCalc(damageTier,hitNum);
+					markedForDeletion = true;
+					StatusEffect slow = new StatusEffect (5);
+					slow.m_type = StatusType.Slow;
+					c.gameObject.GetComponent<Player> ().statMngr.AddEffect (slow);
 
-                    }
-                    else if (c.gameObject.tag == "Enemy")
-                    {
+					spellTimer--;
+					if (spellTimer <= 0)
+					{
+						markedForDeletion = true;
+						spellTimer = 50;
+					}
+				}
+			}
+			break;
+		case 2: //freeze
+			colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
+			foreach (Collider2D c in colliders)
+			{
+				if (c.gameObject.tag == "Enemy")
+				{
+					StatusEffect freeze = new StatusEffect (8);
+					freeze.m_type = StatusType.Freeze;
+					c.gameObject.GetComponent<Enemy> ().statMngr.AddEffect (freeze);
+					c.gameObject.GetComponent<Enemy> ().health -= damageCalc (damageTier, hitNum);
+					markedForDeletion = true;
+				} else if (c.gameObject.tag == "Obstacle")
+				{
+					c.GetComponent<Obstacle> ().health -= damageCalc (damageTier, damage);
+					markedForDeletion = true;
+				} else if (c.gameObject.tag == "Player" && PlayerNum == 2)
+				{
+					StatusEffect freeze = new StatusEffect (8);
+					freeze.m_type = StatusType.Freeze;
+					c.gameObject.GetComponent<Player> ().statMngr.AddEffect (freeze);
+					c.gameObject.GetComponent<Player> ().health -= damageCalc (damageTier, hitNum);
+					markedForDeletion = true;
 
-                        //c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
-                    }
-                    if (c.gameObject.tag == "Obstacle")
-                    {
-                        //c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
-                    }
-                }
-                break;
-        }
-    }
+				} else if (c.gameObject.tag == "Player2" && PlayerNum == 1)
+				{
+					StatusEffect freeze = new StatusEffect (8);
+					freeze.m_type = StatusType.Freeze;
+					c.gameObject.GetComponent<Player> ().statMngr.AddEffect (freeze);
+					c.gameObject.GetComponent<Player> ().health -= damageCalc (damageTier, hitNum);
+					markedForDeletion = true;
+				}
+			}
+			break;
+		case 3: //Shield
+			colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
+			foreach (Collider2D c in colliders)
+			{
+				if(c.gameObject.tag == "Enemy")
+				{
+					
+					markedForDeletion = true;
+				}
+				else if(c.gameObject.tag == "Obstacle")
+				{
+					
+					markedForDeletion = true;
+				}
+				else if(c.gameObject.tag == "Player" && PlayerNum == 2)
+				{
+					
+					markedForDeletion = true;
+
+				}
+				else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
+				{
+					
+					markedForDeletion = true;
+				}
+			}
+			break;
+		case 4: //Stacking Damage
+			colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
+			foreach (Collider2D c in colliders)
+			{
+				if(c.gameObject.tag == "Enemy")
+				{
+					
+					markedForDeletion = true;
+				}
+				else if(c.gameObject.tag == "Obstacle")
+				{
+					
+					markedForDeletion = true;
+				}
+				else if(c.gameObject.tag == "Player" && PlayerNum == 2)
+				{
+					
+					markedForDeletion = true;
+
+				}
+				else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
+				{
+					
+					markedForDeletion = true;
+				}
+			}
+			break;
+		}
+	}
+	public override void setDescription(int weapon)
+		{
+		switch (weapon)
+		{
+		//Revolver
+		case 1:
+			description = "Slows enemy movement on a row.";
+			break;
+		//Rifle
+		case 2:
+			description = "Freeze the target.";
+			break;
+		//Shotgun
+		case 3:
+			description = "Creates a shield ahead of the player.";
+			break;
+		//Gatling
+		case 4:
+			description = "Stacking damage.";
+			break;
+		//Cane Gun
+		case 5:
+			description = "";
+			break;
+		}
+		}
+    
 }

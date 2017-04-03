@@ -17,10 +17,15 @@ public class Player : MonoBehaviour {
 	private bool xAxisInUse = false;
 	GameObject[] bulletIndicators;
 	Text currentBullet;
+	Text pHealth;
+	public int armorWeakness;
+	public StatusManager statMngr;
 
 	// Use this for initialization
 	void Start () 
 	{
+		 statMngr = new StatusManager();
+
 		if (PlayerNum == 1)
 		{
 			currentBullet = GameObject.Find("Current Bullet").GetComponent<Text>();
@@ -28,6 +33,15 @@ public class Player : MonoBehaviour {
 		else
 		{
 			currentBullet = GameObject.Find("Current Bullet_P2").GetComponent<Text>();
+		}
+
+		if (PlayerNum == 1)
+		{
+			pHealth = GameObject.Find("PlayerHealth").GetComponent<Text>();
+		}
+		else
+		{
+			pHealth = GameObject.Find("PlayerHealth_2").GetComponent<Text>();
 		}
 
 		bulletIndicators = new GameObject[8];
@@ -67,6 +81,7 @@ public class Player : MonoBehaviour {
 	{
 		hideEmpty ();
 		updateCurrentSpell ();
+		pHealth.text = health.ToString();
 		//Moves the character
 		movement();
 		if (Input.GetButtonDown("Fire1") && Chamber.Count >0) 
@@ -79,7 +94,6 @@ public class Player : MonoBehaviour {
 		}
 		if (Chamber.Count == 0 && field.Handful.Count > 0)
 		{
-			Debug.Log ("Check");
 			reload = true;
 		}
 	}
@@ -258,25 +272,28 @@ public class Player : MonoBehaviour {
 					transform.position = new Vector2 (transform.position.x, transform.position.y - 1);
 			}
 		}
-
-		if (Input.GetAxisRaw ("Vertical_P1") == 0)
+		if (PlayerNum == 1)
 		{
-			yAxisInUse = false;
-		}
-		else if(Input.GetAxisRaw ("Vertical_P2") == 0)
+			if (Input.GetAxisRaw ("Vertical_P1") == 0)
+			{
+				yAxisInUse = false;
+			}
+			if (Input.GetAxisRaw ("Horizontal_P1") == 0)
+			{
+				xAxisInUse = false;
+			}
+		} 
+		else
 		{
-			yAxisInUse = false;
+			if (Input.GetAxisRaw ("Horizontal_P2") == 0)
+			{
+				xAxisInUse = false;
+			}
+			if (Input.GetAxisRaw ("Vertical_P2") == 0)
+			{
+				yAxisInUse = false;
+			}
 		}
-
-		if (Input.GetAxisRaw ("Horizontal_P1") == 0)
-		{
-			xAxisInUse = false;
-		}
-		else if(Input.GetAxisRaw ("Horizontal_P2") == 0)
-		{
-			xAxisInUse = false;
-		}
-
 	}
 	void initiateSpell()
 	{
