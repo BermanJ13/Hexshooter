@@ -20,12 +20,20 @@ public class Player : MonoBehaviour {
 	Text pHealth;
 	public int armorWeakness;
 	public StatusManager statMngr;
+	protected string atkbutton;
 
 	// Use this for initialization
 	void Start () 
 	{
 		 statMngr = new StatusManager();
-
+		if (PlayerNum == 1)
+		{
+			atkbutton = "Fire_P1";
+		}
+		else
+		{
+			atkbutton = "Fire_P2";
+		}
 		if (PlayerNum == 1)
 		{
 			currentBullet = GameObject.Find("Current Bullet").GetComponent<Text>();
@@ -84,7 +92,7 @@ public class Player : MonoBehaviour {
 		pHealth.text = health.ToString();
 		//Moves the character
 		movement();
-		if (Input.GetButtonDown("Fire1") && Chamber.Count >0) 
+		if (Input.GetButtonDown(atkbutton) && Chamber.Count >0) 
 		{
 			initiateSpell ();
 
@@ -319,10 +327,14 @@ public class Player : MonoBehaviour {
 	}
 	void updateCurrentSpell()
 	{
-		if(Chamber.Count>0)
+		if (Chamber.Count > 0)
 		{
-			Spell curSpell = ((GameObject)Resources.Load (Chamber [0].name)).GetComponent<Spell>();
+			Spell curSpell = ((GameObject)Resources.Load (Chamber [0].name)).GetComponent<Spell> ();
 			currentBullet.text = curSpell.name + ": " + curSpell.damage;
+		} 
+		else
+		{
+			currentBullet.text = "";
 		}
 	}
 }
