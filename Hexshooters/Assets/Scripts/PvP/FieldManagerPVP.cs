@@ -74,6 +74,7 @@ public class FieldManagerPVP : FieldManager
 						runeDamage.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
 						runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
 						runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
+						runeDisplay.GetComponent<Image> ().color = new Color(0,0,0,255);
 					}
 				}
 				if (ES_P2.currentSelectedGameObject.tag == "SpellHolder")
@@ -82,6 +83,7 @@ public class FieldManagerPVP : FieldManager
 					runeDamage_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
 					runeDesc_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
 					runeDisplay_2.GetComponent<Image> ().sprite = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
+					runeDisplay_2.GetComponent<Image> ().color = new Color(0,0,0,255);
 				}
 			}
 		}
@@ -137,6 +139,8 @@ public class FieldManagerPVP : FieldManager
 			}
 			updateSpellList ();
 			deleteSpells ();
+			updateObstacleList ();
+			deleteObstacles ();
 			if (player.reload && player2.reload)
 			{
 				showReloadScreen ();

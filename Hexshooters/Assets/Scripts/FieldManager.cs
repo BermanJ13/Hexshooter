@@ -18,6 +18,7 @@ public class FieldManager : MonoBehaviour
 	protected Transform Testdummy;
 	protected Spell[] spells;
 	protected Enemy[] enemies;
+	protected Obstacle[] obstacles;
 	protected GameObject[] bulletIndicators;
 	protected Player player;
 	protected bool pause = false;
@@ -92,6 +93,7 @@ public class FieldManager : MonoBehaviour
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 		updateEnemyList ();
 		updateSpellList ();
+		updateObstacleList ();
 		//showHealth ();
 	}
 	
@@ -135,6 +137,8 @@ public class FieldManager : MonoBehaviour
 			}
 			updateSpellList ();
 			deleteSpells ();
+			updateObstacleList ();
+			deleteObstacles ();
 			if (player.reload && enemyReload)
 			{
 				showReloadScreen ();
@@ -158,6 +162,25 @@ public class FieldManager : MonoBehaviour
 				}
 			}
 		}
+		updateSpellList ();
+	}
+	public void deleteObstacles()
+	{
+		if (obstacles != null) 
+		{
+			foreach (Obstacle obs in obstacles) 
+			{
+				////Debug.Log (spell.GetComponent<Spell> ().MarkedForDeletion);
+				if (obs != null)
+				{
+					if (obs.MarkedforDeletion)
+					{
+						Destroy (obs.gameObject);
+					}
+				}
+			}
+		}
+		updateObstacleList ();
 	}
 	public void updateEnemyList()
 	{
@@ -178,6 +201,17 @@ public class FieldManager : MonoBehaviour
 		foreach(GameObject t in temp)
 		{
 			spells [count] = t.GetComponent<Spell> ();
+			count++;
+		}
+	}
+	public void updateObstacleList()
+	{
+		GameObject[] temp = GameObject.FindGameObjectsWithTag ("Obstacle");
+		obstacles = new Obstacle[temp.Length];
+		int count = 0;
+		foreach(GameObject t in temp)
+		{
+			obstacles [count] = t.GetComponent<Obstacle> ();
 			count++;
 		}
 	}

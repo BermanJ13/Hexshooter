@@ -102,7 +102,8 @@ public class Player : MonoBehaviour {
 	
 	void movement()
 	{
-		bool inbounds = false;
+		bool inboundsX = false;
+		bool inboundsY = false;
 		bool moveRight = true;
 		bool moveLeft  = true;
 		bool moveUp  = true;
@@ -145,7 +146,7 @@ public class Player : MonoBehaviour {
 				{
 					if (c.gameObject.tag == playerArea)
 					{
-						inbounds = true;
+						inboundsX = true;
 					}
 					if (c.gameObject.tag == "Obstacle")
 					{
@@ -163,7 +164,7 @@ public class Player : MonoBehaviour {
 					}
 				}
 				//Performs the movement if possible
-				if (inbounds)
+				if (inboundsX)
 				if (moveRight)
 				{
 					transform.position = new Vector2 (transform.position.x + 1, transform.position.y);
@@ -181,7 +182,7 @@ public class Player : MonoBehaviour {
 					//Checks whether or not something is in the way or if the desired spot is within the player.
 					if (c.gameObject.tag == playerArea)
 					{
-						inbounds = true;
+						inboundsX = true;
 					}
 					if (c.gameObject.tag == "Obstacle")
 					{
@@ -199,7 +200,7 @@ public class Player : MonoBehaviour {
 					}
 				}
 				//Performs the movement if possible
-				if (inbounds)
+				if (inboundsX)
 				if (moveLeft)
 					transform.position = new Vector2 (transform.position.x - 1, transform.position.y);
 			}
@@ -216,7 +217,7 @@ public class Player : MonoBehaviour {
 					//Checks whether or not something is in the way or if the desired spot is within the player.
 					if (c.gameObject.tag == playerArea)
 					{
-						inbounds = true;
+						inboundsY = true;
 					}
 					if (c.gameObject.tag == "Obstacle")
 					{
@@ -234,7 +235,7 @@ public class Player : MonoBehaviour {
 					}
 				}
 				//Performs the movement if possible
-				if (inbounds)
+				if (inboundsY)
 				if (moveUp)
 					transform.position = new Vector2 (transform.position.x, transform.position.y + 1);
 			} 
@@ -249,7 +250,7 @@ public class Player : MonoBehaviour {
 					//Checks whether or not something is in the way or if the desired spot is within the player.
 					if (c.gameObject.tag == playerArea)
 					{
-						inbounds = true;
+						inboundsY = true;
 					}
 					if (c.gameObject.tag == "Obstacle")
 					{
@@ -267,7 +268,7 @@ public class Player : MonoBehaviour {
 					}
 				}
 				//Performs the movement if possible
-				if (inbounds)
+				if (inboundsY)
 				if (moveDown)
 					transform.position = new Vector2 (transform.position.x, transform.position.y - 1);
 			}
