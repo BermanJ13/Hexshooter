@@ -36,8 +36,11 @@ public class FieldManagerPVP : FieldManager
 		for (int i = 0; i < 10; i++)
 		{
 			Handful.Add(Resources.Load ("Lightning"));
-			Handful.Add(Resources.Load ("Earth"));
 			Handful.Add(Resources.Load ("Water"));
+			if(i<5)
+				Handful.Add(Resources.Load ("Earth"));
+			else
+				Handful.Add(Resources.Load ("Lightning"));
 		}
 		Shuffle(Handful);
 
@@ -45,8 +48,11 @@ public class FieldManagerPVP : FieldManager
 		for (int i = 0; i < 10; i++)
 		{
 			Handful_2.Add(Resources.Load ("Lightning"));
-			Handful_2.Add(Resources.Load ("Earth"));
-			Handful_2.Add(Resources.Load ("Water"));
+			Handful.Add(Resources.Load ("Water"));
+			if(i<5)
+				Handful.Add(Resources.Load ("Earth"));
+			else
+				Handful.Add(Resources.Load ("Lightning"));
 		}
 		Shuffle(Handful_2);
 
@@ -141,7 +147,7 @@ public class FieldManagerPVP : FieldManager
 			deleteSpells ();
 			updateObstacleList ();
 			deleteObstacles ();
-			if (player.reload && player2.reload)
+			if (player.reload && player2.reload && spells.Length == 0)
 			{
 				showReloadScreen ();
 			}
@@ -306,6 +312,7 @@ public class FieldManagerPVP : FieldManager
 			pauseUI [i].SetActive (false);
 		}
 		pause = false;
+		player.reload = false;
 	}
 
 

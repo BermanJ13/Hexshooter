@@ -58,12 +58,12 @@ public class FieldManager : MonoBehaviour
 		}
 		Shuffle(Handful);
         //creates a dictionary out of the list of objects made in the inspector
-        foreach (Transform trns in gamePieces)
-        {
-            things.Add(trns.name, trns);
-        }
-        things.Add("p", gamePieces[0]);
-        things.Add("e", gamePieces[1]);
+        //foreach (Transform trns in gamePieces)
+        //{
+        //    things.Add(trns.name, trns);
+        //}
+        //things.Add("p", gamePieces[0]);
+        //things.Add("e", gamePieces[1]);
 
 		//Creates the Grid
 		for (int y = 0; y < 5; y++) 
@@ -103,12 +103,13 @@ public class FieldManager : MonoBehaviour
 		//updateHealth ();
 		if(ES_P1.currentSelectedGameObject.tag == "SpellHolder")
 		{
-			runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo>().runeName;
-			runeDamage.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo>().runeDamage;
+			runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
+			runeDamage.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
 			runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
-			runeDisplay.GetComponent<Image>().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo>().runeImage;
+			runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
+			runeDisplay.GetComponent<Image> ().color = new Color(0,0,0,255);
 		}
-		if (pause && Input.GetKeyDown (KeyCode.Escape))
+		if (pause && Input.GetButtonDown("Cancel_P1"))
 		{
 			if (Temp.Count > 0)
 			{
@@ -234,10 +235,6 @@ public class FieldManager : MonoBehaviour
 				TempNum.RemoveAt (i);
 			}
 		}
-		foreach (int i  in TempNum)
-		{
-			Debug.Log (i);
-		}
 		for (int i = 0; i< pauseObjects.Length;i++)
 		{
 			if (i < Handful.Count)
@@ -248,6 +245,11 @@ public class FieldManager : MonoBehaviour
 			{
 				pauseObjects [pauseObjects.Length-1].SetActive (true);
 			}
+		}
+		for (int i = 0; i< battleObjects.Length;i++)
+		{
+			if(battleObjects[i] != null)
+				battleObjects [i].SetActive (false);
 		}
 		for (int i = 0; i< pauseUI.Length;i++)
 		{
@@ -287,6 +289,11 @@ public class FieldManager : MonoBehaviour
 		foreach (GameObject g in pauseObjects)
 		{
 			g.SetActive (false);
+		}
+		for (int i = 0; i< battleObjects.Length;i++)
+		{
+			if(battleObjects[i] != null)
+				battleObjects [i].SetActive (true);
 		}
 		for (int i = 0; i< pauseUI.Length;i++)
 		{

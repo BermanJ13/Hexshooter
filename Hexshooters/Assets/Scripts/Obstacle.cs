@@ -7,6 +7,8 @@ public class Obstacle : MonoBehaviour {
 	public int health;
 	public int armorWeakness;
 	public bool MarkedforDeletion;
+	public string stat;
+	bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
 
 
 	// Use this for initialization
@@ -22,5 +24,16 @@ public class Obstacle : MonoBehaviour {
 		{
 			MarkedforDeletion = true;
 		}
+	}
+	public void takeDamage(int damage) //created for "break" status
+	{
+		int multipliers = 1;
+		if (this.stat == "break")
+		{
+			multipliers *= 2;
+			stat = "normal";
+			breakImmune = true;
+		}
+		this.health -= damage* multipliers;
 	}
 }

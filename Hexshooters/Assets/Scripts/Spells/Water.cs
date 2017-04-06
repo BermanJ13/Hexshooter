@@ -42,7 +42,7 @@ public class Water : Spell {
 					target = new Vector2 (transform.position.x + 1, transform.position.y) - direction;
 			}
 
-                position = Vector2.Lerp(transform.position, target, Time.deltaTime*4);
+                position = Vector2.Lerp(transform.position, target, Time.deltaTime*8);
                 transform.position = position;
                 break;
 
@@ -53,7 +53,7 @@ public class Water : Spell {
 				if ((transform.position.x - rifleOrigin.x) < 3)
 				{
 					target = new Vector2 (transform.position.x + 2, transform.position.y) + direction;
-					position = Vector2.Lerp (transform.position, target, Time.deltaTime*4);
+					position = Vector2.Lerp (transform.position, target, Time.deltaTime*8);
 					transform.position = position;
 				} else
 				{
@@ -71,7 +71,7 @@ public class Water : Spell {
 				if ((transform.position.x + rifleOrigin.x) < 3)
 				{
 					target = new Vector2 (transform.position.x - 2, transform.position.y) - direction;
-					position = Vector2.Lerp (transform.position, target, Time.deltaTime*4);
+					position = Vector2.Lerp (transform.position, target, Time.deltaTime*8);
 					transform.position = position;
 				} else
 				{
@@ -100,7 +100,7 @@ public class Water : Spell {
 			{
 				target = new Vector2 (transform.position.x, transform.position.y) - direction;
 			}
-                position = Vector2.Lerp(transform.position, target, Time.deltaTime*4);
+                position = Vector2.Lerp(transform.position, target, Time.deltaTime*8);
                 transform.position = position;
                 break;
 
@@ -117,30 +117,30 @@ public class Water : Spell {
                 {
 					if (c.gameObject.tag == "Enemy")
 					{
-						c.gameObject.GetComponent<Enemy> ().health -= 2;
+					c.gameObject.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
 						revolverMove = true;
 					} 
 					else if (c.gameObject.tag == "Obstacle")
 					{
-						c.GetComponent<Obstacle> ().health -= damageCalc (damageTier, damage);
-						markedForDeletion = true;
+					c.GetComponent<Obstacle> ().takeDamage(damageCalc (damageTier, hitNum));
+					revolverMove = true;
 					} 
 					else if (c.gameObject.tag == "Player" && PlayerNum == 2)
 					{
-						c.gameObject.GetComponent<Player> ().health -= 2;
+					c.gameObject.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
 						revolverMove = true;
 					
 					} 
 					else if (c.gameObject.tag == "Player2" && PlayerNum == 1)
 					{
-						c.gameObject.GetComponent<Player> ().health -= 2;
+					c.gameObject.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
 						revolverMove = true;
 					}
 					else if (c.gameObject.tag == "Player2" && PlayerNum == 2)
 					{
 						if (revolverMove)
 						{
-							c.gameObject.GetComponent<Player>().health += 2;
+						c.gameObject.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum)*-1);
 							revolverMove = false;
 							markedForDeletion = true;
 						}
@@ -149,7 +149,7 @@ public class Water : Spell {
 					{
 						if (revolverMove)
 						{
-							c.gameObject.GetComponent<Player>().health += 2;
+						c.gameObject.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum)*-1);
 							revolverMove = false;
 							markedForDeletion = true;
 						}
@@ -169,7 +169,7 @@ public class Water : Spell {
                     }
                     if (c.gameObject.tag == "Obstacle")
                     {
-                        //c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
+                        //c.gameObject.GetComponent<Obstacle>()takeDamage(damageCalc (damageTier, hitNum));
                         markedForDeletion = true;
                     }
 					else if(c.gameObject.tag == "Player" && PlayerNum == 2)
@@ -197,22 +197,22 @@ public class Water : Spell {
                         if (c.gameObject.GetComponent<Enemy>().stat == "normal")
                             c.gameObject.GetComponent<Enemy>().Status("break");
                         markedForDeletion = true;
-                        //c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
+                        //c.gameObject.GetComponent<Enemy>().takeDamage(damageCalc (damageTier, hitNum));
                     }
                     if (c.gameObject.tag == "Obstacle")
                     {
                         markedForDeletion = true;
-                        //c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
+                        c.gameObject.GetComponent<Obstacle>().takeDamage(damageCalc (damageTier, hitNum));
                     }
 					else if(c.gameObject.tag == "Player" && PlayerNum == 2)
 					{
-						c.GetComponent<Player>().health -= damageCalc(damageTier,hitNum);
+						c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
 						markedForDeletion = true;
 					
 					}
 					else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
 					{
-						c.GetComponent<Player>().health -= damageCalc(damageTier,hitNum);
+						c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
 						markedForDeletion = true;
 					}
                 }
@@ -237,7 +237,7 @@ public class Water : Spell {
                     }
                     if (c.gameObject.tag == "Obstacle")
                     {
-                        //c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
+                        //c.gameObject.GetComponent<Obstacle>()takeDamage(damageCalc (damageTier, hitNum));
                     }
 					else if(c.gameObject.tag == "Player" && PlayerNum == 2)
 				{

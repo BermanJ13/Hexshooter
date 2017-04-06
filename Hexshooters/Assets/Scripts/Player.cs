@@ -21,6 +21,8 @@ public class Player : MonoBehaviour {
 	public int armorWeakness;
 	public StatusManager statMngr;
 	protected string atkbutton;
+	public string stat;
+	bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
 
 	// Use this for initialization
 	void Start () 
@@ -336,5 +338,16 @@ public class Player : MonoBehaviour {
 		{
 			currentBullet.text = "";
 		}
+	}
+	public void takeDamage(int damage) //created for "break" status
+	{
+		int multipliers = 1;
+		if (this.stat == "break")
+		{
+			multipliers *= 2;
+			stat = "normal";
+			breakImmune = true;
+		}
+		this.health -= damage* multipliers;
 	}
 }

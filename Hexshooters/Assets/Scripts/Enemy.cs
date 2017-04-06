@@ -151,16 +151,14 @@ public class Enemy : MonoBehaviour {
 
     public void takeDamage(int damage) //created for "break" status
     {
-        if (this.stat != "break")
+		int multipliers = 1;
+        if (this.stat == "break")
         {
-            this.health -= damage;
-        }
-        else
-        {
-            this.health -= (damage * 2);
+			multipliers *= 2;
             stat = "normal";
             breakImmune = true;
         }
+		this.health -= damage* multipliers;
     }
 
 	void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)

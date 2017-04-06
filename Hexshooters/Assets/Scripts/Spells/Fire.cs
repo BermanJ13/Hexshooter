@@ -95,23 +95,23 @@ public class Fire : Spell {
 			{
 				if(c.gameObject.tag == "Enemy")
 				{
-					c.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
+					c.GetComponent<Enemy>().takeDamage(damageCalc (damageTier, hitNum));
 					markedForDeletion = true;
 				}
 				else if(c.gameObject.tag == "Obstacle")
 				{
-					c.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
+					c.GetComponent<Obstacle>().takeDamage(damageCalc (damageTier, hitNum));
 					markedForDeletion = true;
 				}
 				else if(c.gameObject.tag == "Player" && PlayerNum == 2)
 				{
-					c.GetComponent<Player>().health -= damageCalc(damageTier,hitNum);
+					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
 					markedForDeletion = true;
 
 				}
 				else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
 				{
-					c.GetComponent<Player>().health -= damageCalc(damageTier,hitNum);
+					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
 					markedForDeletion = true;
 				}
 			}
@@ -123,25 +123,25 @@ public class Fire : Spell {
 				{
 					if(c.gameObject.tag == "Enemy")
 					{
-						c.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
+						c.GetComponent<Enemy>().takeDamage(damageCalc (damageTier, hitNum));
 						c.GetComponent<Enemy>().Status("burn");
 						markedForDeletion = true;
 					}
 					else if(c.gameObject.tag == "Obstacle")
 					{
-						c.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
+						c.GetComponent<Obstacle>().takeDamage(damageCalc (damageTier, hitNum));
 						markedForDeletion = true;
 					}
 					else if(c.gameObject.tag == "Player" && PlayerNum == 2)
 					{
-						c.GetComponent<Player>().health -= damageCalc(damageTier,hitNum);
+						c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
 						//c.GetComponent<Player>().Status("burn");
 						markedForDeletion = true;
 
 					}
 					else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
 					{
-						c.GetComponent<Player>().health -= damageCalc(damageTier,hitNum);
+						c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
 						//c.GetComponent<Player>().Status("burn");
 						markedForDeletion = true;
 					}
@@ -149,25 +149,25 @@ public class Fire : Spell {
 				
 				break;
 		case 3:
-			colliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x + 1, transform.position.y), 1.25f);
+			colliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x, transform.position.y), 1.25f);
 			foreach (Collider2D c in colliders)
 			{
 				if (c.gameObject.tag == "Enemy")
 				{
-					c.GetComponent<Enemy> ().health -= damageCalc (damageTier, damage);
+					c.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
 					markedForDeletion = true;
 				} else if (c.gameObject.tag == "Obstacle")
 				{
-					c.GetComponent<Obstacle> ().health -= damageCalc (damageTier, damage);
+					c.GetComponent<Obstacle> ().takeDamage(damageCalc (damageTier, hitNum));
 					markedForDeletion = true;
 				} else if (c.gameObject.tag == "Player" && PlayerNum == 2)
 				{
-					c.GetComponent<Player> ().health -= damageCalc (damageTier, damage);
+					c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
 					markedForDeletion = true;
 				
 				} else if (c.gameObject.tag == "Player2" && PlayerNum == 1)
 				{
-					c.GetComponent<Player> ().health -= damageCalc (damageTier, damage);
+					c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
 					markedForDeletion = true;
 				}
 			}
