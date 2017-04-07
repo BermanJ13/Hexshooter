@@ -44,6 +44,8 @@ public class Obstacle : MonoBehaviour {
 	}
 	public void move()
 	{
+		Debug.Log ("Here");
+		Debug.Log (direction);
 		Vector2 target =  new Vector3(transform.position.x +direction.x,transform.position.y +direction.y, 0.0f);
 		Vector2 position = Vector2.Lerp (transform.position, target, (Time.deltaTime*8));
 		transform.position = position;
@@ -58,6 +60,7 @@ public class Obstacle : MonoBehaviour {
 			//if collides with another obstacle, destroys both
 			if (d.gameObject.tag == "Obstacle") 
 			{
+				Debug.Log (d.GetComponent<Obstacle> ().gameObject != this.gameObject);
 				if (d.GetComponent<Obstacle> ().gameObject != this.gameObject) 
 				{
 					d.GetComponent<Obstacle> ().MarkedforDeletion = true;
@@ -75,48 +78,29 @@ public class Obstacle : MonoBehaviour {
 				}
 				//move  the piece somewhere, but where?
 			} 
-			else if (d.gameObject.tag == "Player 2") 
+			else if (d.gameObject.tag == "Player2") 
 			{
-				//take 15 dmg
-				if (p.PlayerNum == 1) 
-				{
-					if (p.transform.position.x != 0)
+				d.GetComponent<Player> ().takeDamage (damage); //player takes dmg 
+
+					if (d.transform.position.x != 9)
 					{
-						p.transform.position = new Vector3 (p.transform.position.x - 1, p.transform.position.y, p.transform.position.z);
+						d.transform.position += new Vector3 (1, 0, 0);
 					}
-				}
-				d.GetComponent<Player> ().takeDamage (damage); //player takes dmg
+				MarkedforDeletion = true;
+
 			} 
-			else if(d.gameObject.tag == "Player1")
+			else if(d.gameObject.tag == "Player")
 			{
-					if (d.GetComponent<Player> ().transform.position.x != 9) 
-					{
-						p.transform.position = new Vector3 (p.transform.position.x + 1, p.transform.position.y, p.transform.position.z);
-					}
 				d.GetComponent<Player> ().takeDamage (damage); //player takes dmg
+
+
+					if (d.GetComponent<Player> ().transform.position.x != 0) 
+					{
+						d.transform.position += new Vector3(-1f,0f,0f); 
+					}
+				MarkedforDeletion = true;
 			}
 						
-				
-				
-				//move  the piece somewhere, but where?
-		
-			/*
-				//else would be player 1
-				else {
-				if (p.PlayerNum == 1) {
-					if (p.transform.position.x != 0) {
-						p.transform.position = new Vector3 (p.transform.position.x - 1, p.transform.position.y, p.transform.position.z);
-					}
-				} else {
-					if (d.GetComponent<Player> ().transform.position.x != 9) {
-						p.transform.position = new Vector3 (p.transform.position.x + 1, p.transform.position.y, p.transform.position.z);
-					}
-				}
-				//take 15 dmg
-				d.GetComponent<Player> ().takeDamage (damage); //player takes dmg
-				//move  the piece somewhere, but where?
-			}
-			*/
 		}
 	}
 }

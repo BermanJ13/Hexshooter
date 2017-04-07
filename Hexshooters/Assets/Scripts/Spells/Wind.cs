@@ -6,9 +6,11 @@ public class Wind : Spell {
 
     // Use this for initialization
 	private int spellTimer; //spell timer for rifle spell
+	public List<Spell> riflePowered;
     new void Start()
     {
         base.Start();
+		riflePowered = new List<Spell>();
 		spellTimer = 500;
 		setDescription (1);
     }
@@ -83,12 +85,29 @@ public class Wind : Spell {
 				//if attack an obstacle
 				else if (c.gameObject.tag == "Obstacle") {
 					//makes a variable depending if bullet is coming from the left or right side
-					if (PlayerNum == 1) {
+					if (PlayerNum == 1)
+					{
+						
 						c.GetComponent<Obstacle> ().direction = new Vector2(direction.x,direction.y);
-						c.transform.position += new Vector3 (1f, 0f, 0.0f);
-					} else {
+						//boundary
+						if (c.transform.position.x != 9) {
+							c.transform.position += new Vector3 (1f, 0f, 0f);
+						} 
+						else
+						{
+							c.transform.position += new Vector3 (0f, 0f, 0f); //moves the enemy up a penel
+						}
+
+					} else 
+					{
 						c.GetComponent<Obstacle> ().direction = direction * -1;
-						c.transform.position += new Vector3 (-1f, 0f, 0.0f);
+						if (c.transform.position.x != 9) {
+							c.transform.position += new Vector3 (-1f, 0f, 0f);
+						} 
+						else
+						{
+							c.transform.position += new Vector3 (0f, 0f, 0f); //moves the enemy up a penel
+						}
 					}
 					markedForDeletion = true; //used to delete bullet
 
@@ -97,7 +116,14 @@ public class Wind : Spell {
 				else if (c.gameObject.tag == "Player" && PlayerNum == 2) 
 				{
 					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum)); //player 1 takes dmg
-					c.transform.position += new Vector3 (0f, 1f, 0f); //moves player 1 up a penel
+					//checking boundary and then moving position accordingly 
+					if (c.transform.position.y != 4) {
+						c.transform.position += new Vector3 (0, 1f, 0);
+					} 
+					else
+					{
+						c.transform.position += new Vector3 (0f, 0f, 0f); 
+					}
 					markedForDeletion = true; //used to delete bullet
 
 				}
@@ -105,7 +131,15 @@ public class Wind : Spell {
 				else if (c.gameObject.tag == "Player2" && PlayerNum == 1) 
 				{
 					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum));
-					c.transform.position += new Vector3 (0f, 1f, 0f); //moves the enemy up a penel
+					//checking boundary and then moving position accordingly
+					if (c.transform.position.y != 4) {
+						c.transform.position += new Vector3 (0, 1f, 0);
+					} 
+					else
+					{
+						c.transform.position += new Vector3 (0f, 0f, 0f); 
+					}
+
 					markedForDeletion = true; //used to delete bullet
 				}
 			}
@@ -114,6 +148,7 @@ public class Wind : Spell {
 
 		//Rifle //if spell hits the wind portal == doubles the speed of the spell
 		case 2:
+			//used to see if already touched the speed
 			// Hits the entire row ahead once it strikes and enemy object or enters the enemy side of the field.
 			if (PlayerNum == 1) 
 			{
@@ -127,15 +162,23 @@ public class Wind : Spell {
 					//checks colliders
 					foreach (Collider2D c in colliders) 
 					{
-						//if touching a spell
+						//if touching a spell that isn't itself
 						if (c.gameObject.tag == "Spell" && c.gameObject.name != "Wind(Clone)")
 						{
 							
 							Spell s = c.GetComponent<Spell> ();
+							//check if bullet is coming from same direction
 							if (s.direction == direction) 
 							{
+								//if the spell hasn't been updated before
+								if (!riflePowered.Contains (s)) 
+								{
+									//multiple speed by 2
 									s.speed *= 2; 
+									//adds to list of spells that is already powered up
+									riflePowered.Add (s);
 									Debug.Log ("post speed" + s.speed);
+								}
 
 							}
 						}
@@ -194,7 +237,19 @@ public class Wind : Spell {
 				//if attack an enemy
 				if (c.gameObject.tag == "Enemy") {
 					c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum)); //enemy takes dmg
-					c.transform.position += new Vector3 (2f, 0f, 0f); //moves the enemy up a penel //moves the enemy two panels back
+					//checking boundary and then moving accordingly
+					if (c.transform.position.x < 8) {
+						c.transform.position += new Vector3 (2f, 0f, 0f);
+					} 
+					else if(c.transform.position.x == 8)
+					{
+						c.transform.position += new Vector3 (1f, 0f, 0f);
+					}
+					else
+					{
+						c.transform.position += new Vector3 (0f, 0f, 0f); //moves the enemy up a penel
+					}
+
 					markedForDeletion = true; //used to delete bullet
 				}
 				//if hit an obstacle
@@ -202,10 +257,35 @@ public class Wind : Spell {
 					//makes a variable depending if bullet is coming from the left or right side
 					if (PlayerNum == 1) {
 						c.GetComponent<Obstacle> ().direction = direction *2;
-						c.transform.position += new Vector3 (2f, 0f, 0.0f);
-					} else {
+						//checking boundary and movings accordingly
+						if (c.transform.position.x < 8) {
+							c.transform.position += new Vector3 (2f, 0f, 0f);
+						} 
+						else if(c.transform.position.x == 8)
+						{
+							c.transform.position += new Vector3 (1f, 0f, 0f);
+						}
+						else
+						{
+							c.transform.position += new Vector3 (0f, 0f, 0f); //moves the enemy up a penel
+						}
+					} 
+					else 
+					{
 						c.GetComponent<Obstacle> ().direction = direction * -2;
-						c.transform.position += new Vector3 (-2f, 0f, 0.0f);
+						//checking boundaries and movings accordlingly
+						if (c.transform.position.x > 1) 
+						{
+							c.transform.position += new Vector3 (-2f, 0f, 0f);
+						} 
+						else if(c.transform.position.x == 1)
+						{
+							c.transform.position += new Vector3 (-1f, 0f, 0f);
+						}
+						else
+						{
+							c.transform.position += new Vector3 (0f, 0f, 0f); //moves the enemy up a penel
+						}
 					}
 					markedForDeletion = true; //used to delete bullet
 
@@ -214,7 +294,20 @@ public class Wind : Spell {
 				else if (c.gameObject.tag == "Player" && PlayerNum == 2) 
 				{
 					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum)); //player 1 takes dmg
-					c.transform.position += new Vector3 (-2f, 0f, 0f);  //moves the enemy two panels back
+
+					//checking boundaries and movings accordlingly
+					if (c.transform.position.x > 1) 
+					{
+						c.transform.position += new Vector3 (-2f, 0f, 0f);
+					} 
+					else if(c.transform.position.x == 1)
+					{
+						c.transform.position += new Vector3 (-1f, 0f, 0f);
+					}
+					else
+					{
+						c.transform.position += new Vector3 (0f, 0f, 0f); //moves the enemy up a penel
+					}
 					markedForDeletion = true; //used to delete bullet
 
 				}
@@ -222,7 +315,17 @@ public class Wind : Spell {
 				else if (c.gameObject.tag == "Player2" && PlayerNum == 1) 
 				{
 					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum));
-					c.transform.position += new Vector3 (2f, 0f, 0f);  //moves the enemy two panels back
+					if (c.transform.position.x < 8) {
+						c.transform.position += new Vector3 (2f, 0f, 0f);
+					} 
+					else if(c.transform.position.x == 8)
+					{
+						c.transform.position += new Vector3 (1f, 0f, 0f);
+					}
+					else
+					{
+						c.transform.position += new Vector3 (0f, 0f, 0f); //moves the enemy up a penel
+					}
 					markedForDeletion = true; //used to delete bullet
 				}
 			}
@@ -246,18 +349,25 @@ public class Wind : Spell {
 					//makes a variable depending if bullet is coming from the left or right side
 					if (PlayerNum == 1) {
 						c.GetComponent<Obstacle> ().direction = direction * -1;
-						c.transform.position += new Vector3 (-1f, 0f, 0.0f); 
+						//c.transform.position += new Vector3 (-1f, 0f, 0.0f); 
 						markedForDeletion = true; //used to delete bullet
 					} else {
 						c.GetComponent<Obstacle> ().direction = direction * 1;
-						c.transform.position += new Vector3 (1f, 0f, 0.0f); 
+						//c.transform.position += new Vector3 (1f, 0f, 0.0f); 
 					}
 				}
 				// if hit player 1
 				else if (c.gameObject.tag == "Player" && PlayerNum == 2) 
 				{
 					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum)); //player 1 takes dmg
-					c.transform.position += new Vector3 (1f, 0f, 0.0f); //moves the enemy two panels back
+					//checks boundary and moves accordingly
+					if (c.transform.position.x != 4) {
+						c.transform.position += new Vector3 (1f, 0f, 0f);
+					} 
+					else
+					{
+						c.transform.position += new Vector3 (0f, 0f, 0f); //moves the enemy up a penel
+					}
 					markedForDeletion = true; //used to delete bullet
 
 				}
@@ -265,7 +375,13 @@ public class Wind : Spell {
 				else if (c.gameObject.tag == "Player2" && PlayerNum == 1) 
 				{
 					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum));
-					c.transform.position += new Vector3 (-1f, 0f, 0.0f); //moves the enemy two panels back
+					if (c.transform.position.x != 5) {
+						c.transform.position += new Vector3 (-1f, 0f, 0f);
+					} 
+					else
+					{
+						c.transform.position += new Vector3 (0f, 0f, 0f); //moves the enemy up a penel
+					}
 					markedForDeletion = true; //used to delete bullet
 				}
 			}
