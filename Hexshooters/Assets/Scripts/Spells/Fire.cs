@@ -28,13 +28,13 @@ public class Fire : Spell {
 		//revolver
 		case 1:
 			target = new Vector2 (transform.position.x, transform.position.y) + direction;
-			position = Vector2.Lerp (transform.position, target, (Time.deltaTime*2));
+			position = Vector2.Lerp (transform.position, target, (Time.deltaTime*speed));
 			transform.position = position;
 			break;
 		//rifle
 		case 2:
 			target = new Vector2 (transform.position.x, transform.position.y) + direction;
-			position = Vector2.Lerp (transform.position, target, (Time.deltaTime*2));
+			position = Vector2.Lerp (transform.position, target, (Time.deltaTime*speed));
 			transform.position = position;
 			break;
 		//shotgun
@@ -88,7 +88,7 @@ public class Fire : Spell {
 		Collider2D[] colliders;
 		switch (weapon) 
 		{
-			//revolver
+			//revolver = fireball that does dmg
 			case 1:
 			colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
 			foreach (Collider2D c in colliders)
@@ -116,7 +116,7 @@ public class Fire : Spell {
 				}
 			}
 				break;
-			//rifle
+			//rifle = burn dmg + initial damage
 			case 2:
 				colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
 				foreach (Collider2D c in colliders)
@@ -147,7 +147,7 @@ public class Fire : Spell {
 					}
 				}
 				
-				break;
+				break;	//shotgun = explosion damage/ aoe damage
 		case 3:
 			colliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x, transform.position.y), 1.25f);
 			foreach (Collider2D c in colliders)
@@ -172,7 +172,15 @@ public class Fire : Spell {
 				}
 			}
 			break;
+		
+		//Gattling = flamethrower
+		case 4:
+			break;
 		}
+
+
+
+
 	}
 
 	public override void setDescription(int weapon)

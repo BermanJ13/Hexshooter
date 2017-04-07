@@ -270,7 +270,7 @@ public class Spell_Template : Spell {
 	else
 		target = new Vector2 (transform.position.x, transform.position.y) - direction;	
 		
-	position = Vector2.Lerp (transform.position, target, (Time.deltaTime*2));
+	position = Vector2.Lerp (transform.position, target, (Time.deltaTime*8));
 	transform.position = position;
 
 	-A specific Square in relation to the stating point ie. 3 squares ahead of where i fired it.-
