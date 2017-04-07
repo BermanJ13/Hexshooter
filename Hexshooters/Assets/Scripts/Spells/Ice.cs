@@ -179,97 +179,61 @@ public class Ice : Spell {
 					c.gameObject.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
 					markedForDeletion = true;
 
-				} else if (c.gameObject.tag == "Player2" && PlayerNum == 1)
-				{
-					StatusEffect freeze = new StatusEffect (8);
-					freeze.m_type = StatusType.Freeze;
-					c.gameObject.GetComponent<Player> ().statMngr.AddEffect (freeze);
-					c.gameObject.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
-					markedForDeletion = true;
-				}
-			}
-			break;
-		case 3: //Shield
-			colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
-			foreach (Collider2D c in colliders)
-			{
-				if(c.gameObject.tag == "Enemy")
-				{
-					
-					markedForDeletion = true;
-				}
-				else if(c.gameObject.tag == "Obstacle")
-				{
-					
-					markedForDeletion = true;
-				}
-				else if(c.gameObject.tag == "Player" && PlayerNum == 2)
-				{
-					
-					markedForDeletion = true;
+                    }
+                    else if (c.gameObject.tag == "Enemy")
+                    {
+                        StatusEffect freeze = new StatusEffect(5);
+                        freeze.m_type = StatusType.Freeze;
+                        c.gameObject.GetComponent<Enemy>().myStatus.AddEffect(freeze);
+                        //c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
+                    }
+                    if (c.gameObject.tag == "Obstacle")
+                    {
+                        //c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
+                    }
+                }
+                break;
+            case 3: //Shield
+                colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
+                foreach (Collider2D c in colliders)
+                {
+                    if (c.gameObject.tag == "Player")
+                    {
+                        StatusEffect shield = new StatusEffect(5);
+                        shield.m_type = StatusType.Shield;
+                        c.gameObject.GetComponent<Player>().myStatus.AddEffect(shield);
 
-				}
-				else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
-				{
-					
-					markedForDeletion = true;
-				}
-			}
-			break;
-		case 4: //Stacking Damage
-			colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
-			foreach (Collider2D c in colliders)
-			{
-				if(c.gameObject.tag == "Enemy")
-				{
-					
-					markedForDeletion = true;
-				}
-				else if(c.gameObject.tag == "Obstacle")
-				{
-					
-					markedForDeletion = true;
-				}
-				else if(c.gameObject.tag == "Player" && PlayerNum == 2)
-				{
-					
-					markedForDeletion = true;
+                        markedForDeletion = true;
+                        //c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
+                    }
+                    if (c.gameObject.tag == "Obstacle")
+                    {
+                        markedForDeletion = true;
+                        //c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
+                    }
+                }
+                break;
+            case 4: //Stacking Damage
+                colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x+2, transform.position.y));
+                foreach (Collider2D c in colliders)
+                {
+                    if (c.gameObject.tag == "Player")
+                    {
 
-				}
-				else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
-				{
-					
-					markedForDeletion = true;
-				}
-			}
-			break;
-		}
-	}
-	public override void setDescription(int weapon)
-		{
-		switch (weapon)
-		{
-		//Revolver
-		case 1:
-			description = "Slows enemy movement on a row.";
-			break;
-		//Rifle
-		case 2:
-			description = "Freeze the target.";
-			break;
-		//Shotgun
-		case 3:
-			description = "Creates a shield ahead of the player.";
-			break;
-		//Gatling
-		case 4:
-			description = "Stacking damage.";
-			break;
-		//Cane Gun
-		case 5:
-			description = "";
-			break;
-		}
-		}
-    
+                    }
+                    else if (c.gameObject.tag == "Enemy")
+                    {
+                        StatusEffect stack = new StatusEffect(12);
+                        stack.m_type = StatusType.Stacking;
+                        c.gameObject.GetComponent<Enemy>().myStatus.AddEffect(stack);
+                        //c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
+                    }
+                    if (c.gameObject.tag == "Obstacle")
+                    {
+                        //c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
+                    }
+                }
+                break;
+        }
+    }
 }

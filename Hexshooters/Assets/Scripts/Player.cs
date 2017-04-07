@@ -24,8 +24,8 @@ public class Player : MonoBehaviour {
 	public string stat;
 	bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
 
-	// Use this for initialization
-	void Start () 
+    // Use this for initialization
+    void Start () 
 	{
 		
 		if (GameObject.Find ("CharSelect") != null)
@@ -92,7 +92,9 @@ public class Player : MonoBehaviour {
 			field = GameObject.FindGameObjectWithTag ("FieldManager").GetComponent<FieldManager>();
 		reload = true;
         	health = 100;
-	}
+
+        this.myStatus = this.GetComponent<StatusManager>();
+    }
 	
 	// Update is called once per frame
 	public void playerUpdate () 
