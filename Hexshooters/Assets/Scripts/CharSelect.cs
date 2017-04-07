@@ -53,26 +53,26 @@ public class CharSelect : MonoBehaviour {
 				p2select.GetComponent<Text> ().text = "Shotgun";
 			}
 
-			if (Input.GetKeyDown (KeyCode.A))
+			if (Input.GetKeyDown (KeyCode.LeftArrow))
 			{
 				p2--;
 				if (p2 < 1)
 					p2 = 3;
 			}
-			if (Input.GetKeyDown (KeyCode.D))
+			if (Input.GetKeyDown (KeyCode.RightArrow))
 			{
 				p2++;
 				if (p2 > 3)
 					p2 = 1;
 			}
 
-			if (Input.GetKeyDown (KeyCode.LeftArrow))
+			if (Input.GetKeyDown (KeyCode.A))
 			{
 				p1--;
 				if (p1 < 1)
 					p1 = 3;
 			}
-			if (Input.GetKeyDown (KeyCode.RightArrow))
+			if (Input.GetKeyDown (KeyCode.D))
 			{
 				p1++;
 				if (p1 > 3)

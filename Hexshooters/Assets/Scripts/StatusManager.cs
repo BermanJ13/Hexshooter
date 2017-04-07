@@ -41,15 +41,15 @@ public class StatusManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        m_effects = new List<StatusEffect>();
     }
 
     // Update is called once per frame
     void Update()
-    {
+	{Debug.Log (m_effects.Count);
         for (int i = 0; i < m_effects.Count; --i)
         {
-            m_effects[i].m_timer -= Time.deltaTime;
+			m_effects[i].m_timer -= Time.deltaTime;
+			Debug.Log (m_effects[i].m_timer);
         }
         m_effects.RemoveAll(OutOfTime);
     }

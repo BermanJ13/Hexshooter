@@ -44,7 +44,7 @@ public class Chains : Spell {
 		{
 			if (c.gameObject.tag == "Enemy")
 			{
-				StatusEffect bound = new StatusEffect (10);
+				StatusEffect bound = new StatusEffect (3);
 				bound.m_type = StatusType.Bound;
 				c.gameObject.GetComponent<Enemy> ().statMngr.AddEffect (bound);
 				c.gameObject.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
