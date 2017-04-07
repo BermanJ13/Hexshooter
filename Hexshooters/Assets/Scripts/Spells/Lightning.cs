@@ -46,13 +46,13 @@ public class Lightning : Spell {
 			if (PlayerNum == 1)
 			{
 				target = new Vector2 (transform.position.x, transform.position.y) + direction;
-				position = Vector2.Lerp (transform.position, target, Time.deltaTime * 8);
+				position = Vector2.Lerp (transform.position, target, Time.deltaTime * speed);
 				transform.position = position;
 			} 
 			else
 			{
 				target = new Vector2 (transform.position.x, transform.position.y) - direction;
-				position = Vector2.Lerp (transform.position, target, Time.deltaTime * 8);
+				position = Vector2.Lerp (transform.position, target, Time.deltaTime * speed);
 				transform.position = position;
 			}
 			break;
@@ -76,7 +76,7 @@ public class Lightning : Spell {
 				}
 			}
 
-			position = Vector2.Lerp (transform.position,target, (Time.deltaTime*8));
+			position = Vector2.Lerp (transform.position,target, (Time.deltaTime*speed));
 			transform.position = position;
 			if (transform.position == new Vector3(target.x, target.y,0))
 			{

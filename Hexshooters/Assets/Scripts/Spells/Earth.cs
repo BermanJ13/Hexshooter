@@ -46,11 +46,13 @@ public class Earth : Spell {
 		case 1:
 			if (PlayerNum == 1)
 			{
+				
 				//HIts a square three spaces ahead
 				if (targetNeeded)
 				{
 					target = new Vector2 (transform.position.x + 3, transform.position.y);
 					targetNeeded = false;
+
 				}
 			}
 			else
@@ -62,7 +64,7 @@ public class Earth : Spell {
 					targetNeeded = false;
 				}
 			}
-				position = Vector2.Lerp (transform.position, target, (Time.deltaTime * 8));
+				position = Vector2.Lerp (transform.position, target, (Time.deltaTime * speed));
 				transform.position = position;
 
 				if (transform.position == new Vector3 (target.x, target.y, 0))
@@ -83,7 +85,7 @@ public class Earth : Spell {
 				target = new Vector2 (transform.position.x, transform.position.y) - direction;
 
 			}
-			position = Vector2.Lerp (transform.position, target, Time.deltaTime * 8);
+			position = Vector2.Lerp (transform.position, target, Time.deltaTime * speed);
 			transform.position = position;
 
 			Collider2D[] hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x, transform.position.y), 0.2f);
@@ -111,7 +113,7 @@ public class Earth : Spell {
 				target = new Vector2 (transform.position.x, transform.position.y) - direction;
 
 			}
-			position = Vector2.Lerp (transform.position, target, Time.deltaTime*8);
+			position = Vector2.Lerp (transform.position, target, Time.deltaTime*speed);
 			transform.position = position;
 			break;
 		//Shotgun
@@ -135,7 +137,7 @@ public class Earth : Spell {
 					targetNeeded = false;
 				}
 			}
-			position = Vector2.Lerp (transform.position, target, (Time.deltaTime * 8));
+			position = Vector2.Lerp (transform.position, target, (Time.deltaTime * speed));
 			transform.position = position;
 
 			if (transform.position == new Vector3(target.x, target.y,0))
@@ -160,6 +162,7 @@ public class Earth : Spell {
 				{
 					c.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
 					c.transform.position += new Vector3 (1, 0, 0);
+					damage = 0;
 					Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
 					markedForDeletion = true;
 					colided = true;
@@ -174,6 +177,7 @@ public class Earth : Spell {
 				{
 					c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
 					c.transform.position += new Vector3 (-1, 0, 0);
+					damage = 0;
 					Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
 					markedForDeletion = true;
 					colided = true;
@@ -182,6 +186,7 @@ public class Earth : Spell {
 				{
 					c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
 					c.transform.position += new Vector3 (1, 0, 0);
+					damage = 0;
 					Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
 					markedForDeletion = true;
 					colided = true;
@@ -190,6 +195,7 @@ public class Earth : Spell {
 			if (!colided && !created)
 			{
 				Debug.Log ("Here");
+				damage = 0;
 				Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
 				created = true;
 				markedForDeletion = true;
