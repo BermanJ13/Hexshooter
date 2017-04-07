@@ -33,7 +33,7 @@ public class Chains : Spell {
 		{
 			target = new Vector2 (transform.position.x, transform.position.y) - direction;
 		}
-		position = Vector2.Lerp(transform.position, target, Time.deltaTime*8);
+		position = Vector2.Lerp(transform.position, target, Time.deltaTime*speed);
 		transform.position = position;
 	}
 
