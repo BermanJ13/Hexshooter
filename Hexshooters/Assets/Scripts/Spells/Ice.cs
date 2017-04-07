@@ -22,33 +22,38 @@ public class Ice : Spell {
     public override void movement(int weapon)
     {
 		Vector2 target;
+        Vector2 position;
         switch (weapon)
         {
             //revolver
             case 1:
-				if(PlayerNum ==1)
-				{
-					target = new Vector2(transform.position.x, transform.position.y) + direction;
-				}
-				else
-				{				
-					target = new Vector2(transform.position.x, transform.position.y) - direction;
-				}
-				Vector2 position = Vector2.Lerp(transform.position, target, Time.deltaTime);
-            	transform.position = position;                
-				break;
+                if (PlayerNum == 1)
+                {
+                    target = new Vector2(transform.position.x, transform.position.y) + direction;
+                    
+                }
+                else
+                {
+                    target = new Vector2(transform.position.x, transform.position.y) - direction;
+                    
+                }
+                position = Vector2.Lerp(transform.position, target, Time.deltaTime * speed);
+                transform.position = position;
+                break;
 
             //rifle
-		case 2:
-				if(PlayerNum ==1)
-				{
-					target = new Vector2(transform.position.x , transform.position.y) + direction;
-				}
-				else
-				{				
-					target = new Vector2(transform.position.x , transform.position.y) - direction;
-				}
-                position = Vector2.Lerp(transform.position, target, Time.deltaTime);
+            case 2:
+                if (PlayerNum == 1)
+                {
+                    target = new Vector2(transform.position.x, transform.position.y) + direction;
+
+                }
+                else
+                {
+                    target = new Vector2(transform.position.x, transform.position.y) - direction;
+
+                }
+                position = Vector2.Lerp(transform.position, target, Time.deltaTime * speed);
                 transform.position = position;
                 break;
 
@@ -76,7 +81,7 @@ public class Ice : Spell {
 				{				
 					target = new Vector2(transform.position.x, transform.position.y) - direction;
 				}
-                position = Vector2.Lerp(transform.position, target, Time.deltaTime);
+                position = Vector2.Lerp(transform.position, target, Time.deltaTime*speed);
                 transform.position = position;
                 break;
 
