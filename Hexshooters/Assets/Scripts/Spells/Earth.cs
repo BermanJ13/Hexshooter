@@ -13,6 +13,7 @@ public class Earth : Spell {
 	Vector2 target;
 	Vector2 position;
 	Collider2D[] colliders;	
+	private bool created;
 	// Use this for initialization
 	new void Start () {
 		base.Start ();
@@ -20,6 +21,7 @@ public class Earth : Spell {
 		playerPanels = GameObject.FindGameObjectsWithTag ("playerZone");
 		targetNeeded = true;
 		inBounds = false;
+		created = false;
 	}
 
 	// Update is called once per frame
@@ -42,25 +44,45 @@ public class Earth : Spell {
 		{
 		//Revolver
 		case 1:
-			//HIts a square three spaces ahead
-			if (targetNeeded)
+			if (PlayerNum == 1)
 			{
-				target = new Vector2 (transform.position.x + 3, transform.position.y);
-				targetNeeded = false;
+				//HIts a square three spaces ahead
+				if (targetNeeded)
+				{
+					target = new Vector2 (transform.position.x + 3, transform.position.y);
+					targetNeeded = false;
+				}
 			}
-			position = Vector2.Lerp (transform.position, target, (Time.deltaTime * 8));
-			transform.position = position;
+			else
+			{
+				//HIts a square three spaces ahead
+				if (targetNeeded)
+				{
+					target = new Vector2 (transform.position.x - 3, transform.position.y);
+					targetNeeded = false;
+				}
+			}
+				position = Vector2.Lerp (transform.position, target, (Time.deltaTime * 8));
+				transform.position = position;
 
-			if (transform.position == new Vector3(target.x,target.y,0))
-			{
-				hitBehavior (1);
-			}
+				if (transform.position == new Vector3 (target.x, target.y, 0))
+				{
+					hitBehavior (1);
+				}
 			break;
 		//Rifle
 		case 2:
 			//Moves Forward indefinitely and has an effect if it goes out of bounds
 			inBounds = false;
-			target = new Vector2 (transform.position.x, transform.position.y) + direction;
+			if (PlayerNum == 1)
+			{
+				target = new Vector2 (transform.position.x, transform.position.y) + direction;
+			} 
+			else
+			{
+				target = new Vector2 (transform.position.x, transform.position.y) - direction;
+
+			}
 			position = Vector2.Lerp (transform.position, target, Time.deltaTime * 8);
 			transform.position = position;
 
@@ -80,17 +102,38 @@ public class Earth : Spell {
 		//Gatling
 		case 4:
 			// Moves FOrward Indefinitely
-			target = new Vector2 (transform.position.x, transform.position.y) + direction;
+			if (PlayerNum == 1)
+			{
+				target = new Vector2 (transform.position.x, transform.position.y) + direction;
+			} 
+			else
+			{
+				target = new Vector2 (transform.position.x, transform.position.y) - direction;
+
+			}
 			position = Vector2.Lerp (transform.position, target, Time.deltaTime*8);
 			transform.position = position;
 			break;
 		//Shotgun
 		case 3:
 			//Targets one space ahead
-			if (targetNeeded)
+			if (PlayerNum == 1)
 			{
-				target = new Vector2 (transform.position.x + 1, transform.position.y);
-				targetNeeded = false;
+				//HIts a square three spaces ahead
+				if (targetNeeded)
+				{
+					target = new Vector2 (transform.position.x + 1, transform.position.y);
+					targetNeeded = false;
+				}
+			}
+			else
+			{
+				//HIts a square three spaces ahead
+				if (targetNeeded)
+				{
+					target = new Vector2 (transform.position.x - 1, transform.position.y);
+					targetNeeded = false;
+				}
 			}
 			position = Vector2.Lerp (transform.position, target, (Time.deltaTime * 8));
 			transform.position = position;
@@ -109,40 +152,106 @@ public class Earth : Spell {
 		{
 		//Revolver
 		case 1:
-			//Makes an obstacle and pushes back an enemy on the target square
-			foreach (GameObject c in enemies)
+			bool colided = false;
+			colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
+			foreach (Collider2D c in colliders)
 			{
-				if (c.GetComponent<Collider2D> ().IsTouching (GetComponent<Collider2D> ()))
+				if (c.gameObject.tag == "Enemy")
 				{
-					c.GetComponent<Enemy> ().health -= damageCalc (damageTier, hitNum);
-					c.transform.position += new Vector3 (1, 0,0);
-					Instantiate(Resources.Load("TestObstacle"),  transform.position, Quaternion.identity);
+					c.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.transform.position += new Vector3 (1, 0, 0);
+					Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
 					markedForDeletion = true;
+					colided = true;
+				} else if (c.gameObject.tag == "Obstacle")
+				{
+					c.GetComponent<Obstacle> ().takeDamage(damageCalc (damageTier, hitNum));
+					//c.transform.position += new Vector3 (1, 0, 0);
+					//Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
+					markedForDeletion = true;
+					colided = true;
+				} else if (c.gameObject.tag == "Player" && PlayerNum == 2)
+				{
+					c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.transform.position += new Vector3 (-1, 0, 0);
+					Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
+					markedForDeletion = true;
+					colided = true;
+
+				} else if (c.gameObject.tag == "Player2" && PlayerNum == 1)
+				{
+					c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.transform.position += new Vector3 (1, 0, 0);
+					Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
+					markedForDeletion = true;
+					colided = true;
 				}
 			}
-			Instantiate(Resources.Load("TestObstacle"),  transform.position, Quaternion.identity);
-			markedForDeletion = true;
+			if (!colided && !created)
+			{
+				Debug.Log ("Here");
+				Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
+				created = true;
+				markedForDeletion = true;
+			}
 			break;
 		//Rifle
 		case 2:
 			//Hits the whole back row if it goes out of bounds
-				foreach (GameObject c in enemies)
+			colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
+			foreach (Collider2D c in colliders)
+			{
+				if(c.gameObject.tag == "Enemy")
 				{
-					if (c.GetComponent<Collider2D> ().IsTouching (GetComponent<Collider2D> ()))
-					{
-						c.GetComponent<Enemy> ().health -= damageCalc (damageTier, hitNum);
-						markedForDeletion = true;
-					}
+					c.GetComponent<Enemy>().takeDamage(damageCalc (damageTier, hitNum));
+					markedForDeletion = true;
 				}
+				else if(c.gameObject.tag == "Obstacle")
+				{
+					c.GetComponent<Obstacle>().takeDamage(damageCalc (damageTier, hitNum));
+					markedForDeletion = true;
+				}
+				else if(c.gameObject.tag == "Player" && PlayerNum == 2)
+				{
+					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+					markedForDeletion = true;
+
+				}
+				else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
+				{
+					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+					markedForDeletion = true;
+				}
+			}
+
 			if(!inBounds)
 			{
-				colliders = Physics2D.OverlapAreaAll (new Vector2 (9, -1), new Vector2 (9, 6));
-				foreach(Collider2D c in colliders)
+				if(PlayerNum == 1)
+					colliders = Physics2D.OverlapAreaAll (new Vector2 (9, -1), new Vector2 (9, 6));
+				else
+					colliders = Physics2D.OverlapAreaAll (new Vector2 (0, -1), new Vector2 (0, 6));
+
+				foreach (Collider2D c in colliders)
 				{
 					if(c.gameObject.tag == "Enemy")
 					{
-						//Debug.Log (damageCalc (damageTier, hitNum));
-						c.gameObject.GetComponent<Enemy> ().health -= damageCalc (damageTier, hitNum);
+						c.GetComponent<Enemy>().takeDamage(damageCalc (damageTier, hitNum));
+						markedForDeletion = true;
+					}
+					else if(c.gameObject.tag == "Obstacle")
+					{
+						c.GetComponent<Obstacle>().takeDamage(damageCalc (damageTier, hitNum));
+						markedForDeletion = true;
+					}
+					else if(c.gameObject.tag == "Player" && PlayerNum == 2)
+					{
+						c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+						markedForDeletion = true;
+
+					}
+					else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
+					{
+						c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
 						markedForDeletion = true;
 					}
 				}
@@ -152,34 +261,95 @@ public class Earth : Spell {
 		//Shotgun
 		case 3:
 			//HIts the whole row ahead of the player
-			colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x + 10, transform.position.y));
-			foreach (Collider2D c in colliders) 
+			if(PlayerNum == 1)
+				colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x + 10, transform.position.y));
+			else
+				colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x - 10, transform.position.y));
+			foreach (Collider2D c in colliders)
 			{
-				if (c.gameObject.tag == "Enemy" ) 
+				if(c.gameObject.tag == "Enemy")
 				{
-					c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
+					c.GetComponent<Enemy>().takeDamage(damageCalc (damageTier, hitNum));
+					markedForDeletion = true;
 				}
-				if (c.gameObject.tag == "Obstacle" ) 
+				else if(c.gameObject.tag == "Obstacle")
 				{
-					//c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
+					c.GetComponent<Obstacle>().takeDamage(damageCalc (damageTier, hitNum));
+					markedForDeletion = true;
 				}
-				markedForDeletion = true;
+				else if(c.gameObject.tag == "Player" && PlayerNum == 2)
+				{
+					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+					markedForDeletion = true;
+
+				}
+				else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
+				{
+					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+					markedForDeletion = true;
+				}
 			}
 			break;
 		//Gatling
 		case 4:
-			//Stacking damage with each hit.
-			foreach(GameObject c in enemies)
+			colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
+			foreach (Collider2D c in colliders)
 			{
-				if(c.GetComponent<Collider2D>().IsTouching(GetComponent<Collider2D>()))
+				if (c.gameObject.tag == "Enemy")
 				{
-					c.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
-					c.GetComponent<Enemy>().health -= c.GetComponent<Enemy>().armorWeakness;
+					c.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Enemy> ().health -= c.GetComponent<Enemy> ().armorWeakness;
 					c.GetComponent<Enemy> ().armorWeakness++;
 					markedForDeletion = true;
-				}
+				} else if (c.gameObject.tag == "Obstacle")
+				{
+					c.GetComponent<Obstacle> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Obstacle> ().health -= c.GetComponent<Enemy> ().armorWeakness;
+					c.GetComponent<Obstacle> ().armorWeakness++;
+					markedForDeletion = true;
+				} else if (c.gameObject.tag == "Player" && PlayerNum == 2)
+				{
+					c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player> ().health -= c.GetComponent<Enemy> ().armorWeakness;
+					c.GetComponent<Player> ().armorWeakness++;
+					markedForDeletion = true;
 
+				} else if (c.gameObject.tag == "Player2" && PlayerNum == 1)
+				{
+					c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player> ().health -= c.GetComponent<Enemy> ().armorWeakness;
+					c.GetComponent<Player> ().armorWeakness++;
+					markedForDeletion = true;
+				}
 			}
+			break;
+		}
+	}
+
+	public override void setDescription(int weapon)
+	{
+		
+		switch (weapon)
+		{
+		//Revolver
+		case 1:
+			description = "Make a shield 3 panels ahead.";
+			break;
+			//Rifle
+		case 2:
+			description = "Shoot past the last row, to strike the entire back row.";
+			break;
+			//Shotgun
+		case 3:
+			description = "Creates a fissure striking the row ahead and inflicts stun.";
+			break;
+			//Gatling
+		case 4:
+			description = "Stacking Damage";
+			break;
+			//Cane Gun
+		case 5:
+			description = "";
 			break;
 		}
 	}

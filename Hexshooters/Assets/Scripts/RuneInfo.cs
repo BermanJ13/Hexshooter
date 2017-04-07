@@ -5,6 +5,7 @@ using UnityEngine;
 public class RuneInfo : MonoBehaviour {
 	public string runeName;
 	public string runeDamage;
+	public string runeDesc;
 	public Sprite runeImage;
 	// Use this for initialization
 	void Start () {

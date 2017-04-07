@@ -13,57 +13,38 @@ public class FieldManager : MonoBehaviour
     private StreamReader reader;
     private List<string> rows = new List<string>();
 
-	public Transform playerPanel;
-	public Transform enemyPanel;
-	//public Transform player;
-	public Transform Testdummy;
-	public Spell[] spells;
-	public Enemy[] enemies;
-	public Player player;
-	public bool pause = false;
+	protected Transform playerPanel;
+	protected Transform enemyPanel;
+	protected Transform Testdummy;
+	protected Spell[] spells;
+	protected Enemy[] enemies;
+	protected Obstacle[] obstacles;
+	protected GameObject[] bulletIndicators;
+	protected Player player;
+	protected bool pause = false;
 	public List<Object> Handful = new List<Object>();
-	public List<Object> Temp = new List<Object>();
-	public List<int> TempNum = new List<int>();
-	private static System.Random rand = new System.Random();  
-	static GameObject[] pauseObjects;
-	static GameObject[] pauseUI;
-	SpellHolder spellHold;
-	public List<GameObject> spellSlots = new List<GameObject>();
+	protected List<Object> Temp = new List<Object>();
+	protected List<int> TempNum = new List<int>();
+	protected  static System.Random rand = new System.Random();  
+	protected static GameObject[] pauseObjects;
+	protected static GameObject[] pauseUI;
+	protected SpellHolder spellHold;
+	protected List<GameObject> spellSlots = new List<GameObject>();
 	public Sprite defaultSlot;
-	public GameObject runeDisplay;
-	public Text runeDamage;
-	public Text runeName;
-	public GameObject can;
+	protected GameObject runeDisplay;
+	protected Text runeDamage;
+	protected Text runeName;
+	protected Text runeDesc;
+	protected GameObject can;
+	protected GameObject p1Gun;
+	public EventSystem ES_P1;
+	protected GameObject[] battleObjects;
 
 	// Use this for initialization
 	void Start () 
 	{
-		can = GameObject.Find ("Canvas");
-		spellHold = GameObject.Find ("SpellHolder").GetComponent<SpellHolder>();
-		pauseObjects = new GameObject[11];
-		pauseObjects[0] = GameObject.Find("Spell 0");
-		pauseObjects[1] = GameObject.Find("Spell 1");
-		pauseObjects[2] = GameObject.Find("Spell 2");
-		pauseObjects[3] = GameObject.Find("Spell 3");
-		pauseObjects[4] = GameObject.Find("Spell 4");
-		pauseObjects[5] = GameObject.Find("Spell 5");
-		pauseObjects[6] = GameObject.Find("Spell 6");
-		pauseObjects[7] = GameObject.Find("Spell 7");
-		pauseObjects[8] = GameObject.Find("Spell 8");
-		pauseObjects[9] = GameObject.Find("Spell 9");
-		pauseObjects[10] = GameObject.Find("BattleButton");
-		pauseUI = GameObject.FindGameObjectsWithTag ("PauseUI");
-
-		spellSlots.Add (GameObject.Find("SpellSlot1"));
-		spellSlots.Add (GameObject.Find("SpellSlot2"));
-		spellSlots.Add (GameObject.Find("SpellSlot3"));
-		spellSlots.Add (GameObject.Find("SpellSlot4"));
-		spellSlots.Add (GameObject.Find("SpellSlot5"));
-		spellSlots.Add (GameObject.Find("SpellSlot6"));
-
-		runeDisplay = GameObject.Find ("RuneHolder");
-		runeDamage = GameObject.Find ("RuneDamage").GetComponent<Text>();
-		runeName = GameObject.Find ("Rune Name").GetComponent<Text>();
+		ES_P1 = EventSystem.current;
+		getUI ();
 
 		//Debug.Log (pauseObjects[0]);
 		//Hnadful= Deck
@@ -77,12 +58,12 @@ public class FieldManager : MonoBehaviour
 		}
 		Shuffle(Handful);
         //creates a dictionary out of the list of objects made in the inspector
-        foreach (Transform trns in gamePieces)
-        {
-            things.Add(trns.name, trns);
-        }
-        things.Add("p", gamePieces[0]);
-        things.Add("e", gamePieces[1]);
+        //foreach (Transform trns in gamePieces)
+        //{
+        //    things.Add(trns.name, trns);
+        //}
+        //things.Add("p", gamePieces[0]);
+        //things.Add("e", gamePieces[1]);
 
 		//Creates the Grid
 		for (int y = 0; y < 5; y++) 
@@ -112,6 +93,7 @@ public class FieldManager : MonoBehaviour
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 		updateEnemyList ();
 		updateSpellList ();
+		updateObstacleList ();
 		//showHealth ();
 	}
 	
@@ -119,13 +101,15 @@ public class FieldManager : MonoBehaviour
 	void Update () 
 	{
 		//updateHealth ();
-		if(EventSystem.current.currentSelectedGameObject.tag == "SpellHolder")
+		if(ES_P1.currentSelectedGameObject.tag == "SpellHolder")
 		{
-			runeName.text = EventSystem.current.currentSelectedGameObject.GetComponent<RuneInfo>().runeName;
-			runeDamage.text = EventSystem.current.currentSelectedGameObject.GetComponent<RuneInfo>().runeDamage;
-			runeDisplay.GetComponent<Image>().sprite = EventSystem.current.currentSelectedGameObject.GetComponent<RuneInfo>().runeImage;
+			runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
+			runeDamage.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
+			runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
+			runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
+			runeDisplay.GetComponent<Image> ().color = new Color(0,0,0,255);
 		}
-		if (pause && Input.GetKeyDown (KeyCode.Escape))
+		if (pause && Input.GetButtonDown("Cancel_P1"))
 		{
 			if (Temp.Count > 0)
 			{
@@ -154,6 +138,8 @@ public class FieldManager : MonoBehaviour
 			}
 			updateSpellList ();
 			deleteSpells ();
+			updateObstacleList ();
+			deleteObstacles ();
 			if (player.reload && enemyReload)
 			{
 				showReloadScreen ();
@@ -161,7 +147,7 @@ public class FieldManager : MonoBehaviour
 		}
 	}
 
-	void deleteSpells()
+	public void deleteSpells()
 	{
 		if (spells != null) 
 		{
@@ -177,6 +163,25 @@ public class FieldManager : MonoBehaviour
 				}
 			}
 		}
+		updateSpellList ();
+	}
+	public void deleteObstacles()
+	{
+		if (obstacles != null) 
+		{
+			foreach (Obstacle obs in obstacles) 
+			{
+				////Debug.Log (spell.GetComponent<Spell> ().MarkedForDeletion);
+				if (obs != null)
+				{
+					if (obs.MarkedforDeletion)
+					{
+						Destroy (obs.gameObject);
+					}
+				}
+			}
+		}
+		updateObstacleList ();
 	}
 	public void updateEnemyList()
 	{
@@ -200,6 +205,17 @@ public class FieldManager : MonoBehaviour
 			count++;
 		}
 	}
+	public void updateObstacleList()
+	{
+		GameObject[] temp = GameObject.FindGameObjectsWithTag ("Obstacle");
+		obstacles = new Obstacle[temp.Length];
+		int count = 0;
+		foreach(GameObject t in temp)
+		{
+			obstacles [count] = t.GetComponent<Obstacle> ();
+			count++;
+		}
+	}
 	void showReloadScreen()
 	{
 		for (int i = 0; i < spellSlots.Count; i++)
@@ -219,10 +235,6 @@ public class FieldManager : MonoBehaviour
 				TempNum.RemoveAt (i);
 			}
 		}
-		foreach (int i  in TempNum)
-		{
-			Debug.Log (i);
-		}
 		for (int i = 0; i< pauseObjects.Length;i++)
 		{
 			if (i < Handful.Count)
@@ -233,6 +245,11 @@ public class FieldManager : MonoBehaviour
 			{
 				pauseObjects [pauseObjects.Length-1].SetActive (true);
 			}
+		}
+		for (int i = 0; i< battleObjects.Length;i++)
+		{
+			if(battleObjects[i] != null)
+				battleObjects [i].SetActive (false);
 		}
 		for (int i = 0; i< pauseUI.Length;i++)
 		{
@@ -257,6 +274,7 @@ public class FieldManager : MonoBehaviour
 				RuneInfo r = spellHold.children [i].gameObject.GetComponent<RuneInfo> ();
 				r.runeName = curSpell.GetComponent<Spell>().name;
 				r.runeImage = curSpell.GetComponent<Spell> ().runeImage;
+				r.runeDesc = curSpell.GetComponent<Spell> ().description;
 				r.runeDamage = curSpell.GetComponent<Spell>().damage.ToString();
 			}
 		}
@@ -271,6 +289,11 @@ public class FieldManager : MonoBehaviour
 		foreach (GameObject g in pauseObjects)
 		{
 			g.SetActive (false);
+		}
+		for (int i = 0; i< battleObjects.Length;i++)
+		{
+			if(battleObjects[i] != null)
+				battleObjects [i].SetActive (true);
 		}
 		for (int i = 0; i< pauseUI.Length;i++)
 		{
@@ -290,7 +313,7 @@ public class FieldManager : MonoBehaviour
 			Handful[i] = value;
 		}
 	}
-	void addBullet(int num)
+	protected void addBullet(int num)
 	{
 		
 		if (Temp.Count < 6)
@@ -303,24 +326,27 @@ public class FieldManager : MonoBehaviour
 			spellHold.deactivateSpell ("Spell " + num + "");
 			TempNum.Add (num);
 			selectButton ();
+			p1Gun.transform.Rotate (new Vector3 (0.0f,0.0f,60.0f));
 			if(Temp.Count == 6)
-				EventSystem.current.SetSelectedGameObject(GameObject.Find("BattleButton"));
+				ES_P1.SetSelectedGameObject(GameObject.Find("BattleButton"));
 			//Debug.Log (num);
 		} 
 		else
 		{
-			EventSystem.current.SetSelectedGameObject(GameObject.Find("BattleButton"));
+			ES_P1.SetSelectedGameObject(GameObject.Find("BattleButton"));
 		}
 	}
-	void removeBullet()
+	protected void removeBullet()
 	{
 		spellHold.activateSpell ("Spell " +TempNum[TempNum.Count-1]+ "");
 		spellSlots[Temp.Count-1].GetComponent<Image>().sprite = defaultSlot;
 		spellSlots[Temp.Count-1].GetComponent<Image>().color = Color.white;
 		Temp.RemoveAt (Temp.Count - 1);
 		TempNum.RemoveAt (TempNum.Count - 1);
+
+		p1Gun.transform.Rotate (new Vector3 (0.0f,0.0f,-60.0f));
 	}
-	void selectButton ()
+	protected void selectButton ()
 	{
 		bool found = false;
 		for (int i = 0; i < 9; i++)
@@ -333,30 +359,55 @@ public class FieldManager : MonoBehaviour
 			}
 			if(GameObject.Find("Spell " +i+ "") != null && !found && !used)
 			{
-				EventSystem.current.SetSelectedGameObject(GameObject.Find("Spell " +i+ ""));
+				ES_P1.SetSelectedGameObject(GameObject.Find("Spell " +i+ ""));
 				found = true;
 			}
 			else if(!found)
-				EventSystem.current.SetSelectedGameObject(GameObject.Find("BattleButton"));
+				ES_P1.SetSelectedGameObject(GameObject.Find("BattleButton"));
 		}
 	}
-	void showHealth()
+	public void getUI()
 	{
-		for (int i =0;i<enemies.Length;i++)
-		{
-			GameObject enemyText = new GameObject ("eText" + i);
-			Text ehealth = enemyText.AddComponent<Text> ();
-			ehealth.transform.position = new Vector3 (enemies[i].transform.position.x, enemies[i].transform.position.y + 10, enemies[i].transform.position.z);
-			ehealth.text = enemies[i].health.ToString();
-		}
+		can = GameObject.Find ("Canvas");
+		spellHold = GameObject.Find ("SpellHolder").GetComponent<SpellHolder>();
+		pauseObjects = new GameObject[11];
+		pauseObjects[0] = GameObject.Find("Spell 0");
+		pauseObjects[1] = GameObject.Find("Spell 1");
+		pauseObjects[2] = GameObject.Find("Spell 2");
+		pauseObjects[3] = GameObject.Find("Spell 3");
+		pauseObjects[4] = GameObject.Find("Spell 4");
+		pauseObjects[5] = GameObject.Find("Spell 5");
+		pauseObjects[6] = GameObject.Find("Spell 6");
+		pauseObjects[7] = GameObject.Find("Spell 7");
+		pauseObjects[8] = GameObject.Find("Spell 8");
+		pauseObjects[9] = GameObject.Find("Spell 9");
+		pauseObjects[10] = GameObject.Find("BattleButton");
+		pauseUI = GameObject.FindGameObjectsWithTag ("PauseUI");
+
+		spellSlots.Add (GameObject.Find("SpellSlot1"));
+		spellSlots.Add (GameObject.Find("SpellSlot2"));
+		spellSlots.Add (GameObject.Find("SpellSlot3"));
+		spellSlots.Add (GameObject.Find("SpellSlot4"));
+		spellSlots.Add (GameObject.Find("SpellSlot5"));
+		spellSlots.Add (GameObject.Find("SpellSlot6"));
+
+		bulletIndicators = new GameObject[8];
+		bulletIndicators [0] = GameObject.Find ("Player 1 Bottle 1");
+		bulletIndicators [1] = GameObject.Find ("Player 1 Bottle 2");
+		bulletIndicators [2] = GameObject.Find ("Player 1 Bottle 3");
+		bulletIndicators [3] = GameObject.Find ("Player 1 Bottle 4");
+		bulletIndicators [4] = GameObject.Find ("Player 1 Bottle 5");
+		bulletIndicators [5] = GameObject.Find ("Player 1 Bottle 6");
+		bulletIndicators [6] = GameObject.Find ("Player 1 Bottle 7");
+		bulletIndicators [7] = GameObject.Find ("Player 1 Bottle 8");
+
+		runeDisplay = GameObject.Find ("RuneHolder");
+		runeDamage = GameObject.Find ("RuneDamage").GetComponent<Text>();
+		runeName = GameObject.Find ("Rune Name").GetComponent<Text>();
+		runeDesc = GameObject.Find ("Rune Description").GetComponent<Text>();
+		battleObjects = GameObject.FindGameObjectsWithTag("battleUI");
+
+		p1Gun = GameObject.Find ("UI_GunCylinder");
 	}
-	void updateHealth()
-	{
-		for (int i =0; i<enemies.Length;i++)
-		{
-			GameObject enemyText = GameObject.Find("eText" + i);
-			Text ehealth = enemyText.GetComponent<Text> ();
-			ehealth.text = enemies[i].health.ToString();
-		}
-	}
+
 }

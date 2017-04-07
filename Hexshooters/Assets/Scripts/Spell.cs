@@ -7,8 +7,6 @@ public class Spell : MonoBehaviour {
 	public string[] attributes;
 	public string[] effects;
 	public int damage;
-	protected GameObject[] enemies; 
-	protected List<Collider2D> enemyColliders = new List<Collider2D> ();
 	public int damageTier;
 	public int weaponUsed;
 	public Vector2 direction;
@@ -17,10 +15,12 @@ public class Spell : MonoBehaviour {
 	public List<GameObject> hitEnemies= new List<GameObject> (); 
 	public Sprite bulletImage;
 	public Sprite runeImage;
+	public int PlayerNum;
 	public bool MarkedForDeletion
 	{
 		get { return markedForDeletion;}
 	}
+	public string description; 
 
 	// Use this for initialization
 	public void Start () 
@@ -28,27 +28,18 @@ public class Spell : MonoBehaviour {
 		markedForDeletion = false;
 		//we never init the list
 		//List<Collider2D> enemyColliders = new List<Collider2D> ();
-		enemies = GameObject.FindGameObjectsWithTag ("Enemy");
-
-		foreach(GameObject enemy in enemies)
-		{
-			enemyColliders.Add(enemy.GetComponent<Collider2D>());
-		}
 	}
-	
 	// Update is called once per frame
 	public void spellUpdate () 
 	{
 		this.movement (weaponUsed);
-		if(enemyColliders != null)
+		Collider2D[] colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
+		foreach (Collider2D c in colliders)
 		{
-			foreach(Collider2D enemy in enemyColliders)
+			if (c.gameObject.tag == "Player" || c.gameObject.tag == "Enemy" || c.gameObject.tag == "Obstacle"|| c.gameObject.tag == "Player2" )
 			{
-				if(GetComponent<Collider2D>().IsTouching(enemy))
-				{
-					hitBehavior(weaponUsed);
-				}
-			}
+				hitBehavior(weaponUsed);
+			} 
 		}
 	}
 
@@ -75,6 +66,11 @@ public class Spell : MonoBehaviour {
 
 	//Dictates bullet beavior on the player
 	public virtual void selfStatus()
+	{
+
+	}
+	//Dictates bullet beavior on the player
+	public virtual void setDescription(int weapon)
 	{
 
 	}
