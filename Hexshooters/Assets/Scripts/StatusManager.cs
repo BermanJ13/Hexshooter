@@ -12,7 +12,9 @@ public enum StatusType
     Freeze,
     Break,
     Slow,
-    Shield,
+	Shield,
+	Bound,
+	Disabled,
     Stacking
 }
 
@@ -34,20 +36,20 @@ public class StatusEffect
 public class StatusManager : MonoBehaviour
 {
 
-    public List<StatusEffect> m_effects;
+	public List<StatusEffect> m_effects = new List<StatusEffect>();
 
     // Use this for initialization
     void Start()
     {
-        m_effects = new List<StatusEffect>();
     }
 
     // Update is called once per frame
     void Update()
-    {
+	{Debug.Log (m_effects.Count);
         for (int i = 0; i < m_effects.Count; --i)
         {
-            m_effects[i].m_timer -= Time.deltaTime;
+			m_effects[i].m_timer -= Time.deltaTime;
+			Debug.Log (m_effects[i].m_timer);
         }
         m_effects.RemoveAll(OutOfTime);
     }
@@ -62,7 +64,19 @@ public class StatusManager : MonoBehaviour
         {
             case StatusType.Burn:
             case StatusType.Freeze:
-            case StatusType.Poison:
+		case StatusType.Poison:
+		case StatusType.Bound:
+			if (m_effects.Contains(effect))
+				effect.m_timer += 8;
+			else
+				m_effects.Add(effect);
+			break;
+		case StatusType.Disabled:
+			if (m_effects.Contains(effect))
+				effect.m_timer += 8;
+			else
+				m_effects.Add(effect);
+			break;
             case StatusType.Break:
                 if (m_effects.Contains(effect))
                     effect.m_timer = 0;

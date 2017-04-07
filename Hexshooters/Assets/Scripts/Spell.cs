@@ -9,6 +9,7 @@ public class Spell : MonoBehaviour {
 	public int damage;
 	public int damageTier;
 	public int weaponUsed;
+	public int speed; //time.deltatime multiplier which is typically 8
 	public Vector2 direction;
 	public int hitNum;
 	protected bool markedForDeletion;

@@ -9,13 +9,14 @@ public class Ice : Spell {
     // Use this for initialization
     new void Start () {
         base.Start();
-
+		setDescription (weaponUsed);
         spellTimer = 50;
 	}
 	
 	// Update is called once per frame
 	new void spellUpdate () {
         base.spellUpdate();
+
 	}
 
     public override void movement(int weapon)
@@ -41,11 +42,11 @@ public class Ice : Spell {
 		case 2:
 				if(PlayerNum ==1)
 				{
-					target = new Vector2(transform.position.x + 1, transform.position.y) + direction;
+					target = new Vector2(transform.position.x , transform.position.y) + direction;
 				}
 				else
 				{				
-					target = new Vector2(transform.position.x - 1, transform.position.y) - direction;
+					target = new Vector2(transform.position.x , transform.position.y) - direction;
 				}
                 position = Vector2.Lerp(transform.position, target, Time.deltaTime);
                 transform.position = position;
@@ -55,11 +56,11 @@ public class Ice : Spell {
             case 3:
 				if(PlayerNum ==1)
 				{
-					target = new Vector2(transform.position.x + 1, transform.position.y) + direction;
+					target = new Vector2(transform.position.x , transform.position.y) + direction;
 				}
 				else
 				{				
-					target = new Vector2(transform.position.x - 1, transform.position.y) - direction;
+					target = new Vector2(transform.position.x , transform.position.y) - direction;
 				}
                 position = Vector2.Lerp(transform.position, target, Time.deltaTime);
                 transform.position = position;
@@ -98,10 +99,15 @@ public class Ice : Spell {
 
     public override void hitBehavior(int weapon)
 	{
+		Collider2D[] colliders;
 		switch (weapon)
 		{
 		case 1: //freeze row
-			Collider2D[] colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x + 10, transform.position.y));
+			if(PlayerNum == 1)
+			 colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x + 10, transform.position.y));
+			else
+				 colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x - 10, transform.position.y));
+			
 			foreach (Collider2D c in colliders)
 			{
 				if(c.gameObject.tag == "Enemy")
@@ -214,7 +220,10 @@ public class Ice : Spell {
                 }
                 break;
             case 4: //Stacking Damage
-                colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x+2, transform.position.y));
+			if(PlayerNum == 1)
+				colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x + 2, transform.position.y));
+			else
+				colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x - 2, transform.position.y));
                 foreach (Collider2D c in colliders)
                 {
                     if (c.gameObject.tag == "Player")
@@ -236,4 +245,30 @@ public class Ice : Spell {
                 break;
         }
     }
+	public override void setDescription(int weapon)
+	{
+		switch (weapon)
+		{
+		//Revolver
+		case 1:
+			description = "Coats a Row in frost Slowing Enemy Movement";
+			break;
+			//Rifle
+		case 2:
+			description = "Freezes the opponent for an Instant.";
+			break;
+			//Shotgun
+		case 3:
+			description = "Sield the player who uses the spell.";
+			break;
+			//Gatling
+		case 4:
+			description = "Does damage to the opponent that gets mor epowerful with each hit.";
+			break;
+			//Cane Gun
+		case 5:
+			description = "";
+			break;
+		}
+	}
 }

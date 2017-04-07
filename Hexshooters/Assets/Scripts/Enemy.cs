@@ -150,45 +150,29 @@ public class Enemy : MonoBehaviour {
         }
 
     }
+	public void takeDamage(int damage) //created for "break" status
+	{
+		int multipliers = 1;
+		if (myStatus.IsAffected(StatusType.Break))
+		{
+			multipliers *= 2;
+		}
+		if (myStatus.IsAffected(StatusType.Shield))
+		{
+			multipliers /= 2;
+		}
+		if (myStatus.IsAffected(StatusType.Stacking))
+		{
+			this.health -= stackDmg;
+			stackDmg++;
+		}
+		else
+		{
+			stackDmg = 0;
+		}
 
-    public void takeDamage(int damage) //created for "break" status
-    {
-        
-        if (myStatus.Equals(StatusType.Break))
-        {
-            if (!myStatus.Equals(StatusType.Shield))
-            {
-                this.health -= damage;
-            }
-            else
-            {
-                this.health -= damage / 2;
-            }
-        }
-        else
-        {
-            if (!myStatus.Equals(StatusType.Shield))
-            {
-                this.health -= (damage * 2);
-              
-                breakImmune = true;
-            }
-            else
-            {
-                this.health -= damage;
-                breakImmune = true;
-            }
-        }
-        if (myStatus.Equals(StatusType.Stacking))
-        {
-            this.health -= stackDmg;
-            stackDmg++;
-        }
-        else
-        {
-            stackDmg = 0;
-        }
-    }
+		this.health -= damage* multipliers + stackDmg;
+	}
 
 	void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
 	{

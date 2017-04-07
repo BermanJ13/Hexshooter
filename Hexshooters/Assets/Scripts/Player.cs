@@ -23,10 +23,19 @@ public class Player : MonoBehaviour {
 	protected string atkbutton;
 	public string stat;
 	bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
+	int stackDmg;
 
     // Use this for initialization
     void Start () 
 	{
+		
+		if (GameObject.Find ("CharSelect") != null)
+		{
+			if (PlayerNum == 1)
+				weapon = GameObject.Find ("CharSelect").GetComponent<CharSelect> ().p1;
+			else
+				weapon = GameObject.Find("CharSelect").GetComponent<CharSelect> ().p2;
+		}
 		 statMngr = new StatusManager();
 		if (PlayerNum == 1)
 		{
@@ -85,20 +94,27 @@ public class Player : MonoBehaviour {
 		reload = true;
         	health = 100;
 
-        this.myStatus = this.GetComponent<StatusManager>();
     }
 	
 	// Update is called once per frame
 	public void playerUpdate () 
 	{
+		bool canMove = true;
 		hideEmpty ();
 		updateCurrentSpell ();
 		pHealth.text = health.ToString();
-		//Moves the character
-		movement();
+
+		if (!statMngr.IsAffected( StatusType.Bound))
+		{
+			movement ();
+		}
+
 		if (Input.GetButtonDown(atkbutton) && Chamber.Count >0) 
 		{
-			initiateSpell ();
+			if (!statMngr.IsAffected (StatusType.Disabled))
+			{
+				initiateSpell ();
+			}
 
 			// Transform earth = Instantiate(variable, position, Identity)
 			//Spell earth2 = earth.GetComponent<Spell>();
@@ -344,12 +360,24 @@ public class Player : MonoBehaviour {
 	public void takeDamage(int damage) //created for "break" status
 	{
 		int multipliers = 1;
-		if (this.stat == "break")
+		if (statMngr.IsAffected(StatusType.Break))
 		{
 			multipliers *= 2;
-			stat = "normal";
-			breakImmune = true;
 		}
-		this.health -= damage* multipliers;
+		if (statMngr.IsAffected(StatusType.Shield))
+		{
+			multipliers /= 2;
+		}
+		if (statMngr.IsAffected(StatusType.Stacking))
+		{
+			this.health -= stackDmg;
+			stackDmg++;
+		}
+		else
+		{
+			stackDmg = 0;
+		}
+
+		this.health -= damage* multipliers + stackDmg;
 	}
 }

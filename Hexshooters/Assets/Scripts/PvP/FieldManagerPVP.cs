@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class FieldManagerPVP : FieldManager
 {
@@ -33,26 +34,26 @@ public class FieldManagerPVP : FieldManager
 		//Hnadful= Deck
 		//Pass Deck In from Overworld Scene
 		//Placeholder Fils Deck with Lighnin and Eart Spells
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 5; i++)
 		{
-			Handful.Add(Resources.Load ("Lightning"));
+			Handful.Add(Resources.Load ("Chains"));
+			Handful.Add(Resources.Load ("Ice"));
 			Handful.Add(Resources.Load ("Water"));
-			if(i<5)
-				Handful.Add(Resources.Load ("Earth"));
-			else
-				Handful.Add(Resources.Load ("Lightning"));
+			Handful.Add(Resources.Load ("Earth"));
+			Handful.Add(Resources.Load ("Lightning"));
+			Handful.Add(Resources.Load ("Boomerang"));
 		}
 		Shuffle(Handful);
 
 		//Placeholder Fils Deck with Lighnin and Eart Spells
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 5; i++)
 		{
+			Handful_2.Add(Resources.Load ("Chains"));
+			Handful_2.Add(Resources.Load ("Ice"));
+			Handful_2.Add(Resources.Load ("Water"));
+			Handful_2.Add(Resources.Load ("Earth"));
 			Handful_2.Add(Resources.Load ("Lightning"));
-			Handful.Add(Resources.Load ("Water"));
-			if(i<5)
-				Handful.Add(Resources.Load ("Earth"));
-			else
-				Handful.Add(Resources.Load ("Lightning"));
+			Handful_2.Add(Resources.Load ("Boomerang"));
 		}
 		Shuffle(Handful_2);
 
@@ -62,6 +63,7 @@ public class FieldManagerPVP : FieldManager
 		player2 = GameObject.FindGameObjectWithTag ("Player2").GetComponent<Player> ();
 		updateEnemyList ();
 		updateSpellList ();
+		updateObstacleList ();
 	}
 	
 	// Update is called once per frame
@@ -109,6 +111,8 @@ public class FieldManagerPVP : FieldManager
 		}
 		if (pause)
 		{
+			if(Handful.Count == 0 && Handful_2.Count ==0)
+				SceneManager.LoadScene (3);
 			if (p1Ready && p2Ready)
 			{
 				showBattleScreen ();
@@ -131,6 +135,12 @@ public class FieldManagerPVP : FieldManager
 			{
 				if(spell != null)
 					spell.spellUpdate ();
+			}
+
+			foreach(Obstacle ob in obstacles)
+			{
+				if(ob != null)
+					ob.obstacleUpdate ();
 			}
 			foreach(Enemy enemy in enemies)
 			{

@@ -46,13 +46,13 @@ public class Lightning : Spell {
 			if (PlayerNum == 1)
 			{
 				target = new Vector2 (transform.position.x, transform.position.y) + direction;
-				position = Vector2.Lerp (transform.position, target, Time.deltaTime * 8);
+				position = Vector2.Lerp (transform.position, target, Time.deltaTime * speed);
 				transform.position = position;
 			} 
 			else
 			{
 				target = new Vector2 (transform.position.x, transform.position.y) - direction;
-				position = Vector2.Lerp (transform.position, target, Time.deltaTime * 8);
+				position = Vector2.Lerp (transform.position, target, Time.deltaTime * speed);
 				transform.position = position;
 			}
 			break;
@@ -76,7 +76,7 @@ public class Lightning : Spell {
 				}
 			}
 
-			position = Vector2.Lerp (transform.position,target, (Time.deltaTime*8));
+			position = Vector2.Lerp (transform.position,target, (Time.deltaTime*speed));
 			transform.position = position;
 			if (transform.position == new Vector3(target.x, target.y,0))
 			{
@@ -147,7 +147,9 @@ public class Lightning : Spell {
 				if(c.gameObject.tag == "Enemy")
 				{
 					c.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
-					c.GetComponent<Enemy> ().Status ("disabled");
+					StatusEffect disabled = new StatusEffect (5);
+					disabled.m_type = StatusType.Disabled;
+					c.gameObject.GetComponent<Enemy> ().statMngr.AddEffect (disabled);
 					markedForDeletion = true;
 				}
 				else if(c.gameObject.tag == "Obstacle")
@@ -158,12 +160,18 @@ public class Lightning : Spell {
 				else if(c.gameObject.tag == "Player" && PlayerNum == 2)
 				{
 					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+					StatusEffect disabled = new StatusEffect (5);
+					disabled.m_type = StatusType.Disabled;
+					c.gameObject.GetComponent<Enemy> ().statMngr.AddEffect (disabled);
 					markedForDeletion = true;
 
 				}
 				else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
 				{
 					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+					StatusEffect disabled = new StatusEffect (5);
+					disabled.m_type = StatusType.Disabled;
+					c.gameObject.GetComponent<Enemy> ().statMngr.AddEffect (disabled);
 					markedForDeletion = true;
 				}
 			}

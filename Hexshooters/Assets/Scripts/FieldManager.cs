@@ -52,7 +52,7 @@ public class FieldManager : MonoBehaviour
 		//Placeholder Fils Deck with Lighnin and Eart Spells
 		for (int i = 0; i < 10; i++)
 		{
-			Handful.Add(Resources.Load ("Lightning"));
+			Handful.Add(Resources.Load ("Wind"));
 			Handful.Add(Resources.Load ("Earth"));
 			Handful.Add(Resources.Load ("Water"));
 		}
@@ -135,6 +135,11 @@ public class FieldManager : MonoBehaviour
 						enemyReload = false;
 					}
 				}
+			}
+			foreach(Obstacle ob in obstacles)
+			{
+				if(ob != null)
+					ob.obstacleUpdate ();
 			}
 			updateSpellList ();
 			deleteSpells ();
