@@ -63,6 +63,7 @@ public class FieldManagerPVP : FieldManager
 		player2 = GameObject.FindGameObjectWithTag ("Player2").GetComponent<Player> ();
 		updateEnemyList ();
 		updateSpellList ();
+		updateObstacleList ();
 	}
 	
 	// Update is called once per frame
@@ -134,6 +135,12 @@ public class FieldManagerPVP : FieldManager
 			{
 				if(spell != null)
 					spell.spellUpdate ();
+			}
+
+			foreach(Obstacle ob in obstacles)
+			{
+				if(ob != null)
+					ob.obstacleUpdate ();
 			}
 			foreach(Enemy enemy in enemies)
 			{
