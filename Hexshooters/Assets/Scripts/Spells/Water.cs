@@ -138,6 +138,12 @@ public class Water : Spell {
 
                         if (c.gameObject.GetComponent<Enemy>().stat == "normal")
                             c.gameObject.GetComponent<Enemy>().Status("break");
+
+
+                        StatusEffect broken = new StatusEffect(10);
+                        broken.m_type = StatusType.Break;
+                        c.gameObject.GetComponent<Enemy>().myStatus.AddEffect(broken);
+                        
                         markedForDeletion = true;
                         //c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
                     }

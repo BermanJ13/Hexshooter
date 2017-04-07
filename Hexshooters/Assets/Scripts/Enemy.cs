@@ -26,6 +26,7 @@ public class Enemy : MonoBehaviour {
 	public string stat;
 	public bool reload;
 	bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
+    int stackDmg;
 
     public bool isMoving;
     private Direction directionMoving;
@@ -48,6 +49,7 @@ public class Enemy : MonoBehaviour {
 		armorWeakness = 0;
 		reload = true;
         breakImmune = false;
+        stackDmg = 0;
 
         isMoving = false;
         speed = 0.03f;
@@ -102,7 +104,7 @@ public class Enemy : MonoBehaviour {
 
         if (status == StatusType.Slow)
         {
-
+            
         }
 
         if (status == StatusType.Freeze)
@@ -151,15 +153,40 @@ public class Enemy : MonoBehaviour {
 
     public void takeDamage(int damage) //created for "break" status
     {
-        if (this.stat != "break")
+        
+        if (myStatus.Equals(StatusType.Break))
         {
-            this.health -= damage;
+            if (!myStatus.Equals(StatusType.Shield))
+            {
+                this.health -= damage;
+            }
+            else
+            {
+                this.health -= damage / 2;
+            }
         }
         else
         {
-            this.health -= (damage * 2);
-            stat = "normal";
-            breakImmune = true;
+            if (!myStatus.Equals(StatusType.Shield))
+            {
+                this.health -= (damage * 2);
+              
+                breakImmune = true;
+            }
+            else
+            {
+                this.health -= damage;
+                breakImmune = true;
+            }
+        }
+        if (myStatus.Equals(StatusType.Stacking))
+        {
+            this.health -= stackDmg;
+            stackDmg++;
+        }
+        else
+        {
+            stackDmg = 0;
         }
     }
 
@@ -173,12 +200,15 @@ public class Enemy : MonoBehaviour {
 
     public void enemyUpdate()
     {
+        
+        
+        
         // Handles movement.
         if (isMoving)
         {
             Vector3 movementVector = new Vector3(0, 0, 0);
             float movementMag = speed;
-
+        
             switch (directionMoving)
             {
                 case Direction.Down:
@@ -194,21 +224,25 @@ public class Enemy : MonoBehaviour {
                     movementVector = new Vector3(0, 1, 0);
                     break;
             }
-
+        
             if (myStatus.IsAffected(StatusType.Freeze))
             {
                 movementMag *= frozenModifier;
             }
-            if(movementMag > distanceToMove)
+            else if (myStatus.IsAffected(StatusType.Slow))
+            {
+                movementMag *= (frozenModifier / 2);
+            }
+            if (movementMag > distanceToMove)
             {
                 movementMag = distanceToMove;
             }
-
+        
             movementVector *= movementMag;
-
+        
             this.transform.position += movementVector;
             distanceToMove -= movementMag;
-            if(distanceToMove < 0.0001f)
+            if (distanceToMove < 0.0001f)
             {
                 distanceToMove = 0;
                 isMoving = false;
@@ -233,5 +267,6 @@ public class Enemy : MonoBehaviour {
                     break;
             }
         }
+        
     }
 }

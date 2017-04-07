@@ -10,14 +10,17 @@ public class Player : MonoBehaviour {
 	public List<Object> Chamber = new List<Object>();
 	public FieldManager field;
 	public bool reload;
+    public StatusManager myStatus;
 
-	// Use this for initialization
-	void Start () 
+    // Use this for initialization
+    void Start () 
 	{
 		field = GameObject.FindGameObjectWithTag ("FieldManager").GetComponent<FieldManager>();
 		reload = true;
         	health = 100;
-	}
+
+        this.myStatus = this.GetComponent<StatusManager>();
+    }
 	
 	// Update is called once per frame
 	public void playerUpdate () 

@@ -75,9 +75,9 @@ public class Ice : Spell {
                     }
                     else if (c.gameObject.tag == "Enemy")
                     {
-                        StatusEffect slow = new StatusEffect(5);
+                        StatusEffect slow = new StatusEffect(8);
                         slow.m_type = StatusType.Slow;
-                        c.gameObject.GetComponent<Enemy>().statMngr.AddEffect(slow);
+                        c.gameObject.GetComponent<Enemy>().myStatus.AddEffect(slow);
 
                         spellTimer--;
                         if (spellTimer <= 0)
@@ -104,9 +104,9 @@ public class Ice : Spell {
                     }
                     else if (c.gameObject.tag == "Enemy")
                     {
-                        StatusEffect freeze = new StatusEffect(8);
+                        StatusEffect freeze = new StatusEffect(5);
                         freeze.m_type = StatusType.Freeze;
-                        c.gameObject.GetComponent<Enemy>().statMngr.AddEffect(freeze);
+                        c.gameObject.GetComponent<Enemy>().myStatus.AddEffect(freeze);
                         //c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
                     }
                     if (c.gameObject.tag == "Obstacle")
@@ -119,9 +119,13 @@ public class Ice : Spell {
                 colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
                 foreach (Collider2D c in colliders)
                 {
-                    if (c.gameObject.tag == "Enemy")
+                    if (c.gameObject.tag == "Player")
                     {
-                       
+                        StatusEffect shield = new StatusEffect(5);
+                        shield.m_type = StatusType.Shield;
+                        c.gameObject.GetComponent<Player>().myStatus.AddEffect(shield);
+
+                        markedForDeletion = true;
                         //c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
                     }
                     if (c.gameObject.tag == "Obstacle")
@@ -132,7 +136,7 @@ public class Ice : Spell {
                 }
                 break;
             case 4: //Stacking Damage
-                colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
+                colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x+2, transform.position.y));
                 foreach (Collider2D c in colliders)
                 {
                     if (c.gameObject.tag == "Player")
@@ -141,7 +145,9 @@ public class Ice : Spell {
                     }
                     else if (c.gameObject.tag == "Enemy")
                     {
-
+                        StatusEffect stack = new StatusEffect(12);
+                        stack.m_type = StatusType.Stacking;
+                        c.gameObject.GetComponent<Enemy>().myStatus.AddEffect(stack);
                         //c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
                     }
                     if (c.gameObject.tag == "Obstacle")
