@@ -201,7 +201,7 @@ public class Ice : Spell {
                     {
                         StatusEffect shield = new StatusEffect(5);
                         shield.m_type = StatusType.Shield;
-                        c.gameObject.GetComponent<Player>().myStatus.AddEffect(shield);
+                        c.gameObject.GetComponent<Player>().statMngr.AddEffect(shield);
 
                         markedForDeletion = true;
                         //c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
