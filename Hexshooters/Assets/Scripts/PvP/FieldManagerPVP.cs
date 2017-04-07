@@ -35,7 +35,7 @@ public class FieldManagerPVP : FieldManager
 		//Placeholder Fils Deck with Lighnin and Eart Spells
 		for (int i = 0; i < 10; i++)
 		{
-			Handful.Add(Resources.Load ("Lightning"));
+			Handful.Add(Resources.Load ("Chains"));
 			Handful.Add(Resources.Load ("Water"));
 			if(i<5)
 				Handful.Add(Resources.Load ("Earth"));
@@ -47,12 +47,12 @@ public class FieldManagerPVP : FieldManager
 		//Placeholder Fils Deck with Lighnin and Eart Spells
 		for (int i = 0; i < 10; i++)
 		{
-			Handful_2.Add(Resources.Load ("Lightning"));
-			Handful.Add(Resources.Load ("Water"));
+			Handful_2.Add(Resources.Load ("Boomerang"));
+			Handful_2.Add(Resources.Load ("Water"));
 			if(i<5)
-				Handful.Add(Resources.Load ("Earth"));
+				Handful_2.Add(Resources.Load ("Earth"));
 			else
-				Handful.Add(Resources.Load ("Lightning"));
+				Handful_2.Add(Resources.Load ("Lightning"));
 		}
 		Shuffle(Handful_2);
 

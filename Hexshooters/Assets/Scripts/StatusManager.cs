@@ -12,7 +12,8 @@ public enum StatusType
     Freeze,
     Break,
     Slow,
-    Shield
+    Shield,
+	Bound
 }
 
 /// <summary>
@@ -33,7 +34,7 @@ public class StatusEffect
 public class StatusManager : MonoBehaviour
 {
 
-    public List<StatusEffect> m_effects;
+	public List<StatusEffect> m_effects = new List<StatusEffect>();
 
     // Use this for initialization
     void Start()
@@ -59,13 +60,14 @@ public class StatusManager : MonoBehaviour
     {
         switch (effect.m_type)
         {
-            case StatusType.Burn:
-            case StatusType.Freeze:
-            case StatusType.Poison:
-            case StatusType.Break:
-            case StatusType.Slow:
-            case StatusType.Shield:
-            default:
+		case StatusType.Burn:
+		case StatusType.Freeze:
+		case StatusType.Poison:
+		case StatusType.Break:
+		case StatusType.Slow:
+		case StatusType.Shield:
+		case StatusType.Bound:
+		default:;
                 m_effects.Add(effect);
                 break;
         }

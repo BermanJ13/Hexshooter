@@ -27,6 +27,14 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+		
+		if (GameObject.Find ("CharSelect") != null)
+		{
+			if (PlayerNum == 1)
+				weapon = GameObject.Find ("CharSelect").GetComponent<CharSelect> ().p1;
+			else
+				weapon = GameObject.Find("CharSelect").GetComponent<CharSelect> ().p2;
+		}
 		 statMngr = new StatusManager();
 		if (PlayerNum == 1)
 		{
@@ -89,11 +97,23 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	public void playerUpdate () 
 	{
+		bool canMove = true;
 		hideEmpty ();
 		updateCurrentSpell ();
 		pHealth.text = health.ToString();
-		//Moves the character
-		movement();
+
+		foreach (StatusEffect s in GetComponent<StatusManager> ().m_effects)
+		{
+			if (s.m_type == StatusType.Bound)
+			{
+				canMove = false;
+			}
+		}
+		if (canMove)
+		{
+			//Moves the character
+			movement ();
+		}
 		if (Input.GetButtonDown(atkbutton) && Chamber.Count >0) 
 		{
 			initiateSpell ();
