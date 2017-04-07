@@ -16,7 +16,6 @@ public class Ice : Spell {
 	// Update is called once per frame
 	new void spellUpdate () {
         base.spellUpdate();
-
 	}
 
     public override void movement(int weapon)
@@ -37,7 +36,7 @@ public class Ice : Spell {
                     target = new Vector2(transform.position.x, transform.position.y) - direction;
                     
                 }
-                position = Vector2.Lerp(transform.position, target, Time.deltaTime * speed);
+			position = Vector2.Lerp(transform.position, target, (Time.deltaTime * speed));
                 transform.position = position;
                 break;
 
@@ -53,7 +52,7 @@ public class Ice : Spell {
                     target = new Vector2(transform.position.x, transform.position.y) - direction;
 
                 }
-                position = Vector2.Lerp(transform.position, target, Time.deltaTime * speed);
+			position = Vector2.Lerp(transform.position, target, (Time.deltaTime * speed));
                 transform.position = position;
                 break;
 
@@ -67,7 +66,7 @@ public class Ice : Spell {
 				{				
 					target = new Vector2(transform.position.x , transform.position.y) - direction;
 				}
-                position = Vector2.Lerp(transform.position, target, Time.deltaTime);
+			position = Vector2.Lerp(transform.position, target, (Time.deltaTime * speed));
                 transform.position = position;
                 break;
 
@@ -81,7 +80,7 @@ public class Ice : Spell {
 				{				
 					target = new Vector2(transform.position.x, transform.position.y) - direction;
 				}
-                position = Vector2.Lerp(transform.position, target, Time.deltaTime*speed);
+			position = Vector2.Lerp(transform.position, target, (Time.deltaTime * speed));
                 transform.position = position;
                 break;
 
@@ -95,7 +94,7 @@ public class Ice : Spell {
 				{				
 					target = new Vector2(transform.position.x, transform.position.y) - direction;
 				}
-                position = Vector2.Lerp(transform.position, target, Time.deltaTime);
+			position = Vector2.Lerp(transform.position, target, (Time.deltaTime * speed));
                 transform.position = position;
                 break;
 

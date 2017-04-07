@@ -41,12 +41,13 @@ public class StatusManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+		
     }
 
     // Update is called once per frame
     void Update()
 	{Debug.Log (m_effects.Count);
-        for (int i = 0; i < m_effects.Count; --i)
+        for (int i = 0; i < m_effects.Count; i++)
         {
 			m_effects[i].m_timer -= Time.deltaTime;
 			Debug.Log (m_effects[i].m_timer);
@@ -62,14 +63,16 @@ public class StatusManager : MonoBehaviour
     {
         switch (effect.m_type)
         {
-            case StatusType.Burn:
-            case StatusType.Freeze:
+		case StatusType.Burn:
+		case StatusType.Freeze:
 		case StatusType.Poison:
 		case StatusType.Bound:
-			if (m_effects.Contains(effect))
+			if (m_effects.Contains (effect))
 				effect.m_timer += 8;
 			else
-				m_effects.Add(effect);
+				m_effects.Add (effect);
+
+			Debug.Log (m_effects.Count);
 			break;
 		case StatusType.Disabled:
 			if (m_effects.Contains(effect))
@@ -79,7 +82,7 @@ public class StatusManager : MonoBehaviour
 			break;
             case StatusType.Break:
                 if (m_effects.Contains(effect))
-                    effect.m_timer = 0;
+                    effect.m_timer += 10;
                 else
                     m_effects.Add(effect);
                 break;

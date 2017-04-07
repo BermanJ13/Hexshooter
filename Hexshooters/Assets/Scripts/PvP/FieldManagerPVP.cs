@@ -34,10 +34,10 @@ public class FieldManagerPVP : FieldManager
 		//Hnadful= Deck
 		//Pass Deck In from Overworld Scene
 		//Placeholder Fils Deck with Lighnin and Eart Spells
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < 6; i++)
 		{
-			Handful.Add(Resources.Load ("Chains"));
-			Handful.Add(Resources.Load ("Ice"));
+			//Handful.Add(Resources.Load ("Chains"));
+			Handful.Add(Resources.Load ("Wind"));
 			Handful.Add(Resources.Load ("Water"));
 			Handful.Add(Resources.Load ("Earth"));
 			Handful.Add(Resources.Load ("Lightning"));
@@ -46,10 +46,10 @@ public class FieldManagerPVP : FieldManager
 		Shuffle(Handful);
 
 		//Placeholder Fils Deck with Lighnin and Eart Spells
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < 6; i++)
 		{
-			Handful_2.Add(Resources.Load ("Chains"));
-			Handful_2.Add(Resources.Load ("Ice"));
+			//Handful_2.Add(Resources.Load ("Chains"));
+			Handful_2.Add(Resources.Load ("Wind"));
 			Handful_2.Add(Resources.Load ("Water"));
 			Handful_2.Add(Resources.Load ("Earth"));
 			Handful_2.Add(Resources.Load ("Lightning"));
@@ -70,6 +70,10 @@ public class FieldManagerPVP : FieldManager
 	void Update () 
 	{
 		//updateHealth ();
+		if (player.health <= 0 || player2.health <=0)
+		{
+			SceneManager.LoadScene (3);
+		}
 		if (pause)
 		{
 			if (ES_P1.currentSelectedGameObject != null)

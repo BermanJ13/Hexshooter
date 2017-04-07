@@ -227,7 +227,7 @@ public class Water : Spell {
 
                         StatusEffect broken = new StatusEffect(10);
                         broken.m_type = StatusType.Break;
-                        c.gameObject.GetComponent<Enemy>().myStatus.AddEffect(broken);
+                        //c.gameObject.GetComponent<Enemy>().myStatus.AddEffect(broken);
                         
                         markedForDeletion = true;
                         //c.gameObject.GetComponent<Enemy>().takeDamage(damageCalc (damageTier, hitNum));

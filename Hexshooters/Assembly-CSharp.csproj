@@ -53,6 +53,7 @@
      <Compile Include="Assets\Scripts\FieldManager.cs" />
      <Compile Include="Assets\Scripts\GameInfo.cs" />
      <Compile Include="Assets\Scripts\GameResults.cs" />
+     <Compile Include="Assets\Scripts\Instructions.cs" />
      <Compile Include="Assets\Scripts\Obstacle.cs" />
      <Compile Include="Assets\Scripts\OverPlayer.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />

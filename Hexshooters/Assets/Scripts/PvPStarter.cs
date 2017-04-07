@@ -14,6 +14,11 @@ public class PvPStarter : MonoBehaviour {
 	void Update () {
 		
 	}
+
+	public void toInstructions()
+	{
+		SceneManager.LoadScene (4);
+	}
 	public void toCharacterSelect()
 	{
 		SceneManager.LoadScene (1);
