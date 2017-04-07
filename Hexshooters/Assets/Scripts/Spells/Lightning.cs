@@ -147,7 +147,9 @@ public class Lightning : Spell {
 				if(c.gameObject.tag == "Enemy")
 				{
 					c.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
-					c.GetComponent<Enemy> ().Status ("disabled");
+					StatusEffect disabled = new StatusEffect (5);
+					disabled.m_type = StatusType.Disabled;
+					c.gameObject.GetComponent<Enemy> ().statMngr.AddEffect (disabled);
 					markedForDeletion = true;
 				}
 				else if(c.gameObject.tag == "Obstacle")
@@ -158,12 +160,18 @@ public class Lightning : Spell {
 				else if(c.gameObject.tag == "Player" && PlayerNum == 2)
 				{
 					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+					StatusEffect disabled = new StatusEffect (5);
+					disabled.m_type = StatusType.Disabled;
+					c.gameObject.GetComponent<Enemy> ().statMngr.AddEffect (disabled);
 					markedForDeletion = true;
 
 				}
 				else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
 				{
 					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+					StatusEffect disabled = new StatusEffect (5);
+					disabled.m_type = StatusType.Disabled;
+					c.gameObject.GetComponent<Enemy> ().statMngr.AddEffect (disabled);
 					markedForDeletion = true;
 				}
 			}

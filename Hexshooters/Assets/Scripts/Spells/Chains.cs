@@ -44,7 +44,7 @@ public class Chains : Spell {
 		{
 			if (c.gameObject.tag == "Enemy")
 			{
-				StatusEffect bound = new StatusEffect (30);
+				StatusEffect bound = new StatusEffect (10);
 				bound.m_type = StatusType.Bound;
 				c.gameObject.GetComponent<Enemy> ().statMngr.AddEffect (bound);
 				c.gameObject.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
@@ -59,7 +59,7 @@ public class Chains : Spell {
 			} 
 			else if (c.gameObject.tag == "Player" && PlayerNum == 2)
 			{
-				StatusEffect bound = new StatusEffect (30);
+				StatusEffect bound = new StatusEffect (10);
 				bound.m_type = StatusType.Bound;
 				c.gameObject.GetComponent<Player> ().statMngr.AddEffect (bound);
 				c.gameObject.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
@@ -69,7 +69,7 @@ public class Chains : Spell {
 			} 
 			else if (c.gameObject.tag == "Player2" && PlayerNum == 1)
 			{
-				StatusEffect bound = new StatusEffect (30);
+				StatusEffect bound = new StatusEffect (10);
 				bound.m_type = StatusType.Bound;
 				c.gameObject.GetComponent<Player> ().statMngr.AddEffect (bound);
 				c.gameObject.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));

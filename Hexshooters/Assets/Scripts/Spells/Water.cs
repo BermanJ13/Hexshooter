@@ -32,15 +32,15 @@ public class Water : Spell {
 		case 1:
 			if (PlayerNum == 1)
 			{
-				 target = new Vector2 (transform.position.x + 1, transform.position.y) + direction;
+				 target = new Vector2 (transform.position.x , transform.position.y) + direction;
 				if (revolverMove)
-					target = new Vector2 (transform.position.x - 1, transform.position.y) + direction;
+					target = new Vector2 (transform.position.x , transform.position.y) - direction;
 			}
 			else
 			{
-				 target = new Vector2 (transform.position.x - 1, transform.position.y) - direction;
+				 target = new Vector2 (transform.position.x, transform.position.y) - direction;
 				if (revolverMove)
-					target = new Vector2 (transform.position.x + 1, transform.position.y) - direction;
+					target = new Vector2 (transform.position.x , transform.position.y) + direction;
 			}
 
                 position = Vector2.Lerp(transform.position, target, Time.deltaTime*speed);
@@ -53,7 +53,7 @@ public class Water : Spell {
 			{
 				if ((transform.position.x - rifleOrigin.x) < 3)
 				{
-					target = new Vector2 (transform.position.x + 2, transform.position.y) + direction;
+					target = new Vector2 (transform.position.x , transform.position.y) + direction*2;
 					position = Vector2.Lerp (transform.position, target, Time.deltaTime*speed);
 					transform.position = position;
 				} else
@@ -71,7 +71,7 @@ public class Water : Spell {
 			{
 				if ((transform.position.x + rifleOrigin.x) < 3)
 				{
-					target = new Vector2 (transform.position.x - 2, transform.position.y) - direction;
+					target = new Vector2 (transform.position.x , transform.position.y) - direction*2;
 					position = Vector2.Lerp (transform.position, target, Time.deltaTime*speed);
 					transform.position = position;
 				} else

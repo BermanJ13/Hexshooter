@@ -12,8 +12,9 @@ public enum StatusType
     Freeze,
     Break,
     Slow,
-    Shield,
-    Bound,
+	Shield,
+	Bound,
+	Disabled,
     Stacking
 }
 
@@ -63,13 +64,19 @@ public class StatusManager : MonoBehaviour
         {
             case StatusType.Burn:
             case StatusType.Freeze:
-            case StatusType.Poison:
-	    case StatusType.Bound:
-		if (m_effects.Contains(effect))
-                    effect.m_timer += 8;
-                else
-                    m_effects.Add(effect);
-	    break;
+		case StatusType.Poison:
+		case StatusType.Bound:
+			if (m_effects.Contains(effect))
+				effect.m_timer += 8;
+			else
+				m_effects.Add(effect);
+			break;
+		case StatusType.Disabled:
+			if (m_effects.Contains(effect))
+				effect.m_timer += 8;
+			else
+				m_effects.Add(effect);
+			break;
             case StatusType.Break:
                 if (m_effects.Contains(effect))
                     effect.m_timer = 0;
