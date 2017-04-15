@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\ActiveFieldManager.cs" />
      <Compile Include="Assets\Scripts\CharSelect.cs" />
      <Compile Include="Assets\Scripts\ControllerRefocus.cs" />
      <Compile Include="Assets\Scripts\DialogueManager.cs" />
