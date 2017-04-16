@@ -194,7 +194,7 @@ public class Earth : Spell {
 			}
 			if (!colided && !created)
 			{
-				Debug.Log ("Here");
+				//Debug.Log ("Here");
 				damage = 0;
 				Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
 				created = true;

@@ -23,7 +23,7 @@ public class Obstacle : MonoBehaviour {
 	// Update is called uonce per frame
 	public void obstacleUpdate () 
 	{
-		Debug.Log (health);
+		//Debug.Log (health);
 		move ();
 		collide();
 		if (health <= 0)
@@ -44,8 +44,8 @@ public class Obstacle : MonoBehaviour {
 	}
 	public void move()
 	{
-		Debug.Log ("Here");
-		Debug.Log (direction);
+		//Debug.Log ("Here");
+		//Debug.Log (direction);
 		Vector2 target =  new Vector3(transform.position.x +direction.x,transform.position.y +direction.y, 0.0f);
 		Vector2 position = Vector2.Lerp (transform.position, target, (Time.deltaTime*8));
 		transform.position = position;
@@ -60,7 +60,7 @@ public class Obstacle : MonoBehaviour {
 			//if collides with another obstacle, destroys both
 			if (d.gameObject.tag == "Obstacle") 
 			{
-				Debug.Log (d.GetComponent<Obstacle> ().gameObject != this.gameObject);
+				//Debug.Log (d.GetComponent<Obstacle> ().gameObject != this.gameObject);
 				if (d.GetComponent<Obstacle> ().gameObject != this.gameObject) 
 				{
 					d.GetComponent<Obstacle> ().MarkedforDeletion = true;

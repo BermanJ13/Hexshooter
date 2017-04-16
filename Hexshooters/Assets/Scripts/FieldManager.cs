@@ -13,6 +13,8 @@ public class FieldManager : MonoBehaviour
     private StreamReader reader;
     private List<string> rows = new List<string>();
 
+	public bool firstPause;
+	protected bool updateStopper;
 	protected Transform playerPanel;
 	protected Transform enemyPanel;
 	protected Transform Testdummy;
@@ -21,10 +23,10 @@ public class FieldManager : MonoBehaviour
 	protected Obstacle[] obstacles;
 	protected GameObject[] bulletIndicators;
 	protected Player player;
-	protected bool pause = false;
+	public bool pause = false;
 	public List<Object> Handful = new List<Object>();
 	protected List<Object> Temp = new List<Object>();
-	protected List<int> TempNum = new List<int>();
+	public List<int> TempNum = new List<int>();
 	protected  static System.Random rand = new System.Random();  
 	protected static GameObject[] pauseObjects;
 	protected static GameObject[] pauseUI;
@@ -41,22 +43,15 @@ public class FieldManager : MonoBehaviour
 	protected GameObject[] battleObjects;
 
 	// Use this for initialization
-	void Start () 
+	public void Start () 
 	{
 		ES_P1 = EventSystem.current;
 		getUI ();
-
-		//Debug.Log (pauseObjects[0]);
 		//Hnadful= Deck
 		//Pass Deck In from Overworld Scene
 		//Placeholder Fils Deck with Lighnin and Eart Spells
-		for (int i = 0; i < 10; i++)
-		{
-			Handful.Add(Resources.Load ("Wind"));
-			Handful.Add(Resources.Load ("Earth"));
-			Handful.Add(Resources.Load ("Water"));
-		}
-		Shuffle(Handful);
+		buildDeck();
+
         //creates a dictionary out of the list of objects made in the inspector
         //foreach (Transform trns in gamePieces)
         //{
@@ -65,23 +60,7 @@ public class FieldManager : MonoBehaviour
         //things.Add("p", gamePieces[0]);
         //things.Add("e", gamePieces[1]);
 
-		//Creates the Grid
-		for (int y = 0; y < 5; y++) 
-		{
-			for (int x = 0; x < 10; x++) 
-			{
-				//Checks whether the current panel is for the enmy or player side
-				if(x<5)
-				{
-					Instantiate(Resources.Load("Player_Panel"), new Vector3(x, y, 0), Quaternion.identity);
-					//sPawns the Player
-					if(y==2 && x==0)
-						Instantiate(Resources.Load("Player"), new Vector3(x, y, 0), Quaternion.identity);
-				}
-				else
-					Instantiate(Resources.Load("Enemy_Panel"), new Vector3(x, y, 0), Quaternion.identity);
-			}
-		}
+		createBoard ();
 
 		//test Dummy
 		Instantiate (Resources.Load("TestDummy"),new Vector3(6,3,0),Quaternion.identity);
@@ -221,7 +200,7 @@ public class FieldManager : MonoBehaviour
 			count++;
 		}
 	}
-	void showReloadScreen()
+	public void showReloadScreen()
 	{
 		for (int i = 0; i < spellSlots.Count; i++)
 		{
@@ -287,6 +266,7 @@ public class FieldManager : MonoBehaviour
 	}
 	public void showBattleScreen()
 	{
+		firstPause = false;
 		for (int i = 0; i < Temp.Count; i++)
 		{
 			player.Chamber.Add(Temp [i]);
@@ -310,12 +290,12 @@ public class FieldManager : MonoBehaviour
 
 	public void Shuffle(List<Object> list) 
 	{
-		for(int i = Handful.Count -1; i > 1; i--)
+		for(int i = list.Count -1; i > 1; i--)
 		{
 			int k = (rand.Next(0, i));
-			Object value = Handful[k];
-			Handful[k] = Handful[i];
-			Handful[i] = value;
+			Object value = list[k];
+			list[k] = list[i];
+			list[i] = value;
 		}
 	}
 	protected void addBullet(int num)
@@ -343,13 +323,16 @@ public class FieldManager : MonoBehaviour
 	}
 	protected void removeBullet()
 	{
-		spellHold.activateSpell ("Spell " +TempNum[TempNum.Count-1]+ "");
-		spellSlots[Temp.Count-1].GetComponent<Image>().sprite = defaultSlot;
-		spellSlots[Temp.Count-1].GetComponent<Image>().color = Color.white;
-		Temp.RemoveAt (Temp.Count - 1);
-		TempNum.RemoveAt (TempNum.Count - 1);
+		if (TempNum [TempNum.Count - 1] != null || TempNum [TempNum.Count - 1] != 100)
+		{
+			spellHold.activateSpell ("Spell " + TempNum [TempNum.Count - 1] + "");
+			spellSlots [Temp.Count - 1].GetComponent<Image> ().sprite = defaultSlot;
+			spellSlots [Temp.Count - 1].GetComponent<Image> ().color = Color.white;
+			Temp.RemoveAt (Temp.Count - 1);
+			TempNum.RemoveAt (TempNum.Count - 1);
 
-		p1Gun.transform.Rotate (new Vector3 (0.0f,0.0f,-60.0f));
+			p1Gun.transform.Rotate (new Vector3 (0.0f, 0.0f, -60.0f));
+		}
 	}
 	protected void selectButton ()
 	{
@@ -364,6 +347,7 @@ public class FieldManager : MonoBehaviour
 			}
 			if(GameObject.Find("Spell " +i+ "") != null && !found && !used)
 			{
+				Debug.Log (ES_P1);
 				ES_P1.SetSelectedGameObject(GameObject.Find("Spell " +i+ ""));
 				found = true;
 			}
@@ -410,9 +394,39 @@ public class FieldManager : MonoBehaviour
 		runeDamage = GameObject.Find ("RuneDamage").GetComponent<Text>();
 		runeName = GameObject.Find ("Rune Name").GetComponent<Text>();
 		runeDesc = GameObject.Find ("Rune Description").GetComponent<Text>();
-		battleObjects = GameObject.FindGameObjectsWithTag("battleUI");
+		battleObjects = new GameObject[1];
+		battleObjects[0] = GameObject.Find("Current Bullet");
 
 		p1Gun = GameObject.Find ("UI_GunCylinder");
 	}
-
+	public void buildDeck()
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			Handful.Add(Resources.Load ("Wind"));
+			Handful.Add(Resources.Load ("Earth"));
+			Handful.Add(Resources.Load ("Water"));
+		}
+		Shuffle(Handful);
+	}
+	public void createBoard()
+	{
+		//Creates the Grid
+		for (int y = 0; y < 5; y++) 
+		{
+			for (int x = 0; x < 10; x++) 
+			{
+				//Checks whether the current panel is for the enmy or player side
+				if(x<5)
+				{
+					Instantiate(Resources.Load("Player_Panel"), new Vector3(x, y, 0), Quaternion.identity);
+					//sPawns the Player
+					if(y==2 && x==0)
+						Instantiate(Resources.Load("Player"), new Vector3(x, y, 0), Quaternion.identity);
+				}
+				else
+					Instantiate(Resources.Load("Enemy_Panel"), new Vector3(x, y, 0), Quaternion.identity);
+			}
+		}
+	}
 }

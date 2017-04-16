@@ -11,17 +11,17 @@ public class FieldManagerPVP : FieldManager
 	public List<Object> Handful_2 = new List<Object>();
 	protected List<Object> Temp_2 = new List<Object>();
 	protected List<int> TempNum_2 = new List<int>();
-	private static System.Random rand = new System.Random();  
-	static GameObject[] pauseObjects_p2;
-	SpellHolder spellHold_2;
+	protected static System.Random rand = new System.Random();  
+	protected static GameObject[] pauseObjects_p2;
+	protected SpellHolder spellHold_2;
 	protected List<GameObject> spellSlots_2 = new List<GameObject>();
 	protected GameObject runeDisplay_2;
 	protected Text runeDamage_2;
 	protected Text runeName_2;
 	protected Text runeDesc_2;
 	public EventSystem ES_P2;
-	protected bool p1Ready,p2Ready;
-	GameObject p2Gun;
+	public bool p1Ready,p2Ready;
+	protected GameObject p2Gun;
 	protected Text curBullet_2;
 	
 	// Use this for initialization
@@ -30,35 +30,14 @@ public class FieldManagerPVP : FieldManager
 
 		getUI ();
 
+		battleObjects = new GameObject[2];
 		//Debug.Log (pauseObjects[0]);
 		//Hnadful= Deck
 		//Pass Deck In from Overworld Scene
 		//Placeholder Fils Deck with Lighnin and Eart Spells
-		for (int i = 0; i < 6; i++)
-		{
-			//Handful.Add(Resources.Load ("Chains"));
-			Handful.Add(Resources.Load ("Wind"));
-			Handful.Add(Resources.Load ("Water"));
-			Handful.Add(Resources.Load ("Earth"));
-			Handful.Add(Resources.Load ("Lightning"));
-			Handful.Add(Resources.Load ("Boomerang"));
-		}
-		Shuffle(Handful);
-
-		//Placeholder Fils Deck with Lighnin and Eart Spells
-		for (int i = 0; i < 6; i++)
-		{
-			//Handful_2.Add(Resources.Load ("Chains"));
-			Handful_2.Add(Resources.Load ("Wind"));
-			Handful_2.Add(Resources.Load ("Water"));
-			Handful_2.Add(Resources.Load ("Earth"));
-			Handful_2.Add(Resources.Load ("Lightning"));
-			Handful_2.Add(Resources.Load ("Boomerang"));
-		}
-		Shuffle(Handful_2);
+		buildDeck();
 
 		createGrid ();
-
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 		player2 = GameObject.FindGameObjectWithTag ("Player2").GetComponent<Player> ();
 		updateEnemyList ();
@@ -69,12 +48,12 @@ public class FieldManagerPVP : FieldManager
 	// Update is called once per frame
 	void Update () 
 	{
+		
 		//updateHealth ();
 		if (player.health <= 0 || player2.health <=0)
 		{
 			SceneManager.LoadScene (3);
-		}
-		if (pause)
+		}		if (pause)
 		{
 			if (ES_P1.currentSelectedGameObject != null)
 			{
@@ -330,7 +309,7 @@ public class FieldManagerPVP : FieldManager
 	}
 
 
-	void addBullet_2(int num)
+	protected void addBullet_2(int num)
 	{
 
 		if (Temp_2.Count < 6)
@@ -354,7 +333,7 @@ public class FieldManagerPVP : FieldManager
 			ES_P2.SetSelectedGameObject(GameObject.Find("BattleButton_2"));
 		}
 	}
-	void removeBullet_P2()
+	protected void removeBullet_P2()
 	{
 		spellHold_2.activateSpell ("Spell " +TempNum_2[TempNum_2.Count-1]+ "_2");
 		spellSlots_2[Temp_2.Count-1].GetComponent<Image>().sprite = defaultSlot;
@@ -365,7 +344,7 @@ public class FieldManagerPVP : FieldManager
 		//p2Gun.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x,transform.rotation.y,transform.rotation.z - 60), Time.time*0.1f);
 
 	}
-	void selectButton_2 ()
+	protected void selectButton_2 ()
 	{
 		bool found = false;
 		for (int i = 0; i < 9; i++)
@@ -446,9 +425,10 @@ public class FieldManagerPVP : FieldManager
 		p1Gun = GameObject.Find ("UI_GunCylinder");
 		p2Gun = GameObject.Find ("UI_GunCylinder_2");
 
+		battleObjects = new GameObject[2];
 		battleObjects[1] = GameObject.Find("Current Bullet_2");
 	}
-	void createGrid()
+	protected void createGrid()
 	{
 
 		//Creates the Grid
@@ -471,4 +451,30 @@ public class FieldManagerPVP : FieldManager
 			}
 		}
 	}
+	protected void buildDeck()
+	{
+		for (int i = 0; i < 6; i++)
+		{
+			//Handful.Add(Resources.Load ("Chains"));
+			Handful.Add(Resources.Load ("Wind"));
+			Handful.Add(Resources.Load ("Water"));
+			Handful.Add(Resources.Load ("Earth"));
+			Handful.Add(Resources.Load ("Lightning"));
+			Handful.Add(Resources.Load ("Boomerang"));
+		}
+		Shuffle(Handful);
+
+		//Placeholder Fils Deck with Lighnin and Eart Spells
+		for (int i = 0; i < 6; i++)
+		{
+			//Handful_2.Add(Resources.Load ("Chains"));
+			Handful_2.Add(Resources.Load ("Wind"));
+			Handful_2.Add(Resources.Load ("Water"));
+			Handful_2.Add(Resources.Load ("Earth"));
+			Handful_2.Add(Resources.Load ("Lightning"));
+			Handful_2.Add(Resources.Load ("Boomerang"));
+		}
+		Shuffle(Handful_2);
+	}
+
 }

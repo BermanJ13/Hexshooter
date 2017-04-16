@@ -46,7 +46,8 @@ public class StatusManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-	{Debug.Log (m_effects.Count);
+	{
+		//Debug.Log (m_effects.Count);
         for (int i = 0; i < m_effects.Count; i++)
         {
 			m_effects[i].m_timer -= Time.deltaTime;

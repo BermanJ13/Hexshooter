@@ -87,10 +87,14 @@ public class Player : MonoBehaviour {
 			bulletIndicators [7] = GameObject.Find ("Player 2 Bottle 8");
 		}
 		GameObject p2 = GameObject.FindGameObjectWithTag("Player2");
-		if(p2 != null || PlayerNum != 1)
-			field = GameObject.FindGameObjectWithTag ("FieldManager").GetComponent<FieldManagerPVP>();
+		if (p2 != null || PlayerNum != 1)
+		{
+			field = GameObject.FindGameObjectWithTag ("FieldManager").GetComponent<FieldManagerPVP> ();
+		} 
 		else
-			field = GameObject.FindGameObjectWithTag ("FieldManager").GetComponent<FieldManager>();
+		{
+			field = GameObject.FindGameObjectWithTag ("FieldManager").GetComponent<FieldManager> ();
+		}
 		reload = true;
         	health = 100;
 
