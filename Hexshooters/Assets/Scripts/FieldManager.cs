@@ -57,40 +57,47 @@ public class FieldManager : MonoBehaviour
 			Handful.Add(Resources.Load ("Water"));
 		}
 		Shuffle(Handful);
-        //creates a dictionary out of the list of objects made in the inspector
-        //foreach (Transform trns in gamePieces)
-        //{
-        //    things.Add(trns.name, trns);
-        //}
-        //things.Add("p", gamePieces[0]);
-        //things.Add("e", gamePieces[1]);
 
-		//Creates the Grid
-		for (int y = 0; y < 5; y++) 
-		{
-			for (int x = 0; x < 10; x++) 
-			{
-				//Checks whether the current panel is for the enmy or player side
-				if(x<5)
-				{
-					Instantiate(Resources.Load("Player_Panel"), new Vector3(x, y, 0), Quaternion.identity);
-					//sPawns the Player
-					if(y==2 && x==0)
-						Instantiate(Resources.Load("Player"), new Vector3(x, y, 0), Quaternion.identity);
-				}
-				else
-					Instantiate(Resources.Load("Enemy_Panel"), new Vector3(x, y, 0), Quaternion.identity);
-			}
-		}
+        foreach (Transform trns in gamePieces)
+        {
+            things.Add(trns.name, trns);
+        }
+        things.Add("p", gamePieces[0]);
+        things.Add("e", gamePieces[1]);
 
-		//test Dummy
-		Instantiate (Resources.Load("TestDummy"),new Vector3(6,3,0),Quaternion.identity);
+        //open ups the streamreader then reads every line and adds it to the rows list
+        reader = new StreamReader("Assets/Maps/" + mapFile + ".txt");
+        string line = null;
+        line = reader.ReadLine();
+        while (line != null)
+        {
+            rows.Add(line);
+            line = reader.ReadLine();
+        }
 
-		Instantiate (Resources.Load("TestDummy"),new Vector3(5,4,0),Quaternion.identity);
+        //use this in the foreach loop to hold the first two values
+        //which is the position of the objects
+        Vector2 place;
+        //for each string in rows split the string into tiles
+        foreach (string a in rows)
+        {
+            string[] tiles = a.Split(' ');
+            //foreach string in tiles split it into entries
+            foreach (string b in tiles)
+            {
+                string[] entry = b.Split(',');
+                //set the place vector from before from the first two enties in the tile
+                place = new Vector2(float.Parse(entry[0]), float.Parse(entry[1]));
 
-		Instantiate (Resources.Load("TestDummy"),new Vector3(7,2,0),Quaternion.identity);
+                //put anything else on the tile that belongs there
+                for (int i = 0; i < entry.Length - 2; i++)
+                {
+                    Instantiate(things[entry[i + 2]], new Vector3(place.x, place.y, 0), Quaternion.identity);
+                }
+            }
+        }
 
-		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
+        player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 		updateEnemyList ();
 		updateSpellList ();
 		updateObstacleList ();

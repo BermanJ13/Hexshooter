@@ -28,6 +28,27 @@ public class Enemy : MonoBehaviour {
 	bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
     int stackDmg;
 
+    //interval for attack TEMPORARY
+    private float attackInterval=0;
+    private float attackTime=0;
+    Random rnd = new Random();
+
+    //basic attack variables
+    [Header("Basic Attack")]
+    public int basicAttackDamage  = 10;
+    public float basicAttackStayTime = 1;
+    float attackCounter = 0;
+    bool attacking = false;
+    Vector3 playerPos;
+
+    //rear back variables
+    [Header("Rear Back")]
+    public float rearBackTime = 3;
+    bool rearing= false;
+    float rearCounter;
+    Vector3 oldPos;
+
+    [Header("Moving")]
     public bool isMoving;
     private Direction directionMoving;
     public float speed;
@@ -40,6 +61,50 @@ public class Enemy : MonoBehaviour {
 
     public StatusManager statMngr = new StatusManager();
     
+    public bool RearBack()
+    {
+        rearCounter = rearCounter + Time.deltaTime;
+        if(!rearing)
+        {
+            oldPos = gameObject.transform.position;
+            rearing = true;
+        }
+
+        if (rearCounter > rearBackTime)
+        {
+            return true;
+        }
+        else
+        {
+            gameObject.transform.position = new Vector3(oldPos.x+0.3f, oldPos.y,oldPos.z);
+        }
+        return false;
+    }
+
+    void BasicAttack()
+    {
+        if (!attacking)
+        {
+            playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
+            attacking = true;
+        }
+            if(RearBack())
+        {
+            attackCounter = attackCounter + Time.deltaTime;
+            gameObject.transform.position = playerPos;
+                if (attackCounter > basicAttackStayTime)
+                {
+                     rearing = false;
+                     attacking = false;
+                     rearCounter = 0;
+                     attackCounter = 0;
+                        isMoving = true;
+                     attackTime = 0;
+                     attackInterval = Random.Range(3, 5);
+                 }
+            }
+    }
+
 
 	// Use this for initialization
 	void Start () {
@@ -56,6 +121,11 @@ public class Enemy : MonoBehaviour {
         distanceToMove = 0;
         frozenModifier = 0.3f;
         myState = EnemyState.IShouldRunUp;
+
+        //
+        //TEMPORARY RANDOM INTERVAL
+        //
+        attackInterval = Random.Range(3,5);
 
         this.myStatus = this.GetComponent<StatusManager>();
 	}
@@ -184,9 +254,17 @@ public class Enemy : MonoBehaviour {
 
     public void enemyUpdate()
     {
-        
-        
-        
+        //
+        //TEMPORARY ATTACK CALL
+        //
+        attackTime = attackTime + Time.deltaTime;
+        if(attackTime > attackInterval)
+        {
+            isMoving = false;
+            BasicAttack();
+        }
+
+
         // Handles movement.
         if (isMoving)
         {
@@ -252,5 +330,13 @@ public class Enemy : MonoBehaviour {
             }
         }
         
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            other.GetComponent<Player>().takeDamage(basicAttackDamage);
+        }
     }
 }
