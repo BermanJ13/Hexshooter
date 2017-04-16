@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour {
 
-    	public int health;
+    public int health;
 	public Transform spell;
 	public int weapon;
 	public List<Object> Chamber = new List<Object>();
