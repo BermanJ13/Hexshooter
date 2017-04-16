@@ -40,6 +40,7 @@ public class Enemy : MonoBehaviour {
     float attackCounter = 0;
     bool attacking = false;
     Vector3 playerPos;
+    bool hitPlayer = false;
 
     //rear back variables
     [Header("Rear Back")]
@@ -89,11 +90,18 @@ public class Enemy : MonoBehaviour {
             attacking = true;
         }
             if(RearBack())
-        {
+            {
             attackCounter = attackCounter + Time.deltaTime;
             gameObject.transform.position = playerPos;
+            if(Vector3.Magnitude(GameObject.FindGameObjectWithTag("Player").transform.position-gameObject.transform.position) < 1 && !hitPlayer)
+            {
+                GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().takeDamage(basicAttackDamage);
+                Debug.Log("Health: " +GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().health);
+                hitPlayer = true;
+            }
                 if (attackCounter > basicAttackStayTime)
                 {
+                    gameObject.transform.position = oldPos;
                      rearing = false;
                      attacking = false;
                      rearCounter = 0;
@@ -101,6 +109,7 @@ public class Enemy : MonoBehaviour {
                         isMoving = true;
                      attackTime = 0;
                      attackInterval = Random.Range(3, 5);
+                    hitPlayer = false;
                  }
             }
     }
@@ -334,9 +343,11 @@ public class Enemy : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        Debug.Log("asdf");
+        if (other.tag == "Player")
         {
             other.GetComponent<Player>().takeDamage(basicAttackDamage);
+            Debug.Log(other.GetComponent<Player>().health);
         }
     }
 }
