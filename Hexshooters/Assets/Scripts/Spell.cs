@@ -41,6 +41,10 @@ public class Spell : MonoBehaviour {
 			{
 				hitBehavior(weaponUsed);
 			} 
+			if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+			{
+				showPanels (c);
+			}
 		}
 	}
 
@@ -81,5 +85,9 @@ public class Spell : MonoBehaviour {
 	{
 		markedForDeletion = true;
 
+	}
+	public void showPanels(Collider2D c)
+	{
+		c.gameObject.gameObject.GetComponent<Panel> ().attacked = true;
 	}
 }

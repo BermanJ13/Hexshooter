@@ -24,8 +24,11 @@ public class Obstacle : MonoBehaviour {
 	public void obstacleUpdate () 
 	{
 		//Debug.Log (health);
-		move ();
-		collide();
+		if (direction != new Vector2 (0, 0))
+		{
+			move ();
+			collide ();
+		}
 		if (health <= 0)
 		{
 			MarkedforDeletion = true;
