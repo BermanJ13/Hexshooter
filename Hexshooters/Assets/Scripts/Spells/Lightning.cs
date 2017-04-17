@@ -131,9 +131,14 @@ public class Lightning : Spell {
 				}
 				else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
 				{
-					Debug.Log ("Damage");
+					//Debug.Log ("Damage");
 					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
 					markedForDeletion = true;
+				}
+
+				if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+				{
+					showPanels (c);
 				}
 				markedForDeletion = true;
 			}
@@ -174,6 +179,11 @@ public class Lightning : Spell {
 					c.gameObject.GetComponent<Enemy> ().statMngr.AddEffect (disabled);
 					markedForDeletion = true;
 				}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
 			}
 			break;
 		//Shotgun
@@ -218,6 +228,11 @@ public class Lightning : Spell {
 					GameObject spread = (GameObject)Instantiate (Resources.Load("Lightning"), c.gameObject.transform.position, Quaternion.identity);
 					spread.GetComponent<Spell> ().hitEnemies = this.GetComponent<Spell> ().hitEnemies;
 				}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
 			}
 			markedForDeletion = false;
 			break;
@@ -367,6 +382,11 @@ public class Lightning : Spell {
 						break;
 					}
 				}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
 			}
 			break;
 		//Cane Gun
@@ -383,6 +403,11 @@ public class Lightning : Spell {
 				{
 					c.gameObject.GetComponent<Obstacle>().takeDamage(damageCalc (damageTier, hitNum));
 				}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
 			}
 			markedForDeletion = true;
 			break;

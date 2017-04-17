@@ -47,8 +47,8 @@ public class StatusManager : MonoBehaviour
     // Update is called once per frame
     void Update()
 	{
-		//Debug.Log (m_effects.Count);
-        for (int i = 0; i < m_effects.Count; i++)
+		Debug.Log (m_effects.Count);
+        for (int i = 0; i < m_effects.Count; ++i)
         {
 			m_effects[i].m_timer -= Time.deltaTime;
 			Debug.Log (m_effects[i].m_timer);
@@ -136,6 +136,7 @@ public class StatusManager : MonoBehaviour
     /// <returns></returns>
     private static bool OutOfTime(StatusEffect effect)
     {
+		Debug.Log ("Fuck this noise");
         return effect.m_timer <= 0.0f;
     }
 }

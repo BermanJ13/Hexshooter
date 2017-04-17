@@ -425,9 +425,9 @@ public class FieldManager : MonoBehaviour
 	{
 		for (int i = 0; i < 10; i++)
 		{
-			Handful.Add(Resources.Load ("Wind"));
+			Handful.Add(Resources.Load ("Chains"));
 			Handful.Add(Resources.Load ("Earth"));
-			Handful.Add(Resources.Load ("Water"));
+			Handful.Add(Resources.Load ("Lightning"));
 		}
 		Shuffle(Handful);
 	}

@@ -191,6 +191,11 @@ public class Earth : Spell {
 					markedForDeletion = true;
 					colided = true;
 				}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
 			}
 			if (!colided && !created)
 			{
@@ -228,6 +233,11 @@ public class Earth : Spell {
 					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
 					markedForDeletion = true;
 				}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
 			}
 
 			if(!inBounds)
@@ -260,6 +270,11 @@ public class Earth : Spell {
 						c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
 						markedForDeletion = true;
 					}
+
+						if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+						{
+							showPanels (c);
+						}
 				}
 			}
 					
@@ -294,6 +309,11 @@ public class Earth : Spell {
 					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
 					markedForDeletion = true;
 				}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
 			}
 			break;
 		//Gatling
@@ -327,6 +347,11 @@ public class Earth : Spell {
 					c.GetComponent<Player> ().armorWeakness++;
 					markedForDeletion = true;
 				}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
 			}
 			break;
 		}

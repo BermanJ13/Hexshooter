@@ -164,6 +164,11 @@ public class Ice : Spell {
 						spellTimer = 50;
 					}
 				}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
 			}
 			break;
 		case 2: //freeze
@@ -201,6 +206,11 @@ public class Ice : Spell {
                     {
                         //c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
                     }
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
                 }
                 break;
             case 3: //Shield
@@ -221,6 +231,11 @@ public class Ice : Spell {
                         markedForDeletion = true;
                         //c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
                     }
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
                 }
                 break;
             case 4: //Stacking Damage
@@ -245,6 +260,11 @@ public class Ice : Spell {
                     {
                         //c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
                     }
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
                 }
                 break;
         }

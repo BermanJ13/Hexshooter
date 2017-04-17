@@ -76,6 +76,11 @@ public class Chains : Spell {
 				returnShot = true;
 				markedForDeletion = true;
 			}
+
+			if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+			{
+				showPanels (c);
+			}
 		}
 	}
 }
