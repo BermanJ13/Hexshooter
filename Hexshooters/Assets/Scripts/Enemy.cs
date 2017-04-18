@@ -60,7 +60,6 @@ public class Enemy : MonoBehaviour {
     public EnemyState myState;
 
 
-    public StatusManager statMngr = new StatusManager();
     
     public bool RearBack()
     {

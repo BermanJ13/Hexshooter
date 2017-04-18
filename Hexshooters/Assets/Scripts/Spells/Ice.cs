@@ -118,7 +118,7 @@ public class Ice : Spell {
 				{
 					StatusEffect slow = new StatusEffect (5);
 					slow.m_type = StatusType.Slow;
-					c.gameObject.GetComponent<Enemy> ().statMngr.AddEffect (slow);
+					c.gameObject.GetComponent<Enemy> ().myStatus.AddEffect (slow);
 
 					spellTimer--;
 					if (spellTimer <= 0)
@@ -140,7 +140,7 @@ public class Ice : Spell {
 					markedForDeletion = true;
 					StatusEffect slow = new StatusEffect (5);
 					slow.m_type = StatusType.Slow;
-					c.gameObject.GetComponent<Player> ().statMngr.AddEffect (slow);
+					c.gameObject.GetComponent<Player> ().myStatus.AddEffect (slow);
 
 					spellTimer--;
 					if (spellTimer <= 0)
@@ -155,7 +155,7 @@ public class Ice : Spell {
 					markedForDeletion = true;
 					StatusEffect slow = new StatusEffect (5);
 					slow.m_type = StatusType.Slow;
-					c.gameObject.GetComponent<Player> ().statMngr.AddEffect (slow);
+					c.gameObject.GetComponent<Player> ().myStatus.AddEffect (slow);
 
 					spellTimer--;
 					if (spellTimer <= 0)
@@ -179,7 +179,7 @@ public class Ice : Spell {
 				{
 					StatusEffect freeze = new StatusEffect (8);
 					freeze.m_type = StatusType.Freeze;
-					c.gameObject.GetComponent<Enemy> ().statMngr.AddEffect (freeze);
+					c.gameObject.GetComponent<Enemy> ().myStatus.AddEffect (freeze);
 					c.gameObject.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
 					markedForDeletion = true;
 				} else if (c.gameObject.tag == "Obstacle")
@@ -190,7 +190,7 @@ public class Ice : Spell {
 				{
 					StatusEffect freeze = new StatusEffect (8);
 					freeze.m_type = StatusType.Freeze;
-					c.gameObject.GetComponent<Player> ().statMngr.AddEffect (freeze);
+					c.gameObject.GetComponent<Player> ().myStatus.AddEffect (freeze);
 					c.gameObject.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
 					markedForDeletion = true;
 
@@ -221,7 +221,7 @@ public class Ice : Spell {
                     {
                         StatusEffect shield = new StatusEffect(5);
                         shield.m_type = StatusType.Shield;
-                        c.gameObject.GetComponent<Player>().statMngr.AddEffect(shield);
+                        c.gameObject.GetComponent<Player>().myStatus.AddEffect(shield);
 
                         markedForDeletion = true;
                         //c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
