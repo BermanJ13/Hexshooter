@@ -10,8 +10,8 @@ public class FieldManager : MonoBehaviour
     public string mapFile;
     [SerializeField]public Transform[] gamePieces;
     public Dictionary<string, Transform> things = new Dictionary<string, Transform>();
-    private StreamReader reader;
-    private List<string> rows = new List<string>();
+    protected StreamReader reader;
+    protected List<string> rows = new List<string>();
 
 	public bool firstPause;
 	protected bool updateStopper;

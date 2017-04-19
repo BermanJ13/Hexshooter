@@ -9,7 +9,7 @@ public class ActiveFieldManager : FieldManager {
 	protected bool once;
 	void Start()
 	{
-		base.Start ();
+		base.Start();
 		firstPause = true;
 		pause = true;
 		once = true;
