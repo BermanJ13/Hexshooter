@@ -86,22 +86,26 @@ public class OverPlayer : MonoBehaviour {
 	}
 	void interaction()
 	{
-		
-	if (Input.GetKey (KeyCode.A)) 
-	{
-		Collider2D hitCollider = Physics2D.OverlapCircle(new Vector2(transform.position.x, transform.position.y),1f);
-		if (hitCollider.gameObject.tag == "Building")
-		{
-			//Load Building Scene
-		}
-		if (hitCollider.gameObject.tag == "Object")
-		{
-			//Load Building Scene
-		}
-		if (hitCollider.gameObject.tag == "NPC")
-		{
-			//Load Building Scene
-		}
-	}
-}
+
+        Collider2D hitCollider = Physics2D.OverlapCircle(new Vector2(transform.position.x, transform.position.y), 1f);
+        if (hitCollider.gameObject.tag=="Cutscene")
+        {
+            Debug.Log("Cutscene");
+        }
+        else if (Input.GetKey (KeyCode.Return)) 
+	    {
+		    if (hitCollider.gameObject.tag == "Building")
+		    {
+		    	//Load Building Scene
+		    }
+		    if (hitCollider.gameObject.tag == "Object")
+		    {
+			    //Load Building Scene
+		    }
+		    if (hitCollider.gameObject.tag == "NPC")
+		    {
+                 Debug.Log("NPC");
+		    }
+	    }
+    }
 }
