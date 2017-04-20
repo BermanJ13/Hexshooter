@@ -182,7 +182,8 @@ public class Player : MonoBehaviour {
 					}
 					if (c.gameObject.tag == "Obstacle")
 					{
-						moveRight = false;
+						if(!c.gameObject.GetComponent<Obstacle>().canPass)
+							moveRight = false;
 					}
 				
 					if (c.gameObject.tag == enemyArea)
@@ -218,6 +219,7 @@ public class Player : MonoBehaviour {
 					}
 					if (c.gameObject.tag == "Obstacle")
 					{
+						if(!c.gameObject.GetComponent<Obstacle>().canPass)
 						moveLeft = false;
 					}
 				
@@ -253,7 +255,8 @@ public class Player : MonoBehaviour {
 					}
 					if (c.gameObject.tag == "Obstacle")
 					{
-						moveUp = false;
+						if(!c.gameObject.GetComponent<Obstacle>().canPass)
+							moveUp = false;
 					}
 				
 					if (c.gameObject.tag == enemyArea)
@@ -286,7 +289,8 @@ public class Player : MonoBehaviour {
 					}
 					if (c.gameObject.tag == "Obstacle")
 					{
-						moveDown = false;
+						if(!c.gameObject.GetComponent<Obstacle>().canPass)
+							moveDown = false;
 					}
 				
 					if (c.gameObject.tag == enemyArea)

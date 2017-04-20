@@ -50,12 +50,13 @@
      <Compile Include="Assets\Scripts\CharSelect.cs" />
      <Compile Include="Assets\Scripts\ControllerRefocus.cs" />
      <Compile Include="Assets\Scripts\DialogueManager.cs" />
-     <Compile Include="Assets\Scripts\Enemy.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
      <Compile Include="Assets\Scripts\FieldManager.cs" />
      <Compile Include="Assets\Scripts\GameInfo.cs" />
      <Compile Include="Assets\Scripts\GameResults.cs" />
      <Compile Include="Assets\Scripts\Instructions.cs" />
-     <Compile Include="Assets\Scripts\Obstacle.cs" />
+     <Compile Include="Assets\Scripts\Obstacles\Flames.cs" />
+     <Compile Include="Assets\Scripts\Obstacles\Obstacle.cs" />
      <Compile Include="Assets\Scripts\OverPlayer.cs" />
      <Compile Include="Assets\Scripts\Panel.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
@@ -69,7 +70,6 @@
      <Compile Include="Assets\Scripts\PvP\FieldManagerPVP.cs" />
      <Compile Include="Assets\Scripts\PvPStarter.cs" />
      <Compile Include="Assets\Scripts\RuneInfo.cs" />
-     <Compile Include="Assets\Scripts\Spell.cs" />
      <Compile Include="Assets\Scripts\SpellHolder.cs" />
      <Compile Include="Assets\Scripts\Spells\Boomerang.cs" />
      <Compile Include="Assets\Scripts\Spells\Chains.cs" />
@@ -80,6 +80,7 @@
      <Compile Include="Assets\Scripts\Spells\Lightning.cs" />
      <Compile Include="Assets\Scripts\Spells\Rain.cs" />
      <Compile Include="Assets\Scripts\Spells\Spell Template.cs" />
+     <Compile Include="Assets\Scripts\Spells\Spell.cs" />
      <Compile Include="Assets\Scripts\Spells\Trains.cs" />
      <Compile Include="Assets\Scripts\Spells\Voodoo.cs" />
      <Compile Include="Assets\Scripts\Spells\Water.cs" />

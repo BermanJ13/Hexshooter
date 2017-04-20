@@ -11,6 +11,7 @@ public class Obstacle : MonoBehaviour {
 	public string stat;
 	public int damage;
 	bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
+	public bool canPass;
 
 
 	// Use this for initialization
