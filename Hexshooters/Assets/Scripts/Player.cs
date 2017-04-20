@@ -39,7 +39,15 @@ public class Player : MonoBehaviour {
 		 myStatus = GetComponent<StatusManager>();
 		if (PlayerNum == 1)
 		{
-			atkbutton = "Fire_P1";
+			if (GameObject.FindGameObjectWithTag("Player2") != null && PlayerNum == 1)
+			{
+				atkbutton = "Fire_P1";
+			} 
+			else
+			{
+				atkbutton = "Fire_Solo";
+			}
+
 		}
 		else
 		{
@@ -148,8 +156,16 @@ public class Player : MonoBehaviour {
 
 		if (PlayerNum == 1)
 		{
-			Horizontal = Input.GetAxisRaw ("Horizontal_P1");
-			vertical = Input.GetAxisRaw ("Vertical_P1");
+			if (GameObject.FindGameObjectWithTag("Player2") != null && PlayerNum == 1)
+			{
+				Horizontal = Input.GetAxisRaw ("Horizontal_P1");
+				vertical = Input.GetAxisRaw ("Vertical_P1");
+			} 
+			else
+			{
+				Horizontal = Input.GetAxisRaw ("Horizontal_Solo");
+				vertical = Input.GetAxisRaw ("Vertical_Solo");
+			}
 			playerArea = "playerZone";
 			enemyArea = "enemyZone";
 		} else if (PlayerNum == 2)
@@ -311,14 +327,29 @@ public class Player : MonoBehaviour {
 		}
 		if (PlayerNum == 1)
 		{
-			if (Input.GetAxisRaw ("Vertical_P1") == 0)
+			if (GameObject.FindGameObjectWithTag("Player2") != null && PlayerNum == 1)
 			{
-				yAxisInUse = false;
-			}
-			if (Input.GetAxisRaw ("Horizontal_P1") == 0)
+				if (Input.GetAxisRaw ("Vertical_P1") == 0)
+				{
+					yAxisInUse = false;
+				}
+				if (Input.GetAxisRaw ("Horizontal_P1") == 0)
+				{
+					xAxisInUse = false;
+				}
+			} 
+			else
 			{
-				xAxisInUse = false;
+				if (Input.GetAxisRaw ("Vertical_Solo") == 0)
+				{
+					yAxisInUse = false;
+				}
+				if (Input.GetAxisRaw ("Horizontal_Solo") == 0)
+				{
+					xAxisInUse = false;
+				}
 			}
+
 		} 
 		else
 		{

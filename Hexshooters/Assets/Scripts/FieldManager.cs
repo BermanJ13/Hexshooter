@@ -113,7 +113,7 @@ public class FieldManager : MonoBehaviour
 			runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
 			runeDisplay.GetComponent<Image> ().color = new Color(0,0,0,255);
 		}
-		if (pause && Input.GetButtonDown("Cancel_P1"))
+		if (pause && Input.GetButtonDown("Cancel_Solo"))
 		{
 			if (Temp.Count > 0)
 			{
