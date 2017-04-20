@@ -96,7 +96,7 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 
 				if (p1Ready && p2Ready)
 				{
-					firstPause = false;
+					//firstPause = false;
 					showBattleScreen (1);
 					showBattleScreen (2);
 				}
@@ -173,11 +173,11 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 			updateObstacleList ();
 			deleteObstacles ();
 
-			if (!p1reload &&  player.reload && Input.GetButtonDown("Start_P1"))
+			if (player.reload && Input.GetButtonDown("Start_P1"))
 			{
 				showReloadScreen (1);
 			}
-			if (!p2reload &&  player2.reload && Input.GetButtonDown("Start_P2"))
+			if ( player2.reload && Input.GetButtonDown("Start_P2"))
 			{
 				showReloadScreen (2);
 			}
@@ -355,6 +355,8 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 			{
 				pauseUI [i].SetActive (false);
 			}
+			pause = false;
+			firstPause = false;
 		}
 		else
 		{
@@ -379,6 +381,8 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 			{
 				pauseUI_2 [i].SetActive (false);
 			}
+			pause = false;
+			firstPause = false;
 		}
 	}
 	public void getUI()
@@ -435,12 +439,12 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 		}
 	}
 
-	public void readyP1()
-	{
-		p1Ready = true;
-	}
-	public void readyP2()
-	{
-		p2Ready = true;
-	}
+	//public void readyP1()
+	//{
+	//	p1Ready = true;
+	//}
+	//public void readyP2()
+	//{
+	//	p2Ready = true;
+	//}
 }

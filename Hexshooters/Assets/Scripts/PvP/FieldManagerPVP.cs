@@ -485,6 +485,7 @@ public class FieldManagerPVP : FieldManager
 	}
 	public void chooseGun_2(int weapon)
 	{
+		Debug.Log (weapon);
 		weapons_2 [0] = GameObject.Find ("UI_GunCylinder_2");
 		weapons_2 [1] = GameObject.Find ("8 Rifle_2");
 		weapons_2 [2] = GameObject.Find ("4 Shot Gun_2");
@@ -525,8 +526,8 @@ public class FieldManagerPVP : FieldManager
 				weapons [3].SetActive (true);
 				spellSlots_2.Add (GameObject.Find ("SpellSlot1"));
 				spellSlots_2.Add (GameObject.Find ("SpellSlot2"));
-				p1Gun = weapons_2 [3];
-				weaponMax = 2;
+				p2Gun = weapons_2 [3];
+				weaponMax_2 = 2;
 
 				//weapons_2[2].SetActive (true);
 				//spellSlots.Add (GameObject.Find("SpellSlot1_2"));
@@ -546,7 +547,7 @@ public class FieldManagerPVP : FieldManager
 				spellSlots_2.Add (GameObject.Find ("SpellSlot6_2"));
 				spellSlots_2.Add (GameObject.Find ("SpellSlot7_2"));
 				spellSlots_2.Add (GameObject.Find ("SpellSlot8_2"));
-				p1Gun = weapons_2 [1];
+				p2Gun = weapons_2 [1];
 				weaponMax_2 = 8;
 
 			break;
