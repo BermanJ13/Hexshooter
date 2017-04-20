@@ -142,6 +142,11 @@ public class Wind : Spell {
 
 					markedForDeletion = true; //used to delete bullet
 				}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
 			}
 			break;
 
@@ -182,6 +187,11 @@ public class Wind : Spell {
 
 							}
 						}
+
+							if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+							{
+								showPanels (c);
+							}
 					}
 				}
 				//spell is dead
@@ -328,6 +338,11 @@ public class Wind : Spell {
 					}
 					markedForDeletion = true; //used to delete bullet
 				}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
 			}
 			break;
 		//Gatling = vaccum
@@ -384,6 +399,11 @@ public class Wind : Spell {
 					}
 					markedForDeletion = true; //used to delete bullet
 				}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
 			}
 			break;
 		}

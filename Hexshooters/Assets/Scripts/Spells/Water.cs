@@ -181,6 +181,11 @@ public class Water : Spell {
 							markedForDeletion = true;
 						}
 					}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
                 }
                 break;
             case 2: //whirlpool shoots 3 squares ahead and drags enemy from adjacent squares
@@ -209,6 +214,11 @@ public class Water : Spell {
 					{
 						c.transform.position = transform.position;
 						markedForDeletion = true;
+					}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
 					}
 
                 }
@@ -247,6 +257,11 @@ public class Water : Spell {
 					{
 						c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
 						markedForDeletion = true;
+					}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
 					}
                 }
                 break;
@@ -302,6 +317,11 @@ public class Water : Spell {
 						spellTimer = 50;
 					}
 						markedForDeletion = true;
+					}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
 					}
                 }
                 break;

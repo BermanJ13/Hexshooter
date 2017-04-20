@@ -46,7 +46,7 @@ public class Chains : Spell {
 			{
 				StatusEffect bound = new StatusEffect (3);
 				bound.m_type = StatusType.Bound;
-				c.gameObject.GetComponent<Enemy> ().statMngr.AddEffect (bound);
+				c.gameObject.GetComponent<Enemy> ().myStatus.AddEffect (bound);
 				c.gameObject.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
 				returnShot = true;
 				markedForDeletion = true;
@@ -61,7 +61,7 @@ public class Chains : Spell {
 			{
 				StatusEffect bound = new StatusEffect (10);
 				bound.m_type = StatusType.Bound;
-				c.gameObject.GetComponent<Player> ().statMngr.AddEffect (bound);
+				c.gameObject.GetComponent<Player> ().myStatus.AddEffect (bound);
 				c.gameObject.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
 				returnShot = true;
 				markedForDeletion = true;
@@ -71,10 +71,15 @@ public class Chains : Spell {
 			{
 				StatusEffect bound = new StatusEffect (10);
 				bound.m_type = StatusType.Bound;
-				c.gameObject.GetComponent<Player> ().statMngr.AddEffect (bound);
+				c.gameObject.GetComponent<Player> ().myStatus.AddEffect (bound);
 				c.gameObject.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
 				returnShot = true;
 				markedForDeletion = true;
+			}
+
+			if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+			{
+				showPanels (c);
 			}
 		}
 	}

@@ -37,7 +37,7 @@ public class GameResults : MonoBehaviour {
 		}
 		if (GameObject.FindGameObjectWithTag ("Player2"))
 		{
-			p2_health = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ().health;
+			p2_health = GameObject.FindGameObjectWithTag ("Player2").GetComponent<Player> ().health;
 		}
 
 		if (p1_health > p2_health)

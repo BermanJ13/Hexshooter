@@ -17,71 +17,105 @@ public class OverPlayer : MonoBehaviour {
 	}
 	void movement()
 	{
-		bool moveRight = false;
-		bool moveLeft  = false;
-		bool moveUp  = false;
-		bool moveDown = false;
+		bool inboundsX = false;
+		bool inboundsY = false;
+		bool moveRight = true;
+		bool moveLeft  = true;
+		bool moveUp  =   true;
+		bool moveDown =  true;
 		//Checks for Left and RIght Movement
 		if (Input.GetKey (KeyCode.RightArrow)) 
 		{
-			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x + 0.25f, transform.position.y),0.2f);
+			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x + 0.1f, transform.position.y),0.1f);
 			//Checks whether or not something is in the way or if the desired spot is within the player area.
 			foreach( Collider2D c in hitColliders)
 			{
 				if (c.gameObject.tag == "Map")
 				{
-					moveRight = true;
+					inboundsX = true;
+				}
+
+				if (c.gameObject.tag == "Boundary")
+				{
+					moveRight = false;
 				}
 			}
 			//Performs the movement if possible
-			if (moveRight)
-				transform.position = new Vector2 (transform.position.x + 0.25f, transform.position.y);
+			if (inboundsX)
+			{
+				if (moveRight)
+					transform.position = new Vector2 (transform.position.x + 0.15f, transform.position.y);
+			}
 		} 
 		else if (Input.GetKey (KeyCode.LeftArrow)) 
 		{
-			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x - 0.25f, transform.position.y),0.2f);
+			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x - 0.1f, transform.position.y),0.1f);
 			foreach( Collider2D c in hitColliders)
 			{
 				//Checks whether or not something is in the way or if the desired spot is within the player.
 				if (c.gameObject.tag == "Map")
 				{
-					moveLeft = true;
+					Debug.Log ("Damn");
+					inboundsX = true;
 				}
+				if (c.gameObject.tag == "Boundary")
+				{
+					Debug.Log ("Dammit");
+					moveLeft = false;
+				}
+
 			}
 			//Performs the movement if possible
-			if(moveLeft)
-				transform.position = new Vector2 (transform.position.x - 0.25f, transform.position.y);
+			if (inboundsX)
+			{
+				if (moveLeft)
+					transform.position = new Vector2 (transform.position.x - 0.15f, transform.position.y);
+			}
 		}
 		//Checks for Up and Down Movement
 		if (Input.GetKey (KeyCode.UpArrow)) 
 		{
-			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y + 0.25f),0.2f);
+			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y + 0.1f),0.1f);
 			foreach( Collider2D c in hitColliders)
 			{
 				//Checks whether or not something is in the way or if the desired spot is within the player.
 				if (c.gameObject.tag == "Map")
 				{
-					moveUp = true;
+					inboundsY = true;
+				}
+				if (c.gameObject.tag == "Boundary")
+				{
+					moveUp = false;
 				}
 			}
 			//Performs the movement if possible
-			if(moveUp)
-				transform.position = new Vector2 (transform.position.x, transform.position.y + 0.25f);
+			if (inboundsY)
+			{
+				if (moveUp)
+					transform.position = new Vector2 (transform.position.x, transform.position.y + 0.15f);
+			}
 		} 
 		else if (Input.GetKey (KeyCode.DownArrow)) 
 		{
-			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y - 0.25f),0.2f);
+			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y - 0.1f),0.1f);
 			foreach( Collider2D c in hitColliders)
 			{
 				//Checks whether or not something is in the way or if the desired spot is within the player.
 				if (c.gameObject.tag == "Map")
 				{
-					moveDown = true;
+					inboundsY = true;
+				}
+				if (c.gameObject.tag == "Boundary")
+				{
+					moveDown = false;
 				}
 			}
 			//Performs the movement if possible
-			if(moveDown)
-				transform.position = new Vector2 (transform.position.x, transform.position.y - 0.25f);
+			if (inboundsY)
+			{
+				if (moveDown)
+					transform.position = new Vector2 (transform.position.x, transform.position.y - 0.15f);
+			}
 		}
 	}
 	void interaction()

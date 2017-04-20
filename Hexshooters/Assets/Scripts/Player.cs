@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour {
 
-    	public int health;
+    public int health;
 	public Transform spell;
 	public int weapon;
 	public List<Object> Chamber = new List<Object>();
@@ -19,7 +19,7 @@ public class Player : MonoBehaviour {
 	Text currentBullet;
 	Text pHealth;
 	public int armorWeakness;
-	public StatusManager statMngr;
+	public StatusManager myStatus;
 	protected string atkbutton;
 	public string stat;
 	bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
@@ -36,10 +36,18 @@ public class Player : MonoBehaviour {
 			else
 				weapon = GameObject.Find("CharSelect").GetComponent<CharSelect> ().p2;
 		}
-		 statMngr = new StatusManager();
+		 myStatus = GetComponent<StatusManager>();
 		if (PlayerNum == 1)
 		{
-			atkbutton = "Fire_P1";
+			if (GameObject.FindGameObjectWithTag("Player2") != null && PlayerNum == 1)
+			{
+				atkbutton = "Fire_P1";
+			} 
+			else
+			{
+				atkbutton = "Fire_Solo";
+			}
+
 		}
 		else
 		{
@@ -87,10 +95,14 @@ public class Player : MonoBehaviour {
 			bulletIndicators [7] = GameObject.Find ("Player 2 Bottle 8");
 		}
 		GameObject p2 = GameObject.FindGameObjectWithTag("Player2");
-		if(p2 != null || PlayerNum != 1)
-			field = GameObject.FindGameObjectWithTag ("FieldManager").GetComponent<FieldManagerPVP>();
+		if (p2 != null || PlayerNum != 1)
+		{
+			field = GameObject.FindGameObjectWithTag ("FieldManager").GetComponent<FieldManagerPVP> ();
+		} 
 		else
-			field = GameObject.FindGameObjectWithTag ("FieldManager").GetComponent<FieldManager>();
+		{
+			field = GameObject.FindGameObjectWithTag ("FieldManager").GetComponent<FieldManager> ();
+		}
 		reload = true;
         	health = 100;
 
@@ -104,14 +116,14 @@ public class Player : MonoBehaviour {
 		updateCurrentSpell ();
 		pHealth.text = health.ToString();
 
-		if (!statMngr.IsAffected( StatusType.Bound))
+		if (!myStatus.IsAffected( StatusType.Bound))
 		{
 			movement ();
 		}
 
 		if (Input.GetButtonDown(atkbutton) && Chamber.Count >0) 
 		{
-			if (!statMngr.IsAffected (StatusType.Disabled))
+			if (!myStatus.IsAffected (StatusType.Disabled))
 			{
 				initiateSpell ();
 			}
@@ -144,8 +156,16 @@ public class Player : MonoBehaviour {
 
 		if (PlayerNum == 1)
 		{
-			Horizontal = Input.GetAxisRaw ("Horizontal_P1");
-			vertical = Input.GetAxisRaw ("Vertical_P1");
+			if (GameObject.FindGameObjectWithTag("Player2") != null && PlayerNum == 1)
+			{
+				Horizontal = Input.GetAxisRaw ("Horizontal_P1");
+				vertical = Input.GetAxisRaw ("Vertical_P1");
+			} 
+			else
+			{
+				Horizontal = Input.GetAxisRaw ("Horizontal_Solo");
+				vertical = Input.GetAxisRaw ("Vertical_Solo");
+			}
 			playerArea = "playerZone";
 			enemyArea = "enemyZone";
 		} else if (PlayerNum == 2)
@@ -178,7 +198,8 @@ public class Player : MonoBehaviour {
 					}
 					if (c.gameObject.tag == "Obstacle")
 					{
-						moveRight = false;
+						if(!c.gameObject.GetComponent<Obstacle>().canPass)
+							moveRight = false;
 					}
 				
 					if (c.gameObject.tag == enemyArea)
@@ -214,6 +235,7 @@ public class Player : MonoBehaviour {
 					}
 					if (c.gameObject.tag == "Obstacle")
 					{
+						if(!c.gameObject.GetComponent<Obstacle>().canPass)
 						moveLeft = false;
 					}
 				
@@ -249,7 +271,8 @@ public class Player : MonoBehaviour {
 					}
 					if (c.gameObject.tag == "Obstacle")
 					{
-						moveUp = false;
+						if(!c.gameObject.GetComponent<Obstacle>().canPass)
+							moveUp = false;
 					}
 				
 					if (c.gameObject.tag == enemyArea)
@@ -282,7 +305,8 @@ public class Player : MonoBehaviour {
 					}
 					if (c.gameObject.tag == "Obstacle")
 					{
-						moveDown = false;
+						if(!c.gameObject.GetComponent<Obstacle>().canPass)
+							moveDown = false;
 					}
 				
 					if (c.gameObject.tag == enemyArea)
@@ -303,14 +327,29 @@ public class Player : MonoBehaviour {
 		}
 		if (PlayerNum == 1)
 		{
-			if (Input.GetAxisRaw ("Vertical_P1") == 0)
+			if (GameObject.FindGameObjectWithTag("Player2") != null && PlayerNum == 1)
 			{
-				yAxisInUse = false;
-			}
-			if (Input.GetAxisRaw ("Horizontal_P1") == 0)
+				if (Input.GetAxisRaw ("Vertical_P1") == 0)
+				{
+					yAxisInUse = false;
+				}
+				if (Input.GetAxisRaw ("Horizontal_P1") == 0)
+				{
+					xAxisInUse = false;
+				}
+			} 
+			else
 			{
-				xAxisInUse = false;
+				if (Input.GetAxisRaw ("Vertical_Solo") == 0)
+				{
+					yAxisInUse = false;
+				}
+				if (Input.GetAxisRaw ("Horizontal_Solo") == 0)
+				{
+					xAxisInUse = false;
+				}
 			}
+
 		} 
 		else
 		{
@@ -360,15 +399,15 @@ public class Player : MonoBehaviour {
 	public void takeDamage(int damage) //created for "break" status
 	{
 		int multipliers = 1;
-		if (statMngr.IsAffected(StatusType.Break))
+		if (myStatus.IsAffected(StatusType.Break))
 		{
 			multipliers *= 2;
 		}
-		if (statMngr.IsAffected(StatusType.Shield))
+		if (myStatus.IsAffected(StatusType.Shield))
 		{
 			multipliers /= 2;
 		}
-		if (statMngr.IsAffected(StatusType.Stacking))
+		if (myStatus.IsAffected(StatusType.Stacking))
 		{
 			this.health -= stackDmg;
 			stackDmg++;
