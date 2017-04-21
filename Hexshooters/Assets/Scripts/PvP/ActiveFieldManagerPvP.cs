@@ -14,8 +14,9 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 	public bool p2reload;
 	void Start()
 	{
-		getUI ();
 
+		weapons = new GameObject[4];
+		weapons_2 = new GameObject[4];
 		battleObjects = new GameObject[2];
 		//Debug.Log (pauseObjects[0]);
 		//Hnadful= Deck
@@ -26,6 +27,8 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 		createGrid ();
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 		player2 = GameObject.FindGameObjectWithTag ("Player2").GetComponent<Player> ();
+		chooseGun_2 (player2.weapon);
+		getUI ();
 		updateEnemyList ();
 		updateSpellList ();
 		updateObstacleList ();
@@ -93,6 +96,7 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 
 				if (p1Ready && p2Ready)
 				{
+					//firstPause = false;
 					showBattleScreen (1);
 					showBattleScreen (2);
 				}
@@ -169,7 +173,7 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 			updateObstacleList ();
 			deleteObstacles ();
 
-			if ( player.reload && Input.GetButtonDown("Start_P1"))
+			if (player.reload && Input.GetButtonDown("Start_P1"))
 			{
 				showReloadScreen (1);
 			}
@@ -351,6 +355,8 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 			{
 				pauseUI [i].SetActive (false);
 			}
+			pause = false;
+			firstPause = false;
 		}
 		else
 		{
@@ -432,4 +438,13 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 			}
 		}
 	}
+
+	//public void readyP1()
+	//{
+	//	p1Ready = true;
+	//}
+	//public void readyP2()
+	//{
+	//	p2Ready = true;
+	//}
 }

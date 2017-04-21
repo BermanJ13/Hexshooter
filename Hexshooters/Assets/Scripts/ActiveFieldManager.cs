@@ -35,7 +35,7 @@ public class ActiveFieldManager : FieldManager {
 
 		if (pause)
 		{
-			if (Input.GetButtonDown ("Cancel_P1"))
+			if (Input.GetButtonDown ("Cancel_Solo"))
 			{
 				if (Temp.Count > 0)
 				{
@@ -97,7 +97,7 @@ public class ActiveFieldManager : FieldManager {
 			updateObstacleList ();
 			deleteObstacles ();
 
-			if ( player.reload && Input.GetButtonDown("Start_P1"))
+			if ( player.reload && Input.GetButtonDown("Start_Solo"))
 			{
 				showReloadScreen ();
 				if (player.Chamber.Count > 0)
