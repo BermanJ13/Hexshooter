@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\Enemies\Bandit1.cs" />
      <Compile Include="Assets\Scripts\Enemies\Bosses\Ransom.cs" />
      <Compile Include="Assets\Scripts\Enemies\Bosses\Rob.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Enemy - Copy.cs" />
      <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
      <Compile Include="Assets\Scripts\FieldManager.cs" />
      <Compile Include="Assets\Scripts\GameInfo.cs" />
@@ -101,6 +102,7 @@
      <None Include="Assets\ProjectSettings\ProjectVersion.txt" />
      <None Include="Assets\Dialogue\Text\TestTalk.txt" />
      <None Include="Assets\Maps\base.txt" />
+     <None Include="Assets\Maps\BossFIght.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

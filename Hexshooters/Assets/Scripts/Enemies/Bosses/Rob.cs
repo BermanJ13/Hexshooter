@@ -42,7 +42,7 @@ public class Rob : AIBase {
         modify_TIME_PER_ACTION = TIME_PER_ACTION;
     }
 
-    public override void Update()
+    public override void enemyUpdate()
     {
         if (myStatus.IsAffected(StatusType.Slow) || myStatus.IsAffected(StatusType.Freeze))
         {
@@ -175,12 +175,27 @@ public class Rob : AIBase {
             float shieldRand = UnityEngine.Random.Range(0, 1.0f);
             if (shieldRand > (float)myBrother.myEnemy.Health() / 100.0f)
             {
-                Debug.LogError("Ice shield spell in Rob Attack() unimplemented.");
+				// Use ice spell
+				GameObject go = (GameObject)Instantiate(Resources.Load("Ice"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+				////get the thing component on your instantiated object
+				Spell mything = go.GetComponent<Spell>();
+
+				////set a member variable (must be PUBLIC)
+				mything.weaponUsed = 3; 
+				mything.PlayerNum = 2;
             }
             else
             {
-                // Use wind spell
-                Debug.LogError("Wind spell in Rob Attack() unimplemented.");
+				// Use wind spell
+				GameObject go = (GameObject)Instantiate(Resources.Load("Wind"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+				////get the thing component on your instantiated object
+				Spell mything = go.GetComponent<Spell>();
+
+				////set a member variable (must be PUBLIC)
+				mything.weaponUsed = 1; 
+				mything.PlayerNum = 2;
             }
         }
         else
@@ -188,7 +203,15 @@ public class Rob : AIBase {
             float shieldRand = UnityEngine.Random.Range(0, 1.0f);
             if (myBrother && shieldRand > (float)myBrother.myEnemy.Health() / 100.0f)
             {
-                Debug.LogError("Ice shield spell in Rob Attack() unimplemented.");
+				// Use ice spell
+				GameObject go = (GameObject)Instantiate(Resources.Load("Ice"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+				////get the thing component on your instantiated object
+				Spell mything = go.GetComponent<Spell>();
+
+				////set a member variable (must be PUBLIC)
+				mything.weaponUsed = 3; 
+				mything.PlayerNum = 2;
             }
             else
             {
@@ -196,12 +219,27 @@ public class Rob : AIBase {
                 if (rand < 0.5f)//50%
                 {
                     // Use wind spell
-                    Debug.LogError("Wind spell in Rob Attack() unimplemented.");
+					GameObject go = (GameObject)Instantiate(Resources.Load("Wind"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+					////get the thing component on your instantiated object
+					Spell mything = go.GetComponent<Spell>();
+
+					////set a member variable (must be PUBLIC)
+					mything.weaponUsed = 1; 
+					mything.PlayerNum = 2;
                 }
                 else
                 {
                     // Use water spell
-                    Debug.LogError("Water spell in Rob Attack() unimplemented.");
+					// Use wind spell
+					GameObject go = (GameObject)Instantiate(Resources.Load("Water"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+					////get the thing component on your instantiated object
+					Spell mything = go.GetComponent<Spell>();
+
+					////set a member variable (must be PUBLIC)
+					mything.weaponUsed = 3; 
+					mything.PlayerNum = 2;
                     recentWaterCounter = RECENT_WATER_RESET;
                 }
             }

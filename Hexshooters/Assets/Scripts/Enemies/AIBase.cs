@@ -64,7 +64,7 @@ public abstract class AIBase : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	public virtual void Update () {
+	public virtual void enemyUpdate () {
         if (myStatus.IsAffected(StatusType.Slow) || myStatus.IsAffected(StatusType.Freeze))
         {
             timer -= Time.deltaTime * FROZEN_MULTIPLIER;

@@ -58,7 +58,7 @@ public class Enemy : MonoBehaviour {
     public StatusManager myStatus;
 
     public EnemyState myState;
-	AIBase 
+
 
     
     public bool RearBack()
@@ -262,7 +262,82 @@ public class Enemy : MonoBehaviour {
 
     public void enemyUpdate()
     {
-		
+        //
+        //TEMPORARY ATTACK CALL
+        //
+        attackTime = attackTime + Time.deltaTime;
+        if(attackTime > attackInterval)
+        {
+            isMoving = false;
+            BasicAttack();
+        }
+
+
+        // Handles movement.
+        if (isMoving)
+        {
+            Vector3 movementVector = new Vector3(0, 0, 0);
+            float movementMag = speed;
+        
+            switch (directionMoving)
+            {
+                case Direction.Down:
+                    movementVector = new Vector3(0, -1, 0);
+                    break;
+                case Direction.Left:
+                    movementVector = new Vector3(-1, 0, 0);
+                    break;
+                case Direction.Right:
+                    movementVector = new Vector3(1, 0, 0);
+                    break;
+                case Direction.Up:
+                    movementVector = new Vector3(0, 1, 0);
+                    break;
+            }
+        
+            if (myStatus.IsAffected(StatusType.Freeze))
+            {
+                movementMag *= frozenModifier;
+            }
+            else if (myStatus.IsAffected(StatusType.Slow))
+            {
+                movementMag *= (frozenModifier / 2);
+            }
+            if (movementMag > distanceToMove)
+            {
+                movementMag = distanceToMove;
+            }
+        
+            movementVector *= movementMag;
+        
+            this.transform.position += movementVector;
+            distanceToMove -= movementMag;
+            if (distanceToMove < 0.0001f)
+            {
+                distanceToMove = 0;
+                isMoving = false;
+            }
+        }
+        else //Normal actions.
+        {
+            switch (myState)
+            {
+                case EnemyState.IShouldRunDown:
+                    directionMoving = Direction.Up;
+                    isMoving = true;
+                    distanceToMove = 1.0f;
+                    myState = EnemyState.IShouldRunUp;
+                    break;
+                case EnemyState.IShouldRunUp:
+                    //Finished running up, run down.
+                    directionMoving = Direction.Down;
+                    isMoving = true;
+                    distanceToMove = 1.0f;
+                    myState = EnemyState.IShouldRunDown;
+                    break;
+            }
+        }
+        
     }
 
     void OnTriggerEnter(Collider other)

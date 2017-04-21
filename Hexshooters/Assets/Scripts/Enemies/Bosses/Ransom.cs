@@ -43,7 +43,7 @@ public class Ransom : AIBase {
         modify_TIME_PER_ACTION = TIME_PER_ACTION;
     }
 
-    public override void Update()
+    public override void enemyUpdate()
     {
         if (myBrother == null)
         {
@@ -227,7 +227,14 @@ public class Ransom : AIBase {
         {
             if (recentFireCounter > 0)
             {
-                Debug.LogError("Lightning Spell in Ransom Attack() not implemented");
+				GameObject go = (GameObject)Instantiate(Resources.Load("Lightning"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+				////get the thing component on your instantiated object
+				Spell mything = go.GetComponent<Spell>();
+
+				////set a member variable (must be PUBLIC)
+				mything.weaponUsed = 1; 
+				mything.PlayerNum = 2;
             }
             else
             {
@@ -235,11 +242,26 @@ public class Ransom : AIBase {
 
                 if (rand < 0.5f) //50%
                 {
-                    Debug.LogError("Lightning Spell in Ransom Attack() not implemented");
+					GameObject go = (GameObject)Instantiate(Resources.Load("Lightning"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+					////get the thing component on your instantiated object
+					Spell mything = go.GetComponent<Spell>();
+
+					////set a member variable (must be PUBLIC)
+					mything.weaponUsed = 1; 
+					mything.PlayerNum = 2;
                 }
                 else
                 {
-                    Debug.LogError("Nature Spell in Ransom Attack() not implemented");
+					GameObject go = (GameObject)Instantiate(Resources.Load("Fire"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+					////get the thing component on your instantiated object
+					Spell mything = go.GetComponent<Spell>();
+
+					////set a member variable (must be PUBLIC)
+					mything.weaponUsed = 1; 
+					mything.PlayerNum = 2;
+					recentFireCounter = RECENT_FIRE_RESET;
                 }
             }
         }
@@ -251,11 +273,25 @@ public class Ransom : AIBase {
             {
                 if (rand < 0.5f) //50%
                 {
-                    Debug.LogError("Lightning Spell in Ransom Attack() not implemented");
+					GameObject go = (GameObject)Instantiate(Resources.Load("Lightning"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+					////get the thing component on your instantiated object
+					Spell mything = go.GetComponent<Spell>();
+
+					////set a member variable (must be PUBLIC)
+					mything.weaponUsed = 1; 
+					mything.PlayerNum = 2;
                 }
                 else
                 {
-                    Debug.LogError("Fire Spell in Ransom Attack() not implemented");
+					GameObject go = (GameObject)Instantiate(Resources.Load("Fire"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+					////get the thing component on your instantiated object
+					Spell mything = go.GetComponent<Spell>();
+
+					////set a member variable (must be PUBLIC)
+					mything.weaponUsed = 1; 
+					mything.PlayerNum = 2;
                     recentFireCounter = RECENT_FIRE_RESET;
                 }
             }
@@ -264,7 +300,14 @@ public class Ransom : AIBase {
 
                 if (rand < 0.33f) //33%
                 {
-                    Debug.LogError("Lightning Spell in Ransom Attack() not implemented");
+					GameObject go = (GameObject)Instantiate(Resources.Load("Lightning"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+					////get the thing component on your instantiated object
+					Spell mything = go.GetComponent<Spell>();
+
+					////set a member variable (must be PUBLIC)
+					mything.weaponUsed = 1; 
+					mything.PlayerNum = 2;
                 }
                 else if(rand < 0.66f) //33%
                 {
@@ -272,7 +315,15 @@ public class Ransom : AIBase {
                 }
                 else //34%
                 {
-                    Debug.LogError("Fire Spell in Ransom Attack() not implemented");
+					GameObject go = (GameObject)Instantiate(Resources.Load("Fire"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+					////get the thing component on your instantiated object
+					Spell mything = go.GetComponent<Spell>();
+
+					////set a member variable (must be PUBLIC)
+					mything.weaponUsed = 1; 
+					mything.PlayerNum = 2;
+					recentFireCounter = RECENT_FIRE_RESET;
                     recentFireCounter = RECENT_FIRE_RESET;
                 }
             }
