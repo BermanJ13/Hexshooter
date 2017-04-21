@@ -17,7 +17,7 @@ public class PvPStarter : MonoBehaviour {
 
 	public void toInstructions()
 	{
-		SceneManager.LoadScene (4);
+		SceneManager.LoadScene (3);
 	}
 	public void toCharacterSelect()
 	{
@@ -25,6 +25,14 @@ public class PvPStarter : MonoBehaviour {
 	}
 	public void toPvP()
 	{
-		SceneManager.LoadScene (2);
+		SceneManager.LoadScene (4);
+	}
+	public void toOver()
+	{
+		SceneManager.LoadScene (6);
+	}
+	public void quitGame()
+	{
+		Application.Quit();
 	}
 }
