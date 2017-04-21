@@ -471,11 +471,19 @@ public class FieldManager : MonoBehaviour
 			weapons [2] = GameObject.Find ("4 Shot Gun");
 			weapons [3] = GameObject.Find ("2 Shot Gun");
 		}
+		else
+		{
+			pauseUI = GameObject.FindGameObjectsWithTag ("PauseUI");
+		}
 
 		for (int i = 0; i < weapons.Length; i++)
 		{
-			if(weapons[i] != null)
+			if (weapons [i] != null)
+			{
 				weapons [i].SetActive (false);
+				if (!first)
+				Debug.Log (i);
+			}
 		}
 		switch (weapon)
 		{

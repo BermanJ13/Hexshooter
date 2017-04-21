@@ -498,6 +498,8 @@ public class FieldManagerPVP : FieldManager
 			weapons_2 [2] = GameObject.Find ("4 Shot Gun_2");
 			weapons_2 [3] = GameObject.Find ("2 Shot Gun_2");
 		}
+		else
+			pauseUI= GameObject.FindGameObjectsWithTag ("PauseUI");
 
 		for (int i = 0; i < weapons.Length; i++)
 		{
