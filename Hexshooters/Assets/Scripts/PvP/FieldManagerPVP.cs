@@ -463,10 +463,10 @@ public class FieldManagerPVP : FieldManager
 		for (int i = 0; i < 6; i++)
 		{
 			//Handful.Add(Resources.Load ("Chains"));
-			Handful.Add(Resources.Load ("Chains"));
+			Handful.Add(Resources.Load ("Fire"));
 			Handful.Add(Resources.Load ("Water"));
 			Handful.Add(Resources.Load ("Earth"));
-			Handful.Add(Resources.Load ("Lightning"));
+			Handful.Add(Resources.Load ("Fire"));
 			Handful.Add(Resources.Load ("Boomerang"));
 		}
 		Shuffle(Handful);
@@ -478,8 +478,8 @@ public class FieldManagerPVP : FieldManager
 			Handful_2.Add(Resources.Load ("Wind"));
 			Handful_2.Add(Resources.Load ("Water"));
 			Handful_2.Add(Resources.Load ("Earth"));
-			Handful_2.Add(Resources.Load ("Lightning"));
-			Handful_2.Add(Resources.Load ("Boomerang"));
+			Handful_2.Add(Resources.Load ("Fire"));
+			Handful_2.Add(Resources.Load ("Fire"));
 		}
 		Shuffle(Handful_2);
 	}
