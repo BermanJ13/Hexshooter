@@ -32,8 +32,8 @@ public class DialogueManager : MonoBehaviour {
     {
         UI = GameObject.FindGameObjectsWithTag("DialogUI");
 
-        for (int i = 0; i < UI.Length; i++)
-            UI[i].SetActive(false);
+        //for (int i = 0; i < UI.Length; i++)
+           // UI[i].SetActive(false);
 
         /*
         characterPic.gameObject.SetActive(false);
@@ -43,7 +43,7 @@ public class DialogueManager : MonoBehaviour {
         */
     }
 
-    private bool Load(string fileName)
+    public bool Load(string fileName)
     {
         
         try
@@ -97,8 +97,8 @@ public class DialogueManager : MonoBehaviour {
         }
         else
         {
-            for (int i = 0; i < UI.Length; i++)
-                UI[i].SetActive(false);
+            //for (int i = 0; i < UI.Length; i++)
+                //UI[i].SetActive(false);
         }
 	}
 

@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class OverPlayer : MonoBehaviour {
-	void Awake()
+
+    List<string> script;
+
+    public DialogueManager dialog;
+
+    void Awake()
 	{
 		DontDestroyOnLoad (transform.gameObject);
 	}
 	// Use this for initialization
 	void Start () {
-		
+        dialog = new DialogueManager();
+        script = new List<string>();
+        script.Add("Dialogue/Text/TestCutscene.txt");
 	}
 	
 	// Update is called once per frame
@@ -125,10 +132,10 @@ public class OverPlayer : MonoBehaviour {
 	{
 
         Collider2D hitCollider = Physics2D.OverlapCircle(new Vector2(transform.position.x, transform.position.y), 1f);
-		Debug.Log (hitCollider);
 		if (hitCollider.gameObject.tag=="Cutscene")
         {
             Debug.Log("Cutscene");
+            dialog.Load(script[0]);
         }
         else if (Input.GetKey (KeyCode.Return)) 
 	    {
