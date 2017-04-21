@@ -43,10 +43,12 @@ public class FieldManager : MonoBehaviour
 	public EventSystem ES_P1;
 	protected GameObject[] battleObjects;
 	public GameObject[] weapons;
+	public bool once;
 
 	// Use this for initialization
 	public void Start () 
 	{
+		once =false;
 		weapons = new GameObject[4];
 		ES_P1 = EventSystem.current;
 		//Hnadful= Deck
@@ -104,6 +106,11 @@ public class FieldManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		if (once)
+		{
+			chooseGun (player.weapon);
+			once = false;
+		}
 		//updateHealth ();
 		if(ES_P1.currentSelectedGameObject.tag == "SpellHolder")
 		{
@@ -464,7 +471,8 @@ public class FieldManager : MonoBehaviour
 
 		for (int i = 0; i < weapons.Length; i++)
 		{
-			weapons [i].SetActive (false);
+			if(weapons[i] != null)
+				weapons [i].SetActive (false);
 		}
 		switch (weapon)
 		{

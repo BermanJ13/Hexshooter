@@ -29,6 +29,10 @@ public class Spell : MonoBehaviour {
 		markedForDeletion = false;
 		//we never init the list
 		//List<Collider2D> enemyColliders = new List<Collider2D> ();
+		if (PlayerNum != 1)
+		{
+			transform.localEulerAngles = new Vector3(0f,0f,180f);
+		}
 	}
 	// Update is called once per frame
 	public void spellUpdate () 

@@ -30,7 +30,7 @@ public class FieldManagerPVP : FieldManager
 	void Start () 
 	{
 
-
+		once = false;
 		weapons = new GameObject[4];
 		weapons_2 = new GameObject[4];
 		battleObjects = new GameObject[2];
@@ -53,7 +53,12 @@ public class FieldManagerPVP : FieldManager
 	// Update is called once per frame
 	void Update () 
 	{
-		
+		if (once)
+		{
+			chooseGun (player.weapon);
+			chooseGun_2 (player2.weapon);
+			once = false;
+		}
 		//updateHealth ();
 		if (player.health <= 0 || player2.health <=0)
 		{
@@ -493,7 +498,8 @@ public class FieldManagerPVP : FieldManager
 
 		for (int i = 0; i < weapons.Length; i++)
 		{
-			weapons_2 [i].SetActive (false);
+			if(weapons_2[i] != null)
+				weapons_2 [i].SetActive (false);
 		}
 		switch (weapon)
 		{
@@ -556,5 +562,6 @@ public class FieldManagerPVP : FieldManager
 			break;
 
 		}
+
 	}
 }

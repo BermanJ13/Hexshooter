@@ -32,9 +32,14 @@ public class Player : MonoBehaviour {
 		if (GameObject.Find ("CharSelect") != null)
 		{
 			if (PlayerNum == 1)
+			{
 				weapon = GameObject.Find ("CharSelect").GetComponent<CharSelect> ().p1;
+				field.chooseGun (weapon);
+			}
 			else
-				weapon = GameObject.Find("CharSelect").GetComponent<CharSelect> ().p2;
+			{				
+				weapon = GameObject.Find ("CharSelect").GetComponent<CharSelect> ().p2;
+			}
 		}
 		 myStatus = GetComponent<StatusManager>();
 		if (PlayerNum == 1)

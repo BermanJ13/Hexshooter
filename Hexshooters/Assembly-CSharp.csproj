@@ -54,6 +54,10 @@
      <Compile Include="Assets\Scripts\CharSelect.cs" />
      <Compile Include="Assets\Scripts\ControllerRefocus.cs" />
      <Compile Include="Assets\Scripts\DialogueManager.cs" />
+     <Compile Include="Assets\Scripts\Enemies\AIBase.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Bandit1.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Bosses\Ransom.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Bosses\Rob.cs" />
      <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
      <Compile Include="Assets\Scripts\FieldManager.cs" />
      <Compile Include="Assets\Scripts\GameInfo.cs" />
@@ -97,9 +101,6 @@
      <None Include="Assets\ProjectSettings\ProjectVersion.txt" />
      <None Include="Assets\Dialogue\Text\TestTalk.txt" />
      <None Include="Assets\Maps\base.txt" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -114,9 +115,6 @@
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
