@@ -27,7 +27,7 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 		createGrid ();
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 		player2 = GameObject.FindGameObjectWithTag ("Player2").GetComponent<Player> ();
-		chooseGun_2 (player2.weapon);
+		chooseGun_2 (player2.weapon, true);
 		getUI ();
 		updateEnemyList ();
 		updateSpellList ();

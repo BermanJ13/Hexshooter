@@ -34,7 +34,6 @@ public class Player : MonoBehaviour {
 			if (PlayerNum == 1)
 			{
 				weapon = GameObject.Find ("CharSelect").GetComponent<CharSelect> ().p1;
-				field.chooseGun (weapon);
 			}
 			else
 			{				

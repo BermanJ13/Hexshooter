@@ -48,7 +48,7 @@ public class FieldManager : MonoBehaviour
 	// Use this for initialization
 	public void Start () 
 	{
-		once =false;
+		once =true;
 		weapons = new GameObject[4];
 		ES_P1 = EventSystem.current;
 		//Hnadful= Deck
@@ -108,7 +108,7 @@ public class FieldManager : MonoBehaviour
 	{
 		if (once)
 		{
-			chooseGun (player.weapon);
+			chooseGun (player.weapon, false);
 			once = false;
 		}
 		//updateHealth ();
@@ -397,7 +397,7 @@ public class FieldManager : MonoBehaviour
 	public void getUI()
 	{
 		can = GameObject.Find ("Canvas");
-		chooseGun (player.weapon);
+		chooseGun (player.weapon, true);
 		spellHold = GameObject.Find ("SpellHolder").GetComponent<SpellHolder>();
 		pauseObjects = new GameObject[11];
 		pauseObjects[0] = GameObject.Find("Spell 0");
@@ -462,12 +462,15 @@ public class FieldManager : MonoBehaviour
 			}
 		}
 	}
-	public void chooseGun(int weapon)
+	public void chooseGun(int weapon, bool first)
 	{
-		weapons[0] = GameObject.Find ("UI_GunCylinder");
-		weapons[1] = GameObject.Find ("8 Rifle");
-		weapons[2] = GameObject.Find ("4 Shot Gun");
-		weapons[3] = GameObject.Find ("2 Shot Gun");
+		if (first)
+		{
+			weapons [0] = GameObject.Find ("UI_GunCylinder");
+			weapons [1] = GameObject.Find ("8 Rifle");
+			weapons [2] = GameObject.Find ("4 Shot Gun");
+			weapons [3] = GameObject.Find ("2 Shot Gun");
+		}
 
 		for (int i = 0; i < weapons.Length; i++)
 		{

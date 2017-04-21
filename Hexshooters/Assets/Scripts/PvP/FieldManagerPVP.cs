@@ -30,7 +30,7 @@ public class FieldManagerPVP : FieldManager
 	void Start () 
 	{
 
-		once = false;
+		once = true;
 		weapons = new GameObject[4];
 		weapons_2 = new GameObject[4];
 		battleObjects = new GameObject[2];
@@ -43,7 +43,7 @@ public class FieldManagerPVP : FieldManager
 		createGrid ();
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 		player2 = GameObject.FindGameObjectWithTag ("Player2").GetComponent<Player> ();
-		chooseGun_2 (player2.weapon);
+		chooseGun_2 (player2.weapon, true);
 		getUI ();
 		updateEnemyList ();
 		updateSpellList ();
@@ -55,8 +55,8 @@ public class FieldManagerPVP : FieldManager
 	{
 		if (once)
 		{
-			chooseGun (player.weapon);
-			chooseGun_2 (player2.weapon);
+			chooseGun (player.weapon, false);
+			chooseGun_2 (player2.weapon, false);
 			once = false;
 		}
 		//updateHealth ();
@@ -488,13 +488,16 @@ public class FieldManagerPVP : FieldManager
 		}
 		Shuffle(Handful_2);
 	}
-	public void chooseGun_2(int weapon)
+	public void chooseGun_2(int weapon, bool first)
 	{
 		Debug.Log (weapon);
-		weapons_2 [0] = GameObject.Find ("UI_GunCylinder_2");
-		weapons_2 [1] = GameObject.Find ("8 Rifle_2");
-		weapons_2 [2] = GameObject.Find ("4 Shot Gun_2");
-		weapons_2 [3] = GameObject.Find ("2 Shot Gun_2");
+		if (first)
+		{
+			weapons_2 [0] = GameObject.Find ("UI_GunCylinder_2");
+			weapons_2 [1] = GameObject.Find ("8 Rifle_2");
+			weapons_2 [2] = GameObject.Find ("4 Shot Gun_2");
+			weapons_2 [3] = GameObject.Find ("2 Shot Gun_2");
+		}
 
 		for (int i = 0; i < weapons.Length; i++)
 		{

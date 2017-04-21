@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class OverPlayer : MonoBehaviour {
-
+	void Awake()
+	{
+		DontDestroyOnLoad (transform.gameObject);
+	}
 	// Use this for initialization
 	void Start () {
 		
@@ -122,7 +125,8 @@ public class OverPlayer : MonoBehaviour {
 	{
 
         Collider2D hitCollider = Physics2D.OverlapCircle(new Vector2(transform.position.x, transform.position.y), 1f);
-        if (hitCollider.gameObject.tag=="Cutscene")
+		Debug.Log (hitCollider);
+		if (hitCollider.gameObject.tag=="Cutscene")
         {
             Debug.Log("Cutscene");
         }

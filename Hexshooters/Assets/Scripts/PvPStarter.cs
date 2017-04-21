@@ -29,13 +29,13 @@ public class PvPStarter : MonoBehaviour {
 	}
 	public void toPvP()
 	{
-		SceneManager.LoadScene (4);
+		SceneManager.LoadScene ("PVP");
 	}
 	public void toOver()
 	{
         OverPlayer op = GameObject.FindObjectOfType<OverPlayer>();
         op.enabled = true;
-        SceneManager.LoadScene (6);
+        SceneManager.LoadScene ("Overworld");
 	}
 	public void quitGame()
 	{
