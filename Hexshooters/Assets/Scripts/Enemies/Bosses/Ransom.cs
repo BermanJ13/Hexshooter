@@ -39,7 +39,7 @@ public class Ransom : AIBase {
         maxY = 4;
 
         myBrother = GameObject.FindObjectOfType<Rob>();
-        Initialize(7, 2);
+        //Initialize(7, 2);
         modify_TIME_PER_ACTION = TIME_PER_ACTION;
     }
 
@@ -311,7 +311,14 @@ public class Ransom : AIBase {
                 }
                 else if(rand < 0.66f) //33%
                 {
-                    Debug.LogError("Nature Spell in Ransom Attack() not implemented");
+					GameObject go = (GameObject)Instantiate(Resources.Load("Fire"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+					////get the thing component on your instantiated object
+					Spell mything = go.GetComponent<Spell>();
+
+					////set a member variable (must be PUBLIC)
+					mything.weaponUsed = 1; 
+					mything.PlayerNum = 2;
                 }
                 else //34%
                 {

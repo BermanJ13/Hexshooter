@@ -38,7 +38,7 @@ public class Rob : AIBase {
         maxY = 4;
 
         myBrother = GameObject.FindObjectOfType<Ransom>();
-        Initialize(6, 2);
+        //Initialize(6, 2);
         modify_TIME_PER_ACTION = TIME_PER_ACTION;
     }
 

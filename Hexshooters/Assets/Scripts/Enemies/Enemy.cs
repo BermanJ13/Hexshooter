@@ -58,7 +58,7 @@ public class Enemy : MonoBehaviour {
     public StatusManager myStatus;
 
     public EnemyState myState;
-	AIBase 
+	AIBase ai;
 
     
     public bool RearBack()
@@ -116,6 +116,8 @@ public class Enemy : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		ai = GetComponent<AIBase> ();
+		ai.Initialize ((int)transform.position.x,(int)transform.position.y);
 		health = 100;
 		//Debug.Log (health);
 		stat = "normal";
@@ -262,7 +264,7 @@ public class Enemy : MonoBehaviour {
 
     public void enemyUpdate()
     {
-		
+		ai.enemyUpdate ();
     }
 
     void OnTriggerEnter(Collider other)

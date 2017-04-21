@@ -58,7 +58,6 @@
      <Compile Include="Assets\Scripts\Enemies\Bandit1.cs" />
      <Compile Include="Assets\Scripts\Enemies\Bosses\Ransom.cs" />
      <Compile Include="Assets\Scripts\Enemies\Bosses\Rob.cs" />
-     <Compile Include="Assets\Scripts\Enemies\Enemy - Copy.cs" />
      <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
      <Compile Include="Assets\Scripts\FieldManager.cs" />
      <Compile Include="Assets\Scripts\GameInfo.cs" />
