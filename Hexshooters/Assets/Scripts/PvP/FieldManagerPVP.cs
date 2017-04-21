@@ -523,9 +523,9 @@ public class FieldManagerPVP : FieldManager
 				weaponMax_2 = 8;
 			break;
 			case 3:
-				weapons [3].SetActive (true);
-				spellSlots_2.Add (GameObject.Find ("SpellSlot1"));
-				spellSlots_2.Add (GameObject.Find ("SpellSlot2"));
+				weapons_2 [3].SetActive (true);
+				spellSlots_2.Add (GameObject.Find ("SpellSlot1_2"));
+				spellSlots_2.Add (GameObject.Find ("SpellSlot2_2"));
 				p2Gun = weapons_2 [3];
 				weaponMax_2 = 2;
 
