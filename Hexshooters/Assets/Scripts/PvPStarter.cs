@@ -33,7 +33,9 @@ public class PvPStarter : MonoBehaviour {
 	}
 	public void toOver()
 	{
-		SceneManager.LoadScene (6);
+        OverPlayer op = GameObject.FindObjectOfType<OverPlayer>();
+        op.enabled = true;
+        SceneManager.LoadScene (6);
 	}
 	public void quitGame()
 	{
