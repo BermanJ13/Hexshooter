@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Flames : Obstacle {
 	public List<GameObject> hitPanels = new List<GameObject>();
+	private int flameTimer = 200; //decay from flame timer before poof prox ~8seconds atm
 	// Update is called uonce per frame
-	public void obstacleUpdate () 
+	public override void obstacleUpdate () 
 	{
 		collide ();
+		flameTimer--;
+		Debug.Log (flameTimer);
 		//Debug.Log (health);
 		if (direction != new Vector2 (0, 0))
 		{
@@ -17,9 +20,15 @@ public class Flames : Obstacle {
 		{
 			MarkedforDeletion = true;
 		}
+		if(flameTimer<=0)
+		{
+			MarkedforDeletion = true;
+			flameTimer = 200;
+		}
 	}
-	public void collide ()
+	public override void collide ()
 	{
+		Debug.Log ("hi");
 		Collider2D[] colliders;
 		colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
 		foreach (Collider2D d in colliders) 
@@ -47,7 +56,7 @@ public class Flames : Obstacle {
 
 				if (d.transform.position.x != 9)
 				{
-					d.transform.position += new Vector3 (1, 0, 0);
+					//d.transform.position += new Vector3 (1, 0, 0);
 				}
 				MarkedforDeletion = true;
 
@@ -59,11 +68,11 @@ public class Flames : Obstacle {
 
 				if (d.GetComponent<Player> ().transform.position.x != 0) 
 				{
-					d.transform.position += new Vector3(-1f,0f,0f); 
+					//d.transform.position += new Vector3(-1f,0f,0f); 
 				}
 				MarkedforDeletion = true;
 			}
-			if (d.gameObject.tag == "playerZone" && d.gameObject.tag == "enemyZone")
+			if (d.gameObject.tag == "playerZone" || d.gameObject.tag == "enemyZone")
 			{
 				bool created = false;
 				if (direction != new Vector2 (0, 0))
@@ -73,7 +82,8 @@ public class Flames : Obstacle {
 						if(hitPanels[i] == d.gameObject)
 							created = true;
 					}
-					if (created)
+					Debug.Log (created);
+					if (!created)
 					{
 						GameObject g = (GameObject)Instantiate (Resources.Load ("Flames"), new Vector2 (transform.position.x, transform.position.y), Quaternion.identity);
 						g.GetComponent<Flames> ().hitPanels = hitPanels;

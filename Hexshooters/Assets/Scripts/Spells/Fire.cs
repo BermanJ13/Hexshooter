@@ -9,6 +9,7 @@ public class Fire : Spell {
 	private GameObject[] playerPanels; 
 	private bool targetNeeded;
 	private int spellTimer;
+	private int gattlingTimer; //time for how long the gattling gun flamethrower last
 	public Transform obstacle;
 	Vector2 target;
 	Vector2 position;
@@ -18,6 +19,7 @@ public class Fire : Spell {
 	new void Start () {
 		base.Start ();
 		spellTimer = 50;
+		gattlingTimer = 50;
 		enemyPanels = GameObject.FindGameObjectsWithTag ("enemyZone");
 		playerPanels = GameObject.FindGameObjectsWithTag ("playerZone");
 		targetNeeded = true;
@@ -116,32 +118,9 @@ public class Fire : Spell {
 			break;
 		//Gatling = moves for 5 spaces 
 		case 4:
-			//if player 1
-			if (PlayerNum == 1)
-			{
-				if (targetNeeded)
-				{
-					target = new Vector2 (transform.position.x + 5, transform.position.y);
-					targetNeeded = false;
-
-				}
-			}
-			//if player 2
-			else
-			{
-				if (targetNeeded)
-				{
-					target = new Vector2 (transform.position.x - 5, transform.position.y);
-					targetNeeded = false;
-				}
-			}
-			position = Vector2.Lerp (transform.position, target, (Time.deltaTime * speed));
-			transform.position = position;
-
-			if (transform.position == new Vector3 (target.x, target.y, 0))
-			{
-				hitBehavior (4);
-			}
+			
+			hitBehavior (4);
+			
 			break;
 
 		}
@@ -387,43 +366,52 @@ public class Fire : Spell {
 		case 4:
 			// if it collides with anything and 5 spaces behind it 
 			if (PlayerNum == 1) {
-				colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x - 4, transform.position.y));
-			} else {
 				colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x + 4, transform.position.y));
+			} else {
+				colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x - 4, transform.position.y));
 			}
-			//goes through the array
-			foreach (Collider2D c in colliders) {
-				//if attack an enemy
-				if (c.gameObject.tag == "Enemy") {
-					//initial strike
-					c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum)); 
-					markedForDeletion = true; //used to delete bullet
-				}
-				//if hit an obstacle does nothing but dmg
-				else if (c.gameObject.tag == "Obstacle") {
-					//obstacle takes damage
-					c.GetComponent<Obstacle> ().takeDamage (damageCalc (damageTier, hitNum)); 
-					markedForDeletion = true; //used to delete bullet
+		
+			// time the stream of fire is alive
+			gattlingTimer--;
+			//checks to see if is hitting a spell during this time and if so do damage
+			if (gattlingTimer > 0) {
+				//checks colliders
+				foreach (Collider2D c in colliders) {
+					//if attack an enemy
+					if (c.gameObject.tag == "Enemy") {
+						//initial strike
+						c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum)); 
+						markedForDeletion = true; //used to delete bullet
+					}
+					//if hit an obstacle does nothing but dmg
+					else if (c.gameObject.tag == "Obstacle") {
+						//obstacle takes damage
+						c.GetComponent<Obstacle> ().takeDamage (damageCalc (damageTier, hitNum)); 
+						markedForDeletion = true; //used to delete bullet
 
-				}
-				// if hit player 1
-				else if (c.gameObject.tag == "Player" && PlayerNum == 2) {
-					//initial damage
-					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum)); 
-					markedForDeletion = true; //used to delete bullet
-				}
-				// if hit player 2
-				else if (c.gameObject.tag == "Player2" && PlayerNum == 1) {
-					//initial damage
-					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum)); 
-					markedForDeletion = true; //used to delete bullet
-
-				}
-
-				if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone") {
-					showPanels (c);
+					}
+					// if hit player 1
+					else if (c.gameObject.tag == "Player" && PlayerNum == 2) {
+						//initial damage
+						c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum)); 
+						markedForDeletion = true; //used to delete bullet
+					}
+					// if hit player 2
+					else if (c.gameObject.tag == "Player2" && PlayerNum == 1) {
+						//initial damage
+						c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum)); 
+						markedForDeletion = true; //used to delete bullet
+					}
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone") {
+						showPanels (c);
+					}
 				}
 			}
+			//spell is dead
+			if (gattlingTimer <= 0) {
+				markedForDeletion = true;
+				gattlingTimer = 50;
+			} 
 			markedForDeletion = true;
 			break;
 		}

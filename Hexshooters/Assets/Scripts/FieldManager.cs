@@ -214,7 +214,7 @@ public class FieldManager : MonoBehaviour
 			count++;
 		}
 	}
-	public void updateObstacleList()
+	public new void  updateObstacleList()
 	{
 		GameObject[] temp = GameObject.FindGameObjectsWithTag ("Obstacle");
 		obstacles = new Obstacle[temp.Length];
