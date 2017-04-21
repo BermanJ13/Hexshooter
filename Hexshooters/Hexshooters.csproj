@@ -81,10 +81,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Script\ActivateAttack.cs" />
+    <Compile Include="Assets\Script\Movement.cs" />
+    <Compile Include="Assets\Script\Particle.cs" />
+    <Compile Include="Assets\Script\tmp.cs" />
     <Compile Include="Assets\Scripts\ActiveFieldManager.cs" />
     <Compile Include="Assets\Scripts\CharSelect.cs" />
     <Compile Include="Assets\Scripts\ControllerRefocus.cs" />
     <Compile Include="Assets\Scripts\DialogueManager.cs" />
+    <Compile Include="Assets\Scripts\Enemies\AIBase.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Bandit1.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Bosses\Ransom.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Bosses\Rob.cs" />
     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
     <Compile Include="Assets\Scripts\FieldManager.cs" />
     <Compile Include="Assets\Scripts\GameInfo.cs" />
