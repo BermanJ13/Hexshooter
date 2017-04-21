@@ -14,6 +14,6 @@ public class Instructions : MonoBehaviour {
 	void Update () 
 	{
 		if (Input.GetKeyDown (KeyCode.Return))
-			SceneManager.LoadScene (1);
+			SceneManager.LoadScene (2);
 	}
 }

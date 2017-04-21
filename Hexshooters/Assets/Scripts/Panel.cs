@@ -15,7 +15,7 @@ public class Panel : MonoBehaviour {
 	void Update () {
 		if (attacked)
 		{
-			Color c = new Color (255f, 255f, 0f, .7f);
+			Color c = new Color (255f, 255f, 0f, .2f);
 			GetComponent<SpriteRenderer> ().color = c;
 		}
 		else

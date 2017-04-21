@@ -52,6 +52,10 @@ public class ControllerRefocus_Multiplayer : MonoBehaviour
 		{
 			ES_P1.SetSelectedGameObject(ES_P1.firstSelectedGameObject);
 		}
+		if (ES_P1.currentSelectedGameObject == GameObject.Find("Spell 9_2"))
+		{
+			ES_P1.SetSelectedGameObject(ES_P1.firstSelectedGameObject);
+		}
 		if (ES_P1.currentSelectedGameObject == GameObject.Find("BattleButton_2"))
 		{
 			ES_P1.SetSelectedGameObject(ES_P1.firstSelectedGameObject);
@@ -96,6 +100,10 @@ public class ControllerRefocus_Multiplayer : MonoBehaviour
 			ES_P2.SetSelectedGameObject(ES_P2.firstSelectedGameObject);
 		}
 		if (ES_P2.currentSelectedGameObject == GameObject.Find("Spell 8"))
+		{
+			ES_P2.SetSelectedGameObject(ES_P2.firstSelectedGameObject);
+		}
+		if (ES_P2.currentSelectedGameObject == GameObject.Find("Spell 9"))
 		{
 			ES_P2.SetSelectedGameObject(ES_P2.firstSelectedGameObject);
 		}

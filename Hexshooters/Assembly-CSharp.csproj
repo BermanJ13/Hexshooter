@@ -46,6 +46,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Script\ActivateAttack.cs" />
+     <Compile Include="Assets\Script\Movement.cs" />
+     <Compile Include="Assets\Script\Particle.cs" />
+     <Compile Include="Assets\Script\tmp.cs" />
      <Compile Include="Assets\Scripts\ActiveFieldManager.cs" />
      <Compile Include="Assets\Scripts\CharSelect.cs" />
      <Compile Include="Assets\Scripts\ControllerRefocus.cs" />

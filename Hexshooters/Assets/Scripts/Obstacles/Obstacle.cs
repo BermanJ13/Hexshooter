@@ -22,7 +22,7 @@ public class Obstacle : MonoBehaviour {
 	}
 
 	// Update is called uonce per frame
-	public void obstacleUpdate () 
+	public virtual void obstacleUpdate () 
 	{
 		//Debug.Log (health);
 		if (direction != new Vector2 (0, 0))
@@ -35,7 +35,7 @@ public class Obstacle : MonoBehaviour {
 			MarkedforDeletion = true;
 		}
 	}
-	public void takeDamage(int damage) //created for "break" status
+	public virtual void takeDamage(int damage) //created for "break" status
 	{
 		int multipliers = 1;
 		if (this.stat == "break")
@@ -46,7 +46,7 @@ public class Obstacle : MonoBehaviour {
 		}
 		this.health -= damage* multipliers;
 	}
-	public void move()
+	public virtual void move()
 	{
 		//Debug.Log ("Here");
 		//Debug.Log (direction);
@@ -54,7 +54,7 @@ public class Obstacle : MonoBehaviour {
 		Vector2 position = Vector2.Lerp (transform.position, target, (Time.deltaTime*8));
 		transform.position = position;
 	}
-	public void collide ()
+	public virtual void collide ()
 	{
 		Collider2D[] colliders;
 		colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
