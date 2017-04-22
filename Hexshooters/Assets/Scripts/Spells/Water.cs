@@ -144,8 +144,11 @@ public class Water : Spell {
                 {
 					if (c.gameObject.tag == "Enemy")
 					{
-					c.gameObject.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
-						revolverMove = true;
+						if (PlayerNum == 1)
+						{
+							c.gameObject.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							revolverMove = true;
+						}
 					} 
 					else if (c.gameObject.tag == "Obstacle")
 					{
@@ -194,10 +197,13 @@ public class Water : Spell {
                 {
                   
                     if (c.gameObject.tag == "Enemy")
-                    {
-                        //in future call Enemy move to this position so they don't just warp
-                        c.transform.position = transform.position;
-                        markedForDeletion = true;
+					{
+						if (PlayerNum == 1)
+						{
+							//in future call Enemy move to this position so they don't just warp
+							c.transform.position = transform.position;
+							markedForDeletion = true;
+						}
                     }
                     if (c.gameObject.tag == "Obstacle")
                     {
@@ -228,7 +234,9 @@ public class Water : Spell {
                 foreach (Collider2D c in colliders)
                 {
                     if (c.gameObject.tag == "Enemy")
-                    {
+					{
+						if (PlayerNum == 1)
+						{
                         c.gameObject.GetComponent<Enemy>().takeDamage(3);
 
                         if (c.gameObject.GetComponent<Enemy>().stat == "normal")
@@ -241,6 +249,7 @@ public class Water : Spell {
                         
                         markedForDeletion = true;
                         //c.gameObject.GetComponent<Enemy>().takeDamage(damageCalc (damageTier, hitNum));
+						}
                     }
                     if (c.gameObject.tag == "Obstacle")
                     {
@@ -270,18 +279,21 @@ public class Water : Spell {
                 foreach (Collider2D c in colliders)
                 {
                     if (c.gameObject.tag == "Enemy")
-                    {
-                        if (spellTimer % 10 == 0) //modulo ensures that enemy not immediately pushed to back
-                        {
-                            if (c.gameObject.GetComponent<Enemy>().transform.position.x <= 8)
-                                c.gameObject.GetComponent<Enemy>().transform.position = new Vector2(c.gameObject.GetComponent<Enemy>().transform.position.x + 1, c.gameObject.GetComponent<Enemy>().transform.position.y);
-                        }
-                        spellTimer--;
-                        if (spellTimer <= 0)
-                        {
-                            markedForDeletion = true;
-                            spellTimer = 50;
-                        }
+					{
+						if (PlayerNum == 1)
+						{
+							if (spellTimer % 10 == 0) //modulo ensures that enemy not immediately pushed to back
+							{
+								if (c.gameObject.GetComponent<Enemy> ().transform.position.x <= 8)
+									c.gameObject.GetComponent<Enemy> ().transform.position = new Vector2 (c.gameObject.GetComponent<Enemy> ().transform.position.x + 1, c.gameObject.GetComponent<Enemy> ().transform.position.y);
+							}
+							spellTimer--;
+							if (spellTimer <= 0)
+							{
+								markedForDeletion = true;
+								spellTimer = 50;
+							}
+						}
                     }
                     if (c.gameObject.tag == "Obstacle")
                     {

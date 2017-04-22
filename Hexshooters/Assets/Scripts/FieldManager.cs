@@ -154,6 +154,8 @@ public class FieldManager : MonoBehaviour
 			}
 			updateSpellList ();
 			deleteSpells ();
+			updateEnemyList ();
+			deleteEnemies ();
 			updateObstacleList ();
 			deleteObstacles ();
 			if (player.reload && enemyReload)
@@ -180,6 +182,24 @@ public class FieldManager : MonoBehaviour
 			}
 		}
 		updateSpellList ();
+	}
+	public void deleteEnemies()
+	{
+		if (enemies != null) 
+		{
+			foreach (Enemy e in enemies) 
+			{
+				////Debug.Log (spell.GetComponent<Spell> ().MarkedForDeletion);
+				if (e != null)
+				{
+					if (e.MarkedForDeletion)
+					{
+						Destroy (e.gameObject);
+					}
+				}
+			}
+		}
+		updateEnemyList ();
 	}
 	public void deleteObstacles()
 	{
@@ -234,6 +254,10 @@ public class FieldManager : MonoBehaviour
 	}
 	public void showReloadScreen()
 	{
+		foreach(GameObject g in bulletIndicators)
+		{
+			g.SetActive (true);
+		}
 		for (int i = 0; i < spellSlots.Count; i++)
 		{
 			Debug.Log (defaultSlot);
@@ -436,7 +460,7 @@ public class FieldManager : MonoBehaviour
 	{
 		for (int i = 0; i < 10; i++)
 		{
-			Handful.Add(Resources.Load ("Chains"));
+			Handful.Add(Resources.Load ("Fire"));
 			Handful.Add(Resources.Load ("Earth"));
 			Handful.Add(Resources.Load ("Lightning"));
 		}

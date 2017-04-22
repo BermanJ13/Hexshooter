@@ -160,13 +160,17 @@ public class Earth : Spell {
 			{
 				if (c.gameObject.tag == "Enemy")
 				{
-					c.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
-					c.transform.position += new Vector3 (1, 0, 0);
-					damage = 0;
-					Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
-					markedForDeletion = true;
-					colided = true;
-				} else if (c.gameObject.tag == "Obstacle")
+					if (PlayerNum == 1)
+					{
+						c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+						c.transform.position += new Vector3 (1, 0, 0);
+						damage = 0;
+						Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
+						markedForDeletion = true;
+						colided = true;
+					}
+				} 
+				else if (c.gameObject.tag == "Obstacle")
 				{
 					c.GetComponent<Obstacle> ().takeDamage(damageCalc (damageTier, hitNum));
 					//c.transform.position += new Vector3 (1, 0, 0);
@@ -213,9 +217,12 @@ public class Earth : Spell {
 			foreach (Collider2D c in colliders)
 			{
 				if(c.gameObject.tag == "Enemy")
-				{
-					c.GetComponent<Enemy>().takeDamage(damageCalc (damageTier, hitNum));
-					markedForDeletion = true;
+					{
+						if (PlayerNum == 1)
+						{
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							markedForDeletion = true;
+						}
 				}
 				else if(c.gameObject.tag == "Obstacle")
 				{
@@ -250,9 +257,12 @@ public class Earth : Spell {
 				foreach (Collider2D c in colliders)
 				{
 					if(c.gameObject.tag == "Enemy")
-					{
-						c.GetComponent<Enemy>().takeDamage(damageCalc (damageTier, hitNum));
-						markedForDeletion = true;
+						{
+							if (PlayerNum == 1)
+							{
+								c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+								markedForDeletion = true;
+							}
 					}
 					else if(c.gameObject.tag == "Obstacle")
 					{
@@ -289,9 +299,12 @@ public class Earth : Spell {
 			foreach (Collider2D c in colliders)
 			{
 				if(c.gameObject.tag == "Enemy")
-				{
-					c.GetComponent<Enemy>().takeDamage(damageCalc (damageTier, hitNum));
-					markedForDeletion = true;
+					{
+						if (PlayerNum == 1)
+						{
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							markedForDeletion = true;
+						}
 				}
 				else if(c.gameObject.tag == "Obstacle")
 				{
@@ -322,11 +335,14 @@ public class Earth : Spell {
 			foreach (Collider2D c in colliders)
 			{
 				if (c.gameObject.tag == "Enemy")
-				{
-					c.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
-					c.GetComponent<Enemy> ().health -= c.GetComponent<Enemy> ().armorWeakness;
-					c.GetComponent<Enemy> ().armorWeakness++;
-					markedForDeletion = true;
+					{
+						if (PlayerNum == 1)
+						{
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							c.GetComponent<Enemy> ().health -= c.GetComponent<Enemy> ().armorWeakness;
+							c.GetComponent<Enemy> ().armorWeakness++;
+							markedForDeletion = true;
+						}
 				} else if (c.gameObject.tag == "Obstacle")
 				{
 					c.GetComponent<Obstacle> ().takeDamage(damageCalc (damageTier, hitNum));

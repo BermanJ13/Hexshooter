@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour {
 	public bool reload;
 	bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
     int stackDmg;
-
+	public bool MarkedForDeletion;
     //interval for attack TEMPORARY
     private float attackInterval=0;
     private float attackTime=0;
@@ -117,6 +117,7 @@ public class Enemy : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		ai = GetComponent<AIBase> ();
+		if(ai != null)
 		ai.Initialize ((int)transform.position.x,(int)transform.position.y);
 		health = 100;
 		//Debug.Log (health);
@@ -264,6 +265,9 @@ public class Enemy : MonoBehaviour {
 
     public void enemyUpdate()
     {
+		if (health <= 0)
+			MarkedForDeletion = true;
+		if(ai != null)
 		ai.enemyUpdate ();
     }
 

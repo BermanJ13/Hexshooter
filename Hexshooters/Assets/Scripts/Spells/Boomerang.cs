@@ -48,8 +48,11 @@ public class Boomerang : Spell {
 		{
 			if (c.gameObject.tag == "Enemy")
 			{
-				c.gameObject.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
-				returnShot = true;
+				if (PlayerNum == 1)
+				{
+					c.gameObject.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+					returnShot = true;
+				}
 			} 
 			else if (c.gameObject.tag == "Obstacle")
 			{

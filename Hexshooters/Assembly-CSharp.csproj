@@ -98,15 +98,18 @@
      <Compile Include="Assets\Scripts\Spells\Wind.cs" />
      <Compile Include="Assets\Scripts\Spells\Wood.cs" />
      <Compile Include="Assets\Scripts\StatusManager.cs" />
+     <Compile Include="Assets\Vortex Game Studios\FilterBehavior\FilterBehaviour.cs" />
+     <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\OLDTVScreen.cs" />
+     <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\OLDTVTube.cs" />
+     <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\Tutorial\CameraReflex.cs" />
+     <None Include="Assets\Vortex Game Studios\OLD TV Filter 2\Shader\OLDTVFilter_Screen.shader" />
      <None Include="Assets\Maps\testmap.txt" />
      <None Include="Assets\Dialogue\Text\TestCutscene.txt" />
      <None Include="Assets\ProjectSettings\ProjectVersion.txt" />
      <None Include="Assets\Dialogue\Text\TestTalk.txt" />
      <None Include="Assets\Maps\base.txt" />
+     <None Include="Assets\Vortex Game Studios\OLD TV Filter 2\Shader\OLDTVFilter_Tube.shader" />
      <None Include="Assets\Maps\BossFIght.txt" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -121,9 +124,6 @@
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>

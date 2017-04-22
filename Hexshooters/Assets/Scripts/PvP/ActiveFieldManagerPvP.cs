@@ -6,7 +6,6 @@ using System.IO;
 using UnityEngine.EventSystems;
 
 public class ActiveFieldManagerPvP : FieldManagerPVP {
-	protected bool once;
 	protected static GameObject[] pauseUI_2;
 	protected GameObject[] bulletIndicators_2;
 	protected GameObject[] battleObjects_2;
@@ -44,6 +43,8 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 	{
 		if (once)
 		{
+			chooseGun (player.weapon, false);
+			chooseGun_2 (player2.weapon, false);
 			showReloadScreen (1);
 			showReloadScreen (2);
 
