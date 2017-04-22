@@ -19,7 +19,7 @@ public enum EnemyState
 public class Enemy : MonoBehaviour {
 
 	//health 
-	public int health;
+	public int health = 100;
 	public int armorWeakness;
 	System.Timers.Timer timeCount = new System.Timers.Timer ();
 	int burnTime =3;
@@ -29,12 +29,6 @@ public class Enemy : MonoBehaviour {
     int stackDmg;
 
 
-    //rear back variables
-    [Header("Rear Back")]
-    public float rearBackTime = 3;
-    bool rearing= false;
-    float rearCounter;
-    Vector3 oldPos;
 
     [Header("Moving")]
     public bool isMoving;
@@ -48,40 +42,11 @@ public class Enemy : MonoBehaviour {
 
 
     public StatusManager statMngr = new StatusManager();
-    
-    /// <summary>
-    /// Call when you want to start rearing back
-    /// </summary>
-    /// <returns>returns true when rearing is over</returns>
-    public bool RearBack()
-    {
-        rearCounter = rearCounter + Time.deltaTime;
-        //if it is not rearing set the oldPos to the current pos, then set rearing to true
-        if (!rearing)
-        {
-            oldPos = gameObject.transform.position;
-            rearing = true;
-        }
-
-        if (rearCounter > rearBackTime)
-        {
-            return true;
-        }
-        else
-        {
-            gameObject.transform.position = new Vector3(oldPos.x+0.3f, oldPos.y,oldPos.z);
-            rearCounter = 0;
-            rearing = false;
-        }
-        return false;
-    }
-
 
 
 
 	// Use this for initialization
-	void Start () {
-		health = 100;
+	public void Start () {
 		//Debug.Log (health);
 		stat = "normal";
 		armorWeakness = 0;
@@ -220,7 +185,7 @@ public class Enemy : MonoBehaviour {
 		timeCount.Start ();
 	}
 
-    public void enemyUpdate()
+    public virtual void enemyUpdate()
     {
         
         // Handles movement.
