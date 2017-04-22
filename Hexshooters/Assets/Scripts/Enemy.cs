@@ -28,19 +28,6 @@ public class Enemy : MonoBehaviour {
 	bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
     int stackDmg;
 
-    //interval for attack TEMPORARY
-    private float attackInterval=0;
-    private float attackTime=0;
-    Random rnd = new Random();
-
-    //basic attack variables
-    [Header("Basic Attack")]
-    public int basicAttackDamage  = 10;
-    public float basicAttackStayTime = 1;
-    float attackCounter = 0;
-    bool attacking = false;
-    Vector3 playerPos;
-    bool hitPlayer = false;
 
     //rear back variables
     [Header("Rear Back")]
@@ -62,10 +49,15 @@ public class Enemy : MonoBehaviour {
 
     public StatusManager statMngr = new StatusManager();
     
+    /// <summary>
+    /// Call when you want to start rearing back
+    /// </summary>
+    /// <returns>returns true when rearing is over</returns>
     public bool RearBack()
     {
         rearCounter = rearCounter + Time.deltaTime;
-        if(!rearing)
+        //if it is not rearing set the oldPos to the current pos, then set rearing to true
+        if (!rearing)
         {
             oldPos = gameObject.transform.position;
             rearing = true;
@@ -78,41 +70,13 @@ public class Enemy : MonoBehaviour {
         else
         {
             gameObject.transform.position = new Vector3(oldPos.x+0.3f, oldPos.y,oldPos.z);
+            rearCounter = 0;
+            rearing = false;
         }
         return false;
     }
 
-    void BasicAttack()
-    {
-        if (!attacking)
-        {
-            playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
-            attacking = true;
-        }
-            if(RearBack())
-            {
-            attackCounter = attackCounter + Time.deltaTime;
-            gameObject.transform.position = playerPos;
-            if(Vector3.Magnitude(GameObject.FindGameObjectWithTag("Player").transform.position-gameObject.transform.position) < 1 && !hitPlayer)
-            {
-                GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().takeDamage(basicAttackDamage);
-                Debug.Log("Health: " +GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().health);
-                hitPlayer = true;
-            }
-                if (attackCounter > basicAttackStayTime)
-                {
-                    gameObject.transform.position = oldPos;
-                     rearing = false;
-                     attacking = false;
-                     rearCounter = 0;
-                     attackCounter = 0;
-                        isMoving = true;
-                     attackTime = 0;
-                     attackInterval = Random.Range(3, 5);
-                    hitPlayer = false;
-                 }
-            }
-    }
+
 
 
 	// Use this for initialization
@@ -130,11 +94,6 @@ public class Enemy : MonoBehaviour {
         distanceToMove = 0;
         frozenModifier = 0.3f;
         myState = EnemyState.IShouldRunUp;
-
-        //
-        //TEMPORARY RANDOM INTERVAL
-        //
-        attackInterval = Random.Range(3,5);
 
         this.myStatus = this.GetComponent<StatusManager>();
 	}
@@ -263,17 +222,7 @@ public class Enemy : MonoBehaviour {
 
     public void enemyUpdate()
     {
-        //
-        //TEMPORARY ATTACK CALL
-        //
-        attackTime = attackTime + Time.deltaTime;
-        if(attackTime > attackInterval)
-        {
-            isMoving = false;
-            BasicAttack();
-        }
-
-
+        
         // Handles movement.
         if (isMoving)
         {
@@ -337,17 +286,6 @@ public class Enemy : MonoBehaviour {
                     myState = EnemyState.IShouldRunDown;
                     break;
             }
-        }
-        
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("asdf");
-        if (other.tag == "Player")
-        {
-            other.GetComponent<Player>().takeDamage(basicAttackDamage);
-            Debug.Log(other.GetComponent<Player>().health);
         }
     }
 }

@@ -314,7 +314,7 @@ public class Water : Spell {
 		{
 		//Revolver
 		case 1:
-			description = "Bounces off te enemy and heals the player if contact is made with the spell.";
+			description = "Bounces off the enemy and heals the player if contact is made with the spell.";
 			break;
 			//Rifle
 		case 2:
@@ -326,7 +326,7 @@ public class Water : Spell {
 			break;
 			//Gatling
 		case 4:
-			description = "Uses a ose to push back the opponent.";
+			description = "Uses a hose to push back the opponent.";
 			break;
 			//Cane Gun
 		case 5:
