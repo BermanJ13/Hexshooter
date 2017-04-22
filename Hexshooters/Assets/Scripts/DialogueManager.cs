@@ -11,7 +11,7 @@ public class DialogueManager : MonoBehaviour {
     private StreamReader reader;
     public List<string> dialogueLines = new List<string>();
 
-    public Canvas dialogue;
+    public Canvas dialogueCanvas;
     [SerializeField]
 
     public Image dialogueBox;
@@ -32,8 +32,8 @@ public class DialogueManager : MonoBehaviour {
     {
         UI = GameObject.FindGameObjectsWithTag("DialogUI");
 
-        for (int i = 0; i < UI.Length; i++)
-            UI[i].SetActive(false);
+        //for (int i = 0; i < UI.Length; i++)
+           // UI[i].SetActive(false);
 
         /*
         characterPic.gameObject.SetActive(false);
@@ -43,7 +43,7 @@ public class DialogueManager : MonoBehaviour {
         */
     }
 
-    private bool Load(string fileName)
+    public bool Load(string fileName)
     {
         
         try
@@ -63,7 +63,7 @@ public class DialogueManager : MonoBehaviour {
                         
                         string[] entries = line.Split('#');
                         if (entries.Length > 0)
-                            for (int i =0; i<entries.Length;i++)
+                            for (int i =1; i<entries.Length;i++)
                             {
                                 dialogueLines.Add(entries[i]);
                             }
@@ -92,13 +92,14 @@ public class DialogueManager : MonoBehaviour {
 
             string[] dialogue= dialogueLines[0].Split(',');
             name.text = dialogue[0];
-            characterPic = (Image) Resources.Load ("../Dialogue/Portrait/"+name.text + dialogue[1] + ".png");
+            string portName = name.text + dialogue[1] + ".png";
+            characterPic.GetComponent<Image>().sprite = Resources.Load<Sprite>(portName);
             words.text = dialogue[2];
         }
         else
         {
-            for (int i = 0; i < UI.Length; i++)
-                UI[i].SetActive(false);
+            //for (int i = 0; i < UI.Length; i++)
+                //UI[i].SetActive(false);
         }
 	}
 
