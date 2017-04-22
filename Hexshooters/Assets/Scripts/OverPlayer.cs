@@ -6,7 +6,8 @@ public class OverPlayer : MonoBehaviour {
 
     List<string> script;
 
-    public DialogueManager dialog;
+    public GameObject dialog;
+    [SerializeField]
 
     void Awake()
 	{
@@ -14,9 +15,9 @@ public class OverPlayer : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
-        dialog = new DialogueManager();
+        dialog = GameObject.FindGameObjectWithTag("DialogMngr");
         script = new List<string>();
-        script.Add("Dialogue/Text/TestCutscene.txt");
+        script.Add("Assets/Dialogue/Text/TestCutscene.txt");
 	}
 	
 	// Update is called once per frame
@@ -135,7 +136,8 @@ public class OverPlayer : MonoBehaviour {
 		if (hitCollider.gameObject.tag=="Cutscene")
         {
             Debug.Log("Cutscene");
-            dialog.Load(script[0]);
+            dialog.GetComponent<DialogueManager>().Load(script[0]);
+            hitCollider.gameObject.SetActive(false);
         }
         else if (Input.GetKey (KeyCode.Return)) 
 	    {
