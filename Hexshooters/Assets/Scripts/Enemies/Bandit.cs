@@ -114,7 +114,15 @@ public class Bandit : AIBase {
     {
         attackCounter = ATTACK_TIMEOUT;
         //Implement weak fire spell cast here.
-        Debug.LogError("Fire Spell in Bandit1 Attack() not implemented");
+		// Use wind spell
+		GameObject go = (GameObject)Instantiate(Resources.Load("Fire"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+		////get the thing component on your instantiated object
+		Spell mything = go.GetComponent<Spell>();
+
+		////set a member variable (must be PUBLIC)
+		mything.weaponUsed = 1; 
+		mything.PlayerNum = 2;
 
     }
 
