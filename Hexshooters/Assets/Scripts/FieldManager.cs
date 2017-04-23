@@ -60,6 +60,7 @@ public class FieldManager : MonoBehaviour
         foreach (Transform trns in gamePieces)
         {
             things.Add(trns.name, trns);
+            Debug.Log(trns.name);
         }
         things.Add("p", gamePieces[0]);
         things.Add("e", gamePieces[1]);

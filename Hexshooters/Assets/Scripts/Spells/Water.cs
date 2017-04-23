@@ -346,7 +346,7 @@ public class Water : Spell {
 		{
 		//Revolver
 		case 1:
-			description = "Bounces off te enemy and heals the player if contact is made with the spell.";
+			description = "Bounces off the enemy and heals the player if contact is made with the spell.";
 			break;
 			//Rifle
 		case 2:
