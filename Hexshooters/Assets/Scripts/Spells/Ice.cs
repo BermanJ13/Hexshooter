@@ -115,10 +115,12 @@ public class Ice : Spell {
 			foreach (Collider2D c in colliders)
 			{
 				if(c.gameObject.tag == "Enemy")
-				{
+					{
+						if (PlayerNum == 1)
+						{
 					StatusEffect slow = new StatusEffect (5);
 					slow.m_type = StatusType.Slow;
-					c.gameObject.GetComponent<Enemy> ().statMngr.AddEffect (slow);
+					c.gameObject.GetComponent<Enemy> ().myStatus.AddEffect (slow);
 
 					spellTimer--;
 					if (spellTimer <= 0)
@@ -128,6 +130,7 @@ public class Ice : Spell {
 					}
 
 					//c.gameObject.GetComponent<Enemy>()takeDamage(damageCalc (damageTier, hitNum));
+						}
 				}
 				else if(c.gameObject.tag == "Obstacle")
 				{
@@ -140,7 +143,7 @@ public class Ice : Spell {
 					markedForDeletion = true;
 					StatusEffect slow = new StatusEffect (5);
 					slow.m_type = StatusType.Slow;
-					c.gameObject.GetComponent<Player> ().statMngr.AddEffect (slow);
+					c.gameObject.GetComponent<Player> ().myStatus.AddEffect (slow);
 
 					spellTimer--;
 					if (spellTimer <= 0)
@@ -155,7 +158,7 @@ public class Ice : Spell {
 					markedForDeletion = true;
 					StatusEffect slow = new StatusEffect (5);
 					slow.m_type = StatusType.Slow;
-					c.gameObject.GetComponent<Player> ().statMngr.AddEffect (slow);
+					c.gameObject.GetComponent<Player> ().myStatus.AddEffect (slow);
 
 					spellTimer--;
 					if (spellTimer <= 0)
@@ -164,6 +167,11 @@ public class Ice : Spell {
 						spellTimer = 50;
 					}
 				}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
 			}
 			break;
 		case 2: //freeze
@@ -171,12 +179,15 @@ public class Ice : Spell {
 			foreach (Collider2D c in colliders)
 			{
 				if (c.gameObject.tag == "Enemy")
-				{
-					StatusEffect freeze = new StatusEffect (8);
-					freeze.m_type = StatusType.Freeze;
-					c.gameObject.GetComponent<Enemy> ().statMngr.AddEffect (freeze);
-					c.gameObject.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
-					markedForDeletion = true;
+					{
+						if (PlayerNum == 1)
+						{
+							StatusEffect freeze = new StatusEffect (8);
+							freeze.m_type = StatusType.Freeze;
+							c.gameObject.GetComponent<Enemy> ().myStatus.AddEffect (freeze);
+							c.gameObject.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							markedForDeletion = true;
+						}
 				} else if (c.gameObject.tag == "Obstacle")
 				{
 					c.GetComponent<Obstacle> ().takeDamage(damageCalc (damageTier, hitNum));
@@ -185,22 +196,31 @@ public class Ice : Spell {
 				{
 					StatusEffect freeze = new StatusEffect (8);
 					freeze.m_type = StatusType.Freeze;
-					c.gameObject.GetComponent<Player> ().statMngr.AddEffect (freeze);
+					c.gameObject.GetComponent<Player> ().myStatus.AddEffect (freeze);
 					c.gameObject.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
 					markedForDeletion = true;
 
                     }
                     else if (c.gameObject.tag == "Enemy")
                     {
+
+						if (PlayerNum == 1)
+						{
                         StatusEffect freeze = new StatusEffect(5);
                         freeze.m_type = StatusType.Freeze;
                         c.gameObject.GetComponent<Enemy>().myStatus.AddEffect(freeze);
                         //c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
+						}
                     }
                     if (c.gameObject.tag == "Obstacle")
                     {
                         //c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
                     }
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
                 }
                 break;
             case 3: //Shield
@@ -211,7 +231,7 @@ public class Ice : Spell {
                     {
                         StatusEffect shield = new StatusEffect(5);
                         shield.m_type = StatusType.Shield;
-                        c.gameObject.GetComponent<Player>().statMngr.AddEffect(shield);
+                        c.gameObject.GetComponent<Player>().myStatus.AddEffect(shield);
 
                         markedForDeletion = true;
                         //c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
@@ -221,6 +241,11 @@ public class Ice : Spell {
                         markedForDeletion = true;
                         //c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
                     }
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
                 }
                 break;
             case 4: //Stacking Damage
@@ -236,15 +261,24 @@ public class Ice : Spell {
                     }
                     else if (c.gameObject.tag == "Enemy")
                     {
+
+						if (PlayerNum == 1)
+						{
                         StatusEffect stack = new StatusEffect(12);
                         stack.m_type = StatusType.Stacking;
                         c.gameObject.GetComponent<Enemy>().myStatus.AddEffect(stack);
                         //c.gameObject.GetComponent<Enemy>().health -= damageCalc(damageTier,hitNum);
+						}
                     }
                     if (c.gameObject.tag == "Obstacle")
                     {
                         //c.gameObject.GetComponent<Obstacle>().health -= damageCalc(damageTier,hitNum);
                     }
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
                 }
                 break;
         }

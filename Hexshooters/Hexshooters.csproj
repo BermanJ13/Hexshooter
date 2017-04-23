@@ -75,21 +75,35 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Script\ActivateAttack.cs" />
+    <Compile Include="Assets\Script\Movement.cs" />
+    <Compile Include="Assets\Script\Particle.cs" />
+    <Compile Include="Assets\Script\tmp.cs" />
     <Compile Include="Assets\Scripts\ActiveFieldManager.cs" />
     <Compile Include="Assets\Scripts\CharSelect.cs" />
     <Compile Include="Assets\Scripts\ControllerRefocus.cs" />
     <Compile Include="Assets\Scripts\DialogueManager.cs" />
-    <Compile Include="Assets\Scripts\Enemy.cs" />
-    <Compile Include="Assets\Scripts\Enemy\Enemy\BasicEnemyAttack.cs" />
-    <Compile Include="Assets\Scripts\Enemy\Enemy\EnemySpell.cs" />
-    <Compile Include="Assets\Scripts\Enemy\Enemy\ScorpionStrike.cs" />
-    <Compile Include="Assets\Scripts\Enemy\Scorpion.cs" />
+    <Compile Include="Assets\Scripts\Enemies\AIBase.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Attacks\BasicEnemyAttack.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Attacks\EnemySpell.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Attacks\ScorpionStrike.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Attacks\WildCatStrike.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Bandit1.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Bosses\Ransom.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Bosses\Rob.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Scorpion.cs" />
+    <Compile Include="Assets\Scripts\Enemies\WildCat.cs" />
     <Compile Include="Assets\Scripts\FieldManager.cs" />
     <Compile Include="Assets\Scripts\GameInfo.cs" />
     <Compile Include="Assets\Scripts\GameResults.cs" />
     <Compile Include="Assets\Scripts\Instructions.cs" />
-    <Compile Include="Assets\Scripts\Obstacle.cs" />
+    <Compile Include="Assets\Scripts\Music\BattleMusic.cs" />
+    <Compile Include="Assets\Scripts\Music\MenuMusic.cs" />
+    <Compile Include="Assets\Scripts\Obstacles\Flames.cs" />
+    <Compile Include="Assets\Scripts\Obstacles\Obstacle.cs" />
     <Compile Include="Assets\Scripts\OverPlayer.cs" />
+    <Compile Include="Assets\Scripts\Panel.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\Preload\DDOL.cs" />
     <Compile Include="Assets\Scripts\Preload\Load.cs" />
@@ -101,7 +115,6 @@
     <Compile Include="Assets\Scripts\PvP\FieldManagerPVP.cs" />
     <Compile Include="Assets\Scripts\PvPStarter.cs" />
     <Compile Include="Assets\Scripts\RuneInfo.cs" />
-    <Compile Include="Assets\Scripts\Spell.cs" />
     <Compile Include="Assets\Scripts\SpellHolder.cs" />
     <Compile Include="Assets\Scripts\Spells\Boomerang.cs" />
     <Compile Include="Assets\Scripts\Spells\Chains.cs" />
@@ -112,6 +125,7 @@
     <Compile Include="Assets\Scripts\Spells\Lightning.cs" />
     <Compile Include="Assets\Scripts\Spells\Rain.cs" />
     <Compile Include="Assets\Scripts\Spells\Spell Template.cs" />
+    <Compile Include="Assets\Scripts\Spells\Spell.cs" />
     <Compile Include="Assets\Scripts\Spells\Trains.cs" />
     <Compile Include="Assets\Scripts\Spells\Voodoo.cs" />
     <Compile Include="Assets\Scripts\Spells\Water.cs" />
@@ -119,13 +133,20 @@
     <Compile Include="Assets\Scripts\Spells\Wind.cs" />
     <Compile Include="Assets\Scripts\Spells\Wood.cs" />
     <Compile Include="Assets\Scripts\StatusManager.cs" />
+    <Compile Include="Assets\Vortex Game Studios\FilterBehavior\FilterBehaviour.cs" />
+    <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\OLDTVScreen.cs" />
+    <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\OLDTVTube.cs" />
+    <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\Tutorial\CameraReflex.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Dialogue\Text\TestCutscene.txt" />
     <None Include="Assets\Dialogue\Text\TestTalk.txt" />
+    <None Include="Assets\Maps\BossFIght.txt" />
     <None Include="Assets\Maps\base.txt" />
     <None Include="Assets\Maps\testmap.txt" />
     <None Include="Assets\Prefabs\Enemies\ProjectSettings\ProjectVersion.txt" />
+    <None Include="Assets\Vortex Game Studios\OLD TV Filter 2\Shader\OLDTVFilter_Screen.shader" />
+    <None Include="Assets\Vortex Game Studios\OLD TV Filter 2\Shader\OLDTVFilter_Tube.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

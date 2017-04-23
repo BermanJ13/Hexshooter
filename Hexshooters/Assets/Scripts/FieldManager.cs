@@ -10,9 +10,10 @@ public class FieldManager : MonoBehaviour
     public string mapFile;
     [SerializeField]public Transform[] gamePieces;
     public Dictionary<string, Transform> things = new Dictionary<string, Transform>();
-    private StreamReader reader;
-    private List<string> rows = new List<string>();
+    protected StreamReader reader;
+    protected List<string> rows = new List<string>();
 
+	protected int weaponMax;
 	public bool firstPause;
 	protected bool updateStopper;
 	protected Transform playerPanel;
@@ -41,12 +42,15 @@ public class FieldManager : MonoBehaviour
 	protected GameObject p1Gun;
 	public EventSystem ES_P1;
 	protected GameObject[] battleObjects;
+	public GameObject[] weapons;
+	public bool once;
 
 	// Use this for initialization
 	public void Start () 
 	{
+		once =true;
+		weapons = new GameObject[4];
 		ES_P1 = EventSystem.current;
-		getUI ();
 		//Hnadful= Deck
 		//Pass Deck In from Overworld Scene
 		//Placeholder Fils Deck with Lighnin and Eart Spells
@@ -55,6 +59,7 @@ public class FieldManager : MonoBehaviour
         foreach (Transform trns in gamePieces)
         {
             things.Add(trns.name, trns);
+            Debug.Log(trns.name);
         }
         things.Add("p", gamePieces[0]);
         things.Add("e", gamePieces[1]);
@@ -91,7 +96,8 @@ public class FieldManager : MonoBehaviour
             }
         }
 
-        player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
+		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
+		getUI ();
 		updateEnemyList ();
 		updateSpellList ();
 		updateObstacleList ();
@@ -101,6 +107,11 @@ public class FieldManager : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		if (once)
+		{
+			chooseGun (player.weapon, false);
+			once = false;
+		}
 		//updateHealth ();
 		if(ES_P1.currentSelectedGameObject.tag == "SpellHolder")
 		{
@@ -110,7 +121,7 @@ public class FieldManager : MonoBehaviour
 			runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
 			runeDisplay.GetComponent<Image> ().color = new Color(0,0,0,255);
 		}
-		if (pause && Input.GetButtonDown("Cancel_P1"))
+		if (pause && Input.GetButtonDown("Cancel_Solo"))
 		{
 			if (Temp.Count > 0)
 			{
@@ -144,6 +155,8 @@ public class FieldManager : MonoBehaviour
 			}
 			updateSpellList ();
 			deleteSpells ();
+			updateEnemyList ();
+			deleteEnemies ();
 			updateObstacleList ();
 			deleteObstacles ();
 			if (player.reload && enemyReload)
@@ -170,6 +183,24 @@ public class FieldManager : MonoBehaviour
 			}
 		}
 		updateSpellList ();
+	}
+	public void deleteEnemies()
+	{
+		if (enemies != null) 
+		{
+			foreach (Enemy e in enemies) 
+			{
+				////Debug.Log (spell.GetComponent<Spell> ().MarkedForDeletion);
+				if (e != null)
+				{
+					if (e.MarkedForDeletion)
+					{
+						Destroy (e.gameObject);
+					}
+				}
+			}
+		}
+		updateEnemyList ();
 	}
 	public void deleteObstacles()
 	{
@@ -211,7 +242,7 @@ public class FieldManager : MonoBehaviour
 			count++;
 		}
 	}
-	public void updateObstacleList()
+	public new void  updateObstacleList()
 	{
 		GameObject[] temp = GameObject.FindGameObjectsWithTag ("Obstacle");
 		obstacles = new Obstacle[temp.Length];
@@ -224,8 +255,13 @@ public class FieldManager : MonoBehaviour
 	}
 	public void showReloadScreen()
 	{
+		foreach(GameObject g in bulletIndicators)
+		{
+			g.SetActive (true);
+		}
 		for (int i = 0; i < spellSlots.Count; i++)
 		{
+			Debug.Log (defaultSlot);
 			spellSlots[i].GetComponent<Image>().sprite = defaultSlot;
 			spellSlots[i].GetComponent<Image>().color = Color.white;
 		}
@@ -323,7 +359,7 @@ public class FieldManager : MonoBehaviour
 	protected void addBullet(int num)
 	{
 		
-		if (Temp.Count < 6)
+		if (Temp.Count < weaponMax)
 		{
 			Temp.Add (Handful [num]);
 			Image slot = spellSlots [Temp.Count - 1].GetComponent<Image> ();
@@ -333,8 +369,12 @@ public class FieldManager : MonoBehaviour
 			spellHold.deactivateSpell ("Spell " + num + "");
 			TempNum.Add (num);
 			selectButton ();
-			p1Gun.transform.Rotate (new Vector3 (0.0f,0.0f,60.0f));
-			if(Temp.Count == 6)
+			if(player.weapon == 1)
+				p1Gun.transform.Rotate (new Vector3 (0.0f,0.0f,60.0f));
+			else if (player.weapon == 2 || player.weapon == 4)
+				p1Gun.transform.Rotate (new Vector3 (0.0f,0.0f,45.0f));
+				
+			if(Temp.Count == weaponMax)
 				ES_P1.SetSelectedGameObject(GameObject.Find("BattleButton"));
 			//Debug.Log (num);
 		} 
@@ -352,8 +392,10 @@ public class FieldManager : MonoBehaviour
 			spellSlots [Temp.Count - 1].GetComponent<Image> ().color = Color.white;
 			Temp.RemoveAt (Temp.Count - 1);
 			TempNum.RemoveAt (TempNum.Count - 1);
-
-			p1Gun.transform.Rotate (new Vector3 (0.0f, 0.0f, -60.0f));
+			if(player.weapon == 1)
+				p1Gun.transform.Rotate (new Vector3 (0.0f, 0.0f, -60.0f));
+			else if (player.weapon == 2 || player.weapon == 4)
+				p1Gun.transform.Rotate (new Vector3 (0.0f,0.0f,-45.0f));
 		}
 	}
 	protected void selectButton ()
@@ -380,6 +422,7 @@ public class FieldManager : MonoBehaviour
 	public void getUI()
 	{
 		can = GameObject.Find ("Canvas");
+		chooseGun (player.weapon, true);
 		spellHold = GameObject.Find ("SpellHolder").GetComponent<SpellHolder>();
 		pauseObjects = new GameObject[11];
 		pauseObjects[0] = GameObject.Find("Spell 0");
@@ -395,12 +438,6 @@ public class FieldManager : MonoBehaviour
 		pauseObjects[10] = GameObject.Find("BattleButton");
 		pauseUI = GameObject.FindGameObjectsWithTag ("PauseUI");
 
-		spellSlots.Add (GameObject.Find("SpellSlot1"));
-		spellSlots.Add (GameObject.Find("SpellSlot2"));
-		spellSlots.Add (GameObject.Find("SpellSlot3"));
-		spellSlots.Add (GameObject.Find("SpellSlot4"));
-		spellSlots.Add (GameObject.Find("SpellSlot5"));
-		spellSlots.Add (GameObject.Find("SpellSlot6"));
 
 		bulletIndicators = new GameObject[8];
 		bulletIndicators [0] = GameObject.Find ("Player 1 Bottle 1");
@@ -419,15 +456,14 @@ public class FieldManager : MonoBehaviour
 		battleObjects = new GameObject[1];
 		battleObjects[0] = GameObject.Find("Current Bullet");
 
-		p1Gun = GameObject.Find ("UI_GunCylinder");
 	}
 	public void buildDeck()
 	{
 		for (int i = 0; i < 10; i++)
 		{
-			Handful.Add(Resources.Load ("Wind"));
+			Handful.Add(Resources.Load ("Fire"));
 			Handful.Add(Resources.Load ("Earth"));
-			Handful.Add(Resources.Load ("Water"));
+			Handful.Add(Resources.Load ("Lightning"));
 		}
 		Shuffle(Handful);
 	}
@@ -451,4 +487,90 @@ public class FieldManager : MonoBehaviour
 			}
 		}
 	}
+	public void chooseGun(int weapon, bool first)
+	{
+		if (first)
+		{
+			weapons [0] = GameObject.Find ("UI_GunCylinder");
+			weapons [1] = GameObject.Find ("8 Rifle");
+			weapons [2] = GameObject.Find ("4 Shot Gun");
+			weapons [3] = GameObject.Find ("2 Shot Gun");
+		}
+		else
+		{
+			pauseUI = GameObject.FindGameObjectsWithTag ("PauseUI");
+		}
+
+		for (int i = 0; i < weapons.Length; i++)
+		{
+			if (weapons [i] != null)
+			{
+				weapons [i].SetActive (false);
+				if (!first)
+				Debug.Log (i);
+			}
+		}
+		switch (weapon)
+		{
+			case 1:
+				weapons [0].SetActive (true);
+				spellSlots.Add (GameObject.Find ("SpellSlot1"));
+				spellSlots.Add (GameObject.Find ("SpellSlot2"));
+				spellSlots.Add (GameObject.Find ("SpellSlot3"));
+				spellSlots.Add (GameObject.Find ("SpellSlot4"));
+				spellSlots.Add (GameObject.Find ("SpellSlot5"));
+				spellSlots.Add (GameObject.Find ("SpellSlot6"));
+
+				p1Gun = weapons [0];
+				weaponMax = 6;
+			break;
+			case 2:
+				weapons[1].SetActive (true);
+				spellSlots.Add (GameObject.Find("SpellSlot1"));
+				spellSlots.Add (GameObject.Find("SpellSlot2"));
+				spellSlots.Add (GameObject.Find("SpellSlot3"));
+				spellSlots.Add (GameObject.Find("SpellSlot4"));
+				spellSlots.Add (GameObject.Find("SpellSlot5"));
+				spellSlots.Add (GameObject.Find("SpellSlot6"));
+				spellSlots.Add (GameObject.Find("SpellSlot7"));
+				spellSlots.Add (GameObject.Find("SpellSlot8"));
+				p1Gun = weapons[1];
+				weaponMax = 8;
+			break;
+			case 3:
+				weapons[3].SetActive (true);
+				spellSlots.Add (GameObject.Find("SpellSlot1"));
+				spellSlots.Add (GameObject.Find("SpellSlot2"));
+				p1Gun = weapons[3];
+				weaponMax = 2;
+
+				//weapons[2].SetActive (true);
+				//spellSlots.Add (GameObject.Find("SpellSlot1"));
+				//spellSlots.Add (GameObject.Find("SpellSlot2"));
+				//spellSlots.Add (GameObject.Find("SpellSlot3"));
+				//spellSlots.Add (GameObject.Find("SpellSlot4"));
+				//p1Gun = weapons[2];
+				//weaponMax = 4;
+			break;
+			case 4:
+				weapons[1].SetActive (true);
+				spellSlots.Add (GameObject.Find("SpellSlot1"));
+				spellSlots.Add (GameObject.Find("SpellSlot2"));
+				spellSlots.Add (GameObject.Find("SpellSlot3"));
+				spellSlots.Add (GameObject.Find("SpellSlot4"));
+				spellSlots.Add (GameObject.Find("SpellSlot5"));
+				spellSlots.Add (GameObject.Find("SpellSlot6"));
+				spellSlots.Add (GameObject.Find("SpellSlot7"));
+				spellSlots.Add (GameObject.Find("SpellSlot8"));
+				p1Gun = weapons[1];
+				weaponMax = 8;
+
+			break;
+			case 5:
+
+			break;
+				
+		}
+	}
+
 }

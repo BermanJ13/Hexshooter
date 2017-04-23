@@ -6,10 +6,9 @@ using System.IO;
 using UnityEngine.EventSystems;
 
 public class ActiveFieldManager : FieldManager {
-	protected bool once;
 	void Start()
 	{
-		base.Start ();
+		base.Start();
 		firstPause = true;
 		pause = true;
 		once = true;
@@ -20,6 +19,7 @@ public class ActiveFieldManager : FieldManager {
 	{
 		if (once)
 		{
+			chooseGun (player.weapon, false);
 			showReloadScreen ();
 			once = false;
 		}
@@ -35,7 +35,7 @@ public class ActiveFieldManager : FieldManager {
 
 		if (pause)
 		{
-			if (Input.GetButtonDown ("Cancel_P1"))
+			if (Input.GetButtonDown ("Cancel_Solo"))
 			{
 				if (Temp.Count > 0)
 				{
@@ -70,6 +70,8 @@ public class ActiveFieldManager : FieldManager {
 				deleteSpells ();
 				updateObstacleList ();
 				deleteObstacles ();
+				updateEnemyList ();
+				deleteEnemies ();
 			}
 		} 
 		else
@@ -96,8 +98,10 @@ public class ActiveFieldManager : FieldManager {
 			deleteSpells ();
 			updateObstacleList ();
 			deleteObstacles ();
+			updateEnemyList ();
+			deleteEnemies ();
 
-			if ( player.reload && Input.GetButtonDown("Start_P1"))
+			if ( player.reload && Input.GetButtonDown("Start_Solo"))
 			{
 				showReloadScreen ();
 				if (player.Chamber.Count > 0)

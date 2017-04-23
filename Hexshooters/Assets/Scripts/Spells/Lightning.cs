@@ -115,9 +115,12 @@ public class Lightning : Spell {
 			foreach (Collider2D c in colliders)
 			{
 				if (c.gameObject.tag == "Enemy")
-				{
+					{
+						if (PlayerNum == 1)
+						{
 					c.gameObject.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
 					//Debug.Log (c.gameObject.GetComponent<Enemy> ().health);
+						}
 				}
 				if (c.gameObject.tag == "Obstacle")
 				{
@@ -131,9 +134,14 @@ public class Lightning : Spell {
 				}
 				else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
 				{
-					Debug.Log ("Damage");
+					//Debug.Log ("Damage");
 					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
 					markedForDeletion = true;
+				}
+
+				if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+				{
+					showPanels (c);
 				}
 				markedForDeletion = true;
 			}
@@ -145,12 +153,15 @@ public class Lightning : Spell {
 			foreach (Collider2D c in colliders)
 			{
 				if(c.gameObject.tag == "Enemy")
-				{
-					c.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
-					StatusEffect disabled = new StatusEffect (5);
-					disabled.m_type = StatusType.Disabled;
-					//c.gameObject.GetComponent<Enemy> ().statMngr.AddEffect (disabled);
-					markedForDeletion = true;
+					{
+						if (PlayerNum == 1)
+						{
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							StatusEffect disabled = new StatusEffect (5);
+							disabled.m_type = StatusType.Disabled;
+							//c.gameObject.GetComponent<Enemy> ().myStatus.AddEffect (disabled);
+							markedForDeletion = true;
+						}
 				}
 				else if(c.gameObject.tag == "Obstacle")
 				{
@@ -162,7 +173,7 @@ public class Lightning : Spell {
 					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
 					StatusEffect disabled = new StatusEffect (5);
 					disabled.m_type = StatusType.Disabled;
-					c.gameObject.GetComponent<Enemy> ().statMngr.AddEffect (disabled);
+					c.gameObject.GetComponent<Enemy> ().myStatus.AddEffect (disabled);
 					markedForDeletion = true;
 
 				}
@@ -171,9 +182,14 @@ public class Lightning : Spell {
 					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
 					StatusEffect disabled = new StatusEffect (5);
 					disabled.m_type = StatusType.Disabled;
-					c.gameObject.GetComponent<Enemy> ().statMngr.AddEffect (disabled);
+					c.gameObject.GetComponent<Enemy> ().myStatus.AddEffect (disabled);
 					markedForDeletion = true;
 				}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
 			}
 			break;
 		//Shotgun
@@ -191,13 +207,16 @@ public class Lightning : Spell {
 					}
 				}
 				if (c.gameObject.tag == "Enemy" && hit) 
-				{
-					//Debug.Log (damageCalc (damageTier, hitNum));
-					c.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
-					hitEnemies.Add (c.gameObject);
-					markedForDeletion = true;
-					GameObject spread = (GameObject)Instantiate (Resources.Load("Lightning"), c.gameObject.transform.position, Quaternion.identity);
-					spread.GetComponent<Spell> ().hitEnemies = this.GetComponent<Spell> ().hitEnemies;
+					{
+						if (PlayerNum == 1)
+						{
+							//Debug.Log (damageCalc (damageTier, hitNum));
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							hitEnemies.Add (c.gameObject);
+							markedForDeletion = true;
+							GameObject spread = (GameObject)Instantiate (Resources.Load ("Lightning"), c.gameObject.transform.position, Quaternion.identity);
+							spread.GetComponent<Spell> ().hitEnemies = this.GetComponent<Spell> ().hitEnemies;
+						}
 				}
 				else if(c.gameObject.tag == "Player" && PlayerNum == 2 && hit)
 				{
@@ -218,6 +237,11 @@ public class Lightning : Spell {
 					GameObject spread = (GameObject)Instantiate (Resources.Load("Lightning"), c.gameObject.transform.position, Quaternion.identity);
 					spread.GetComponent<Spell> ().hitEnemies = this.GetComponent<Spell> ().hitEnemies;
 				}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
 			}
 			markedForDeletion = false;
 			break;
@@ -238,36 +262,40 @@ public class Lightning : Spell {
 				}
 				if (c.gameObject.tag == "Enemy" && hit)
 				{
-					c.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
-					hitEnemies[0] = c.gameObject;
-					int decider = UnityEngine.Random.Range (1,5);
-					switch (decider)
-					{
-					case 1:
-						if(direction != new Vector2 (0,1))
-							direction = new Vector2 (0,1);
-						else
-							direction = new Vector2 (0,-1);
-						break;
-					case 2:
-						if(direction != new Vector2 (0,-1))
-							direction = new Vector2 (0,-1);
-						else
-							direction = new Vector2 (0,1);
-						break;
-					case 3:
-						if(direction != new Vector2 (1,0))
-							direction = new Vector2 (1,0);
-						else
-							direction = new Vector2 (-1,0);
-						break;
-					case 4:
-						if(direction != new Vector2 (-1,0))
-							direction = new Vector2 (-1,0);
-						else
-							direction = new Vector2 (1,0);
-						break;
-					}
+
+						if (PlayerNum == 1)
+						{
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							hitEnemies [0] = c.gameObject;
+							int decider = UnityEngine.Random.Range (1, 5);
+							switch (decider)
+							{
+								case 1:
+									if (direction != new Vector2 (0, 1))
+										direction = new Vector2 (0, 1);
+									else
+										direction = new Vector2 (0, -1);
+								break;
+								case 2:
+									if (direction != new Vector2 (0, -1))
+										direction = new Vector2 (0, -1);
+									else
+										direction = new Vector2 (0, 1);
+								break;
+								case 3:
+									if (direction != new Vector2 (1, 0))
+										direction = new Vector2 (1, 0);
+									else
+										direction = new Vector2 (-1, 0);
+								break;
+								case 4:
+									if (direction != new Vector2 (-1, 0))
+										direction = new Vector2 (-1, 0);
+									else
+										direction = new Vector2 (1, 0);
+								break;
+							}
+						}
 				}if (c.gameObject.tag == "Obstacle" && hit)
 				{
 					c.GetComponent<Obstacle> ().takeDamage(damageCalc (damageTier, hitNum));
@@ -367,6 +395,11 @@ public class Lightning : Spell {
 						break;
 					}
 				}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
 			}
 			break;
 		//Cane Gun
@@ -375,14 +408,22 @@ public class Lightning : Spell {
 			foreach (Collider2D c in colliders)
 			{
 				if (c.gameObject.tag == "Enemy" ) 
-				{
-					c.gameObject.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
-					c.gameObject.GetComponent<Enemy> ().Status ("disabled");
+					{
+						if (PlayerNum == 1)
+						{
+							c.gameObject.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							c.gameObject.GetComponent<Enemy> ().Status ("disabled");
+						}
 				}
 				if (c.gameObject.tag == "Obstacle" ) 
 				{
 					c.gameObject.GetComponent<Obstacle>().takeDamage(damageCalc (damageTier, hitNum));
 				}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
 			}
 			markedForDeletion = true;
 			break;

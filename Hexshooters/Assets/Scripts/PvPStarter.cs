@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class PvPStarter : MonoBehaviour {
 
+	void Awake ()
+	{
+		DontDestroyOnLoad (transform.gameObject);
+	}
 	// Use this for initialization
 	void Start () {
 		
@@ -17,7 +21,7 @@ public class PvPStarter : MonoBehaviour {
 
 	public void toInstructions()
 	{
-		SceneManager.LoadScene (4);
+		SceneManager.LoadScene (3);
 	}
 	public void toCharacterSelect()
 	{
@@ -25,6 +29,16 @@ public class PvPStarter : MonoBehaviour {
 	}
 	public void toPvP()
 	{
-		SceneManager.LoadScene (2);
+		SceneManager.LoadScene ("PVP");
+	}
+	public void toOver()
+	{
+        OverPlayer op = GameObject.FindObjectOfType<OverPlayer>();
+        op.enabled = true;
+        SceneManager.LoadScene ("Overworld");
+	}
+	public void quitGame()
+	{
+		Application.Quit();
 	}
 }
