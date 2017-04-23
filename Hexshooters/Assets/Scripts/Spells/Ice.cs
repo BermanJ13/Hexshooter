@@ -287,7 +287,7 @@ public class Ice : Spell {
 			break;
 			//Gatling
 		case 4:
-			description = "Does damage to the opponent that gets mor epowerful with each hit.";
+			description = "Does damage to the opponent that gets more powerful with each hit.";
 			break;
 			//Cane Gun
 		case 5:
