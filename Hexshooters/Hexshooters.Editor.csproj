@@ -128,6 +128,10 @@
     <None Include="Assets\Dialogue\Text\TestCutscene.txt" />
     <None Include="Assets\Dialogue\Text\TestTalk.txt" />
     <None Include="Assets\Maps\BossFIght.txt" />
+    <None Include="Assets\Maps\DB1.txt" />
+    <None Include="Assets\Maps\DB2.txt" />
+    <None Include="Assets\Maps\DB3.txt" />
+    <None Include="Assets\Maps\DB4.txt" />
     <None Include="Assets\Maps\base.txt" />
     <None Include="Assets\Maps\testmap.txt" />
     <None Include="Assets\Prefabs\Enemies\ProjectSettings\ProjectVersion.txt" />

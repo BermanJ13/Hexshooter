@@ -37,6 +37,7 @@ public class WildCatStrike : EnemySpell
             playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
             playerPos = new Vector3(playerPos.x + backFromPlayerDist, playerPos.y, playerPos.z);
             attacking = true;
+            EnemyScript.isMoving = false;
         }
         if (RearBack())
         {

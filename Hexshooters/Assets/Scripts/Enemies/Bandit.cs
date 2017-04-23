@@ -3,31 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bandit : AIBase {
+public class Bandit : Enemy
+{
 
     private int attackCounter;
     public const int ATTACK_TIMEOUT = 3;// Waits two frames between attacks minimum.
     private bool canAttack;//If true, the enemy can currently attack, if false, cannot for some reason.
-
-    // Bandit1 moves every second.
-    public override float TIME_PER_ACTION
-    {
-        get
-        {
-            return 1.0f;
-        }
-    }
+    
 
     // Use this for initialization
     public override void Start()
     {
         base.Start();
         attackCounter = 0;
-        minX = 5;
-        maxX = 7;
-
-        minY = 0;
-        maxY = 4;
     }
 
     public override void AIStep()
@@ -55,19 +43,31 @@ public class Bandit : AIBase {
                 }
                 else if (decision < 0.65f)//15%
                 {
-                    Move(Direction.Up);
+                    if (movePossible(Direction.Up) == 2)
+                    {
+                        Move(Direction.Up);
+                    }
                 }
                 else if (decision < 0.80f)//15%
                 {
-                    Move(Direction.Down);
+                    if (movePossible(Direction.Down) == 2)
+                    {
+                        Move(Direction.Down);
+                    }
                 }
                 else if (decision < 0.85f)//5%
                 {
-                    Move(Direction.Left);
+                    if (movePossible(Direction.Left) == 2)
+                    {
+                        Move(Direction.Left);
+                    }
                 }
                 else if (decision < 0.90f)//5%
                 {
-                    Move(Direction.Right);
+                    if (movePossible(Direction.Right) == 2)
+                    {
+                        Move(Direction.Right);
+                    }
                 }
                 else//10%
                 {
@@ -78,19 +78,31 @@ public class Bandit : AIBase {
             {
                 if(decision < 0.35f) //35%
                 {
-                    Move(Direction.Up);
+                    if (movePossible(Direction.Up) == 2)
+                    {
+                        Move(Direction.Up);
+                    }
                 }
                 else if(decision < 0.7f)//35%
                 {
-                    Move(Direction.Down);
+                    if (movePossible(Direction.Down) == 2)
+                    {
+                        Move(Direction.Down);
+                    }
                 }
                 else if(decision < 0.8f)//10%
                 {
-                    Move(Direction.Left);
+                    if (movePossible(Direction.Left) == 2)
+                    {
+                        Move(Direction.Left);
+                    }
                 }
                 else if (decision < 0.9f)//10%
                 {
-                    Move(Direction.Right);
+                    if (movePossible(Direction.Right) == 2)
+                    {
+                        Move(Direction.Right);
+                    }
                 }
                 else//10%
                 {

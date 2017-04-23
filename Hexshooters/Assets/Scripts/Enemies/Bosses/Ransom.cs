@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ransom : AIBase {
+public class Ransom : Enemy {
 
     private int attackCounter;
     public int ATTACK_TIMEOUT = 3;
@@ -15,14 +15,6 @@ public class Ransom : AIBase {
     public Rob myBrother = null;
     public bool movedByBrother = false;
     
-    // Bandit1 moves every second.
-    public override float TIME_PER_ACTION
-    {
-        get
-        {
-            return 1.0f;
-        }
-    }
 
     public float modify_TIME_PER_ACTION;
     public const float RAGE_TIME_PER_ACTION = 0.5f;
@@ -32,11 +24,6 @@ public class Ransom : AIBase {
     {
         base.Start();
         attackCounter = 0;
-        minX = 6;
-        maxX = 9;
-
-        minY = 0;
-        maxY = 4;
 
         myBrother = GameObject.FindObjectOfType<Rob>();
         //Initialize(7, 2);
@@ -100,19 +87,31 @@ public class Ransom : AIBase {
                 {
                     if (currentX > myBrother.currentX + 1)
                     {
-                        Move(Direction.Left);
+                        if (movePossible(Direction.Left) == 2)
+                        {
+                            Move(Direction.Left);
+                        }
                     }
                     else if (currentX <= myBrother.currentX)
                     {
-                        Move(Direction.Right);
+                        if (movePossible(Direction.Right) == 2)
+                        {
+                            Move(Direction.Right);
+                        }
                     }
                     else if (myBrother.currentY > currentY)
                     {
-                        Move(Direction.Up);
+                        if (movePossible(Direction.Up) == 2)
+                        {
+                            Move(Direction.Up);
+                        }
                     }
                     else if (myBrother.currentY < currentY)
                     {
-                        Move(Direction.Down);
+                        if (movePossible(Direction.Down) == 2)
+                        {
+                            Move(Direction.Down);
+                        }
                     }
                     else
                     {
@@ -121,18 +120,30 @@ public class Ransom : AIBase {
                             // Counts down until the next attack is available.  Only counts down behind his brother.
                             if (decision < 0.25f)//25% chance of attack up
                             {
-                                if (!Move(Direction.Up))
+                                if (movePossible(Direction.Up) == 2)
                                 {
-                                    Move(Direction.Down);
+                                    if (!Move(Direction.Up))
+                                    {
+                                        if (movePossible(Direction.Down) == 2)
+                                        {
+                                            Move(Direction.Down);
+                                        }
+                                    }
                                 }
 
                                 Attack();
                             }
                             else if (decision < 0.5f)//25% chance of attack down
                             {
-                                if (!Move(Direction.Down))
+                                if (movePossible(Direction.Down) == 2)
                                 {
-                                    Move(Direction.Up);
+                                    if (!Move(Direction.Down))
+                                    {
+                                        if (movePossible(Direction.Up) == 2)
+                                        {
+                                            Move(Direction.Up);
+                                        }
+                                    }
                                 }
 
                                 Attack();
@@ -165,19 +176,31 @@ public class Ransom : AIBase {
                     }
                     else if (decision < 0.65f)//15%
                     {
-                        Move(Direction.Up);
+                        if (movePossible(Direction.Up) == 2)
+                        {
+                            Move(Direction.Up);
+                        }
                     }
                     else if (decision < 0.80f)//15%
                     {
-                        Move(Direction.Down);
+                        if (movePossible(Direction.Down) == 2)
+                        {
+                            Move(Direction.Down);
+                        }
                     }
                     else if (decision < 0.85f)//5%
                     {
-                        Move(Direction.Left);
+                        if (movePossible(Direction.Left) == 2)
+                        {
+                            Move(Direction.Left);
+                        }
                     }
                     else if (decision < 0.90f)//5%
                     {
-                        Move(Direction.Right);
+                        if (movePossible(Direction.Right) == 2)
+                        {
+                            Move(Direction.Right);
+                        }
                     }
                     else//10%
                     {
@@ -188,19 +211,31 @@ public class Ransom : AIBase {
                 {
                     if (decision < 0.35f) //35%
                     {
-                        Move(Direction.Up);
+                        if (movePossible(Direction.Up) == 2)
+                        {
+                            Move(Direction.Up);
+                        }
                     }
                     else if (decision < 0.7f)//35%
                     {
-                        Move(Direction.Down);
+                        if (movePossible(Direction.Down) == 2)
+                        {
+                            Move(Direction.Down);
+                        }
                     }
                     else if (decision < 0.8f)//10%
                     {
-                        Move(Direction.Left);
+                        if (movePossible(Direction.Left) == 2)
+                        {
+                            Move(Direction.Left);
+                        }
                     }
                     else if (decision < 0.9f)//10%
                     {
-                        Move(Direction.Right);
+                        if (movePossible(Direction.Right) == 2)
+                        {
+                            Move(Direction.Right);
+                        }
                     }
                     else//10%
                     {

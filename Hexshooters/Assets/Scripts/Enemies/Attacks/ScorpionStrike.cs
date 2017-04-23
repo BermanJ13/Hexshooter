@@ -39,6 +39,7 @@ public class ScorpionStrike : EnemySpell
             playerPos = new Vector3(playerPos.x + backFromPlayerDist, playerPos.y, playerPos.z);
             //set attacking to true
             attacking = true;
+            EnemyScript.isMoving = false;
         }
         //runs rearback in the enemy class
         //if true then we do the attack cycle

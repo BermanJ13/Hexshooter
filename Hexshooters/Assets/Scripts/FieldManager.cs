@@ -60,7 +60,6 @@ public class FieldManager : MonoBehaviour
         foreach (Transform trns in gamePieces)
         {
             things.Add(trns.name, trns);
-            Debug.Log(trns.name);
         }
         things.Add("p", gamePieces[0]);
         things.Add("e", gamePieces[1]);
@@ -270,7 +269,6 @@ public class FieldManager : MonoBehaviour
 		}
 		for (int i = 0; i < spellSlots.Count; i++)
 		{
-			Debug.Log (defaultSlot);
 			spellSlots[i].GetComponent<Image>().sprite = defaultSlot;
 			spellSlots[i].GetComponent<Image>().color = Color.white;
 		}
@@ -420,7 +418,6 @@ public class FieldManager : MonoBehaviour
 			}
 			if(GameObject.Find("Spell " +i+ "") != null && !found && !used)
 			{
-				Debug.Log (ES_P1);
 				ES_P1.SetSelectedGameObject(GameObject.Find("Spell " +i+ ""));
 				found = true;
 			}
@@ -515,8 +512,6 @@ public class FieldManager : MonoBehaviour
 			if (weapons [i] != null)
 			{
 				weapons [i].SetActive (false);
-				if (!first)
-				Debug.Log (i);
 			}
 		}
 		switch (weapon)
