@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bandit1 : AIBase {
+public class Bandit : AIBase {
 
     private int attackCounter;
     public const int ATTACK_TIMEOUT = 3;// Waits two frames between attacks minimum.
