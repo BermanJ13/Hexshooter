@@ -59,9 +59,6 @@ public class GameResults : MonoBehaviour {
 		if(p1_stat != null)
 		{
 			p1_stat.GetComponent<Text>().text = p1_status;
-
-			if(Input.GetKeyDown(KeyCode.Return))
-				SceneManager.LoadScene (0);
 		}
 		if( p2_stat != null)
 		{

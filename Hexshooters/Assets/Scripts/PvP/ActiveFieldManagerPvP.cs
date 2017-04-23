@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class ActiveFieldManagerPvP : FieldManagerPVP {
 	protected static GameObject[] pauseUI_2;
@@ -49,6 +50,14 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 			showReloadScreen (2);
 
 			once = false;
+		}
+		if (player.health <= 0 )
+		{
+			SceneManager.LoadScene ("Game Over");
+		}
+		if(enemies.Length == 0)
+		{
+			SceneManager.LoadScene ("Overworld");
 		}
 		//updateHealth ();
 		if(ES_P1.currentSelectedGameObject.tag == "SpellHolder")

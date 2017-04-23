@@ -17,7 +17,7 @@ Platform assembly: C:\Users\Admin\Documents\Hexshooters\Hexshooters\test_Data\Ma
 Loading C:\Users\Admin\Documents\Hexshooters\Hexshooters\test_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
 Platform assembly: C:\Users\Admin\Documents\Hexshooters\Hexshooters\test_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
 Loading C:\Users\Admin\Documents\Hexshooters\Hexshooters\test_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
-- Completed reload, in  0.044 seconds
+- Completed reload, in  0.052 seconds
 Platform assembly: C:\Users\Admin\Documents\Hexshooters\Hexshooters\test_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\Admin\Documents\Hexshooters\Hexshooters\test_Data\Managed\System.dll (this message is harmless)
 desktop: 1600x900 50Hz; virtual: 1600x900 at 0,0

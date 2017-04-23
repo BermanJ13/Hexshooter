@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class FieldManager : MonoBehaviour
 {
@@ -110,6 +111,14 @@ public class FieldManager : MonoBehaviour
 		{
 			chooseGun (player.weapon, false);
 			once = false;
+		}
+		if (player.health <= 0 )
+		{
+			SceneManager.LoadScene ("Game Over");
+		}
+		if(enemies.Length == 0)
+		{
+			SceneManager.LoadScene ("Overworld");
 		}
 		//updateHealth ();
 		if(ES_P1.currentSelectedGameObject.tag == "SpellHolder")

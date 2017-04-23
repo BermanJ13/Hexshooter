@@ -62,8 +62,9 @@ public class FieldManagerPVP : FieldManager
 		//updateHealth ();
 		if (player.health <= 0 || player2.health <=0)
 		{
-			SceneManager.LoadScene (3);
-		}		if (pause)
+			SceneManager.LoadScene ("Results");
+		}		
+		if (pause)
 		{
 			if (ES_P1.currentSelectedGameObject != null)
 			{
@@ -105,7 +106,7 @@ public class FieldManagerPVP : FieldManager
 		if (pause)
 		{
 			if(Handful.Count == 0 && Handful_2.Count ==0)
-				SceneManager.LoadScene (3);
+				SceneManager.LoadScene ("Results");
 
 			if (p1Ready && p2Ready)
 			{
