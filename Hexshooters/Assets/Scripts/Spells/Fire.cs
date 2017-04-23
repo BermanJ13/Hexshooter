@@ -444,7 +444,7 @@ public class Fire : Spell {
 			break;
 			//Rifle
 		case 2:
-			description = "Shoot and burn an enemy";
+			description = "Shoot across a row and burn an enemy if it hits them";
 			break;
 		//Shotgun
 		case 3:

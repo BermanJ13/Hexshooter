@@ -434,11 +434,11 @@ public class Wind : Spell {
 			break;
 			//Shotgun
 			case 3:
-			description = "Knocks the enemyor obstacle back with a burst of compressed air.";
+			description = "Knocks the enemy or obstacle back with a burst of compressed air.";
 			break;
 			//Gatling
 			case 4:
-			description = "Pulls enemies or obstacles toward the you it lands in.";
+			description = "Pulls enemies or obstacles towards you.";
 			break;
 			//Cane Gun
 			case 5:

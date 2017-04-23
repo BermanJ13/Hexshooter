@@ -380,7 +380,7 @@ public class Earth : Spell {
 		{
 		//Revolver
 		case 1:
-			description = "Make a shield 3 panels ahead.";
+			description = "Makes an obstacle 3 panels ahead.";
 			break;
 			//Rifle
 		case 2:
