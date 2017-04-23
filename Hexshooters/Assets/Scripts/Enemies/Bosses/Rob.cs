@@ -196,7 +196,7 @@ public class Rob : Enemy {
         if(myBrother && myBrother.recentFireCounter > 0)
         {
             float shieldRand = UnityEngine.Random.Range(0, 1.0f);
-            if (shieldRand > (float)myBrother.myEnemy.Health() / 100.0f)
+            if (shieldRand > (float)myBrother.GetComponent<Enemy>().Health() / 100.0f)
             {
 				// Use ice spell
 				GameObject go = (GameObject)Instantiate(Resources.Load("Ice"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
@@ -224,7 +224,7 @@ public class Rob : Enemy {
         else
         {
             float shieldRand = UnityEngine.Random.Range(0, 1.0f);
-            if (myBrother && shieldRand > (float)myBrother.myEnemy.Health() / 100.0f)
+            if (myBrother && shieldRand > (float)myBrother.GetComponent<Enemy>().Health() / 100.0f)
             {
 				// Use ice spell
 				GameObject go = (GameObject)Instantiate(Resources.Load("Ice"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
