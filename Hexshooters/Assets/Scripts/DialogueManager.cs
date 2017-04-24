@@ -104,7 +104,7 @@ public class DialogueManager : MonoBehaviour {
         }
 	}
 
-    void nextLine()
+    public void nextLine()
     {
         if (dialogueLines.Count > 0)
             dialogueLines.RemoveAt(0);

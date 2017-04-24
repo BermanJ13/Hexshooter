@@ -1,1 +1,1 @@
-#Bandit/normal/I reckon it would be mighty kind to you to donate to our cause and help out  good ol’ Rob and Ransom.#Matt/normal/A or Enter- "Sure" B or Backspace- "No" X or E- "Rob and Ransom?"
+#Bandit/normal/I reckon it would be mighty kind to you to donate to our cause and help out  good ol’ Rob and Ransom.#Matt/normal/Sure, take me to them and I can help them out.#Bandit/normal/Sorry, but I can’t take you to them. They're a little tied up.#Matt/normal/Well then I reckon we have a problem.#Bandit/normal/I reckon we do.

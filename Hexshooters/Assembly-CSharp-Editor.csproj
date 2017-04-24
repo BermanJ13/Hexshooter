@@ -51,12 +51,19 @@
      <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\Editor\OLDTVTubeEditor.cs" />
      <None Include="Assets\Maps\DB2.txt" />
      <None Include="Assets\Maps\VSempty.txt" />
+     <None Include="Assets\Dialogue\Text\Cutscene1c.txt" />
      <None Include="Assets\Vortex Game Studios\OLD TV Filter 2\Shader\OLDTVFilter_Screen.shader" />
+     <None Include="Assets\Dialogue\Text\Cutscene1.txt" />
      <None Include="Assets\Maps\VSobstruction.txt" />
      <None Include="Assets\Maps\VSplayer1Poor.txt" />
      <None Include="Assets\Maps\DB1.txt" />
+     <None Include="Assets\Dialogue\Text\Cutscene7.txt" />
+     <None Include="Assets\Dialogue\Text\Cutscene1a.txt" />
+     <None Include="Assets\Dialogue\Text\Cutscene6.txt" />
+     <None Include="Assets\Dialogue\Text\Cutscene3.txt" />
      <None Include="Assets\Particles\ProjectSettings\ProjectVersion.txt" />
      <None Include="Assets\Maps\DB3.txt" />
+     <None Include="Assets\Dialogue\Text\Cutscene5.txt" />
      <None Include="Assets\Maps\testmap.txt" />
      <None Include="Assets\Dialogue\Text\TestCutscene.txt" />
      <None Include="Assets\Maps\VScenterSideWall.txt" />
@@ -65,8 +72,17 @@
      <None Include="Assets\Maps\VSplayer2Poor.txt" />
      <None Include="Assets\Maps\base.txt" />
      <None Include="Assets\Vortex Game Studios\OLD TV Filter 2\Shader\OLDTVFilter_Tube.shader" />
+     <None Include="Assets\Dialogue\Text\Cutscene4.txt" />
      <None Include="Assets\Maps\DB4.txt" />
+     <None Include="Assets\Dialogue\Text\Cutscene8.txt" />
+     <None Include="Assets\Dialogue\Text\Cutscene9.txt" />
+     <None Include="Assets\Dialogue\Text\Cutscene1b1.txt" />
+     <None Include="Assets\Dialogue\Text\Cutscene2.txt" />
      <None Include="Assets\Maps\BossFIght.txt" />
+     <None Include="Assets\Dialogue\Text\Cutscene1b.txt" />
+     <None Include="Assets\Dialogue\Text\Cutscene1b2.txt" />
+     <None Include="Assets\Dialogue\Text\Cutscene2b.txt" />
+     <None Include="Assets\Dialogue\Text\Cutscene0.txt" />
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>
