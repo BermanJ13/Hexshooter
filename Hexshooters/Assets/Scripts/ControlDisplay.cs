@@ -25,7 +25,7 @@ public class ControlDisplay : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetButtonDown ("ControlsButton"))
+		if (Input.GetButton ("ControlsButton"))
 			showControls ();
 		else
 			hideControls ();
@@ -56,10 +56,11 @@ public class ControlDisplay : MonoBehaviour {
 			break;
 				
 			case "Menu":
-				ControlScreens [2].SetActive (true);
+				ControlScreens [0].SetActive (true);
 				ControlScreens [3].SetActive (true);
 			break;
 		}
+		ControlBackground.SetActive (true);
 
 	}
 	void hideControls()
