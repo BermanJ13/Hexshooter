@@ -109,18 +109,26 @@
      <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\OLDTVTube.cs" />
      <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\Tutorial\CameraReflex.cs" />
      <None Include="Assets\Maps\DB2.txt" />
+     <None Include="Assets\Maps\VSempty.txt" />
      <None Include="Assets\Vortex Game Studios\OLD TV Filter 2\Shader\OLDTVFilter_Screen.shader" />
+     <None Include="Assets\Maps\VSobstruction.txt" />
+     <None Include="Assets\Maps\VSplayer1Poor.txt" />
      <None Include="Assets\Maps\DB1.txt" />
      <None Include="Assets\Particles\ProjectSettings\ProjectVersion.txt" />
      <None Include="Assets\Maps\DB3.txt" />
      <None Include="Assets\Maps\testmap.txt" />
      <None Include="Assets\Dialogue\Text\TestCutscene.txt" />
+     <None Include="Assets\Maps\VScenterSideWall.txt" />
      <None Include="Assets\Prefabs\Enemies\ProjectSettings\ProjectVersion.txt" />
      <None Include="Assets\Dialogue\Text\TestTalk.txt" />
+     <None Include="Assets\Maps\VSplayer2Poor.txt" />
      <None Include="Assets\Maps\base.txt" />
      <None Include="Assets\Vortex Game Studios\OLD TV Filter 2\Shader\OLDTVFilter_Tube.shader" />
      <None Include="Assets\Maps\DB4.txt" />
      <None Include="Assets\Maps\BossFIght.txt" />
+ <Reference Include="UnityEngine.Advertisements">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -135,6 +143,9 @@
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Purchasing">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
