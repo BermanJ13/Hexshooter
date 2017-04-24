@@ -558,24 +558,31 @@ public class FieldManager : MonoBehaviour
 				weaponMax = 8;
 			break;
 			case 3:
-				weapons[3].SetActive (true);
-				spellSlots.Add (GameObject.Find("SpellSlot1"));
-				spellSlots.Add (GameObject.Find("SpellSlot2"));
+				//weapons [3].SetActive (true);
+				//spellSlots.Add (GameObject.Find ("SpellSlot1"));
+				//spellSlots.Add (GameObject.Find ("SpellSlot2"));
+				//if (!first)
+				//{
+				//	spellSlots [0] = GameObject.Find ("SpellSlot1");
+				//	spellSlots [1] = GameObject.Find ("SpellSlot2");
+				//}
+				//p1Gun = weapons [3];
+				//weaponMax = 2;
+
+				weapons [2].SetActive (true);
+				spellSlots.Add (GameObject.Find ("SpellSlot1"));
+				spellSlots.Add (GameObject.Find ("SpellSlot2"));
+				spellSlots.Add (GameObject.Find ("SpellSlot3"));
+				spellSlots.Add (GameObject.Find ("SpellSlot4"));
 				if (!first)
 				{
-					spellSlots[0] = GameObject.Find ("SpellSlot1");
-					spellSlots[1] = GameObject.Find ("SpellSlot2");
+					spellSlots [0] = GameObject.Find ("SpellSlot1");
+					spellSlots [1] = GameObject.Find ("SpellSlot2");
+					spellSlots [2] = GameObject.Find ("SpellSlot3");
+					spellSlots [3] = GameObject.Find ("SpellSlot4");
 				}
-				p1Gun = weapons[3];
-				weaponMax = 2;
-
-				//weapons[2].SetActive (true);
-				//spellSlots.Add (GameObject.Find("SpellSlot1"));
-				//spellSlots.Add (GameObject.Find("SpellSlot2"));
-				//spellSlots.Add (GameObject.Find("SpellSlot3"));
-				//spellSlots.Add (GameObject.Find("SpellSlot4"));
-				//p1Gun = weapons[2];
-				//weaponMax = 4;
+				p1Gun = weapons[2];
+				weaponMax = 4;
 			break;
 			case 4:
 				weapons[1].SetActive (true);
