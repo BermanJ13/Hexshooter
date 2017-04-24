@@ -27,6 +27,7 @@ public class FieldManagerPVP : FieldManager
 	protected Text curBullet_2;
 	public GameObject[] weapons_2;
 	public int weaponMax_2;
+
     
     // Use this for initialization
     void Start () 
@@ -549,6 +550,6 @@ public class FieldManagerPVP : FieldManager
 			break;
 
 		}
-
+		player2.updatePlayerImage ();
 	}
 }

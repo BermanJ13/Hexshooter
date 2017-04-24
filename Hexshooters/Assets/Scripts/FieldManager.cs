@@ -571,6 +571,7 @@ public class FieldManager : MonoBehaviour
 			break;
 				
 		}
+		player.updatePlayerImage ();
 	}
 
 }

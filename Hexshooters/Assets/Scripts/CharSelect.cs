@@ -41,6 +41,10 @@ public class CharSelect : MonoBehaviour {
 			{
 				p1select.GetComponent<Text> ().text = "Shotgun";
 			}
+			if (p1 == 4)
+			{
+				p1select.GetComponent<Text> ().text = "Gatling";
+			}
 			if (p2 == 1)
 			{
 				p2select.GetComponent<Text> ().text = "Revolver";
@@ -53,6 +57,10 @@ public class CharSelect : MonoBehaviour {
 			{
 				p2select.GetComponent<Text> ().text = "Shotgun";
 			}
+			if (p2 == 4)
+			{
+				p2select.GetComponent<Text> ().text = "Gatling";
+			}
 			float Horizontal = Input.GetAxisRaw ("Horizontal_P1");
 			float Horizontal2 = Input.GetAxisRaw ("Horizontal_P2");
 
@@ -63,7 +71,7 @@ public class CharSelect : MonoBehaviour {
 					horizontal2 = true;
 					p2--;
 					if (p2 < 1)
-						p2 = 3;
+						p2 = 4;
 				}
 			}
 			if (Horizontal2 > 0)
@@ -72,7 +80,7 @@ public class CharSelect : MonoBehaviour {
 				{
 					horizontal2 = true;
 					p2++;
-					if (p2 > 3)
+					if (p2 > 4)
 						p2 = 1;
 				}
 			}
@@ -84,7 +92,7 @@ public class CharSelect : MonoBehaviour {
 					horizontal = true;
 					p1--;
 					if (p1 < 1)
-						p1 = 3;
+						p1 = 4;
 				}
 			}
 			if (Horizontal > 0)
@@ -93,7 +101,7 @@ public class CharSelect : MonoBehaviour {
 				{
 					horizontal = true;
 					p1++;
-					if (p1 > 3)
+					if (p1 > 4)
 						p1 = 1;
 				}	
 			}                                                                       

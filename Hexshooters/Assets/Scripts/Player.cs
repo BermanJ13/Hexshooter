@@ -24,6 +24,7 @@ public class Player : MonoBehaviour {
 	public string stat;
 	bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
 	int stackDmg;
+	public Sprite[] playerImages;
 
     // Use this for initialization
     void Start () 
@@ -422,5 +423,21 @@ public class Player : MonoBehaviour {
 		}
 
 		this.health -= damage* multipliers + stackDmg;
+	}
+	public void updatePlayerImage()
+	{
+		switch (weapon)
+		{
+			case 1:
+				GetComponent<SpriteRenderer> ().sprite = playerImages [0];
+			break;
+			case 2:
+			break;
+			case 3:
+				GetComponent<SpriteRenderer> ().sprite = playerImages [1];
+			break;
+			case 4:
+			break;
+		}
 	}
 }
