@@ -51,13 +51,9 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 
 			once = false;
 		}
-		if (player.health <= 0 )
+		if (player.health <= 0 || player2.health <=0)
 		{
-			SceneManager.LoadScene ("Game Over");
-		}
-		if(enemies.Length == 0)
-		{
-			SceneManager.LoadScene ("Overworld");
+			SceneManager.LoadScene ("Results");
 		}
 		//updateHealth ();
 		if(ES_P1.currentSelectedGameObject.tag == "SpellHolder")
