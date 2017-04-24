@@ -564,7 +564,7 @@ public class FieldManagerPVP : FieldManager
 					spellSlots_2[2] = GameObject.Find ("SpellSlot3_2");
 					spellSlots_2[3] = GameObject.Find ("SpellSlot4_2");
 				}
-				p1Gun = weapons_2[2];
+				p2Gun = weapons_2[2];
 				weaponMax_2 = 4;
 			break;
 			case 4:
