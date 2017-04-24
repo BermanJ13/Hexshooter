@@ -8,7 +8,8 @@ using UnityEngine.SceneManagement;
 public class FieldManagerPVP : FieldManager
 {
 	protected Player player2;
-	public List<Object> Handful_2 = new List<Object>();
+    [SerializeField]public string[] maps;
+    public List<Object> Handful_2 = new List<Object>();
 	protected List<Object> Temp_2 = new List<Object>();
 	protected List<int> TempNum_2 = new List<int>();
 	protected static System.Random rand = new System.Random();  
@@ -25,11 +26,12 @@ public class FieldManagerPVP : FieldManager
 	protected Text curBullet_2;
 	public GameObject[] weapons_2;
 	public int weaponMax_2;
-	
+
+    [System.NonSerialized]public override string mapfile;
 	// Use this for initialization
 	void Start () 
 	{
-
+        mapFile = maps[(int)Mathf.Floor(Random.Range(0, maps.Length))];
 		once = true;
 		weapons = new GameObject[4];
 		weapons_2 = new GameObject[4];
