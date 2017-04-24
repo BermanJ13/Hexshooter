@@ -10,6 +10,8 @@ public class CharSelect : MonoBehaviour {
 	public int p2;
 	GameObject p1select;
 	GameObject p2select;
+	bool horizontal = false;
+	bool horizontal2 = false;
 
 	void Awake()
 	{
@@ -21,7 +23,6 @@ public class CharSelect : MonoBehaviour {
 		p2select = GameObject.Find ("P2_Weapon");
 		p1 = 1;
 		p2 = 1;
-
 	}
 	
 	// Update is called once per frame
@@ -40,6 +41,10 @@ public class CharSelect : MonoBehaviour {
 			{
 				p1select.GetComponent<Text> ().text = "Shotgun";
 			}
+			if (p1 == 4)
+			{
+				p1select.GetComponent<Text> ().text = "Gatling";
+			}
 			if (p2 == 1)
 			{
 				p2select.GetComponent<Text> ().text = "Revolver";
@@ -52,32 +57,65 @@ public class CharSelect : MonoBehaviour {
 			{
 				p2select.GetComponent<Text> ().text = "Shotgun";
 			}
+			if (p2 == 4)
+			{
+				p2select.GetComponent<Text> ().text = "Gatling";
+			}
+			float Horizontal = Input.GetAxisRaw ("Horizontal_P1");
+			float Horizontal2 = Input.GetAxisRaw ("Horizontal_P2");
 
-			if (Input.GetKeyDown (KeyCode.LeftArrow))
+			if (Horizontal2 < 0)
 			{
-				p2--;
-				if (p2 < 1)
-					p2 = 3;
+				if (!horizontal2)
+				{
+					horizontal2 = true;
+					p2--;
+					if (p2 < 1)
+						p2 = 4;
+				}
 			}
-			if (Input.GetKeyDown (KeyCode.RightArrow))
+			if (Horizontal2 > 0)
 			{
-				p2++;
-				if (p2 > 3)
-					p2 = 1;
+				if (!horizontal2)
+				{
+					horizontal2 = true;
+					p2++;
+					if (p2 > 4)
+						p2 = 1;
+				}
 			}
 
-			if (Input.GetKeyDown (KeyCode.A))
+			if (Horizontal < 0)
 			{
-				p1--;
-				if (p1 < 1)
-					p1 = 3;
+				if (!horizontal)
+				{
+					horizontal = true;
+					p1--;
+					if (p1 < 1)
+						p1 = 4;
+				}
 			}
-			if (Input.GetKeyDown (KeyCode.D))
+			if (Horizontal > 0)
 			{
-				p1++;
-				if (p1 > 3)
-					p1 = 1;
+				if (!horizontal)
+				{
+					horizontal = true;
+					p1++;
+					if (p1 > 4)
+						p1 = 1;
+				}	
+			}                                                                       
+		
+			if (Horizontal == 0)
+			{
+				horizontal = false;
+			}
+
+			if (Horizontal2 == 0)
+			{
+				horizontal2 = false;
 			}
 		}
 	}
 }
+	

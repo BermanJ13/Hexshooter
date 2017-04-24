@@ -24,7 +24,8 @@ public class Player : MonoBehaviour {
 	public string stat;
 	bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
 	int stackDmg;
-
+	public Sprite[] playerImages;
+	bool buttonPresed;
     // Use this for initialization
     void Start () 
 	{
@@ -119,7 +120,7 @@ public class Player : MonoBehaviour {
 		hideEmpty ();
 		updateCurrentSpell ();
 		pHealth.text = health.ToString();
-
+		buttonPresed = false;
 		if (!myStatus.IsAffected( StatusType.Bound))
 		{
 			movement ();
@@ -131,10 +132,17 @@ public class Player : MonoBehaviour {
 			{
 				initiateSpell ();
 			}
-
-			// Transform earth = Instantiate(variable, position, Identity)
-			//Spell earth2 = earth.GetComponent<Spell>();
-			//earth2 = weaponNumber;
+		}
+		if (Input.GetAxisRaw(atkbutton) > 0 && Chamber.Count >0) 
+		{
+			if (buttonPresed)
+			{
+				if (!myStatus.IsAffected (StatusType.Disabled))
+				{
+					initiateSpell ();
+					buttonPresed = true;
+				}
+			}
 		}
 		if (Chamber.Count == 0 && field.Handful.Count > 0)
 		{
@@ -422,5 +430,21 @@ public class Player : MonoBehaviour {
 		}
 
 		this.health -= damage* multipliers + stackDmg;
+	}
+	public void updatePlayerImage()
+	{
+		switch (weapon)
+		{
+			case 1:
+				GetComponent<SpriteRenderer> ().sprite = playerImages [0];
+			break;
+			case 2:
+			break;
+			case 3:
+				GetComponent<SpriteRenderer> ().sprite = playerImages [1];
+			break;
+			case 4:
+			break;
+		}
 	}
 }

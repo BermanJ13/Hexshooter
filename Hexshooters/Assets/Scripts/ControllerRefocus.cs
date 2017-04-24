@@ -6,9 +6,9 @@ using UnityEngine;
  {
      void Update()
      {
-         if (EventSystem.current.currentSelectedGameObject == null)
-         {
-             EventSystem.current.SetSelectedGameObject(EventSystem.current.firstSelectedGameObject);
-         }
+		if (EventSystem.current.currentSelectedGameObject == null)
+		{
+			EventSystem.current.SetSelectedGameObject(GameObject.Find("BattleButton"));
+		}
      }
  }

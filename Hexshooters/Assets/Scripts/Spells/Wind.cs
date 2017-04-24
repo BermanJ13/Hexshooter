@@ -78,9 +78,13 @@ public class Wind : Spell {
 			{
 				//if attack an enemy
 				if (c.gameObject.tag == "Enemy") {
+
+						if (PlayerNum == 1)
+						{
 					c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum)); //enemy takes dmg
 					c.transform.position += new Vector3 (0f, 1f, 0f); //moves the enemy up a penel
 					markedForDeletion = true; //used to delete bullet
+						}
 				} 
 				//if attack an obstacle
 				else if (c.gameObject.tag == "Obstacle") {
@@ -246,6 +250,9 @@ public class Wind : Spell {
 			{
 				//if attack an enemy
 				if (c.gameObject.tag == "Enemy") {
+
+						if (PlayerNum == 1)
+						{
 					c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum)); //enemy takes dmg
 					//checking boundary and then moving accordingly
 					if (c.transform.position.x < 8) {
@@ -261,6 +268,7 @@ public class Wind : Spell {
 					}
 
 					markedForDeletion = true; //used to delete bullet
+						}
 				}
 				//if hit an obstacle
 				else if (c.gameObject.tag == "Obstacle") {
@@ -353,10 +361,13 @@ public class Wind : Spell {
 			{
 
 				//if attack an enemy
-				if (c.gameObject.tag == "Enemy") {
+					if (c.gameObject.tag == "Enemy") {
+						if (PlayerNum == 1)
+						{
 					c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum)); //enemy takes dmg
 					c.transform.position += new Vector3 (-1f, 0f, 0.0f); //moves the enemy two panels back
 					markedForDeletion = true; //used to delete bullet
+						}
 				} 
 				else if (c.gameObject.tag == "Obstacle") 
 				{
@@ -423,11 +434,11 @@ public class Wind : Spell {
 			break;
 			//Shotgun
 			case 3:
-			description = "Knocks the enemyor obstacle back with a burst of compressed air.";
+			description = "Knocks the enemy or obstacle back with a burst of compressed air.";
 			break;
 			//Gatling
 			case 4:
-			description = "Pulls enemies or obstacles toward the you it lands in.";
+			description = "Pulls enemies or obstacles towards you.";
 			break;
 			//Cane Gun
 			case 5:

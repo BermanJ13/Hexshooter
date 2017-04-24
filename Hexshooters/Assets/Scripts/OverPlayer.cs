@@ -57,7 +57,7 @@ public class OverPlayer : MonoBehaviour {
 		bool moveUp  =   true;
 		bool moveDown =  true;
 		//Checks for Left and RIght Movement
-		if (Input.GetKey (KeyCode.RightArrow)) 
+		if (Input.GetAxisRaw ("Horizontal_Solo") > 0) 
 		{
 			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x + 0.1f, transform.position.y),0.1f);
 			//Checks whether or not something is in the way or if the desired spot is within the player area.
@@ -80,7 +80,7 @@ public class OverPlayer : MonoBehaviour {
 					transform.position = new Vector2 (transform.position.x + 0.15f, transform.position.y);
 			}
 		} 
-		else if (Input.GetKey (KeyCode.LeftArrow)) 
+		else if (Input.GetAxisRaw ("Horizontal_Solo") < 0) 
 		{
 			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x - 0.1f, transform.position.y),0.1f);
 			foreach( Collider2D c in hitColliders)
@@ -106,7 +106,7 @@ public class OverPlayer : MonoBehaviour {
 			}
 		}
 		//Checks for Up and Down Movement
-		if (Input.GetKey (KeyCode.UpArrow)) 
+		if (Input.GetAxisRaw ("Vertical_Solo") > 0) 
 		{
 			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y + 0.1f),0.1f);
 			foreach( Collider2D c in hitColliders)
@@ -128,7 +128,7 @@ public class OverPlayer : MonoBehaviour {
 					transform.position = new Vector2 (transform.position.x, transform.position.y + 0.15f);
 			}
 		} 
-		else if (Input.GetKey (KeyCode.DownArrow)) 
+		else if (Input.GetAxisRaw ("Vertical_Solo") < 0) 
 		{
 			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y - 0.1f),0.1f);
 			foreach( Collider2D c in hitColliders)
@@ -161,7 +161,7 @@ public class OverPlayer : MonoBehaviour {
             dialog.GetComponent<DialogueManager>().Load(script[0]);
             hitCollider.gameObject.SetActive(false);
         }
-        else if (Input.GetKey (KeyCode.Return)) 
+		else if (Input.GetButtonDown ("Submit_Solo")) 
 	    {
 		    if (hitCollider.gameObject.tag == "Building")
 		    {

@@ -13,7 +13,7 @@ public class ControllerRefocus_Multiplayer : MonoBehaviour
 		//Refocus Player 1 Event System 
 		if (ES_P1.currentSelectedGameObject == null)
 		{
-			ES_P1.SetSelectedGameObject(ES_P1.firstSelectedGameObject);
+			ES_P1.SetSelectedGameObject(GameObject.Find("BattleButton"));
 		}
 
 		if (ES_P1.currentSelectedGameObject == GameObject.Find("Spell 0_2"))
@@ -64,7 +64,7 @@ public class ControllerRefocus_Multiplayer : MonoBehaviour
 		//Refocus Player 2 Event System 
 		if (ES_P2.currentSelectedGameObject == null)
 		{
-			ES_P2.SetSelectedGameObject(ES_P2.firstSelectedGameObject);
+			ES_P2.SetSelectedGameObject(GameObject.Find("BattleButton_2"));
 		}
 
 		if (ES_P2.currentSelectedGameObject == GameObject.Find("Spell 0"))

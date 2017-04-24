@@ -4,9 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class ActiveFieldManager : FieldManager {
-	protected bool once;
 	void Start()
 	{
 		base.Start();
@@ -20,8 +20,17 @@ public class ActiveFieldManager : FieldManager {
 	{
 		if (once)
 		{
+			chooseGun (player.weapon, false);
 			showReloadScreen ();
 			once = false;
+		}
+		if (player.health <= 0 )
+		{
+			SceneManager.LoadScene ("Game Over");
+		}
+		if(enemies.Length == 0)
+		{
+			SceneManager.LoadScene ("Overworld");
 		}
 		//updateHealth ();
 		if(ES_P1.currentSelectedGameObject.tag == "SpellHolder")
@@ -70,6 +79,8 @@ public class ActiveFieldManager : FieldManager {
 				deleteSpells ();
 				updateObstacleList ();
 				deleteObstacles ();
+				updateEnemyList ();
+				deleteEnemies ();
 			}
 		} 
 		else
@@ -96,6 +107,8 @@ public class ActiveFieldManager : FieldManager {
 			deleteSpells ();
 			updateObstacleList ();
 			deleteObstacles ();
+			updateEnemyList ();
+			deleteEnemies ();
 
 			if ( player.reload && Input.GetButtonDown("Start_Solo"))
 			{

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rob : AIBase {
+public class Rob : Enemy {
 
     private int attackCounter;
     public int ATTACK_TIMEOUT = 2;
@@ -13,15 +13,7 @@ public class Rob : AIBase {
     
     private bool canAttack;//If true, the enemy can currently attack, if false, cannot for some reason.
     public Ransom myBrother = null;
-
-    // Bandit1 moves every second.
-    public override float TIME_PER_ACTION
-    {
-        get
-        {
-            return 1.0f;
-        }
-    }
+    
 
     public float modify_TIME_PER_ACTION;
     public const float RAGE_TIME_PER_ACTION = 0.5f;
@@ -31,18 +23,13 @@ public class Rob : AIBase {
     {
         base.Start();
         attackCounter = 0;
-        minX = 5;
-        maxX = 8;
-
-        minY = 0;
-        maxY = 4;
 
         myBrother = GameObject.FindObjectOfType<Ransom>();
-        Initialize(6, 2);
+        //Initialize(6, 2);
         modify_TIME_PER_ACTION = TIME_PER_ACTION;
     }
 
-    public override void Update()
+    public override void enemyUpdate()
     {
         if (myStatus.IsAffected(StatusType.Slow) || myStatus.IsAffected(StatusType.Freeze))
         {
@@ -94,34 +81,58 @@ public class Rob : AIBase {
                 }
                 else if (decision < 0.65f)//15%
                 {
-                    if (Move(Direction.Up) && myBrother && !myBrother.myStatus.IsAffected(StatusType.Bound))
+                    if (movePossible(Direction.Up) == 2)
                     {
-                        myBrother.Move(Direction.Up);
-                        myBrother.movedByBrother = true;
+                        if (Move(Direction.Up) && myBrother && !myBrother.myStatus.IsAffected(StatusType.Bound))
+                        {
+                            if (myBrother.movePossible(Direction.Up) == 2)
+                            {
+                                myBrother.Move(Direction.Up);
+                                myBrother.movedByBrother = true;
+                            }
+                        }
                     }
                 }
                 else if (decision < 0.80f)//15%
                 {
-                    if (Move(Direction.Down) && myBrother && !myBrother.myStatus.IsAffected(StatusType.Bound))
+                    if (movePossible(Direction.Down) == 2)
                     {
-                        myBrother.Move(Direction.Down);
-                        myBrother.movedByBrother = true;
+                        if (Move(Direction.Down) && myBrother && !myBrother.myStatus.IsAffected(StatusType.Bound))
+                        {
+                            if (myBrother.movePossible(Direction.Down) == 2)
+                            {
+                                myBrother.Move(Direction.Down);
+                                myBrother.movedByBrother = true;
+                            }
+                        }
                     }
                 }
                 else if (decision < 0.85f)//5%
                 {
-                    if (Move(Direction.Right) && myBrother && !myBrother.myStatus.IsAffected(StatusType.Bound))
+                    if (movePossible(Direction.Right) == 2)
                     {
-                        myBrother.Move(Direction.Right);
-                        myBrother.movedByBrother = true;
+                        if (Move(Direction.Right) && myBrother && !myBrother.myStatus.IsAffected(StatusType.Bound))
+                        {
+                            if (myBrother.movePossible(Direction.Right) == 2)
+                            {
+                                myBrother.Move(Direction.Right);
+                                myBrother.movedByBrother = true;
+                            }
+                        }
                     }
                 }
                 else if (decision < 0.90f)//5%
                 {
-                    if (Move(Direction.Left) && myBrother && !myBrother.myStatus.IsAffected(StatusType.Bound))
+                    if (movePossible(Direction.Left) == 2)
                     {
-                        myBrother.Move(Direction.Left);
-                        myBrother.movedByBrother = true;
+                        if (Move(Direction.Left) && myBrother && !myBrother.myStatus.IsAffected(StatusType.Bound))
+                        {
+                            if (myBrother.movePossible(Direction.Left) == 2)
+                            {
+                                myBrother.Move(Direction.Left);
+                                myBrother.movedByBrother = true;
+                            }
+                        }
                     }
                 }
                 else//10%
@@ -133,19 +144,31 @@ public class Rob : AIBase {
             {
                 if (decision < 0.35f) //35%
                 {
-                    Move(Direction.Up);
+                    if (movePossible(Direction.Up) == 2)
+                    {
+                        Move(Direction.Up);
+                    }
                 }
                 else if (decision < 0.7f)//35%
                 {
-                    Move(Direction.Down);
+                    if (movePossible(Direction.Down) == 2)
+                    {
+                        Move(Direction.Down);
+                    }
                 }
                 else if (decision < 0.8f)//10%
                 {
-                    Move(Direction.Left);
+                    if (movePossible(Direction.Left) == 2)
+                    {
+                        Move(Direction.Left);
+                    }
                 }
                 else if (decision < 0.9f)//10%
                 {
-                    Move(Direction.Right);
+                    if (movePossible(Direction.Right) == 2)
+                    {
+                        Move(Direction.Right);
+                    }
                 }
                 else//10%
                 {
@@ -173,22 +196,45 @@ public class Rob : AIBase {
         if(myBrother && myBrother.recentFireCounter > 0)
         {
             float shieldRand = UnityEngine.Random.Range(0, 1.0f);
-            if (shieldRand > (float)myBrother.myEnemy.Health() / 100.0f)
+            if (shieldRand > (float)myBrother.GetComponent<Enemy>().Health() / 100.0f)
             {
-                Debug.LogError("Ice shield spell in Rob Attack() unimplemented.");
+				// Use ice spell
+				GameObject go = (GameObject)Instantiate(Resources.Load("Ice"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+				////get the thing component on your instantiated object
+				Spell mything = go.GetComponent<Spell>();
+
+				////set a member variable (must be PUBLIC)
+				mything.weaponUsed = 3; 
+				mything.PlayerNum = 2;
             }
             else
             {
-                // Use wind spell
-                Debug.LogError("Wind spell in Rob Attack() unimplemented.");
+				// Use wind spell
+				GameObject go = (GameObject)Instantiate(Resources.Load("Wind"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+				////get the thing component on your instantiated object
+				Spell mything = go.GetComponent<Spell>();
+
+				////set a member variable (must be PUBLIC)
+				mything.weaponUsed = 1; 
+				mything.PlayerNum = 2;
             }
         }
         else
         {
             float shieldRand = UnityEngine.Random.Range(0, 1.0f);
-            if (myBrother && shieldRand > (float)myBrother.myEnemy.Health() / 100.0f)
+            if (myBrother && shieldRand > (float)myBrother.GetComponent<Enemy>().Health() / 100.0f)
             {
-                Debug.LogError("Ice shield spell in Rob Attack() unimplemented.");
+				// Use ice spell
+				GameObject go = (GameObject)Instantiate(Resources.Load("Ice"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+				////get the thing component on your instantiated object
+				Spell mything = go.GetComponent<Spell>();
+
+				////set a member variable (must be PUBLIC)
+				mything.weaponUsed = 3; 
+				mything.PlayerNum = 2;
             }
             else
             {
@@ -196,12 +242,27 @@ public class Rob : AIBase {
                 if (rand < 0.5f)//50%
                 {
                     // Use wind spell
-                    Debug.LogError("Wind spell in Rob Attack() unimplemented.");
+					GameObject go = (GameObject)Instantiate(Resources.Load("Wind"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+					////get the thing component on your instantiated object
+					Spell mything = go.GetComponent<Spell>();
+
+					////set a member variable (must be PUBLIC)
+					mything.weaponUsed = 1; 
+					mything.PlayerNum = 2;
                 }
                 else
                 {
                     // Use water spell
-                    Debug.LogError("Water spell in Rob Attack() unimplemented.");
+					// Use wind spell
+					GameObject go = (GameObject)Instantiate(Resources.Load("Water"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+					////get the thing component on your instantiated object
+					Spell mything = go.GetComponent<Spell>();
+
+					////set a member variable (must be PUBLIC)
+					mything.weaponUsed = 3; 
+					mything.PlayerNum = 2;
                     recentWaterCounter = RECENT_WATER_RESET;
                 }
             }

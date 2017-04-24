@@ -46,27 +46,34 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Script\ActivateAttack.cs" />
-     <Compile Include="Assets\Script\Movement.cs" />
-     <Compile Include="Assets\Script\Particle.cs" />
-     <Compile Include="Assets\Script\tmp.cs" />
+     <Compile Include="Assets\Scripts\ActivateAttack.cs" />
      <Compile Include="Assets\Scripts\ActiveFieldManager.cs" />
      <Compile Include="Assets\Scripts\CharSelect.cs" />
+     <Compile Include="Assets\Scripts\ControlDisplay.cs" />
      <Compile Include="Assets\Scripts\ControllerRefocus.cs" />
      <Compile Include="Assets\Scripts\DialogueManager.cs" />
-     <Compile Include="Assets\Scripts\Enemies\AIBase.cs" />
-     <Compile Include="Assets\Scripts\Enemies\Bandit1.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Attacks\BasicEnemyAttack.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Attacks\EnemySpell.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Attacks\ScorpionStrike.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Attacks\WildCatStrike.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Bandit.cs" />
      <Compile Include="Assets\Scripts\Enemies\Bosses\Ransom.cs" />
      <Compile Include="Assets\Scripts\Enemies\Bosses\Rob.cs" />
      <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Scorpion.cs" />
+     <Compile Include="Assets\Scripts\Enemies\WildCat.cs" />
      <Compile Include="Assets\Scripts\FieldManager.cs" />
      <Compile Include="Assets\Scripts\GameInfo.cs" />
      <Compile Include="Assets\Scripts\GameResults.cs" />
      <Compile Include="Assets\Scripts\Instructions.cs" />
+     <Compile Include="Assets\Scripts\Movement.cs" />
+     <Compile Include="Assets\Scripts\Music\BattleMusic.cs" />
+     <Compile Include="Assets\Scripts\Music\MenuMusic.cs" />
      <Compile Include="Assets\Scripts\Obstacles\Flames.cs" />
      <Compile Include="Assets\Scripts\Obstacles\Obstacle.cs" />
      <Compile Include="Assets\Scripts\OverPlayer.cs" />
      <Compile Include="Assets\Scripts\Panel.cs" />
+     <Compile Include="Assets\Scripts\Particle.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\Preload\DDOL.cs" />
      <Compile Include="Assets\Scripts\Preload\Load.cs" />
@@ -96,11 +103,29 @@
      <Compile Include="Assets\Scripts\Spells\Wind.cs" />
      <Compile Include="Assets\Scripts\Spells\Wood.cs" />
      <Compile Include="Assets\Scripts\StatusManager.cs" />
+     <Compile Include="Assets\Scripts\tmp.cs" />
+     <Compile Include="Assets\Vortex Game Studios\FilterBehavior\FilterBehaviour.cs" />
+     <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\OLDTVScreen.cs" />
+     <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\OLDTVTube.cs" />
+     <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\Tutorial\CameraReflex.cs" />
+     <None Include="Assets\Maps\DB2.txt" />
+     <None Include="Assets\Maps\VSempty.txt" />
+     <None Include="Assets\Vortex Game Studios\OLD TV Filter 2\Shader\OLDTVFilter_Screen.shader" />
+     <None Include="Assets\Maps\VSobstruction.txt" />
+     <None Include="Assets\Maps\VSplayer1Poor.txt" />
+     <None Include="Assets\Maps\DB1.txt" />
+     <None Include="Assets\Particles\ProjectSettings\ProjectVersion.txt" />
+     <None Include="Assets\Maps\DB3.txt" />
      <None Include="Assets\Maps\testmap.txt" />
      <None Include="Assets\Dialogue\Text\TestCutscene.txt" />
-     <None Include="Assets\ProjectSettings\ProjectVersion.txt" />
+     <None Include="Assets\Maps\VScenterSideWall.txt" />
+     <None Include="Assets\Prefabs\Enemies\ProjectSettings\ProjectVersion.txt" />
      <None Include="Assets\Dialogue\Text\TestTalk.txt" />
+     <None Include="Assets\Maps\VSplayer2Poor.txt" />
      <None Include="Assets\Maps\base.txt" />
+     <None Include="Assets\Vortex Game Studios\OLD TV Filter 2\Shader\OLDTVFilter_Tube.shader" />
+     <None Include="Assets\Maps\DB4.txt" />
+     <None Include="Assets\Maps\BossFIght.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
