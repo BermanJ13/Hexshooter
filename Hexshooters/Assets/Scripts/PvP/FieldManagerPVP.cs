@@ -7,8 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class FieldManagerPVP : FieldManager
 {
-	protected Player player2;
+    [Header("PVP")]
     [SerializeField]public string[] maps;
+    protected Player player2;
     public List<Object> Handful_2 = new List<Object>();
 	protected List<Object> Temp_2 = new List<Object>();
 	protected List<int> TempNum_2 = new List<int>();
@@ -26,12 +27,12 @@ public class FieldManagerPVP : FieldManager
 	protected Text curBullet_2;
 	public GameObject[] weapons_2;
 	public int weaponMax_2;
-
-    [System.NonSerialized]public override string mapfile;
-	// Use this for initialization
-	void Start () 
+    
+    // Use this for initialization
+    void Start () 
 	{
-        mapFile = maps[(int)Mathf.Floor(Random.Range(0, maps.Length))];
+        mapFile = maps[Random.Range(0, maps.Length)];
+        Debug.Log(mapFile);
 		once = true;
 		weapons = new GameObject[4];
 		weapons_2 = new GameObject[4];
@@ -42,7 +43,8 @@ public class FieldManagerPVP : FieldManager
 		//Placeholder Fils Deck with Lighnin and Eart Spells
 		buildDeck();
 
-		createGrid ();
+        instantiateMap();
+
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 		player2 = GameObject.FindGameObjectWithTag ("Player2").GetComponent<Player> ();
 		chooseGun_2 (player2.weapon, true);
@@ -442,29 +444,6 @@ public class FieldManagerPVP : FieldManager
 
 		battleObjects = new GameObject[2];
 		battleObjects[1] = GameObject.Find("Current Bullet_2");
-	}
-	protected void createGrid()
-	{
-
-		//Creates the Grid
-		for (int y = 0; y < 5; y++) 
-		{
-			for (int x = 0; x < 10; x++) 
-			{
-				//Checks whether the current panel is for the enmy or player side
-				if(x<5)
-				{
-					Instantiate(Resources.Load("Player_Panel"), new Vector3(x, y, 0), Quaternion.identity);
-					//sPawns the Player
-					if(y==2 && x==0)
-						Instantiate(Resources.Load("Player"), new Vector3(x, y, 0), Quaternion.identity);
-				}
-				else
-					Instantiate(Resources.Load("Enemy_Panel"), new Vector3(x, y, 0), Quaternion.identity);
-				if(y==2 && x==9)
-					Instantiate(Resources.Load("Player2"), new Vector3(x, y, 0), Quaternion.identity);
-			}
-		}
 	}
 	protected void buildDeck()
 	{
