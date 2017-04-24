@@ -56,7 +56,7 @@ public class ControlDisplay : MonoBehaviour {
 			break;
 				
 			case "Menu":
-				ControlScreens [0].SetActive (true);
+				ControlScreens [1].SetActive (true);
 				ControlScreens [3].SetActive (true);
 			break;
 		}

@@ -499,6 +499,15 @@ public class FieldManagerPVP : FieldManager
 				spellSlots_2.Add (GameObject.Find ("SpellSlot4_2"));
 				spellSlots_2.Add (GameObject.Find ("SpellSlot5_2"));
 				spellSlots_2.Add (GameObject.Find ("SpellSlot6_2"));
+				if (!first)
+				{
+					spellSlots_2[0] = GameObject.Find ("SpellSlot1_2");
+					spellSlots_2[1] = GameObject.Find ("SpellSlot2_2");
+					spellSlots_2[2] = GameObject.Find ("SpellSlot3_2");
+					spellSlots_2[3] = GameObject.Find ("SpellSlot4_2");
+					spellSlots_2[4] = GameObject.Find ("SpellSlot5_2");
+					spellSlots_2[5] = GameObject.Find ("SpellSlot6_2");
+				}
 
 				p2Gun = weapons_2 [0];
 				weaponMax_2 = 6;
@@ -513,6 +522,17 @@ public class FieldManagerPVP : FieldManager
 				spellSlots_2.Add (GameObject.Find ("SpellSlot6_2"));
 				spellSlots_2.Add (GameObject.Find ("SpellSlot7_2"));
 				spellSlots_2.Add (GameObject.Find ("SpellSlot8_2"));
+				if (!first)
+				{
+					spellSlots_2[0] = GameObject.Find ("SpellSlot1_2");
+					spellSlots_2[1] = GameObject.Find ("SpellSlot2_2");
+					spellSlots_2[2] = GameObject.Find ("SpellSlot3_2");
+					spellSlots_2[3] = GameObject.Find ("SpellSlot4_2");
+					spellSlots_2[4] = GameObject.Find ("SpellSlot5_2");
+					spellSlots_2[5] = GameObject.Find ("SpellSlot6_2");
+					spellSlots_2[6] = GameObject.Find ("SpellSlot7_2");
+					spellSlots_2[7] = GameObject.Find ("SpellSlot8_2");
+				}
 				p2Gun = weapons_2 [1];
 				weaponMax_2 = 8;
 			break;
@@ -520,6 +540,11 @@ public class FieldManagerPVP : FieldManager
 				weapons_2 [3].SetActive (true);
 				spellSlots_2.Add (GameObject.Find ("SpellSlot1_2"));
 				spellSlots_2.Add (GameObject.Find ("SpellSlot2_2"));
+				if (!first)
+				{
+					spellSlots_2[0] = GameObject.Find ("SpellSlot1_2");
+					spellSlots_2[1] = GameObject.Find ("SpellSlot2_2");
+				}
 				p2Gun = weapons_2 [3];
 				weaponMax_2 = 2;
 
@@ -541,6 +566,17 @@ public class FieldManagerPVP : FieldManager
 				spellSlots_2.Add (GameObject.Find ("SpellSlot6_2"));
 				spellSlots_2.Add (GameObject.Find ("SpellSlot7_2"));
 				spellSlots_2.Add (GameObject.Find ("SpellSlot8_2"));
+				if (!first)
+				{
+					spellSlots_2[0] = GameObject.Find ("SpellSlot1_2");
+					spellSlots_2[1] = GameObject.Find ("SpellSlot2_2");
+					spellSlots_2[2] = GameObject.Find ("SpellSlot3_2");
+					spellSlots_2[3] = GameObject.Find ("SpellSlot4_2");
+					spellSlots_2[4] = GameObject.Find ("SpellSlot5_2");
+					spellSlots_2[5] = GameObject.Find ("SpellSlot6_2");
+					spellSlots_2[6] = GameObject.Find ("SpellSlot7_2");
+					spellSlots_2[7] = GameObject.Find ("SpellSlot8_2");
+				}
 				p2Gun = weapons_2 [1];
 				weaponMax_2 = 8;
 

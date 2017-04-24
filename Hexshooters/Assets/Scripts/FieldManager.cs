@@ -520,6 +520,15 @@ public class FieldManager : MonoBehaviour
 				spellSlots.Add (GameObject.Find ("SpellSlot4"));
 				spellSlots.Add (GameObject.Find ("SpellSlot5"));
 				spellSlots.Add (GameObject.Find ("SpellSlot6"));
+				if (!first)
+				{
+					spellSlots[0] = GameObject.Find ("SpellSlot1");
+					spellSlots[1] = GameObject.Find ("SpellSlot2");
+					spellSlots[2] = GameObject.Find ("SpellSlot3");
+					spellSlots[3] = GameObject.Find ("SpellSlot4");
+					spellSlots[4] = GameObject.Find ("SpellSlot5");
+					spellSlots[5] = GameObject.Find ("SpellSlot6");
+				}
 
 				p1Gun = weapons [0];
 				weaponMax = 6;
@@ -534,6 +543,17 @@ public class FieldManager : MonoBehaviour
 				spellSlots.Add (GameObject.Find("SpellSlot6"));
 				spellSlots.Add (GameObject.Find("SpellSlot7"));
 				spellSlots.Add (GameObject.Find("SpellSlot8"));
+				if (!first)
+				{
+					spellSlots[0] = GameObject.Find ("SpellSlot1");
+					spellSlots[1] = GameObject.Find ("SpellSlot2");
+					spellSlots[2] = GameObject.Find ("SpellSlot3");
+					spellSlots[3] = GameObject.Find ("SpellSlot4");
+					spellSlots[4] = GameObject.Find ("SpellSlot5");
+					spellSlots[5] = GameObject.Find ("SpellSlot6");
+					spellSlots[6] = GameObject.Find ("SpellSlot7");
+					spellSlots[7] = GameObject.Find ("SpellSlot8");
+				}
 				p1Gun = weapons[1];
 				weaponMax = 8;
 			break;
@@ -541,6 +561,11 @@ public class FieldManager : MonoBehaviour
 				weapons[3].SetActive (true);
 				spellSlots.Add (GameObject.Find("SpellSlot1"));
 				spellSlots.Add (GameObject.Find("SpellSlot2"));
+				if (!first)
+				{
+					spellSlots[0] = GameObject.Find ("SpellSlot1");
+					spellSlots[1] = GameObject.Find ("SpellSlot2");
+				}
 				p1Gun = weapons[3];
 				weaponMax = 2;
 
@@ -562,6 +587,17 @@ public class FieldManager : MonoBehaviour
 				spellSlots.Add (GameObject.Find("SpellSlot6"));
 				spellSlots.Add (GameObject.Find("SpellSlot7"));
 				spellSlots.Add (GameObject.Find("SpellSlot8"));
+				if (!first)
+				{
+					spellSlots[0] = GameObject.Find ("SpellSlot1");
+					spellSlots[1] = GameObject.Find ("SpellSlot2");
+					spellSlots[2] = GameObject.Find ("SpellSlot3");
+					spellSlots[3] = GameObject.Find ("SpellSlot4");
+					spellSlots[4] = GameObject.Find ("SpellSlot5");
+					spellSlots[5] = GameObject.Find ("SpellSlot6");
+					spellSlots[6] = GameObject.Find ("SpellSlot7");
+					spellSlots[7] = GameObject.Find ("SpellSlot8");
+				}
 				p1Gun = weapons[1];
 				weaponMax = 8;
 
