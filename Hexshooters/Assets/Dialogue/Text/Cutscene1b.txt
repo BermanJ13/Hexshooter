@@ -1,0 +1,1 @@
+#Matt/normal/No, I haven’t got any money myself.#Bandit/normal/Did you get robbed too? Would you like to join us?#Matt/normal/A or Enter- "Sure" B or Backspace- "No"

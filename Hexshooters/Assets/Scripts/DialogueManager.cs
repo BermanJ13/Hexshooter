@@ -90,7 +90,7 @@ public class DialogueManager : MonoBehaviour {
             for (int i = 0; i < UI.Length; i++)
                 UI[i].SetActive(true);
 
-            string[] dialogue= dialogueLines[0].Split(',');
+            string[] dialogue= dialogueLines[0].Split('/');
             name.text = dialogue[0];
             string portName = name.text + dialogue[1];
             Sprite newPic = Resources.Load<Sprite>("Portrait/"+portName);

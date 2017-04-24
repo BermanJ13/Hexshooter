@@ -133,6 +133,22 @@
     <Compile Include="Assets\Scripts\StatusManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Dialogue\Text\Cutscene0.txt" />
+    <None Include="Assets\Dialogue\Text\Cutscene1.txt" />
+    <None Include="Assets\Dialogue\Text\Cutscene1a.txt" />
+    <None Include="Assets\Dialogue\Text\Cutscene1b.txt" />
+    <None Include="Assets\Dialogue\Text\Cutscene1b1.txt" />
+    <None Include="Assets\Dialogue\Text\Cutscene1b2.txt" />
+    <None Include="Assets\Dialogue\Text\Cutscene1c.txt" />
+    <None Include="Assets\Dialogue\Text\Cutscene2a.txt" />
+    <None Include="Assets\Dialogue\Text\Cutscene2b.txt" />
+    <None Include="Assets\Dialogue\Text\Cutscene3.txt" />
+    <None Include="Assets\Dialogue\Text\Cutscene4.txt" />
+    <None Include="Assets\Dialogue\Text\Cutscene5.txt" />
+    <None Include="Assets\Dialogue\Text\Cutscene6.txt" />
+    <None Include="Assets\Dialogue\Text\Cutscene7.txt" />
+    <None Include="Assets\Dialogue\Text\Cutscene8.txt" />
+    <None Include="Assets\Dialogue\Text\Cutscene9.txt" />
     <None Include="Assets\Dialogue\Text\TestCutscene.txt" />
     <None Include="Assets\Dialogue\Text\TestTalk.txt" />
     <None Include="Assets\Maps\base.txt" />

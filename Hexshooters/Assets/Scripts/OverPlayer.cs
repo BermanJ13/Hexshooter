@@ -17,8 +17,30 @@ public class OverPlayer : MonoBehaviour {
 	void Start () {
         dialog = GameObject.FindGameObjectWithTag("DialogMngr");
         script = new List<string>();
-        script.Add("Assets/Dialogue/Text/TestCutscene.txt");
-	}
+        script.Add("Assets/Dialogue/Text/Cutscene1.txt");
+        script.Add("Assets/Dialogue/Text/Cutscene1a.txt");
+        script.Add("Assets/Dialogue/Text/Cutscene1b.txt");
+        script.Add("Assets/Dialogue/Text/Cutscene1b1.txt");
+        script.Add("Assets/Dialogue/Text/Cutscene1b2.txt");
+        script.Add("Assets/Dialogue/Text/Cutscene1c.txt");
+
+        script.Add("Assets/Dialogue/Text/Cutscene2a.txt");
+        script.Add("Assets/Dialogue/Text/Cutscene2b.txt");
+
+        script.Add("Assets/Dialogue/Text/Cutscene3.txt");
+
+        script.Add("Assets/Dialogue/Text/Cutscene4.txt");
+
+        script.Add("Assets/Dialogue/Text/Cutscene5.txt");
+
+        script.Add("Assets/Dialogue/Text/Cutscene6.txt");
+
+        script.Add("Assets/Dialogue/Text/Cutscene7.txt");
+
+        script.Add("Assets/Dialogue/Text/Cutscene8.txt");
+
+        script.Add("Assets/Dialogue/Text/Cutscene9.txt");
+    }
 	
 	// Update is called once per frame
 	void Update () 
