@@ -132,8 +132,14 @@
     <None Include="Assets\Maps\DB2.txt" />
     <None Include="Assets\Maps\DB3.txt" />
     <None Include="Assets\Maps\DB4.txt" />
+    <None Include="Assets\Maps\VScenterSideWall.txt" />
+    <None Include="Assets\Maps\VSempty.txt" />
+    <None Include="Assets\Maps\VSobstruction.txt" />
+    <None Include="Assets\Maps\VSplayer1Poor.txt" />
+    <None Include="Assets\Maps\VSplayer2Poor.txt" />
     <None Include="Assets\Maps\base.txt" />
     <None Include="Assets\Maps\testmap.txt" />
+    <None Include="Assets\Particles\ProjectSettings\ProjectVersion.txt" />
     <None Include="Assets\Prefabs\Enemies\ProjectSettings\ProjectVersion.txt" />
     <None Include="Assets\Vortex Game Studios\OLD TV Filter 2\Shader\OLDTVFilter_Screen.shader" />
     <None Include="Assets\Vortex Game Studios\OLD TV Filter 2\Shader\OLDTVFilter_Tube.shader" />

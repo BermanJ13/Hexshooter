@@ -73,7 +73,6 @@ public class Ransom : Enemy {
         {
             if (!movedByBrother)
             {
-                Debug.Log("NotMoved");
 
                 if (myBrother.currentY == currentY && myBrother.currentX + 1 == currentX)
                 {

@@ -10,7 +10,6 @@ public class Flames : Obstacle {
 	{
 		collide ();
 		flameTimer--;
-		Debug.Log (flameTimer);
 		//Debug.Log (health);
 		if (direction != new Vector2 (0, 0))
 		{
@@ -28,7 +27,6 @@ public class Flames : Obstacle {
 	}
 	public override void collide ()
 	{
-		Debug.Log ("hi");
 		Collider2D[] colliders;
 		colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
 		foreach (Collider2D d in colliders) 
