@@ -15,7 +15,10 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 	void Start()
 	{
 
-		weapons = new GameObject[4];
+        mapFile = maps[Random.Range(0, maps.Length)];
+        Debug.Log(mapFile);
+
+        weapons = new GameObject[4];
 		weapons_2 = new GameObject[4];
 		battleObjects = new GameObject[2];
 		//Debug.Log (pauseObjects[0]);
@@ -24,7 +27,8 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 		//Placeholder Fils Deck with Lighnin and Eart Spells
 		buildDeck();
 
-		createGrid ();
+        instantiateMap();
+
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 		player2 = GameObject.FindGameObjectWithTag ("Player2").GetComponent<Player> ();
 		chooseGun_2 (player2.weapon, true);
