@@ -49,6 +49,10 @@ public class Rob : Enemy {
             }
             AIStep();
         }
+		if (health <= 0)
+		{
+			MarkedForDeletion = true;
+		}
     }
 
     public override void AIStep()

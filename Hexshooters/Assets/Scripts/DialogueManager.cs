@@ -41,6 +41,7 @@ public class DialogueManager : MonoBehaviour {
         words.gameObject.SetActive(false);
         dialogueBox.gameObject.SetActive(false);
         */
+
     }
 
     public bool Load(string fileName)
@@ -85,6 +86,7 @@ public class DialogueManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		dialogueCanvas.gameObject.SetActive (true);
 		if (dialogueLines.Count > 0)
         {
             for (int i = 0; i < UI.Length; i++)
@@ -99,9 +101,9 @@ public class DialogueManager : MonoBehaviour {
         }
         else
         {
-            //for (int i = 0; i < UI.Length; i++)
-                //UI[i].SetActive(false);
+			dialogueCanvas.gameObject.SetActive (false);
         }
+
 	}
 
     public void nextLine()

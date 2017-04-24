@@ -62,7 +62,7 @@ public class OverPlayer : MonoBehaviour {
 		
 		if (!battle)
 		{
-			this.GetComponent<SpriteRenderer> ().color = new Color (255, 0, 0, 1);
+			this.gameObject.GetComponent<SpriteRenderer> ().color = new Color (255, 0, 0, 1);
 			if (!cutscene)
 			{
 				movement ();
@@ -200,123 +200,127 @@ public class OverPlayer : MonoBehaviour {
 	void interaction()
 	{
 
-		Collider2D hitCollider = Physics2D.OverlapCircle(new Vector2(transform.position.x, transform.position.y), .2f);
-		if (hitCollider.gameObject.tag=="Cut 0")
+		Collider2D[] hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x, transform.position.y), .2f);
+		foreach (Collider2D hitCollider in hitColliders)
 		{
-			if (cut0)
+			if (hitCollider.gameObject.tag == "Cut 0")
 			{
-				dialog.GetComponent<DialogueManager> ().Load (script [0]);
-				hitCollider.gameObject.SetActive (false);
-				cutscene = true;
-				cut0 = false;
+				if (cut0)
+				{
+					dialog.GetComponent<DialogueManager> ().Load (script [0]);
+					hitCollider.gameObject.SetActive (false);
+					cutscene = true;
+					cut0 = false;
+				}
 			}
-		}
-		if (hitCollider.gameObject.tag=="Cut 1")
-		{
-			if (cut1)
+			if (hitCollider.gameObject.tag == "Cut 1")
 			{
-				dialog.GetComponent<DialogueManager> ().Load (script [1]);
-				hitCollider.gameObject.SetActive (false);
-				cutscene = true;
-				cut1 = false;
-			}
+				if (cut1)
+				{
+					dialog.GetComponent<DialogueManager> ().Load (script [1]);
+					hitCollider.gameObject.SetActive (false);
+					cutscene = true;
+					cut1 = false;
+				}
 			
-		}
-		if (hitCollider.gameObject.tag=="Cut 2")
-		{
-			if (cut2)
-			{
-				dialog.GetComponent<DialogueManager> ().Load (script [2]);
-				hitCollider.gameObject.SetActive (false);
-				cutscene = true;
-				cut2 = false;
 			}
+			if (hitCollider.gameObject.tag == "Cut 2")
+			{
+				if (cut2)
+				{
+					dialog.GetComponent<DialogueManager> ().Load (script [2]);
+					hitCollider.gameObject.SetActive (false);
+					cutscene = true;
+					cut2 = false;
+				}
 
-		}
-		if (hitCollider.gameObject.tag=="Cut 3")
-		{
-			if (cut3)
+			}
+			if (hitCollider.gameObject.tag == "Cut 3")
 			{
-				dialog.GetComponent<DialogueManager> ().Load (script [3]);
-				hitCollider.gameObject.SetActive (false);
-				cutscene = true;
-				cut3 = false;
+				if (cut3)
+				{
+					dialog.GetComponent<DialogueManager> ().Load (script [3]);
+					hitCollider.gameObject.SetActive (false);
+					cutscene = true;
+					cut3 = false;
+				}
+			}
+			if (hitCollider.gameObject.tag == "Cut 4")
+			{
+				if (cut4)
+				{
+					dialog.GetComponent<DialogueManager> ().Load (script [4]);
+					hitCollider.gameObject.SetActive (false);
+					cutscene = true;
+					cut4 = false;
+				}
+			}
+			if (hitCollider.gameObject.tag == "Cut 5")
+			{
+				if (cut5)
+				{
+					dialog.GetComponent<DialogueManager> ().Load (script [5]);
+					hitCollider.gameObject.SetActive (false);
+					cutscene = true;
+					cut5 = false;
+				}
+			}
+			if (hitCollider.gameObject.tag == "Cut 6")
+			{
+				if (cut6)
+				{
+					dialog.GetComponent<DialogueManager> ().Load (script [6]);
+					hitCollider.gameObject.SetActive (false);
+					cutscene = true;
+					cut6 = false;
+				}
+			}
+			if (hitCollider.gameObject.tag == "Cut 7")
+			{
+				if (cut7)
+				{
+					dialog.GetComponent<DialogueManager> ().Load (script [7]);
+					hitCollider.gameObject.SetActive (false);
+					cutscene = true;
+					cut7 = false;
+				}
+			}
+			if (hitCollider.gameObject.tag == "Cut 8")
+			{
+				if (cut8)
+				{
+					dialog.GetComponent<DialogueManager> ().Load (script [8]);
+					hitCollider.gameObject.SetActive (false);
+					cutscene = true;
+					cut8 = false;
+				}
+			}
+			if (hitCollider.gameObject.tag == "Cut 9")
+			{
+				if (cut9)
+				{
+					dialog.GetComponent<DialogueManager> ().Load (script [9]);
+					hitCollider.gameObject.SetActive (false);
+					cutscene = true;
+					cut9 = false;
+				}
+			}
+			else
+			if (Input.GetButtonDown ("Submit_Solo"))
+			{
+				if (hitCollider.gameObject.tag == "Building")
+				{
+					//Load Building Scene
+				}
+				if (hitCollider.gameObject.tag == "Object")
+				{
+					//Load Building Scene
+				}
+				if (hitCollider.gameObject.tag == "NPC")
+				{
+					Debug.Log ("NPC");
+				}
 			}
 		}
-		if (hitCollider.gameObject.tag=="Cut 4")
-		{
-			if (cut4)
-			{
-				dialog.GetComponent<DialogueManager> ().Load (script [4]);
-				hitCollider.gameObject.SetActive (false);
-				cutscene = true;
-				cut4 = false;
-			}
-		}
-		if (hitCollider.gameObject.tag=="Cut 5")
-		{
-			if (cut5)
-			{
-				dialog.GetComponent<DialogueManager> ().Load (script [5]);
-				hitCollider.gameObject.SetActive (false);
-				cutscene = true;
-				cut5 = false;
-			}
-		}
-		if (hitCollider.gameObject.tag=="Cut 6")
-		{
-			if (cut6)
-			{
-				dialog.GetComponent<DialogueManager> ().Load (script [6]);
-				hitCollider.gameObject.SetActive (false);
-				cutscene = true;
-				cut6 = false;
-			}
-		}
-		if (hitCollider.gameObject.tag=="Cut 7")
-		{
-			if (cut7)
-			{
-				dialog.GetComponent<DialogueManager> ().Load (script [7]);
-				hitCollider.gameObject.SetActive (false);
-				cutscene = true;
-				cut7 = false;
-			}
-		}
-		if (hitCollider.gameObject.tag=="Cut 8")
-		{
-			if (cut8)
-			{
-				dialog.GetComponent<DialogueManager> ().Load (script [8]);
-				hitCollider.gameObject.SetActive (false);
-				cutscene = true;
-				cut8 = false;
-			}
-		}
-		if (hitCollider.gameObject.tag=="Cut 9")
-		{
-			if (cut9)
-			{
-				dialog.GetComponent<DialogueManager> ().Load (script [9]);
-				hitCollider.gameObject.SetActive (false);
-				cutscene = true;
-				cut9 = false;
-			}
-		}
-		else if (Input.GetButtonDown ("Submit_Solo")) 
-	    {
-		    if (hitCollider.gameObject.tag == "Building")
-		    {
-		    	//Load Building Scene
-		    }
-		    if (hitCollider.gameObject.tag == "Object")
-		    {
-			    //Load Building Scene
-		    }
-		    if (hitCollider.gameObject.tag == "NPC")
-		    {
-                 Debug.Log("NPC");
-		    }
-	    }
-    }
+	}
 }
