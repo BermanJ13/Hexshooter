@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour {
 
     public string dialogueFile;
-    private StreamReader reader;
+	private TextAsset reader;
     public List<string> dialogueLines = new List<string>();
 
     public Canvas dialogueCanvas;
@@ -46,47 +46,30 @@ public class DialogueManager : MonoBehaviour {
 
     public bool Load(string fileName)
     {
-        
-        try
-        {
-            string line;
-            reader = new StreamReader(fileName, Encoding.Default);
-           
-            using (reader)
-            {
-                
-                do
-                {
-                    line = reader.ReadLine();
+          string line;
+		reader = Resources.Load(fileName) as TextAsset;
+			string[] lines = reader.text.Split('#');
+				foreach (string s in lines)
+				{
+					string [] temp;
+					string replaceWith = "";
+					//temp = s.Replace("\r\n", replaceWith).Replace("\n", replaceWith).Replace("\r", replaceWith);
+					temp = s.Split('#');
+					foreach (string t in temp)
+					{
+						dialogueLines.Add (t);
+					}
+				}
 
-                    if (line != null)
-                    {
-                        
-                        string[] entries = line.Split('#');
-                        if (entries.Length > 0)
-                            for (int i =1; i<entries.Length;i++)
-                            {
-                                dialogueLines.Add(entries[i]);
-                            }
-                            
-                    }
-                }
-                while (line != null);
-                // Done reading, close the reader and return true to broadcast success    
-                reader.Close();
                 return true;
-            }
-        }
-        catch (System.Exception e)
-        {
-            Debug.Log(e.Message);
-            return false;
-        }
+            
+        
     }
 	
 	// Update is called once per frame
 	void Update () {
-		dialogueCanvas.gameObject.SetActive (true);
+		if(dialogueCanvas != null)
+			dialogueCanvas.gameObject.SetActive (true);
 		if (dialogueLines.Count > 0)
         {
             for (int i = 0; i < UI.Length; i++)
@@ -101,6 +84,7 @@ public class DialogueManager : MonoBehaviour {
         }
         else
         {
+			if(dialogueCanvas!=false)
 			dialogueCanvas.gameObject.SetActive (false);
         }
 

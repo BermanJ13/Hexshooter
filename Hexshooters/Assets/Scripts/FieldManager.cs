@@ -11,8 +11,8 @@ public class FieldManager : MonoBehaviour
     public string mapFile;
     [SerializeField]public Transform[] gamePieces;
     public Dictionary<string, Transform> things = new Dictionary<string, Transform>();
-    protected StreamReader reader;
-    protected List<string> rows = new List<string>();
+	protected TextAsset reader;
+    public List<string> rows = new List<string>();
 
 	protected int weaponMax;
 	public bool firstPause;
@@ -165,14 +165,15 @@ public class FieldManager : MonoBehaviour
         }
 
         //open ups the streamreader then reads every line and adds it to the rows list
-        reader = new StreamReader("Assets/Maps/" + mapFile + ".txt");
-        string line = null;
-        line = reader.ReadLine();
-        while (line != null)
-        {
-            rows.Add(line);
-            line = reader.ReadLine();
-        }
+		reader = Resources.Load<TextAsset>(mapFile);
+		string[] lines = reader.text.Split ('\n');
+		foreach (string s in lines)
+		{
+			string temp;
+			string replaceWith = "";
+			temp = s.Replace("\r\n", replaceWith).Replace("\n", replaceWith).Replace("\r", replaceWith);
+			rows.Add (temp);
+		}
 
         //use this in the foreach loop to hold the first two values
         //which is the position of the objects

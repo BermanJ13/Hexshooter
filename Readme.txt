@@ -1,0 +1,1 @@
+If the exe isnt working try the project folder
