@@ -66,6 +66,7 @@
      <Compile Include="Assets\Scripts\GameInfo.cs" />
      <Compile Include="Assets\Scripts\GameResults.cs" />
      <Compile Include="Assets\Scripts\Instructions.cs" />
+     <Compile Include="Assets\Scripts\MenuRefocus.cs" />
      <Compile Include="Assets\Scripts\Movement.cs" />
      <Compile Include="Assets\Scripts\Music\BattleMusic.cs" />
      <Compile Include="Assets\Scripts\Music\MenuMusic.cs" />

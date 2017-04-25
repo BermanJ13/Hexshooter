@@ -87,6 +87,15 @@ public class PvPStarter : MonoBehaviour {
 	{
 		SceneManager.LoadScene ("Menu");
 	}
+	public void toPreLoad()
+	{
+		if (GameObject.Find ("OverPlayer") != false)
+			Destroy (GameObject.Find ("OverPlayer"));
+		if (GameObject.Find ("_app") != false)
+			Destroy (GameObject.Find ("_app"));
+		
+		SceneManager.LoadScene ("preload");
+	}
 	public void toOver()
 	{
 		

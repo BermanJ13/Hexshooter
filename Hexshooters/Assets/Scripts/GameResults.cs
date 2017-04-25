@@ -25,7 +25,8 @@ public class GameResults : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-
+		if (GameObject.Find ("CharSelect") != null)
+			Destroy (GameObject.Find ("CharSelect"));
 		p1_stat = GameObject.Find ("p1_status");
 		p2_stat = GameObject.Find ("p2_status");
 		p1_heal= GameObject.Find ("p1_health");

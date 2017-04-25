@@ -26,6 +26,7 @@ public class Player : MonoBehaviour {
 	int stackDmg;
 	public Sprite[] playerImages;
 	bool buttonPresed;
+	bool allowShot =false;
     // Use this for initialization
     void Start () 
 	{
@@ -125,25 +126,30 @@ public class Player : MonoBehaviour {
 		{
 			movement ();
 		}
-
-		if (Input.GetButtonDown(atkbutton) && Chamber.Count >0) 
+		if (Input.GetButtonDown (atkbutton) && Chamber.Count > 0)
 		{
 			if (!myStatus.IsAffected (StatusType.Disabled))
 			{
 				initiateSpell ();
 			}
 		}
-		if (Input.GetAxisRaw(atkbutton) > 0 && Chamber.Count >0) 
+		if (allowShot)
 		{
-			if (buttonPresed)
+			if (Input.GetAxisRaw (atkbutton) > 0 && Chamber.Count > 0)
 			{
-				if (!myStatus.IsAffected (StatusType.Disabled))
+				if (!buttonPresed)
 				{
-					initiateSpell ();
 					buttonPresed = true;
+					if (!myStatus.IsAffected (StatusType.Disabled))
+					{
+						initiateSpell ();
+					}
+					allowShot = false;
 				}
 			}
 		}
+		if (Input.GetAxisRaw (atkbutton) == 0)
+			allowShot = true;
 		if (Chamber.Count == 0 && field.Handful.Count > 0)
 		{
 			reload = true;

@@ -67,11 +67,18 @@ public class FieldManager : MonoBehaviour
 		updateSpellList ();
 		updateObstacleList ();
 		//showHealth ();
+		if (GameObject.Find ("OverPlayer") != null)
+			player.weapon = GameObject.Find ("OverPlayer").GetComponent<OverPlayer>().weapon;
+
+		chooseGun (player.weapon, false);
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+		if (GameObject.Find ("OverPlayer") != null)
+			player.weapon = GameObject.Find ("OverPlayer").GetComponent<OverPlayer>().weapon;
+		
 		if (once)
 		{
 			chooseGun (player.weapon, false);

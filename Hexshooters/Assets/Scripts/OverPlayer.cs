@@ -22,12 +22,14 @@ public class OverPlayer : MonoBehaviour {
     [SerializeField]
 	public bool battle;
 
+	public int weapon;
     void Awake()
 	{
 		DontDestroyOnLoad (transform.gameObject);
 	}
 	// Use this for initialization
 	void Start () {
+		weapon = 1;
         dialog = GameObject.FindGameObjectWithTag("DialogMngr");
         script = new List<string>();
 		script.Add("Assets/Dialogue/Text/Cutscene0.txt");
@@ -55,14 +57,21 @@ public class OverPlayer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (SceneManager.GetActiveScene().name == "Battle1" || SceneManager.GetActiveScene().name == "Battle2" || SceneManager.GetActiveScene().name == "Battle3" || SceneManager.GetActiveScene().name == "Battle4" || SceneManager.GetActiveScene().name == "Battle5")
+		if (SceneManager.GetActiveScene().name == "Battle" || SceneManager.GetActiveScene().name == "Battle1" || SceneManager.GetActiveScene().name == "Battle2" || SceneManager.GetActiveScene().name == "Battle3" || SceneManager.GetActiveScene().name == "Battle4" || SceneManager.GetActiveScene().name == "Battle5")
 			battle = true;
 		else
 			battle = false;
 		
 		if (!battle)
 		{
-			this.gameObject.GetComponent<SpriteRenderer> ().color = new Color (255, 0, 0, 1);
+			if(weapon ==1)
+				this.gameObject.GetComponent<SpriteRenderer> ().color = new Color (255, 0, 0, 1);
+			else
+				this.gameObject.GetComponent<SpriteRenderer> ().color = new Color (0, 0, 255, 1);
+			if(!cut4)
+			{
+				changePlayer ();
+			}
 			if (!cutscene)
 			{
 				movement ();
@@ -89,6 +98,8 @@ public class OverPlayer : MonoBehaviour {
 					SceneManager.LoadScene ("Battle4");
 				if (!cutscene && !cut8)
 					SceneManager.LoadScene ("Battle5");
+				if (!cutscene && !cut9)
+					SceneManager.LoadScene ("Win");
 			}
 		}
 		else
@@ -321,6 +332,20 @@ public class OverPlayer : MonoBehaviour {
 					Debug.Log ("NPC");
 				}
 			}
+		}
+	}
+	void changePlayer()
+	{
+		if (Input.GetButtonDown ("SwitchButton"))
+		{
+			weapon++;
+			if (weapon > 3)
+				weapon = 1;
+			if (weapon == 2)
+				weapon = 3;
+			if (weapon < 0)
+				weapon = 3;
+			
 		}
 	}
 }

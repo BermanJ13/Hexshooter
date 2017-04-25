@@ -67,7 +67,7 @@ public class Fire : Spell {
 			position = Vector2.Lerp (transform.position, target, (Time.deltaTime * speed));
 			transform.position = position;
 
-			if (transform.position == new Vector3 (target.x, target.y, 0))
+				if (transform.position == new Vector3 (target.x, target.y, 0) || transform.position.x == 0|| transform.position.x == 9)
 			{
 				hitBehavior (1);
 			}
