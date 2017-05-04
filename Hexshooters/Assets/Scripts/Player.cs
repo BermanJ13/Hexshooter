@@ -126,13 +126,13 @@ public class Player : MonoBehaviour {
 		{
 			movement ();
 		}
-		if (Input.GetButtonDown (atkbutton) && Chamber.Count > 0)
-		{
-			if (!myStatus.IsAffected (StatusType.Disabled))
-			{
-				initiateSpell ();
-			}
-		}
+		//if (Input.GetButtonDown (atkbutton) && Chamber.Count > 0)
+		//{
+		//	if (!myStatus.IsAffected (StatusType.Disabled))
+		//	{
+		//		initiateSpell ();
+		//	}
+		//}
 		if (allowShot)
 		{
 			if (Input.GetAxisRaw (atkbutton) > 0 && Chamber.Count > 0)

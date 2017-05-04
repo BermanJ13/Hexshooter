@@ -87,6 +87,10 @@ public class PvPStarter : MonoBehaviour {
 	{
 		SceneManager.LoadScene ("Menu");
 	}
+	public void toCredits()
+	{
+		SceneManager.LoadScene ("Credits");
+	}
 	public void toPreLoad()
 	{
 		if (GameObject.Find ("OverPlayer") != false)
