@@ -81,9 +81,16 @@ public class Wind : Spell {
 
 						if (PlayerNum == 1)
 						{
-					c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum)); //enemy takes dmg
-					c.transform.position += new Vector3 (0f, 1f, 0f); //moves the enemy up a penel
-					markedForDeletion = true; //used to delete bullet
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum)); //enemy takes dmg
+							if (c.transform.position.y != 4) 
+							{
+								c.transform.position += new Vector3 (0, 1f, 0); //moves the enemy up a penel
+							} 
+							else
+							{
+								c.transform.position -= new Vector3 (0f, 1f, 0f); //moves the enemy down a penel
+							}
+							markedForDeletion = true; //used to delete bullet
 						}
 				} 
 				//if attack an obstacle
@@ -121,12 +128,13 @@ public class Wind : Spell {
 				{
 					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum)); //player 1 takes dmg
 					//checking boundary and then moving position accordingly 
-					if (c.transform.position.y != 4) {
+					if (c.transform.position.y != 4) 
+					{
 						c.transform.position += new Vector3 (0, 1f, 0);
 					} 
 					else
 					{
-						c.transform.position += new Vector3 (0f, 0f, 0f); 
+						c.transform.position += new Vector3 (0f, 1f, 0f); 
 					}
 					markedForDeletion = true; //used to delete bullet
 
@@ -137,11 +145,11 @@ public class Wind : Spell {
 					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum));
 					//checking boundary and then moving position accordingly
 					if (c.transform.position.y != 4) {
-						c.transform.position += new Vector3 (0, 1f, 0);
+						c.transform.position -= new Vector3 (0, 1f, 0);
 					} 
 					else
 					{
-						c.transform.position += new Vector3 (0f, 0f, 0f); 
+						c.transform.position -= new Vector3 (0f, 1f, 0f); 
 					}
 
 					markedForDeletion = true; //used to delete bullet

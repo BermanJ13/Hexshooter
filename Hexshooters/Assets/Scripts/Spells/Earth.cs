@@ -153,7 +153,8 @@ public class Earth : Spell {
 		switch (weapon) 
 		{
 		//Revolver
-		case 1:
+			case 1:
+			bool self = false;
 			bool colided = false;
 			colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
 			foreach (Collider2D c in colliders)
@@ -177,7 +178,8 @@ public class Earth : Spell {
 					//Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
 					markedForDeletion = true;
 					colided = true;
-				} else if (c.gameObject.tag == "Player" && PlayerNum == 2)
+				} 
+					else if (c.gameObject.tag == "Player" && PlayerNum == 2)
 				{
 					c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
 					c.transform.position += new Vector3 (-1, 0, 0);
@@ -186,22 +188,31 @@ public class Earth : Spell {
 					markedForDeletion = true;
 					colided = true;
 
-				} else if (c.gameObject.tag == "Player2" && PlayerNum == 1)
-				{
-					c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
-					c.transform.position += new Vector3 (1, 0, 0);
-					damage = 0;
-					Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
-					markedForDeletion = true;
-					colided = true;
-				}
+					} 
+					else if (c.gameObject.tag == "Player2" && PlayerNum == 1)
+					{
+						c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+						c.transform.position += new Vector3 (1, 0, 0);
+						damage = 0;
+						Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
+						markedForDeletion = true;
+						colided = true;
+					}
+					else if (c.gameObject.tag == "Player" && PlayerNum == 1)
+					{
+						self = true;
+					}
+					else if (c.gameObject.tag == "Player2" && PlayerNum == 2)
+					{
+						self = true;
+					}
 
 					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
 					{
 						showPanels (c);
 					}
 			}
-			if (!colided && !created)
+			if (!colided && !created && !self)
 			{
 				//Debug.Log ("Here");
 				damage = 0;

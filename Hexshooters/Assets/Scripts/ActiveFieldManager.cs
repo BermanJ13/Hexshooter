@@ -111,7 +111,7 @@ public class ActiveFieldManager : FieldManager {
 			updateEnemyList ();
 			deleteEnemies ();
 
-			if ( player.reload && Input.GetButtonDown("Start_Solo"))
+			if ( player.reload && (Input.GetButtonDown("Submit_Solo")||Input.GetButtonDown("Start_Solo")))
 			{
 				showReloadScreen ();
 				if (player.Chamber.Count > 0)
