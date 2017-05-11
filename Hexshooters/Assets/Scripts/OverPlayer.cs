@@ -61,7 +61,7 @@ public class OverPlayer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (SceneManager.GetActiveScene().name == "Battle" || SceneManager.GetActiveScene().name == "Battle1" || SceneManager.GetActiveScene().name == "Battle2" || SceneManager.GetActiveScene().name == "Battle3" || SceneManager.GetActiveScene().name == "Battle4" || SceneManager.GetActiveScene().name == "Battle5" || SceneManager.GetActiveScene().name == "Active Battle" || SceneManager.GetActiveScene().name == "Active Battle1" || SceneManager.GetActiveScene().name == "Active Battle2" || SceneManager.GetActiveScene().name == "Active Battle3" || SceneManager.GetActiveScene().name == "Active Battle4" || SceneManager.GetActiveScene().name == "Active Battle5")
+		if (SceneManager.GetActiveScene().name == "Battle" || SceneManager.GetActiveScene().name == "Active Battle")
 			battle = true;
 		else
 			battle = false;
@@ -92,27 +92,46 @@ public class OverPlayer : MonoBehaviour {
 					cutscene = false;
 				}
 
-				if (!cutscene && !cut1 && style ==0)
-					SceneManager.LoadScene ("Battle1");
-				if (!cutscene && !cut3 && style ==0)
-					SceneManager.LoadScene ("Battle2");
-				if (!cutscene && !cut4 && style ==0)
-					SceneManager.LoadScene ("Battle3");
-				if (!cutscene && !cut6 && style ==0)
-					SceneManager.LoadScene ("Battle4");
-				if (!cutscene && !cut8 && style ==0)
-					SceneManager.LoadScene ("Battle5");
-				
-				if (!cutscene && !cut1 && style ==1)
-					SceneManager.LoadScene ("Active Battle1");
-				if (!cutscene && !cut3 && style ==1)
-					SceneManager.LoadScene ("Active Battle2");
-				if (!cutscene && !cut4 && style ==1)
-					SceneManager.LoadScene ("Active Battle3");
-				if (!cutscene && !cut6 && style ==1)
-					SceneManager.LoadScene ("Active Battle4");
-				if (!cutscene && !cut8 && style ==1)
-					SceneManager.LoadScene ("Active Battle5");
+				if (!cutscene && !cut1)
+				{
+					us.mapfile = "DB1";
+					if (style == 0)
+						SceneManager.LoadScene ("Battle");
+					else
+						SceneManager.LoadScene ("Active Battle");
+				}
+				if (!cutscene && !cut3)
+				{
+					us.mapfile = "DB2";
+					if (style == 0)
+						SceneManager.LoadScene ("Battle");
+					else
+						SceneManager.LoadScene ("Active Battle");
+				}
+				if (!cutscene && !cut4)
+				{
+					us.mapfile = "DB3";
+					if (style == 0)
+						SceneManager.LoadScene ("Battle");
+					else
+						SceneManager.LoadScene ("Active Battle");
+				}
+				if (!cutscene && !cut6)
+				{
+					us.mapfile = "DB4";
+					if (style == 0)
+						SceneManager.LoadScene ("Battle");
+					else
+						SceneManager.LoadScene ("Active Battle");
+				}
+				if (!cutscene && !cut8)
+				{
+					us.mapfile = "BossFIght";
+					if (style == 0)
+						SceneManager.LoadScene ("Battle");
+					else
+						SceneManager.LoadScene ("Active Battle");
+				}
 				
 				if (!cutscene && !cut9)
 					SceneManager.LoadScene ("Win");

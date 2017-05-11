@@ -45,10 +45,13 @@ public class FieldManager : MonoBehaviour
 	protected GameObject[] battleObjects;
 	public GameObject[] weapons;
 	public bool once;
+	UniversalSettings us;
 
 	// Use this for initialization
 	public void Start () 
 	{
+		us = GameObject.Find("__app").GetComponent<UniversalSettings> ();
+		mapFile = us.mapfile;
 		once =true;
 		weapons = new GameObject[4];
 		ES_P1 = EventSystem.current;
