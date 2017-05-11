@@ -29,7 +29,7 @@ public abstract class Enemy : MonoBehaviour {
     int stackDmg;
 	public bool MarkedForDeletion;
     Random rnd = new Random();
-
+	public bool hit = false;
 
 
     [Header("Moving")]
@@ -155,7 +155,15 @@ public abstract class Enemy : MonoBehaviour {
             MarkedForDeletion = true;
         }
         
-
+		if (hit)
+		{
+			GetComponent<SpriteRenderer>().color = Color.red;
+			hit = false;
+		}
+		else
+		{
+			GetComponent<SpriteRenderer>().color = Color.white;
+		}
     }
 
     /// <summary>
@@ -398,6 +406,7 @@ public abstract class Enemy : MonoBehaviour {
 		}
 
 		this.health -= damage* multipliers + stackDmg;
+		hit = true;
 	}
 
 	void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)

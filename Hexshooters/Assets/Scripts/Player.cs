@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using System.IO;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
 
@@ -25,12 +27,23 @@ public class Player : MonoBehaviour {
 	bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
 	int stackDmg;
 	public Sprite[] playerImages;
+	public Sprite[] playerPortaits;
 	bool buttonPresed;
 	bool allowShot =false;
+	public bool hit;
+	public Image playerDisplay;
     // Use this for initialization
     void Start () 
 	{
-		
+		if (PlayerNum == 1)
+		{
+			playerDisplay = GameObject.Find ("PlayerImage").GetComponent<Image> ();
+		}                                                 
+		else
+		{				
+			playerDisplay = GameObject.Find ("PlayerImage_2").GetComponent<Image> ();
+		}
+		hit = false;
 		if (GameObject.Find ("CharSelect") != null)
 		{
 			if (PlayerNum == 1)
@@ -153,6 +166,16 @@ public class Player : MonoBehaviour {
 		if (Chamber.Count == 0 && field.Handful.Count > 0)
 		{
 			reload = true;
+		}
+
+		if (hit)
+		{
+			GetComponent<SpriteRenderer>().color = Color.red;
+			hit = false;
+		}
+		else
+		{
+			GetComponent<SpriteRenderer>().color = Color.white;
 		}
 	}
 
@@ -436,6 +459,7 @@ public class Player : MonoBehaviour {
 		}
 
 		this.health -= damage* multipliers + stackDmg;
+		hit = true;
 	}
 	public void updatePlayerImage()
 	{
@@ -443,11 +467,21 @@ public class Player : MonoBehaviour {
 		{
 			case 1:
 				GetComponent<SpriteRenderer> ().sprite = playerImages [0];
+				if (playerDisplay != null)
+				{
+					playerDisplay.sprite = playerPortaits [0];
+					playerDisplay.color = new Color (255, 255, 255, 255);
+				}
 			break;
 			case 2:
 			break;
 			case 3:
 				GetComponent<SpriteRenderer> ().sprite = playerImages [1];
+				if (playerDisplay != null)
+				{
+					playerDisplay.sprite = playerPortaits [1];
+					playerDisplay.color = new Color (255, 255, 255, 255);
+				}
 			break;
 			case 4:
 			break;

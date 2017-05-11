@@ -100,7 +100,7 @@ public class FieldManager : MonoBehaviour
 		if(ES_P1.currentSelectedGameObject.tag == "SpellHolder")
 		{
 			runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
-			runeDamage.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
+			runeDamage.text = "Damage:" + ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
 			runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
 			runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
 			runeDisplay.GetComponent<Image> ().color = new Color(0,0,0,255);
