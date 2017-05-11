@@ -18,11 +18,13 @@ public class OverPlayer : MonoBehaviour {
 	public bool cut8=true;
 	public bool cut9=true;
 
+	public int style = 0; 
     public GameObject dialog;
     [SerializeField]
 	public bool battle;
 
 	public int weapon;
+	UniversalSettings us;
     void Awake()
 	{
 		DontDestroyOnLoad (transform.gameObject);
@@ -51,13 +53,15 @@ public class OverPlayer : MonoBehaviour {
 
         script.Add("Cutscene8");
 
-        script.Add("Cutscene9");
+		script.Add("Cutscene9");
+		us = GameObject.Find("__app").GetComponent<UniversalSettings> ();
+		style = us.style;
     }
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		if (SceneManager.GetActiveScene().name == "Battle" || SceneManager.GetActiveScene().name == "Battle1" || SceneManager.GetActiveScene().name == "Battle2" || SceneManager.GetActiveScene().name == "Battle3" || SceneManager.GetActiveScene().name == "Battle4" || SceneManager.GetActiveScene().name == "Battle5")
+		if (SceneManager.GetActiveScene().name == "Battle" || SceneManager.GetActiveScene().name == "Battle1" || SceneManager.GetActiveScene().name == "Battle2" || SceneManager.GetActiveScene().name == "Battle3" || SceneManager.GetActiveScene().name == "Battle4" || SceneManager.GetActiveScene().name == "Battle5" || SceneManager.GetActiveScene().name == "Active Battle" || SceneManager.GetActiveScene().name == "Active Battle1" || SceneManager.GetActiveScene().name == "Active Battle2" || SceneManager.GetActiveScene().name == "Active Battle3" || SceneManager.GetActiveScene().name == "Active Battle4" || SceneManager.GetActiveScene().name == "Active Battle5")
 			battle = true;
 		else
 			battle = false;
@@ -88,16 +92,28 @@ public class OverPlayer : MonoBehaviour {
 					cutscene = false;
 				}
 
-				if (!cutscene && !cut1)
+				if (!cutscene && !cut1 && style ==0)
 					SceneManager.LoadScene ("Battle1");
-				if (!cutscene && !cut3)
+				if (!cutscene && !cut3 && style ==0)
 					SceneManager.LoadScene ("Battle2");
-				if (!cutscene && !cut4)
+				if (!cutscene && !cut4 && style ==0)
 					SceneManager.LoadScene ("Battle3");
-				if (!cutscene && !cut6)
+				if (!cutscene && !cut6 && style ==0)
 					SceneManager.LoadScene ("Battle4");
-				if (!cutscene && !cut8)
+				if (!cutscene && !cut8 && style ==0)
 					SceneManager.LoadScene ("Battle5");
+				
+				if (!cutscene && !cut1 && style ==1)
+					SceneManager.LoadScene ("Active Battle1");
+				if (!cutscene && !cut3 && style ==1)
+					SceneManager.LoadScene ("Active Battle2");
+				if (!cutscene && !cut4 && style ==1)
+					SceneManager.LoadScene ("Active Battle3");
+				if (!cutscene && !cut6 && style ==1)
+					SceneManager.LoadScene ("Active Battle4");
+				if (!cutscene && !cut8 && style ==1)
+					SceneManager.LoadScene ("Active Battle5");
+				
 				if (!cutscene && !cut9)
 					SceneManager.LoadScene ("Win");
 			}

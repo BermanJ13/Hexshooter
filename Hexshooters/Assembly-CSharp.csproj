@@ -46,11 +46,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\ActivateAttack.cs" />
      <Compile Include="Assets\Scripts\ActiveFieldManager.cs" />
+     <Compile Include="Assets\Scripts\CameraSettings.cs" />
      <Compile Include="Assets\Scripts\CharSelect.cs" />
      <Compile Include="Assets\Scripts\ControlDisplay.cs" />
      <Compile Include="Assets\Scripts\ControllerRefocus.cs" />
+     <Compile Include="Assets\Scripts\CursorLock.cs" />
      <Compile Include="Assets\Scripts\DialogueManager.cs" />
      <Compile Include="Assets\Scripts\Enemies\Attacks\BasicEnemyAttack.cs" />
      <Compile Include="Assets\Scripts\Enemies\Attacks\EnemySpell.cs" />
@@ -72,6 +73,7 @@
      <Compile Include="Assets\Scripts\Music\MenuMusic.cs" />
      <Compile Include="Assets\Scripts\Obstacles\Flames.cs" />
      <Compile Include="Assets\Scripts\Obstacles\Obstacle.cs" />
+     <Compile Include="Assets\Scripts\OptionsMenu.cs" />
      <Compile Include="Assets\Scripts\OverPlayer.cs" />
      <Compile Include="Assets\Scripts\Panel.cs" />
      <Compile Include="Assets\Scripts\Particle.cs" />
@@ -104,6 +106,7 @@
      <Compile Include="Assets\Scripts\Spells\Wind.cs" />
      <Compile Include="Assets\Scripts\Spells\Wood.cs" />
      <Compile Include="Assets\Scripts\StatusManager.cs" />
+     <Compile Include="Assets\Scripts\UniversalSettings.cs" />
      <Compile Include="Assets\Scripts\tmp.cs" />
      <Compile Include="Assets\Vortex Game Studios\FilterBehavior\FilterBehaviour.cs" />
      <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\OLDTVScreen.cs" />

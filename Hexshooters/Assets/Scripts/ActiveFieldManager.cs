@@ -28,6 +28,7 @@ public class ActiveFieldManager : FieldManager {
 		{
 			SceneManager.LoadScene ("Game Over");
 		}
+		updateEnemyList ();
 		if(enemies.Length == 0)
 		{
 			SceneManager.LoadScene ("Overworld");

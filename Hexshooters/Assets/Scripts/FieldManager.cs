@@ -88,6 +88,7 @@ public class FieldManager : MonoBehaviour
 		{
 			SceneManager.LoadScene ("Game Over");
 		}
+		updateEnemyList ();
 		if(enemies.Length == 0)
 		{
 			SceneManager.LoadScene ("Overworld");
@@ -139,7 +140,7 @@ public class FieldManager : MonoBehaviour
 			deleteEnemies ();
 			updateObstacleList ();
 			deleteObstacles ();
-			if (player.reload && enemyReload)
+			if (player.reload && enemyReload && spells.Length == 0)
 			{
 				showReloadScreen ();
 			}
@@ -339,6 +340,7 @@ public class FieldManager : MonoBehaviour
 			if (Handful.Count > i)
 			{
 				GameObject curSpell = ((GameObject)Resources.Load (Handful [i].name));
+				curSpell.GetComponent<Spell> ().setDescription (player.weapon);
 				b.GetComponent<Image> ().sprite = curSpell.GetComponent<Spell> ().bulletImage;
 				if (b.GetComponent<Image> ().sprite.name == "Knob")
 					b.GetComponent<Image> ().color = curSpell.GetComponent<SpriteRenderer> ().color;
