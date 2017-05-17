@@ -12,6 +12,7 @@ public class PvPStarter : MonoBehaviour {
 	public bool pvpMenu;
 	public bool change;
 	public EventSystem ES;
+	UniversalSettings us;
 	// Use this for initialization
 	void Start () 
 	{
@@ -21,6 +22,7 @@ public class PvPStarter : MonoBehaviour {
 		menu = true; 
 		pvpMenu = false;
 		change = false;
+		us = GameObject.Find("__app").GetComponent<UniversalSettings> ();
 	}
 	
 	// Update is called once per frame
@@ -61,19 +63,20 @@ public class PvPStarter : MonoBehaviour {
 	}
 	public void toCharacterSelect()
 	{
+		us.pvpStyle = 0;
 		SceneManager.LoadScene ("PvP Character Select");
 	}
 	public void toActiveCharacterSelect()
 	{
-		SceneManager.LoadScene ("Active PVP Select");
+		us.pvpStyle = 1;
+		SceneManager.LoadScene ("PvP Character Select");
 	}
 	public void toPvP()
 	{
-		SceneManager.LoadScene ("PVP");
-	}
-	public void toActivePvP()
-	{
-		SceneManager.LoadScene ("Active PVP");
+		if(us.pvpStyle == 0)
+			SceneManager.LoadScene ("PVP");
+		else
+			SceneManager.LoadScene ("Active PVP");
 	}
 	public void toActive()
 	{
@@ -87,16 +90,21 @@ public class PvPStarter : MonoBehaviour {
 	{
 		SceneManager.LoadScene ("Menu");
 	}
+	public void toOptions()
+	{
+		SceneManager.LoadScene ("Options");
+	}
 	public void toCredits()
 	{
 		SceneManager.LoadScene ("Credits");
 	}
 	public void toPreLoad()
 	{
-		if (GameObject.Find ("OverPlayer") != false)
-			Destroy (GameObject.Find ("OverPlayer"));
-		if (GameObject.Find ("_app") != false)
-			Destroy (GameObject.Find ("_app"));
+		GameObject op = GameObject.Find("OverPlayer");
+		if (op != null)
+			Destroy (op);
+		if (GameObject.Find ("__app") != null)
+			Destroy (GameObject.Find ("__app"));
 		
 		SceneManager.LoadScene ("preload");
 	}

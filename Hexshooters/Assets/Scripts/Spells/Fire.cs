@@ -131,7 +131,8 @@ public class Fire : Spell {
 		switch (weapon) 
 		{
 		//Revolver
-		case 1:
+			case 1:
+			bool self = false;
 			//checks to see if colided with anything for obstacle
 			bool colided = false;
 			//array of everything it can collide with
@@ -213,6 +214,14 @@ public class Fire : Spell {
 					markedForDeletion = true;
 					colided = true;
 				}
+				else if (c.gameObject.tag == "Player" && PlayerNum == 1)
+				{
+					self = true;
+				}
+				else if (c.gameObject.tag == "Player2" && PlayerNum == 2)
+				{
+					self = true;
+				}
 				//shows the area it is affecting
 				if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
 				{
@@ -220,7 +229,7 @@ public class Fire : Spell {
 				}
 			}
 			//if it hits nothing by the end of the everything then create the fire obstacle and delete the bullet
-			if (!colided && !created)
+			if (!colided && !created && !self)
 			{
 				damage = 0;
 				Instantiate (Resources.Load ("Flames"), transform.position, Quaternion.identity);

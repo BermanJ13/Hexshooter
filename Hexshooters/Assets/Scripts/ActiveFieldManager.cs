@@ -28,6 +28,7 @@ public class ActiveFieldManager : FieldManager {
 		{
 			SceneManager.LoadScene ("Game Over");
 		}
+		updateEnemyList ();
 		if(enemies.Length == 0)
 		{
 			SceneManager.LoadScene ("Overworld");
@@ -36,7 +37,7 @@ public class ActiveFieldManager : FieldManager {
 		if(ES_P1.currentSelectedGameObject.tag == "SpellHolder")
 		{
 			runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
-			runeDamage.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
+			runeDamage.text = "Damage:" + ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
 			runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
 			runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
 			runeDisplay.GetComponent<Image> ().color = new Color(0,0,0,255);
@@ -110,7 +111,7 @@ public class ActiveFieldManager : FieldManager {
 			updateEnemyList ();
 			deleteEnemies ();
 
-			if ( player.reload && Input.GetButtonDown("Start_Solo"))
+			if ( player.reload && (Input.GetButtonDown("Submit_Solo")||Input.GetButtonDown("Start_Solo")))
 			{
 				showReloadScreen ();
 				if (player.Chamber.Count > 0)

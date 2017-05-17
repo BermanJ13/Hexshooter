@@ -44,9 +44,9 @@ public class Flames : Obstacle {
 				e.takeDamage (damage); //enemy takes dmg
 				if (e.transform.position.x != 9) 
 				{
-					e.transform.position = new Vector3 (e.transform.position.x + 1, e.transform.position.y, e.transform.position.z);
+					//e.transform.position = new Vector3 (e.transform.position.x + 1, e.transform.position.y, e.transform.position.z);
 				}
-				//move  the piece somewhere, but where?
+				MarkedforDeletion = true;
 			} 
 			else if (d.gameObject.tag == "Player2") 
 			{

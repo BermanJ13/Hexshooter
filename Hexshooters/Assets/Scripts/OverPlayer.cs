@@ -18,11 +18,13 @@ public class OverPlayer : MonoBehaviour {
 	public bool cut8=true;
 	public bool cut9=true;
 
+	public int style = 0; 
     public GameObject dialog;
     [SerializeField]
 	public bool battle;
 
 	public int weapon;
+	UniversalSettings us;
     void Awake()
 	{
 		DontDestroyOnLoad (transform.gameObject);
@@ -51,13 +53,15 @@ public class OverPlayer : MonoBehaviour {
 
         script.Add("Cutscene8");
 
-        script.Add("Cutscene9");
+		script.Add("Cutscene9");
+		us = GameObject.Find("__app").GetComponent<UniversalSettings> ();
+		style = us.style;
     }
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		if (SceneManager.GetActiveScene().name == "Battle" || SceneManager.GetActiveScene().name == "Battle1" || SceneManager.GetActiveScene().name == "Battle2" || SceneManager.GetActiveScene().name == "Battle3" || SceneManager.GetActiveScene().name == "Battle4" || SceneManager.GetActiveScene().name == "Battle5")
+		if (SceneManager.GetActiveScene().name == "Battle" || SceneManager.GetActiveScene().name == "Active Battle")
 			battle = true;
 		else
 			battle = false;
@@ -89,15 +93,46 @@ public class OverPlayer : MonoBehaviour {
 				}
 
 				if (!cutscene && !cut1)
-					SceneManager.LoadScene ("Battle1");
+				{
+					us.mapfile = "DB1";
+					if (style == 0)
+						SceneManager.LoadScene ("Battle");
+					else
+						SceneManager.LoadScene ("Active Battle");
+				}
 				if (!cutscene && !cut3)
-					SceneManager.LoadScene ("Battle2");
+				{
+					us.mapfile = "DB2";
+					if (style == 0)
+						SceneManager.LoadScene ("Battle");
+					else
+						SceneManager.LoadScene ("Active Battle");
+				}
 				if (!cutscene && !cut4)
-					SceneManager.LoadScene ("Battle3");
+				{
+					us.mapfile = "DB3";
+					if (style == 0)
+						SceneManager.LoadScene ("Battle");
+					else
+						SceneManager.LoadScene ("Active Battle");
+				}
 				if (!cutscene && !cut6)
-					SceneManager.LoadScene ("Battle4");
+				{
+					us.mapfile = "DB4";
+					if (style == 0)
+						SceneManager.LoadScene ("Battle");
+					else
+						SceneManager.LoadScene ("Active Battle");
+				}
 				if (!cutscene && !cut8)
-					SceneManager.LoadScene ("Battle5");
+				{
+					us.mapfile = "BossFIght";
+					if (style == 0)
+						SceneManager.LoadScene ("Battle");
+					else
+						SceneManager.LoadScene ("Active Battle");
+				}
+				
 				if (!cutscene && !cut9)
 					SceneManager.LoadScene ("Win");
 			}

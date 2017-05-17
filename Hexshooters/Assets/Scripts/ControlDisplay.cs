@@ -48,6 +48,11 @@ public class ControlDisplay : MonoBehaviour {
 				
 			case "Active Battle":
 			case "Battle":
+			case "Battle1":
+			case "Battle2":
+			case "Battle3":
+			case "Battle4":
+			case "Battle5":
 			case "Game Over":
 			case "Win":
 			case "Overworld":

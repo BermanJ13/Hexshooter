@@ -80,7 +80,11 @@ public class ScorpionStrike : EnemySpell
             {
                 c.gameObject.GetComponent<Player>().takeDamage(damageCalc(damageTier, hitNum));
                 hitAlready = true;
-            }
+			}
+			if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+			{
+				showPanels (c);
+			}
         }
     }
     public override void setDescription(int weapon)

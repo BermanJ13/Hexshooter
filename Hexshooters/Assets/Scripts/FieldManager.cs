@@ -45,10 +45,13 @@ public class FieldManager : MonoBehaviour
 	protected GameObject[] battleObjects;
 	public GameObject[] weapons;
 	public bool once;
+	UniversalSettings us;
 
 	// Use this for initialization
 	public void Start () 
 	{
+		us = GameObject.Find("__app").GetComponent<UniversalSettings> ();
+		mapFile = us.mapfile;
 		once =true;
 		weapons = new GameObject[4];
 		ES_P1 = EventSystem.current;
@@ -88,6 +91,7 @@ public class FieldManager : MonoBehaviour
 		{
 			SceneManager.LoadScene ("Game Over");
 		}
+		updateEnemyList ();
 		if(enemies.Length == 0)
 		{
 			SceneManager.LoadScene ("Overworld");
@@ -96,7 +100,7 @@ public class FieldManager : MonoBehaviour
 		if(ES_P1.currentSelectedGameObject.tag == "SpellHolder")
 		{
 			runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
-			runeDamage.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
+			runeDamage.text = "Damage:" + ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
 			runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
 			runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
 			runeDisplay.GetComponent<Image> ().color = new Color(0,0,0,255);
@@ -139,7 +143,7 @@ public class FieldManager : MonoBehaviour
 			deleteEnemies ();
 			updateObstacleList ();
 			deleteObstacles ();
-			if (player.reload && enemyReload)
+			if (player.reload && enemyReload && spells.Length == 0)
 			{
 				showReloadScreen ();
 			}
@@ -339,6 +343,7 @@ public class FieldManager : MonoBehaviour
 			if (Handful.Count > i)
 			{
 				GameObject curSpell = ((GameObject)Resources.Load (Handful [i].name));
+				curSpell.GetComponent<Spell> ().setDescription (player.weapon);
 				b.GetComponent<Image> ().sprite = curSpell.GetComponent<Spell> ().bulletImage;
 				if (b.GetComponent<Image> ().sprite.name == "Knob")
 					b.GetComponent<Image> ().color = curSpell.GetComponent<SpriteRenderer> ().color;
