@@ -35,13 +35,16 @@ public class Player : MonoBehaviour {
     // Use this for initialization
     void Start () 
 	{
-		if (PlayerNum == 1)
+		if (playerDisplay != null)
 		{
-			playerDisplay = GameObject.Find ("PlayerImage").GetComponent<Image> ();
-		}                                                 
-		else
-		{				
-			playerDisplay = GameObject.Find ("PlayerImage_2").GetComponent<Image> ();
+			if (PlayerNum == 1)
+			{
+				playerDisplay = GameObject.Find ("PlayerImage").GetComponent<Image> ();
+			}
+			else
+			{				
+				playerDisplay = GameObject.Find ("PlayerImage_2").GetComponent<Image> ();
+			}
 		}
 		hit = false;
 		if (GameObject.Find ("CharSelect") != null)
