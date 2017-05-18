@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public enum Direction
 {
@@ -28,9 +30,10 @@ public abstract class Enemy : MonoBehaviour {
 	bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
     int stackDmg;
 	public bool MarkedForDeletion;
-    Random rnd = new Random();
+	Random rnd = new Random();
 	public bool hit = false;
-
+	public bool heal = false;
+	public Text healthDisplay;
 
     [Header("Moving")]
     public float frozenModifier;
@@ -132,6 +135,7 @@ public abstract class Enemy : MonoBehaviour {
     // Update is called once per frame
     public virtual void enemyUpdate()
     {
+		healthDisplay.text = health.ToString();
         if ((myStatus.IsAffected(StatusType.Slow) || myStatus.IsAffected(StatusType.Freeze))&isMoving)
         {
             timer -= Time.deltaTime * FROZEN_MULTIPLIER;
@@ -157,8 +161,13 @@ public abstract class Enemy : MonoBehaviour {
         
 		if (hit)
 		{
-			GetComponent<SpriteRenderer>().color = Color.red;
+			GetComponent<SpriteRenderer> ().color = Color.red;
 			hit = false;
+		}
+		else if (heal)
+		{
+			GetComponent<SpriteRenderer> ().color = Color.blue;
+			heal = false;
 		}
 		else
 		{
@@ -406,7 +415,11 @@ public abstract class Enemy : MonoBehaviour {
 		}
 
 		this.health -= damage* multipliers + stackDmg;
-		hit = true;
+		if (damage * multipliers + stackDmg > 0)
+			hit = true;
+		else
+		if (damage * multipliers + stackDmg < 0)
+			heal = true;
 	}
 
 	void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)

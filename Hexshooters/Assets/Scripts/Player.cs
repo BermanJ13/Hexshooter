@@ -31,6 +31,7 @@ public class Player : MonoBehaviour {
 	bool buttonPresed;
 	bool allowShot =false;
 	public bool hit;
+	public bool heal;
 	public Image playerDisplay;
     // Use this for initialization
     void Start () 
@@ -173,8 +174,13 @@ public class Player : MonoBehaviour {
 
 		if (hit)
 		{
-			GetComponent<SpriteRenderer>().color = Color.red;
+			GetComponent<SpriteRenderer> ().color = Color.red;
 			hit = false;
+		}
+		else if (heal)
+		{
+			GetComponent<SpriteRenderer> ().color = Color.blue;
+			heal = false;
 		}
 		else
 		{
@@ -462,7 +468,12 @@ public class Player : MonoBehaviour {
 		}
 
 		this.health -= damage* multipliers + stackDmg;
-		hit = true;
+
+		if (damage * multipliers + stackDmg > 0)
+			hit = true;
+		else
+			if (damage * multipliers + stackDmg < 0)
+				heal = true;
 	}
 	public void updatePlayerImage()
 	{
