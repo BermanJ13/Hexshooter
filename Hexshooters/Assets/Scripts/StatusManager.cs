@@ -15,7 +15,9 @@ public enum StatusType
 	Shield,
 	Bound,
 	Disabled,
-    Stacking
+    Stacking,
+	MoveLag,
+	ShotLag
 }
 
 /// <summary>
@@ -51,7 +53,7 @@ public class StatusManager : MonoBehaviour
         for (int i = 0; i < m_effects.Count; ++i)
         {
 			m_effects[i].m_timer -= Time.deltaTime;
-			Debug.Log (m_effects[i].m_timer);
+			//Debug.Log (m_effects[i].m_timer);
         }
         m_effects.RemoveAll(OutOfTime);
     }
@@ -70,7 +72,7 @@ public class StatusManager : MonoBehaviour
 			else
 				m_effects.Add (effect);
 
-			Debug.Log (m_effects.Count);
+			//Debug.Log (m_effects.Count);
 			break;
 		case StatusType.Freeze:
 		case StatusType.Poison:
@@ -80,13 +82,25 @@ public class StatusManager : MonoBehaviour
 			else
 				m_effects.Add (effect);
 
-			Debug.Log (m_effects.Count);
+			//Debug.Log (m_effects.Count);
 			break;
-		case StatusType.Disabled:
-			if (m_effects.Contains(effect))
-				effect.m_timer += 8;
-			else
-				m_effects.Add(effect);
+			case StatusType.Disabled:
+				if (m_effects.Contains(effect))
+					effect.m_timer += 8;
+				else
+					m_effects.Add(effect);
+			break;
+			case StatusType.MoveLag:
+				if (m_effects.Contains(effect))
+					effect.m_timer += 3;
+				else
+					m_effects.Add(effect);
+			break;
+			case StatusType.ShotLag:
+				if (m_effects.Contains(effect))
+					effect.m_timer += 1;
+				else
+					m_effects.Add(effect);
 			break;
             case StatusType.Break:
                 if (m_effects.Contains(effect))
@@ -143,7 +157,7 @@ public class StatusManager : MonoBehaviour
     /// <returns></returns>
     private static bool OutOfTime(StatusEffect effect)
     {
-		Debug.Log ("Fuck this noise");
+		//Debug.Log ("Fuck this noise");
         return effect.m_timer <= 0.0f;
     }
 }

@@ -194,7 +194,7 @@ public class Wind : Spell {
 									s.speed *= 2; 
 									//adds to list of spells that is already powered up
 									riflePowered.Add (s);
-									Debug.Log ("post speed" + s.speed);
+									//Debug.Log ("post speed" + s.speed);
 								}
 
 							}
@@ -235,7 +235,7 @@ public class Wind : Spell {
 							if (s.direction == direction) 
 							{
 								s.speed *= 2; 
-								Debug.Log ("post speed" + s.speed);
+								//Debug.Log ("post speed" + s.speed);
 
 							}
 						}

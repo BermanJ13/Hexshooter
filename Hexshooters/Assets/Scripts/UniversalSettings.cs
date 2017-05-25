@@ -13,7 +13,7 @@ public class UniversalSettings : MonoBehaviour {
 		volume = 1.0f; 
 		style = 0;
 		pvpStyle = 0;
-		filter = false;
+		filter = true;
 		mapfile = "";
 	}
 	

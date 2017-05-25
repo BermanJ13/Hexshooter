@@ -189,7 +189,7 @@ public abstract class Enemy : MonoBehaviour {
     /// <returns></returns>
     public int movePossible(Direction direction)
     {
-        Debug.Log(direction);
+        //Debug.Log(direction);
         Collider2D[] hitColliders;
         switch (direction)
         {
@@ -197,7 +197,7 @@ public abstract class Enemy : MonoBehaviour {
                 hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y - 1), 0.2f);
                 foreach (Collider2D c in hitColliders)
                 {
-                    Debug.Log(c.gameObject.tag);
+                    //Debug.Log(c.gameObject.tag);
                     //Checks whether or not something is in the way or if the desired spot is within the enemy.
                     if (c.gameObject.tag == "Obstacle" && c.gameObject.GetComponent<Obstacle>().canPass)
                     {
@@ -216,7 +216,7 @@ public abstract class Enemy : MonoBehaviour {
                 hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y + 1), 0.2f);
                 foreach (Collider2D c in hitColliders)
                 {
-                    Debug.Log(c.gameObject.tag);
+                    //Debug.Log(c.gameObject.tag);
                     //Checks whether or not something is in the way or if the desired spot is within the enemy.
                     if (c.gameObject.tag == "Obstacle" && c.gameObject.GetComponent<Obstacle>().canPass)
                     {
@@ -234,7 +234,7 @@ public abstract class Enemy : MonoBehaviour {
                 hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x-1, transform.position.y), 0.2f);
                 foreach (Collider2D c in hitColliders)
                 {
-                    Debug.Log(c.gameObject.tag);
+                    //Debug.Log(c.gameObject.tag);
                     //Checks whether or not something is in the way or if the desired spot is within the enemy.
                     if (c.gameObject.tag == "Obstacle" && c.gameObject.GetComponent<Obstacle>().canPass)
                     {
@@ -252,7 +252,7 @@ public abstract class Enemy : MonoBehaviour {
                 hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x+1, transform.position.y), 0.2f);
                 foreach (Collider2D c in hitColliders)
                 {
-                    Debug.Log(c.gameObject.tag);
+                    //Debug.Log(c.gameObject.tag);
                     //Checks whether or not something is in the way or if the desired spot is within the enemy.
                     if (c.gameObject.tag == "Obstacle" && c.gameObject.GetComponent<Obstacle>().canPass)
                     {
@@ -318,11 +318,11 @@ public abstract class Enemy : MonoBehaviour {
             int wait = 1 - (System.DateTime.Now.Second % 1);
             timeCount.Interval = wait * 1000;
             timeCount.Start();
-            Debug.Log(burnTime);
+            //Debug.Log(burnTime);
             if (burnTime > 0)
             {
                 health -= 3;
-                Debug.Log(health);
+                //Debug.Log(health);
                 burnTime--;
             }
             else if (burnTime <= 0)
@@ -365,7 +365,7 @@ public abstract class Enemy : MonoBehaviour {
             int wait = 1 - (System.DateTime.Now.Second % 1);
             timeCount.Interval = wait * 1000;
             timeCount.Start();
-            Debug.Log(burnTime);
+            //Debug.Log(burnTime);
             if (burnTime > 0)
             {
                 health -= 3;

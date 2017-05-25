@@ -33,6 +33,8 @@ public class Player : MonoBehaviour {
 	public bool hit;
 	public bool heal;
 	public Image playerDisplay;
+	StatusEffect moveLag;
+	StatusEffect shotLag;
     // Use this for initialization
     void Start () 
 	{
@@ -139,7 +141,7 @@ public class Player : MonoBehaviour {
 		updateCurrentSpell ();
 		pHealth.text = health.ToString();
 		buttonPresed = false;
-		if (!myStatus.IsAffected( StatusType.Bound))
+		if (!myStatus.IsAffected( StatusType.Bound) && !myStatus.IsAffected( StatusType.MoveLag))
 		{
 			movement ();
 		}
@@ -157,7 +159,7 @@ public class Player : MonoBehaviour {
 				if (!buttonPresed)
 				{
 					buttonPresed = true;
-					if (!myStatus.IsAffected (StatusType.Disabled))
+					if (!myStatus.IsAffected (StatusType.Disabled)&& !myStatus.IsAffected( StatusType.ShotLag))
 					{
 						initiateSpell ();
 					}
@@ -267,6 +269,9 @@ public class Player : MonoBehaviour {
 				if (moveRight)
 				{
 					transform.position = new Vector2 (transform.position.x + 1, transform.position.y);
+					moveLag = new StatusEffect (0.1f);
+					moveLag.m_type = StatusType.Bound;
+					myStatus.AddEffect (moveLag);
 				}
 			}
 		} 
@@ -302,7 +307,12 @@ public class Player : MonoBehaviour {
 				//Performs the movement if possible
 				if (inboundsX)
 				if (moveLeft)
+				{
 					transform.position = new Vector2 (transform.position.x - 1, transform.position.y);
+					moveLag = new StatusEffect (0.1f);
+					moveLag.m_type = StatusType.Bound;
+					myStatus.AddEffect (moveLag);
+				}
 			}
 		}
 		//Checks for Up and Down Movement
@@ -338,7 +348,12 @@ public class Player : MonoBehaviour {
 				//Performs the movement if possible
 				if (inboundsY)
 				if (moveUp)
+				{
 					transform.position = new Vector2 (transform.position.x, transform.position.y + 1);
+					moveLag = new StatusEffect (0.1f);
+					moveLag.m_type = StatusType.Bound;
+					myStatus.AddEffect (moveLag);
+				}
 			} 
 		} else if (vertical < 0)
 		{
@@ -372,7 +387,12 @@ public class Player : MonoBehaviour {
 				//Performs the movement if possible
 				if (inboundsY)
 				if (moveDown)
+				{
 					transform.position = new Vector2 (transform.position.x, transform.position.y - 1);
+					moveLag = new StatusEffect (0.1f);
+					moveLag.m_type = StatusType.Bound;
+					myStatus.AddEffect (moveLag);
+				}
 			}
 		}
 		if (PlayerNum == 1)
@@ -425,6 +445,9 @@ public class Player : MonoBehaviour {
 		mything.weaponUsed = weapon; 
 		mything.PlayerNum = PlayerNum;
 		Chamber.RemoveAt (0);
+		shotLag = new StatusEffect (0.1f);
+		shotLag.m_type = StatusType.ShotLag;
+		myStatus.AddEffect (shotLag);
 	}
 
 	void hideEmpty()

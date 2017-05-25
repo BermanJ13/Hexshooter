@@ -80,7 +80,7 @@ public class Flames : Obstacle {
 						if(hitPanels[i] == d.gameObject)
 							created = true;
 					}
-					Debug.Log (created);
+					//Debug.Log (created);
 					if (!created)
 					{
 						GameObject g = (GameObject)Instantiate (Resources.Load ("Flames"), new Vector2 (transform.position.x, transform.position.y), Quaternion.identity);

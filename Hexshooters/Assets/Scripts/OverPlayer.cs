@@ -180,12 +180,12 @@ public class OverPlayer : MonoBehaviour {
 				//Checks whether or not something is in the way or if the desired spot is within the player.
 				if (c.gameObject.tag == "Map")
 				{
-					Debug.Log ("Damn");
+					//Debug.Log ("Damn");
 					inboundsX = true;
 				}
 				if (c.gameObject.tag == "Boundary")
 				{
-					Debug.Log ("Dammit");
+					//Debug.Log ("Dammit");
 					moveLeft = false;
 				}
 
@@ -364,7 +364,7 @@ public class OverPlayer : MonoBehaviour {
 				}
 				if (hitCollider.gameObject.tag == "NPC")
 				{
-					Debug.Log ("NPC");
+					//Debug.Log ("NPC");
 				}
 			}
 		}

@@ -360,6 +360,9 @@ public class FieldManager : MonoBehaviour
 	}
 	public void showBattleScreen()
 	{
+		StatusEffect shotLag = new StatusEffect (0.5f);
+		shotLag.m_type = StatusType.ShotLag;
+		player.myStatus.AddEffect (shotLag);
 		firstPause = false;
 		for (int i = 0; i < Temp.Count; i++)
 		{
@@ -394,7 +397,7 @@ public class FieldManager : MonoBehaviour
 	}
 	protected void addBullet(int num)
 	{
-		Debug.Log (p1Gun);
+		//Debug.Log (p1Gun);
 		if (Temp.Count < weaponMax)
 		{
 			Temp.Add (Handful [num]);

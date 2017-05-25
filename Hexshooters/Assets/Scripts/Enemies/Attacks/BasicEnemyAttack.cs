@@ -26,7 +26,7 @@ public class BasicEnemyAttack : EnemySpell {
     new void spellUpdate()
     {
         base.spellUpdate();
-        Debug.Log(speed);
+        //Debug.Log(speed);
     }
     
     public override void movement(int weapon)
