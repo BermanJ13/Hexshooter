@@ -32,6 +32,7 @@ public class Ransom : Enemy {
 
     public override void enemyUpdate()
     {
+		healthDisplay.text = health.ToString();
         if (myBrother == null)
         {
             if (myStatus.IsAffected(StatusType.Slow) || myStatus.IsAffected(StatusType.Freeze))

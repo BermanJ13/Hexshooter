@@ -452,26 +452,28 @@ public class FieldManagerPVP : FieldManager
 	}
 	protected void buildDeck()
 	{
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < 10; i++)
 		{
-			//Handful.Add(Resources.Load ("Chains"));
+			Handful.Add(Resources.Load ("Chains"));
 			Handful.Add(Resources.Load ("Fire"));
 			Handful.Add(Resources.Load ("Water"));
 			Handful.Add(Resources.Load ("Earth"));
 			Handful.Add(Resources.Load ("Fire"));
 			Handful.Add(Resources.Load ("Boomerang"));
+			Handful.Add(Resources.Load ("Lightning"));
 		}
 		Shuffle(Handful);
 
 		//Placeholder Fils Deck with Lighnin and Eart Spells
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < 10; i++)
 		{
-			//Handful_2.Add(Resources.Load ("Chains"));
+			Handful_2.Add(Resources.Load ("Chains"));
 			Handful_2.Add(Resources.Load ("Wind"));
 			Handful_2.Add(Resources.Load ("Water"));
 			Handful_2.Add(Resources.Load ("Earth"));
 			Handful_2.Add(Resources.Load ("Fire"));
-			Handful_2.Add(Resources.Load ("Fire"));
+			Handful.Add(Resources.Load ("Boomerang"));
+			Handful.Add(Resources.Load ("Lightning"));
 		}
 		Shuffle(Handful_2);
 	}

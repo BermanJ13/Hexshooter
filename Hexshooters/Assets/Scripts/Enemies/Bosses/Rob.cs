@@ -31,6 +31,7 @@ public class Rob : Enemy {
 
     public override void enemyUpdate()
     {
+		healthDisplay.text = health.ToString();
         if (myStatus.IsAffected(StatusType.Slow) || myStatus.IsAffected(StatusType.Freeze))
         {
             timer -= Time.deltaTime * FROZEN_MULTIPLIER;
