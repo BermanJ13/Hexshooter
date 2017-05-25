@@ -52,10 +52,13 @@ public class ActiveFieldManager : FieldManager {
 					removeBullet ();
 				}
 			}
+
+			//Pauses both sides until ready for the first pus eof the game
 			if (firstPause)
 			{
 					
 			} 
+			//COntinues the battle during all subsequent reloads
 			else
 			{
 				bool enemyReload = true;
@@ -111,27 +114,10 @@ public class ActiveFieldManager : FieldManager {
 			updateEnemyList ();
 			deleteEnemies ();
 
+			//Pulls up the reload screen on a button press
 			if ( player.reload && (Input.GetButtonDown("Submit_Solo")||Input.GetButtonDown("Start_Solo")))
 			{
 				showReloadScreen ();
-				if (player.Chamber.Count > 0)
-				{
-					for( int i = 0; i < player.Chamber.Count; i ++ )
-					{
-						Temp.Add (player.Chamber[i]);
-						Image slot = spellSlots [Temp.Count - 1].GetComponent<Image> ();
-
-						slot.sprite = ((GameObject)player.Chamber[i]).GetComponent<Spell> ().bulletImage;
-						//slot.color = rune.color;
-						TempNum.Add (100);
-						selectButton ();
-						p1Gun.transform.Rotate (new Vector3 (0.0f,0.0f,60.0f));
-						if(Temp.Count == 6)
-							ES_P1.SetSelectedGameObject(GameObject.Find("BattleButton"));
-
-					}
-					player.Chamber = new List<Object>();
-				}
 			}
 		}
 	}

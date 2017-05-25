@@ -35,6 +35,8 @@ public class Player : MonoBehaviour {
 	public Image playerDisplay;
 	StatusEffect moveLag;
 	StatusEffect shotLag;
+	public bool basic = false;
+
     // Use this for initialization
     void Start () 
 	{
@@ -162,6 +164,28 @@ public class Player : MonoBehaviour {
 					if (!myStatus.IsAffected (StatusType.Disabled)&& !myStatus.IsAffected( StatusType.ShotLag))
 					{
 						initiateSpell ();
+					}
+					allowShot = false;
+				}
+			}
+			if (Input.GetAxisRaw (atkbutton) > 0 && Chamber.Count == 0)
+			{
+				if (!buttonPresed)
+				{
+					buttonPresed = true;
+					if (!myStatus.IsAffected (StatusType.Disabled)&& !myStatus.IsAffected( StatusType.ShotLag))
+					{
+						GameObject go = (GameObject)Instantiate(Resources.Load ("Basic"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+
+						////get the thing component on your instantiated object
+						Spell mything = go.GetComponent<Spell>();
+
+						////set a member variable (must be PUBLIC)
+						mything.weaponUsed = weapon; 
+						mything.PlayerNum = PlayerNum;
+						shotLag = new StatusEffect (0.5f);
+						shotLag.m_type = StatusType.ShotLag;
+						myStatus.AddEffect (shotLag);
 					}
 					allowShot = false;
 				}

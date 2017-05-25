@@ -46,35 +46,43 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 	// Use this for initialization
 	void Update () 
 	{
+		//Cooses the proper guns and starts the reload screen simultaneously for the first time
 		if (once)
 		{
 			chooseGun (player.weapon, false);
 			chooseGun_2 (player2.weapon, false);
 			showReloadScreen (1);
 			showReloadScreen (2);
-
 			once = false;
 		}
+
 		if (player.health <= 0 || player2.health <=0)
 		{
 			SceneManager.LoadScene ("Results");
 		}
-		//updateHealth ();
-		if(ES_P1.currentSelectedGameObject.tag == "SpellHolder")
+
+		//Updates the Reload screen UI to reflect the currentl selected bullet
+		if (ES_P1.currentSelectedGameObject != null)
 		{
-			runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
-			runeDamage.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
-			runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
-			runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
-			runeDisplay.GetComponent<Image> ().color = new Color(0,0,0,255);
+			if (ES_P1.currentSelectedGameObject.tag == "SpellHolder")
+			{
+				runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
+				runeDamage.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
+				runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
+				runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
+				runeDisplay.GetComponent<Image> ().color = new Color (0, 0, 0, 255);
+			}
 		}
-		if (ES_P2.currentSelectedGameObject.tag == "SpellHolder")
+		if (ES_P2.currentSelectedGameObject != null)
 		{
-			runeName_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
-			runeDamage_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
-			runeDesc_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
-			runeDisplay_2.GetComponent<Image> ().sprite = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
-			runeDisplay_2.GetComponent<Image> ().color = new Color(0,0,0,255);
+			if (ES_P2.currentSelectedGameObject.tag == "SpellHolder")
+			{
+				runeName_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
+				runeDamage_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
+				runeDesc_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
+				runeDisplay_2.GetComponent<Image> ().sprite = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
+				runeDisplay_2.GetComponent<Image> ().color = new Color (0, 0, 0, 255);
+			}
 		}
 
 		if (pause)
@@ -103,7 +111,7 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 			}
 			if (firstPause)
 			{
-
+				//Shows the battle screen for both players
 				if (p1Ready && p2Ready)
 				{
 					//firstPause = false;
@@ -113,6 +121,7 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 			} 
 			else
 			{
+				//Allows the player to move and shoot when not reloading
 				if(!p1reload)
 					player.playerUpdate ();
 				if(!p2reload)
@@ -149,6 +158,7 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 					showBattleScreen (2);
 				}
 
+				//Allows the player back into the reload screen 
 				if (!p1reload && Input.GetButtonDown("Start_P1") && player.reload)
 					showReloadScreen (1);
 				if(!p2reload && Input.GetButtonDown("Start_P2") && player2.reload)
@@ -443,29 +453,6 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 		battleObjects[0] = GameObject.Find("Current Bullet");
 		battleObjects_2 = new GameObject[1];
 		battleObjects_2[0] = GameObject.Find("Current Bullet_2");
-	}
-	protected void createGrid()
-	{
-
-		//Creates the Grid
-		for (int y = 0; y < 5; y++)
-		{
-			for (int x = 0; x < 10; x++)
-			{
-				//Checks whether the current panel is for the enmy or player side
-				if (x < 5)
-				{
-					Instantiate (Resources.Load ("Player_Panel"), new Vector3 (x, y, 0), Quaternion.identity);
-					//sPawns the Player
-					if (y == 2 && x == 0)
-						Instantiate (Resources.Load ("Player"), new Vector3 (x, y, 0), Quaternion.identity);
-				}
-				else
-					Instantiate (Resources.Load ("Enemy_Panel"), new Vector3 (x, y, 0), Quaternion.identity);
-				if (y == 2 && x == 9)
-					Instantiate (Resources.Load ("Player2"), new Vector3 (x, y, 0), Quaternion.identity);
-			}
-		}
 	}
 
 	public void chooseGun_2 (int weapon, bool first)

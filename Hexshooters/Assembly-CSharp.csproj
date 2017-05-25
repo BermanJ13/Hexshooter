@@ -89,6 +89,7 @@
      <Compile Include="Assets\Scripts\PvPStarter.cs" />
      <Compile Include="Assets\Scripts\RuneInfo.cs" />
      <Compile Include="Assets\Scripts\SpellHolder.cs" />
+     <Compile Include="Assets\Scripts\Spells\Basic.cs" />
      <Compile Include="Assets\Scripts\Spells\Boomerang.cs" />
      <Compile Include="Assets\Scripts\Spells\Chains.cs" />
      <Compile Include="Assets\Scripts\Spells\Deputy.cs" />

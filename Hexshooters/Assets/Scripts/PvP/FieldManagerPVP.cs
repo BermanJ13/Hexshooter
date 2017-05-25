@@ -48,6 +48,8 @@ public class FieldManagerPVP : FieldManager
 
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 		player2 = GameObject.FindGameObjectWithTag ("Player2").GetComponent<Player> ();
+		player.basic = true;
+		player2.basic = true;
 		chooseGun_2 (player2.weapon, true);
 		getUI ();
 		updateEnemyList ();
@@ -330,6 +332,7 @@ public class FieldManagerPVP : FieldManager
 	}
 
 
+	//Adds a bullet ot te selected list and prevents it from being s;lected again -P2
 	protected void addBullet_2(int num)
 	{
 
@@ -358,6 +361,8 @@ public class FieldManagerPVP : FieldManager
 			ES_P2.SetSelectedGameObject(GameObject.Find("BattleButton_2"));
 		}
 	}
+
+	//removes te bullet from the prospective selection -P2
 	protected void removeBullet_P2()
 	{
 		spellHold_2.activateSpell ("Spell " +TempNum_2[TempNum_2.Count-1]+ "_2");
@@ -372,6 +377,8 @@ public class FieldManagerPVP : FieldManager
 		//p2Gun.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x,transform.rotation.y,transform.rotation.z - 60), Time.time*0.1f);
 
 	}
+
+	//Selects the first button that has not been chosen when the count is under the max. -P2
 	protected void selectButton_2 ()
 	{
 		bool found = false;
@@ -392,6 +399,7 @@ public class FieldManagerPVP : FieldManager
 				ES_P2.SetSelectedGameObject(GameObject.Find("BattleButton_2"));
 		}
 	}
+	//Sets the player to ready and starts it if the other player is also ready.
 	public void readyP1()
 	{
 		p1Ready = true;
@@ -404,6 +412,8 @@ public class FieldManagerPVP : FieldManager
 		if (p1Ready)
 			showBattleScreen ();
 	}
+
+	//Chooses the Proper guns for the character and activates the cooresponding UI
 	public void getUI()
 	{
 		base.getUI ();

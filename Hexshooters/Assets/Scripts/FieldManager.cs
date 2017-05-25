@@ -55,6 +55,7 @@ public class FieldManager : MonoBehaviour
 		once =true;
 		weapons = new GameObject[4];
 		ES_P1 = EventSystem.current;
+
 		//Hnadful= Deck
 		//Pass Deck In from Overworld Scene
 		//Placeholder Fils Deck with Lighnin and Eart Spells
@@ -65,38 +66,50 @@ public class FieldManager : MonoBehaviour
 
 
         player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
+
+		// Retrieves the references to the alkl ofthe UI elements.
 		getUI ();
+
+		//Updates the lists of enemies, spells, and obstacles to be used in the battle. 
 		updateEnemyList ();
 		updateSpellList ();
 		updateObstacleList ();
-		//showHealth ();
+
 		if (GameObject.Find ("OverPlayer") != null)
 			player.weapon = GameObject.Find ("OverPlayer").GetComponent<OverPlayer>().weapon;
 
+		//Selects and enables the cooresponding UI based on the character
 		chooseGun (player.weapon, false);
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+		//Checks to see if tis battle originate in story mode, and if so it sets the playe rin battle to match the charcter being used in te overworld.
 		if (GameObject.Find ("OverPlayer") != null)
 			player.weapon = GameObject.Find ("OverPlayer").GetComponent<OverPlayer>().weapon;
-		
+
+		//Ensures the correct gun UI is bveing used in the battle
 		if (once)
 		{
 			chooseGun (player.weapon, false);
 			once = false;
 		}
+
+		//Checks to see if the player is dead and if so shows the Game Over Screen
 		if (player.health <= 0 )
 		{
 			SceneManager.LoadScene ("Game Over");
 		}
+
+		//Checks to see if there are any living enemies and if there arent ends the battle
 		updateEnemyList ();
 		if(enemies.Length == 0)
 		{
 			SceneManager.LoadScene ("Overworld");
 		}
-		//updateHealth ();
+
+		//ALters the display elements to match the rune that is currently being hovered over.
 		if(ES_P1.currentSelectedGameObject.tag == "SpellHolder")
 		{
 			runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
@@ -105,6 +118,8 @@ public class FieldManager : MonoBehaviour
 			runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
 			runeDisplay.GetComponent<Image> ().color = new Color(0,0,0,255);
 		}
+
+		//Removes the last bullet from the camber and places it back in he selection screen.
 		if (pause && Input.GetButtonDown("Cancel_Solo"))
 		{
 			if (Temp.Count > 0)
@@ -112,6 +127,8 @@ public class FieldManager : MonoBehaviour
 				removeBullet ();
 			}
 		}
+
+		//When not in reload mode calls the update functions of all the elements on the board. 
 		if (!pause)
 		{
 			player.playerUpdate ();
@@ -137,12 +154,16 @@ public class FieldManager : MonoBehaviour
 				if(ob != null)
 					ob.obstacleUpdate ();
 			}
+
+			//Updates the lists of elemnts on the board and deltes the ones marked for deletion
 			updateSpellList ();
 			deleteSpells ();
 			updateEnemyList ();
 			deleteEnemies ();
 			updateObstacleList ();
 			deleteObstacles ();
+
+			//Checks whether the player is ready for reload, the enemy is ready for reload, and whether the spells on the board have resolved.
 			if (player.reload && enemyReload && spells.Length == 0)
 			{
 				showReloadScreen ();
@@ -150,8 +171,10 @@ public class FieldManager : MonoBehaviour
 		}
 	}
 
+	//Creates the map by loading in the text file
     public void instantiateMap()
     {
+		
         foreach (Transform trns in gamePieces)
         {
             if(trns.name != "Enemy_Panel" && trns.name != "Player_Panel")
@@ -201,7 +224,7 @@ public class FieldManager : MonoBehaviour
             }
         }
     }
-
+	//DEletes spells that have been marked for deletion
 	public void deleteSpells()
 	{
 		if (spells != null) 
@@ -220,6 +243,7 @@ public class FieldManager : MonoBehaviour
 		}
 		updateSpellList ();
 	}
+	//DEletes enemies that have been marked for deletion
 	public void deleteEnemies()
 	{
 		if (enemies != null) 
@@ -238,6 +262,7 @@ public class FieldManager : MonoBehaviour
 		}
 		updateEnemyList ();
 	}
+	//DEletes obstacles that have been marked for deletion
 	public void deleteObstacles()
 	{
 		if (obstacles != null) 
@@ -256,6 +281,7 @@ public class FieldManager : MonoBehaviour
 		}
 		updateObstacleList ();
 	}
+	//updates the list of enemies by finding out whta is currently on the board
 	public void updateEnemyList()
 	{
 		GameObject[] temp = GameObject.FindGameObjectsWithTag ("Enemy");
@@ -267,6 +293,7 @@ public class FieldManager : MonoBehaviour
 			count++;
 		}
 	}
+	//updates the list of spells by finding out whta is currently on the board
 	public void updateSpellList()
 	{
 		GameObject[] temp = GameObject.FindGameObjectsWithTag ("Spell");
@@ -278,6 +305,7 @@ public class FieldManager : MonoBehaviour
 			count++;
 		}
 	}
+	//updates the list of obstacles by finding out whta is currently on the board
 	public new void  updateObstacleList()
 	{
 		GameObject[] temp = GameObject.FindGameObjectsWithTag ("Obstacle");
@@ -289,17 +317,22 @@ public class FieldManager : MonoBehaviour
 			count++;
 		}
 	}
+	//REnables the UI for the reload menu
 	public void showReloadScreen()
 	{
+		//resets the bottle indicators of bullet number
 		foreach(GameObject g in bulletIndicators)
 		{
 			g.SetActive (true);
 		}
+		//resets the default staus to the rune holding ui
 		for (int i = 0; i < spellSlots.Count; i++)
 		{
 			spellSlots[i].GetComponent<Image>().sprite = defaultSlot;
 			spellSlots[i].GetComponent<Image>().color = Color.white;
 		}
+
+		//removes the bullets used in the last round from the deck
 		for(int i=Temp.Count-1;i>-1;i--)
 		{
 			if (Temp [i] != null)
@@ -312,6 +345,7 @@ public class FieldManager : MonoBehaviour
 				TempNum.RemoveAt (i);
 			}
 		}
+		//reenables the UI for the reload screen
 		for (int i = 0; i< pauseObjects.Length;i++)
 		{
 			if (i < Handful.Count)
@@ -323,17 +357,25 @@ public class FieldManager : MonoBehaviour
 				pauseObjects [pauseObjects.Length-1].SetActive (true);
 			}
 		}
+
+		//DEactivates the UI for the battle screen
 		for (int i = 0; i< battleObjects.Length;i++)
 		{
 			if(battleObjects[i] != null)
 				battleObjects [i].SetActive (false);
 		}
+
+		//reenables the UI for the reload screen
 		for (int i = 0; i< pauseUI.Length;i++)
 		{
 				pauseUI [i].SetActive (true);
 		}
+
+		//Selects the proper button
 		selectButton ();
 		pause = true;
+
+		//Sets each spell holder to a match the spell from the deck.
 		for (int i = 0; i < spellHold.children.Count; i++)
 		{
 			Button b = spellHold.children [i].gameObject.GetComponent<Button> ();
@@ -356,35 +398,49 @@ public class FieldManager : MonoBehaviour
 				r.runeDamage = curSpell.GetComponent<Spell>().damage.ToString();
 			}
 		}
+
+		//Sets the player's reload value to false preventing it from reactivating the reload screen immediately
 		player.reload = false;
 	}
 	public void showBattleScreen()
 	{
+		//Adds some shot lag to prevent an immediate firing after selection of bullets
 		StatusEffect shotLag = new StatusEffect (0.5f);
 		shotLag.m_type = StatusType.ShotLag;
 		player.myStatus.AddEffect (shotLag);
 		firstPause = false;
+
+		//Adds the selected bullets to the chamber
 		for (int i = 0; i < Temp.Count; i++)
 		{
 			player.Chamber.Add(Temp [i]);
 		}
+
+		//DIsbales the pause UI
 		foreach (GameObject g in pauseObjects)
 		{
 			g.SetActive (false);
 		}
+
+		//Enables the battle UI
 		for (int i = 0; i< battleObjects.Length;i++)
 		{
 			if(battleObjects[i] != null)
 				battleObjects [i].SetActive (true);
 		}
+
+		//DIsbales the pause UI
 		for (int i = 0; i< pauseUI.Length;i++)
 		{
 			pauseUI [i].SetActive (false);
 		}
+
+		//Pevents the reload creen from reactivating until the poper time
 		pause = false;
 		player.reload = false;
 	}
 
+	//Shuffle sthe order of a List- Used for Deck sHuffling
 	public void Shuffle(List<Object> list) 
 	{
 		for(int i = list.Count -1; i > 1; i--)
@@ -395,6 +451,8 @@ public class FieldManager : MonoBehaviour
 			list[i] = value;
 		}
 	}
+
+	//Adds a bullet ot te selected list and prevents it from being s;lected again
 	protected void addBullet(int num)
 	{
 		//Debug.Log (p1Gun);
@@ -407,6 +465,8 @@ public class FieldManager : MonoBehaviour
 			slot.color = rune.color;
 			spellHold.deactivateSpell ("Spell " + num + "");
 			TempNum.Add (num);
+
+			//SELects the next possible Button And turns adjusts the UI accordingly
 			selectButton ();
 			if(player.weapon == 1)
 				p1Gun.transform.Rotate (new Vector3 (0.0f,0.0f,60.0f));
@@ -422,6 +482,8 @@ public class FieldManager : MonoBehaviour
 			ES_P1.SetSelectedGameObject(GameObject.Find("BattleButton"));
 		}
 	}
+
+	//removes te bullet from the prospective selection
 	protected void removeBullet()
 	{
 		if (TempNum [TempNum.Count - 1] != null || TempNum [TempNum.Count - 1] != 100)
@@ -437,6 +499,8 @@ public class FieldManager : MonoBehaviour
 				p1Gun.transform.Rotate (new Vector3 (0.0f,0.0f,-45.0f));
 		}
 	}
+
+	//Selects the first button that has not been chosen when the count is under the max. 
 	protected void selectButton ()
 	{
 		bool found = false;
@@ -457,6 +521,8 @@ public class FieldManager : MonoBehaviour
 				ES_P1.SetSelectedGameObject(GameObject.Find("BattleButton"));
 		}
 	}
+
+	//Gets the references to the all of the UI
 	public void getUI()
 	{
 		can = GameObject.Find ("Canvas");
@@ -495,6 +561,8 @@ public class FieldManager : MonoBehaviour
 		battleObjects[0] = GameObject.Find("Current Bullet");
 
 	}
+
+	//Builds the deck
 	public void buildDeck()
 	{
 		for (int i = 0; i < 10; i++)
@@ -510,6 +578,8 @@ public class FieldManager : MonoBehaviour
 		}
 		Shuffle(Handful);
 	}
+
+	//Chooses the Proper gun for the character and activates the cooresponding UI
 	public void chooseGun(int weapon, bool first)
 	{
 		if (first)
@@ -579,17 +649,6 @@ public class FieldManager : MonoBehaviour
 				weaponMax = 8;
 			break;
 			case 3:
-				//weapons [3].SetActive (true);
-				//spellSlots.Add (GameObject.Find ("SpellSlot1"));
-				//spellSlots.Add (GameObject.Find ("SpellSlot2"));
-				//if (!first)
-				//{
-				//	spellSlots [0] = GameObject.Find ("SpellSlot1");
-				//	spellSlots [1] = GameObject.Find ("SpellSlot2");
-				//}
-				//p1Gun = weapons [3];
-				//weaponMax = 2;
-
 				weapons [2].SetActive (true);
 				spellSlots.Add (GameObject.Find ("SpellSlot1"));
 				spellSlots.Add (GameObject.Find ("SpellSlot2"));
