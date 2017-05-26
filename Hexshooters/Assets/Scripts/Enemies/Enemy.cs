@@ -420,6 +420,7 @@ public abstract class Enemy : MonoBehaviour {
 		else
 		if (damage * multipliers + stackDmg < 0)
 			heal = true;
+        	AIStep();
 	}
 
 	void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)

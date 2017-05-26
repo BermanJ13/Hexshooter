@@ -10,7 +10,9 @@ public class Bandit : Enemy
     public const int ATTACK_TIMEOUT = 3;// Waits two frames between attacks minimum.
     private bool canAttack;//If true, the enemy can currently attack, if false, cannot for some reason.
     
-
+    [SerializeField]
+    public string[] spells;
+    private int spellcount = 0;
     // Use this for initialization
     public override void Start()
     {
@@ -122,15 +124,22 @@ public class Bandit : Enemy
 
     }
 
+    /// <summary>
+    /// casts a spell in sequence to how they are loaded in the inspector
+    /// </summary>
     public virtual void Attack()
     {
         attackCounter = ATTACK_TIMEOUT;
-        //Implement weak fire spell cast here.
-		// Use wind spell
-		GameObject go = (GameObject)Instantiate(Resources.Load("Fire"),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
 
-		////get the thing component on your instantiated object
-		Spell mything = go.GetComponent<Spell>();
+		GameObject go = (GameObject)Instantiate(Resources.Load(spells[spellcount]),new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+        spellcount++;
+        if (spellcount >= spells.Length)
+        {
+            spellcount = 0;
+        }
+        Debug.Log(spellcount);
+        ////get the thing component on your instantiated object
+        Spell mything = go.GetComponent<Spell>();
 
 		////set a member variable (must be PUBLIC)
 		mything.weaponUsed = 1; 
@@ -138,5 +147,37 @@ public class Bandit : Enemy
 
     }
 
-    
+    public virtual void Attack(string spell)
+    {
+        attackCounter = ATTACK_TIMEOUT;
+
+        GameObject go;
+
+        try
+        {
+             go= (GameObject)Instantiate(Resources.Load(spell), new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+        }
+
+        catch (Exception e)
+        {
+            Console.WriteLine("This Spell '"+spell+"' was not found in the spells array.  Go into the inspector and put it in before trying to use it...  Or something else happened i dunno:", e);
+            return;
+        }
+        
+
+        spellcount++;
+        if (spellcount <= spells.Length)
+        {
+            spellcount = 0;
+        }
+        ////get the thing component on your instantiated object
+        Spell mything = go.GetComponent<Spell>();
+
+        ////set a member variable (must be PUBLIC)
+        mything.weaponUsed = 1;
+        mything.PlayerNum = 2;
+
+    }
+
+
 }
