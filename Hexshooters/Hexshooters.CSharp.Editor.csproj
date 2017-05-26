@@ -5,16 +5,16 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3D5D3050-02FD-E78D-9E8C-F270C7C61EF3}</ProjectGuid>
+    <ProjectGuid>{F0D9E6A8-AE09-C61C-8F3B-FF9F4DA95BB3}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
-    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityProjectType>Editor:5</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.0f3</UnityVersion>
     <RootNamespace></RootNamespace>
@@ -52,95 +52,77 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>Library\UnityAssemblies\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.EditorTestsRunner">
+      <HintPath>Library\UnityAssemblies\UnityEditor.EditorTestsRunner.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>Library\UnityAssemblies\UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.Networking">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.PlaymodeTestsRunner">
+      <HintPath>Library\UnityAssemblies\UnityEditor.PlaymodeTestsRunner.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.PlaymodeTestsRunner">
       <HintPath>Library\UnityAssemblies\UnityEngine.PlaymodeTestsRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.TreeEditor">
+      <HintPath>Library\UnityAssemblies\UnityEditor.TreeEditor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.Analytics">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.HoloLens">
+      <HintPath>Library\UnityAssemblies\UnityEditor.HoloLens.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.VR">
+      <HintPath>Library\UnityAssemblies\UnityEditor.VR.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.VR">
       <HintPath>Library\UnityAssemblies\UnityEngine.VR.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor">
-      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+    <Reference Include="UnityEditor.Graphs">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Graphs.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.WindowsStandalone.Extensions">
+      <HintPath>Library\UnityAssemblies\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+      <HintPath>Library\UnityAssemblies\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\ActiveFieldManager.cs" />
-    <Compile Include="Assets\Scripts\CameraSettings.cs" />
-    <Compile Include="Assets\Scripts\CharSelect.cs" />
-    <Compile Include="Assets\Scripts\ControlDisplay.cs" />
-    <Compile Include="Assets\Scripts\ControllerRefocus.cs" />
-    <Compile Include="Assets\Scripts\CursorLock.cs" />
-    <Compile Include="Assets\Scripts\DialogueManager.cs" />
-    <Compile Include="Assets\Scripts\Enemies\Attacks\BasicEnemyAttack.cs" />
-    <Compile Include="Assets\Scripts\Enemies\Attacks\EnemySpell.cs" />
-    <Compile Include="Assets\Scripts\Enemies\Attacks\ScorpionStrike.cs" />
-    <Compile Include="Assets\Scripts\Enemies\Attacks\WildCatStrike.cs" />
-    <Compile Include="Assets\Scripts\Enemies\Bandit.cs" />
-    <Compile Include="Assets\Scripts\Enemies\Bosses\Ransom.cs" />
-    <Compile Include="Assets\Scripts\Enemies\Bosses\Rob.cs" />
-    <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
-    <Compile Include="Assets\Scripts\Enemies\Scorpion.cs" />
-    <Compile Include="Assets\Scripts\Enemies\WildCat.cs" />
-    <Compile Include="Assets\Scripts\FieldManager.cs" />
-    <Compile Include="Assets\Scripts\GameInfo.cs" />
-    <Compile Include="Assets\Scripts\GameResults.cs" />
-    <Compile Include="Assets\Scripts\Instructions.cs" />
-    <Compile Include="Assets\Scripts\MenuRefocus.cs" />
-    <Compile Include="Assets\Scripts\Movement.cs" />
-    <Compile Include="Assets\Scripts\Music\BattleMusic.cs" />
-    <Compile Include="Assets\Scripts\Music\MenuMusic.cs" />
-    <Compile Include="Assets\Scripts\Obstacles\Flames.cs" />
-    <Compile Include="Assets\Scripts\Obstacles\Obstacle.cs" />
-    <Compile Include="Assets\Scripts\OptionsMenu.cs" />
-    <Compile Include="Assets\Scripts\OverPlayer.cs" />
-    <Compile Include="Assets\Scripts\Panel.cs" />
-    <Compile Include="Assets\Scripts\Particle.cs" />
-    <Compile Include="Assets\Scripts\Player.cs" />
-    <Compile Include="Assets\Scripts\Preload\DDOL.cs" />
-    <Compile Include="Assets\Scripts\Preload\Load.cs" />
-    <Compile Include="Assets\Scripts\PvP\ActiveFieldManagerPvP.cs" />
-    <Compile Include="Assets\Scripts\PvP\Button_Multiplayer.cs" />
-    <Compile Include="Assets\Scripts\PvP\ControllerRefocus_Multiplayer.cs" />
-    <Compile Include="Assets\Scripts\PvP\EventSystem_Multiplayer.cs" />
-    <Compile Include="Assets\Scripts\PvP\EventSystemholder.cs" />
-    <Compile Include="Assets\Scripts\PvP\FieldManagerPVP.cs" />
-    <Compile Include="Assets\Scripts\PvPStarter.cs" />
-    <Compile Include="Assets\Scripts\RuneInfo.cs" />
-    <Compile Include="Assets\Scripts\SpellHolder.cs" />
-    <Compile Include="Assets\Scripts\Spells\Boomerang.cs" />
-    <Compile Include="Assets\Scripts\Spells\Chains.cs" />
-    <Compile Include="Assets\Scripts\Spells\Deputy.cs" />
-    <Compile Include="Assets\Scripts\Spells\Earth.cs" />
-    <Compile Include="Assets\Scripts\Spells\Fire.cs" />
-    <Compile Include="Assets\Scripts\Spells\Ice.cs" />
-    <Compile Include="Assets\Scripts\Spells\Lightning.cs" />
-    <Compile Include="Assets\Scripts\Spells\Rain.cs" />
-    <Compile Include="Assets\Scripts\Spells\Spell Template.cs" />
-    <Compile Include="Assets\Scripts\Spells\Spell.cs" />
-    <Compile Include="Assets\Scripts\Spells\Trains.cs" />
-    <Compile Include="Assets\Scripts\Spells\Voodoo.cs" />
-    <Compile Include="Assets\Scripts\Spells\Water.cs" />
-    <Compile Include="Assets\Scripts\Spells\Whiskey.cs" />
-    <Compile Include="Assets\Scripts\Spells\Wind.cs" />
-    <Compile Include="Assets\Scripts\Spells\Wood.cs" />
-    <Compile Include="Assets\Scripts\StatusManager.cs" />
-    <Compile Include="Assets\Scripts\UniversalSettings.cs" />
-    <Compile Include="Assets\Scripts\tmp.cs" />
-    <Compile Include="Assets\Vortex Game Studios\FilterBehavior\FilterBehaviour.cs" />
-    <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\OLDTVScreen.cs" />
-    <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\OLDTVTube.cs" />
-    <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\Tutorial\CameraReflex.cs" />
+    <ProjectReference Include="Hexshooters.CSharp.csproj">
+      <Project>{3D5D3050-02FD-E78D-9E8C-F270C7C61EF3}</Project>
+      <Name>Hexshooters.CSharp</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Vortex Game Studios\Editor\UEditor.cs" />
+    <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\Editor\OLDTVScreenEditor.cs" />
+    <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\Editor\OLDTVTubeEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Dialogue\Text\Resources\Cutscene0.txt" />

@@ -407,6 +407,7 @@ public abstract class Enemy : MonoBehaviour {
 
 		this.health -= damage* multipliers + stackDmg;
 		hit = true;
+        AIStep();
 	}
 
 	void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
