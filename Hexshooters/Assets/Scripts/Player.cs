@@ -549,4 +549,8 @@ public class Player : MonoBehaviour {
 			break;
 		}
 	}
+	public void activeUpdate()
+	{
+			pHealth.text = health.ToString();
+	}
 }

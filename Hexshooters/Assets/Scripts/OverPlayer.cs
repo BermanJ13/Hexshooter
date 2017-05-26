@@ -92,7 +92,7 @@ public class OverPlayer : MonoBehaviour {
 					cutscene = false;
 				}
 
-				if (!cutscene && !cut1)
+				if (!cutscene && !cut1 && cut2)
 				{
 					us.mapfile = "DB1";
 					if (style == 0)
@@ -100,7 +100,7 @@ public class OverPlayer : MonoBehaviour {
 					else
 						SceneManager.LoadScene ("Active Battle");
 				}
-				if (!cutscene && !cut3)
+				if (!cutscene && !cut3 && cut4)
 				{
 					us.mapfile = "DB2";
 					if (style == 0)
@@ -108,7 +108,7 @@ public class OverPlayer : MonoBehaviour {
 					else
 						SceneManager.LoadScene ("Active Battle");
 				}
-				if (!cutscene && !cut4)
+				if (!cutscene && !cut4 && cut5)
 				{
 					us.mapfile = "DB3";
 					if (style == 0)
@@ -116,7 +116,7 @@ public class OverPlayer : MonoBehaviour {
 					else
 						SceneManager.LoadScene ("Active Battle");
 				}
-				if (!cutscene && !cut6)
+				if (!cutscene && !cut6 && cut7)
 				{
 					us.mapfile = "DB4";
 					if (style == 0)
@@ -124,7 +124,7 @@ public class OverPlayer : MonoBehaviour {
 					else
 						SceneManager.LoadScene ("Active Battle");
 				}
-				if (!cutscene && !cut8)
+				if (!cutscene && !cut8 && cut9)
 				{
 					us.mapfile = "BossFIght";
 					if (style == 0)

@@ -34,13 +34,16 @@ public class ActiveFieldManager : FieldManager {
 			SceneManager.LoadScene ("Overworld");
 		}
 		//updateHealth ();
-		if(ES_P1.currentSelectedGameObject.tag == "SpellHolder")
+		if (ES_P1.currentSelectedGameObject != null)
 		{
-			runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
-			runeDamage.text = "Damage:" + ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
-			runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
-			runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
-			runeDisplay.GetComponent<Image> ().color = new Color(0,0,0,255);
+			if (ES_P1.currentSelectedGameObject.tag == "SpellHolder")
+			{
+				runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
+				runeDamage.text = "Damage:" + ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
+				runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
+				runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
+				runeDisplay.GetComponent<Image> ().color = new Color (0, 0, 0, 255);
+			}
 		}
 
 		if (pause)
@@ -61,6 +64,7 @@ public class ActiveFieldManager : FieldManager {
 			//COntinues the battle during all subsequent reloads
 			else
 			{
+				player.activeUpdate ();
 				bool enemyReload = true;
 				foreach (Spell spell in spells)
 				{

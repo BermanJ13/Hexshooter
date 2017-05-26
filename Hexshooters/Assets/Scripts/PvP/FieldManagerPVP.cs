@@ -75,17 +75,17 @@ public class FieldManagerPVP : FieldManager
 		{
 			if (ES_P1.currentSelectedGameObject != null)
 			{
-				if (ES_P1.currentSelectedGameObject.tag != null)
+				if (ES_P1.currentSelectedGameObject.tag == "SpellHolder")
 				{
-					if (ES_P1.currentSelectedGameObject.tag == "SpellHolder")
-					{
-						runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
-						runeDamage.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
-						runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
-						runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
-						runeDisplay.GetComponent<Image> ().color = new Color(0,0,0,255);
-					}
+					runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
+					runeDamage.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
+					runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
+					runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
+					runeDisplay.GetComponent<Image> ().color = new Color(0,0,0,255);
 				}
+			}
+			if (ES_P2.currentSelectedGameObject != null)
+			{
 				if (ES_P2.currentSelectedGameObject.tag == "SpellHolder")
 				{
 					runeName_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
