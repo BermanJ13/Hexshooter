@@ -110,13 +110,16 @@ public class FieldManager : MonoBehaviour
 		}
 
 		//ALters the display elements to match the rune that is currently being hovered over.
-		if(ES_P1.currentSelectedGameObject.tag == "SpellHolder")
+		if (ES_P1.currentSelectedGameObject != null)
 		{
-			runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
-			runeDamage.text = "Damage:" + ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
-			runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
-			runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
-			runeDisplay.GetComponent<Image> ().color = new Color(0,0,0,255);
+			if (ES_P1.currentSelectedGameObject.tag == "SpellHolder")
+			{
+				runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
+				runeDamage.text = "Damage:" + ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
+				runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
+				runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
+				runeDisplay.GetComponent<Image> ().color = new Color (0, 0, 0, 255);
+			}
 		}
 
 		//Removes the last bullet from the camber and places it back in he selection screen.

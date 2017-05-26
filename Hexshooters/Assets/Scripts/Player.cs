@@ -35,11 +35,12 @@ public class Player : MonoBehaviour {
 	public Image playerDisplay;
 	StatusEffect moveLag;
 	StatusEffect shotLag;
-	public bool basic = false;
+	public bool basic;
 
     // Use this for initialization
     void Start () 
 	{
+		basic = false;
 		if (playerDisplay != null)
 		{
 			if (PlayerNum == 1)
@@ -168,7 +169,7 @@ public class Player : MonoBehaviour {
 					allowShot = false;
 				}
 			}
-			if (Input.GetAxisRaw (atkbutton) > 0 && Chamber.Count == 0)
+			if (Input.GetAxisRaw (atkbutton) > 0 && Chamber.Count == 0 && basic)
 			{
 				if (!buttonPresed)
 				{

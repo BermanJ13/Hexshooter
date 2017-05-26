@@ -134,7 +134,7 @@ public class Wind : Spell {
 					} 
 					else
 					{
-						c.transform.position += new Vector3 (0f, 1f, 0f); 
+						c.transform.position -= new Vector3 (0f, 1f, 0f); 
 					}
 					markedForDeletion = true; //used to delete bullet
 
@@ -145,7 +145,7 @@ public class Wind : Spell {
 					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum));
 					//checking boundary and then moving position accordingly
 					if (c.transform.position.y != 4) {
-						c.transform.position -= new Vector3 (0, 1f, 0);
+						c.transform.position += new Vector3 (0, 1f, 0);
 					} 
 					else
 					{
@@ -269,10 +269,6 @@ public class Wind : Spell {
 					else if(c.transform.position.x == 8)
 					{
 						c.transform.position += new Vector3 (1f, 0f, 0f);
-					}
-					else
-					{
-						c.transform.position += new Vector3 (0f, 0f, 0f); //moves the enemy up a penel
 					}
 
 					markedForDeletion = true; //used to delete bullet
