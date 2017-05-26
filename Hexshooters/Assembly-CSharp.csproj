@@ -54,12 +54,14 @@
      <Compile Include="Assets\Scripts\CursorLock.cs" />
      <Compile Include="Assets\Scripts\DialogueManager.cs" />
      <Compile Include="Assets\Scripts\Enemies\Attacks\BasicEnemyAttack.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Attacks\BuffaloPlow.cs" />
      <Compile Include="Assets\Scripts\Enemies\Attacks\EnemySpell.cs" />
      <Compile Include="Assets\Scripts\Enemies\Attacks\ScorpionStrike.cs" />
      <Compile Include="Assets\Scripts\Enemies\Attacks\WildCatStrike.cs" />
      <Compile Include="Assets\Scripts\Enemies\Bandit.cs" />
      <Compile Include="Assets\Scripts\Enemies\Bosses\Ransom.cs" />
      <Compile Include="Assets\Scripts\Enemies\Bosses\Rob.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Buffalo.cs" />
      <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
      <Compile Include="Assets\Scripts\Enemies\Scorpion.cs" />
      <Compile Include="Assets\Scripts\Enemies\WildCat.cs" />
