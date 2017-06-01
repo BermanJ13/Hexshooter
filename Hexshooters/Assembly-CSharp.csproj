@@ -111,7 +111,6 @@
      <Compile Include="Assets\Scripts\StatusManager.cs" />
      <Compile Include="Assets\Scripts\UniversalSettings.cs" />
      <Compile Include="Assets\Scripts\tmp.cs" />
-     <Compile Include="Assets\TileWindow.cs" />
      <Compile Include="Assets\Vortex Game Studios\FilterBehavior\FilterBehaviour.cs" />
      <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\OLDTVScreen.cs" />
      <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\OLDTVTube.cs" />

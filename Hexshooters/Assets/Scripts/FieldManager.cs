@@ -572,12 +572,8 @@ public class FieldManager : MonoBehaviour
 		{
 			Handful.Add(Resources.Load ("Fire"));
 			Handful.Add(Resources.Load ("Earth"));
-			Handful.Add(Resources.Load ("Lightning"));
-			Handful.Add(Resources.Load ("Boomerang"));
 			Handful.Add(Resources.Load ("Water"));
-			Handful.Add(Resources.Load ("Chains"));
 			Handful.Add(Resources.Load ("Wind"));
-			Handful.Add(Resources.Load ("Ice"));
 		}
 		Shuffle(Handful);
 	}

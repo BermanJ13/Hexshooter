@@ -289,19 +289,23 @@ public class Ice : Spell {
 		{
 		//Revolver
 		case 1:
-			description = "Coats a Row in frost Slowing Enemy Movement";
+				description = "Coats a Row in frost Slowing Enemy Movement";
+				damage = 15;
 			break;
 			//Rifle
 		case 2:
-			description = "Freezes the opponent for an Instant.";
+				description = "Freezes the opponent for an Instant.";
+				damage = 10;
 			break;
 			//Shotgun
 		case 3:
-			description = "Sield the player who uses the spell.";
+				description = "Sield the player who uses the spell.";
+				damage = 0;
 			break;
 			//Gatling
 		case 4:
-			description = "Does damage to the opponent that gets more powerful with each hit.";
+				description = "Does damage to the opponent that gets more powerful with each hit.";
+				damage = 5;
 			break;
 			//Cane Gun
 		case 5:

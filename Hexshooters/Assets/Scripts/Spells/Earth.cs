@@ -391,19 +391,23 @@ public class Earth : Spell {
 		{
 		//Revolver
 		case 1:
-			description = "Makes an obstacle 3 panels ahead.";
+				description = "Makes an obstacle 3 panels ahead.";
+				damage = 10;
 			break;
 			//Rifle
 		case 2:
-			description = "Shoot past the last row, to strike the entire back row.";
+				description = "Shoot past the last row, to strike the entire back row.";
+				damage = 15;
 			break;
 			//Shotgun
 		case 3:
-			description = "Creates a fissure striking the row ahead and inflicts stun.";
+				description = "Creates a fissure striking the row ahead and inflicts stun.";
+				damage = 15;
 			break;
 			//Gatling
 		case 4:
-			description = "Stacking Damage";
+				description = "Stacking Damage";
+				damage = 5;
 			break;
 			//Cane Gun
 		case 5:

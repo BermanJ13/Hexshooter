@@ -437,19 +437,23 @@ public class Lightning : Spell {
 		{
 		//Revolver
 		case 1:
-			description = "After striking an object hits every panel ahead with a lightning bolt.";
+				description = "After striking an object hits every panel ahead with a lightning bolt.";
+				damage = 10;
 			break;
 			//Rifle
 		case 2:
-			description = "Hits the opponent with a shot that disables their shooting for a time.";
+				description = "Hits the opponent with a shot that disables their shooting for a time.";
+				damage = 5;
 			break;
 			//Shotgun
 		case 3:
-			description = "Sends a shockwave out from each opponent that is hit.";
+				description = "Sends a shockwave out from each opponent that is hit.";
+				damage = 20;
 			break;
 			//Gatling
 		case 4:
-			description = "The spell redirects after striking something.";
+				description = "The spell redirects after striking something.";
+				damage = 10;
 			break;
 			//Cane Gun
 		case 5:

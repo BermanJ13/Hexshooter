@@ -346,19 +346,23 @@ public class Water : Spell {
 		{
 		//Revolver
 		case 1:
-			description = "Bounces off the enemy and heals the player if contact is made with the spell.";
+				description = "Bounces off the enemy and heals the player if contact is made with the spell.";
+				damage = 5;
 			break;
 			//Rifle
 		case 2:
-			description = "Pulls a nearby enemy toward the panel.";
+				description = "Pulls a nearby enemy toward the panel.";
+				damage = 10;
 			break;
 			//Shotgun
 		case 3:
-			description = "Increases damage for a period of time.";
+				description = "Increases damage for a period of time after striking an enemy.";
+				damage = 15;
 			break;
 			//Gatling
 		case 4:
-			description = "Uses a hose to push back the opponent.";
+				description = "Uses a hose to push back the opponent.";
+				damage = 10;
 			break;
 			//Cane Gun
 		case 5:

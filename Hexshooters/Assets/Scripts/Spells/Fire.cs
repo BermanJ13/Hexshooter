@@ -448,24 +448,28 @@ public class Fire : Spell {
 		switch (weapon)
 		{
 		//Revolver
-		case 1:
-			description = "Shoots a fireball 5 spaces ahead and creates fire.";
+			case 1:
+				description = "Shoots a fireball 5 spaces ahead and creates fire.";
+				damage = 15;
 			break;
 			//Rifle
-		case 2:
-			description = "Shoot across a row and burn an enemy if it hits them";
+			case 2:
+				description = "Shoot across a row and burn an enemy if it hits them";
+				damage = 10;
 			break;
 		//Shotgun
-		case 3:
-			description = "A blast area of damage";
+			case 3:
+				description = "A blast area of damage";
+				damage = 20;
 			break;
 		//Gatling
-		case 4:
-			description = "Flamethrower";
+			case 4:
+				description = "Flamethrower";
+				damage = 10;
 			break;
 		//Cane Gun
-		case 5:
-			description = "";
+			case 5:
+				description = "";
 			break;
 		}
 	}

@@ -186,7 +186,7 @@ public class Player : MonoBehaviour {
 						mything.PlayerNum = PlayerNum;
 						shotLag = new StatusEffect (0.5f);
 						shotLag.m_type = StatusType.ShotLag;
-						myStatus.AddEffect (shotLag);
+						//myStatus.AddEffect (shotLag);
 					}
 					allowShot = false;
 				}
@@ -296,7 +296,7 @@ public class Player : MonoBehaviour {
 					transform.position = new Vector2 (transform.position.x + 1, transform.position.y);
 					moveLag = new StatusEffect (0.1f);
 					moveLag.m_type = StatusType.Bound;
-					myStatus.AddEffect (moveLag);
+					//myStatus.AddEffect (moveLag);
 				}
 			}
 		} 
@@ -336,7 +336,7 @@ public class Player : MonoBehaviour {
 					transform.position = new Vector2 (transform.position.x - 1, transform.position.y);
 					moveLag = new StatusEffect (0.1f);
 					moveLag.m_type = StatusType.Bound;
-					myStatus.AddEffect (moveLag);
+					//myStatus.AddEffect (moveLag);
 				}
 			}
 		}
@@ -377,7 +377,7 @@ public class Player : MonoBehaviour {
 					transform.position = new Vector2 (transform.position.x, transform.position.y + 1);
 					moveLag = new StatusEffect (0.1f);
 					moveLag.m_type = StatusType.Bound;
-					myStatus.AddEffect (moveLag);
+					//myStatus.AddEffect (moveLag);
 				}
 			} 
 		} else if (vertical < 0)
@@ -416,7 +416,7 @@ public class Player : MonoBehaviour {
 					transform.position = new Vector2 (transform.position.x, transform.position.y - 1);
 					moveLag = new StatusEffect (0.1f);
 					moveLag.m_type = StatusType.Bound;
-					myStatus.AddEffect (moveLag);
+					//myStatus.AddEffect (moveLag);
 				}
 			}
 		}
@@ -472,7 +472,7 @@ public class Player : MonoBehaviour {
 		Chamber.RemoveAt (0);
 		shotLag = new StatusEffect (0.1f);
 		shotLag.m_type = StatusType.ShotLag;
-		myStatus.AddEffect (shotLag);
+		//myStatus.AddEffect (shotLag);
 	}
 
 	void hideEmpty()

@@ -430,19 +430,23 @@ public class Wind : Spell {
 		{
 			//Revolver
 			case 1:
-			description = "Knocks the enemy up a tile or pushes an obstacle away.";
+				description = "Knocks the enemy up a tile or pushes an obstacle away.";
+				damage = 10;
 			break;
 			//Rifle
 			case 2:
-			description = "Leaves a gust of wind that increases bullet speed";
+				description = "Leaves a gust of wind that increases bullet speed";
+				damage = 0;
 			break;
 			//Shotgun
 			case 3:
-			description = "Knocks the enemy or obstacle back with a burst of compressed air.";
+				description = "Knocks the enemy or obstacle back with a burst of compressed air.";
+				damage = 20;
 			break;
 			//Gatling
 			case 4:
-			description = "Pulls enemies or obstacles towards you.";
+				description = "Pulls enemies or obstacles towards you.";
+				damage = 15;
 			break;
 			//Cane Gun
 			case 5:
