@@ -14,7 +14,7 @@ public class WildCat : Enemy
     private float attackTime = 0;
     Random rnd = new Random();
     private WildCatStrike wildCatStrike;
-
+    
     
 
     new void Start()
@@ -25,6 +25,7 @@ public class WildCat : Enemy
         //
         wildCatStrike = gameObject.GetComponent<WildCatStrike>();
         attackInterval = Random.Range(randomAttackTimerRange.x, randomAttackTimerRange.y);
+        
     }
     public override void enemyUpdate()
     {
@@ -34,6 +35,7 @@ public class WildCat : Enemy
 
         if (attackInterval < attackTime || wildCatStrike.attacking)
         {
+            sounds[1].Play();
             wildCatStrike.movement(0);
             if (!wildCatStrike.attacking)
             {

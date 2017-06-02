@@ -47,6 +47,8 @@ public abstract class Enemy : MonoBehaviour {
     [System.NonSerialized]
     public StatusManager statMngr = new StatusManager();
 
+    protected AudioSource[] sounds;
+
 
     // The timer for determining when to take an action.
     public virtual float TIME_PER_ACTION
@@ -126,6 +128,7 @@ public abstract class Enemy : MonoBehaviour {
         myState = EnemyState.IShouldRunUp;
 
         this.myStatus = this.GetComponent<StatusManager>();
+        sounds = this.gameObject.GetComponents<AudioSource>();
 
     }
 
@@ -386,6 +389,7 @@ public abstract class Enemy : MonoBehaviour {
     }
 	public void takeDamage(int damage) //created for "break" status
 	{
+        sounds[0].Play();
 		int multipliers = 1;
 		if (myStatus.IsAffected(StatusType.Break))
 		{

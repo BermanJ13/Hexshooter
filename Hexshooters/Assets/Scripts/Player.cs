@@ -439,6 +439,9 @@ public class Player : MonoBehaviour {
 	}
 	public void takeDamage(int damage) //created for "break" status
 	{
+        AudioSource hitSound = this.gameObject.GetComponent<AudioSource>();
+        hitSound.Play();
+
 		int multipliers = 1;
 		if (myStatus.IsAffected(StatusType.Break))
 		{
