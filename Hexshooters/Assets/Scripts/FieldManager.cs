@@ -394,7 +394,6 @@ public class FieldManager : MonoBehaviour
 	}
 	protected void addBullet(int num)
 	{
-		Debug.Log (p1Gun);
 		if (Temp.Count < weaponMax)
 		{
 			Temp.Add (Handful [num]);
