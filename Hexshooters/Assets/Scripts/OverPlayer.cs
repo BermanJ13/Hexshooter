@@ -17,6 +17,7 @@ public class OverPlayer : MonoBehaviour {
 	public bool cut7=true;
 	public bool cut8=true;
 	public bool cut9=true;
+	public Sprite[] playerImages;
 
 	public int style = 0; 
     public GameObject dialog;
@@ -69,7 +70,7 @@ public class OverPlayer : MonoBehaviour {
 		if (!battle)
 		{
 			if(weapon ==1)
-				this.gameObject.GetComponent<SpriteRenderer> ().color = new Color (255, 0, 0, 1);
+				this.gameObject.GetComponent<SpriteRenderer> ().color = new Color (255, 255, 255, 1);
 			else
 				this.gameObject.GetComponent<SpriteRenderer> ().color = new Color (0, 0, 255, 1);
 			if(!cut4)
@@ -169,7 +170,10 @@ public class OverPlayer : MonoBehaviour {
 			if (inboundsX)
 			{
 				if (moveRight)
+				{
 					transform.position = new Vector2 (transform.position.x + 0.15f, transform.position.y);
+					this.gameObject.GetComponent<SpriteRenderer> ().sprite = playerImages[0];
+				}
 			}
 		} 
 		else if (Input.GetAxisRaw ("Horizontal_Solo") < 0) 
@@ -194,7 +198,10 @@ public class OverPlayer : MonoBehaviour {
 			if (inboundsX)
 			{
 				if (moveLeft)
+				{
 					transform.position = new Vector2 (transform.position.x - 0.15f, transform.position.y);
+					this.gameObject.GetComponent<SpriteRenderer> ().sprite = playerImages[1];
+				}
 			}
 		}
 		//Checks for Up and Down Movement
@@ -217,7 +224,10 @@ public class OverPlayer : MonoBehaviour {
 			if (inboundsY)
 			{
 				if (moveUp)
+				{
 					transform.position = new Vector2 (transform.position.x, transform.position.y + 0.15f);
+					this.gameObject.GetComponent<SpriteRenderer> ().sprite = playerImages[2];
+				}
 			}
 		} 
 		else if (Input.GetAxisRaw ("Vertical_Solo") < 0) 
@@ -239,7 +249,10 @@ public class OverPlayer : MonoBehaviour {
 			if (inboundsY)
 			{
 				if (moveDown)
+				{
 					transform.position = new Vector2 (transform.position.x, transform.position.y - 0.15f);
+					this.gameObject.GetComponent<SpriteRenderer> ().sprite = playerImages[3];
+				}
 			}
 		}
 	}
