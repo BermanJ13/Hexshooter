@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(WildCatStrike))]
-public class WildCat : Enemy
+public class Mouse : Enemy
 {
 
 

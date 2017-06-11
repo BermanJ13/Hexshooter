@@ -458,7 +458,7 @@ public class FieldManager : MonoBehaviour
 	//Adds a bullet ot te selected list and prevents it from being s;lected again
 	protected void addBullet(int num)
 	{
-		//Debug.Log (p1Gun);
+		Debug.Log (p1Gun);
 		if (Temp.Count < weaponMax)
 		{
 			Temp.Add (Handful [num]);
