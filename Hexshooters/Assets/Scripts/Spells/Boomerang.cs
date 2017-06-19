@@ -50,24 +50,24 @@ public class Boomerang : Spell {
 			{
 				if (PlayerNum == 1)
 				{
-					c.gameObject.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+					c.gameObject.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 					returnShot = true;
 				}
 			} 
 			else if (c.gameObject.tag == "Obstacle")
 			{
-				c.GetComponent<Obstacle> ().takeDamage(damageCalc (damageTier, hitNum));
+				c.GetComponent<Obstacle> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 				returnShot = true;
 			} 
 			else if (c.gameObject.tag == "Player" && PlayerNum == 2)
 			{
-				c.gameObject.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+				c.gameObject.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 				returnShot = true;
 
 			} 
 		else if (c.gameObject.tag == "Player2" && PlayerNum == 1)
 			{
-				c.gameObject.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+				c.gameObject.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 				returnShot = true;
 			}
 			else if (c.gameObject.tag == "Player2" && PlayerNum == 2)

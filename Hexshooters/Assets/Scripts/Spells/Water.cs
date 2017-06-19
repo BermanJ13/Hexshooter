@@ -146,31 +146,31 @@ public class Water : Spell {
 					{
 						if (PlayerNum == 1)
 						{
-							c.gameObject.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							c.gameObject.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 							revolverMove = true;
 						}
 					} 
 					else if (c.gameObject.tag == "Obstacle")
 					{
-					c.GetComponent<Obstacle> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Obstacle> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					revolverMove = true;
 					} 
 					else if (c.gameObject.tag == "Player" && PlayerNum == 2)
 					{
-					c.gameObject.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.gameObject.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 						revolverMove = true;
 					
 					} 
 					else if (c.gameObject.tag == "Player2" && PlayerNum == 1)
 					{
-					c.gameObject.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.gameObject.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 						revolverMove = true;
 					}
 					else if (c.gameObject.tag == "Player2" && PlayerNum == 2)
 					{
 						if (revolverMove)
 						{
-						c.gameObject.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum)*-1);
+						c.gameObject.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum)*-1, attributes);
 							revolverMove = false;
 							markedForDeletion = true;
 						}
@@ -179,7 +179,7 @@ public class Water : Spell {
 					{
 						if (revolverMove)
 						{
-						c.gameObject.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum)*-1);
+						c.gameObject.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum)*-1, attributes);
 							revolverMove = false;
 							markedForDeletion = true;
 						}
@@ -207,7 +207,7 @@ public class Water : Spell {
                     }
                     if (c.gameObject.tag == "Obstacle")
                     {
-                        //c.gameObject.GetComponent<Obstacle>()takeDamage(damageCalc (damageTier, hitNum));
+                        //c.gameObject.GetComponent<Obstacle>()takeDamage (damageCalc(damageTier, hitNum), attributes);
                         markedForDeletion = true;
                     }
 					else if(c.gameObject.tag == "Player" && PlayerNum == 2)
@@ -237,7 +237,7 @@ public class Water : Spell {
 					{
 						if (PlayerNum == 1)
 						{
-                        c.gameObject.GetComponent<Enemy>().takeDamage(3);
+							c.gameObject.GetComponent<Enemy>().takeDamage(3,attributes);
 
                         if (c.gameObject.GetComponent<Enemy>().stat == "normal")
                             c.gameObject.GetComponent<Enemy>().Status("break");
@@ -248,23 +248,23 @@ public class Water : Spell {
                         //c.gameObject.GetComponent<Enemy>().myStatus.AddEffect(broken);
                         
                         markedForDeletion = true;
-                        //c.gameObject.GetComponent<Enemy>().takeDamage(damageCalc (damageTier, hitNum));
+                        //c.gameObject.GetComponent<Enemy>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 						}
                     }
                     if (c.gameObject.tag == "Obstacle")
                     {
                         markedForDeletion = true;
-                        c.gameObject.GetComponent<Obstacle>().takeDamage(damageCalc (damageTier, hitNum));
+                        c.gameObject.GetComponent<Obstacle>().takeDamage (damageCalc(damageTier, hitNum), attributes);
                     }
 					else if(c.gameObject.tag == "Player" && PlayerNum == 2)
 					{
-						c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+						c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 						markedForDeletion = true;
 					
 					}
 					else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
 					{
-						c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+						c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 						markedForDeletion = true;
 					}
 
@@ -297,7 +297,7 @@ public class Water : Spell {
                     }
                     if (c.gameObject.tag == "Obstacle")
                     {
-                        //c.gameObject.GetComponent<Obstacle>()takeDamage(damageCalc (damageTier, hitNum));
+                        //c.gameObject.GetComponent<Obstacle>()takeDamage (damageCalc(damageTier, hitNum), attributes);
                     }
 					else if(c.gameObject.tag == "Player" && PlayerNum == 2)
 				{

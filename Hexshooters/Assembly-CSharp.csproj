@@ -111,6 +111,7 @@
      <Compile Include="Assets\Scripts\Spells\Wind.cs" />
      <Compile Include="Assets\Scripts\Spells\Wood.cs" />
      <Compile Include="Assets\Scripts\StatusManager.cs" />
+     <Compile Include="Assets\Scripts\Trigger.cs" />
      <Compile Include="Assets\Scripts\UniversalSettings.cs" />
      <Compile Include="Assets\Scripts\tmp.cs" />
      <Compile Include="Assets\Vortex Game Studios\FilterBehavior\FilterBehaviour.cs" />

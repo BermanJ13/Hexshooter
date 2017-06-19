@@ -46,13 +46,20 @@ public class FieldManager : MonoBehaviour
 	public GameObject[] weapons;
 	public bool once;
 	UniversalSettings us;
+	public int style = 3;
 
 	// Use this for initialization
 	public void Start () 
 	{
 		us = GameObject.Find("__app").GetComponent<UniversalSettings> ();
 		mapFile = us.mapfile;
+		style = us.style;
 		once =true;
+		firstPause = true;
+		if (style == 1)
+			pause = true;
+		else
+			pause = false;
 		weapons = new GameObject[4];
 		ES_P1 = EventSystem.current;
 
@@ -81,9 +88,135 @@ public class FieldManager : MonoBehaviour
 		//Selects and enables the cooresponding UI based on the character
 		chooseGun (player.weapon, false);
 	}
-	
+
+	void Update()
+	{
+		switch(style)
+		{
+			case 0:
+				stationaryUpdate ();
+			break;
+				
+			case 1:
+				activeUpdate ();
+			break;
+		}
+	}
+
+	// Use this for initialization
+	void activeUpdate () 
+	{
+		if (once)
+		{
+			chooseGun (player.weapon, false);
+			showReloadScreen ();
+			once = false;
+		}
+		if (player.health <= 0 )
+		{
+			SceneManager.LoadScene ("Game Over");
+		}
+		updateEnemyList ();
+		if(enemies.Length == 0)
+		{
+			GameObject.Find ("OverPlayer").GetComponent<OverPlayer> ().returnFromBattle = true;
+			SceneManager.LoadScene ("Overworld");
+		}
+		//updateHealth ();
+		if (ES_P1.currentSelectedGameObject != null)
+		{
+			if (ES_P1.currentSelectedGameObject.tag == "SpellHolder")
+			{
+				runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
+				runeDamage.text = "Damage:" + ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
+				runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
+				runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
+				runeDisplay.GetComponent<Image> ().color = new Color (0, 0, 0, 255);
+			}
+		}
+
+		if (pause)
+		{
+			if (Input.GetButtonDown ("Cancel_Solo"))
+			{
+				if (Temp.Count > 0)
+				{
+					removeBullet ();
+				}
+			}
+
+			//Pauses both sides until ready for the first pus eof the game
+			if (firstPause)
+			{
+
+			} 
+			//COntinues the battle during all subsequent reloads
+			else
+			{
+				player.activeUpdate ();
+				bool enemyReload = true;
+				foreach (Spell spell in spells)
+				{
+					if (spell != null)
+						spell.spellUpdate ();
+				}
+				foreach (Enemy enemy in enemies)
+				{
+					if (enemy != null)
+					{
+						enemy.enemyUpdate ();
+					}
+				}
+				foreach (Obstacle ob in obstacles)
+				{
+					if (ob != null)
+						ob.obstacleUpdate ();
+				}
+				updateSpellList ();
+				deleteSpells ();
+				updateObstacleList ();
+				deleteObstacles ();
+				updateEnemyList ();
+				deleteEnemies ();
+			}
+		} 
+		else
+		{
+			player.playerUpdate ();
+			foreach (Spell spell in spells)
+			{
+				if (spell != null)
+					spell.spellUpdate ();
+			}
+			foreach (Enemy enemy in enemies)
+			{
+				if (enemy != null)
+				{
+					enemy.enemyUpdate ();
+				}
+			}
+			foreach (Obstacle ob in obstacles)
+			{
+				if (ob != null)
+					ob.obstacleUpdate ();
+			}
+			updateSpellList ();
+			deleteSpells ();
+			updateObstacleList ();
+			deleteObstacles ();
+			updateEnemyList ();
+			deleteEnemies ();
+
+			//Pulls up the reload screen on a button press
+			if ( player.reload && (Input.GetButtonDown("Submit_Solo")||Input.GetButtonDown("Start_Solo")))
+			{
+				showReloadScreen ();
+			}
+		}
+	}
+
 	// Update is called once per frame
-	void Update () 
+	void stationaryUpdate () 
 	{
 		//Checks to see if tis battle originate in story mode, and if so it sets the playe rin battle to match the charcter being used in te overworld.
 		if (GameObject.Find ("OverPlayer") != null)
@@ -106,6 +239,7 @@ public class FieldManager : MonoBehaviour
 		updateEnemyList ();
 		if(enemies.Length == 0)
 		{
+			GameObject.Find ("OverPlayer").GetComponent<OverPlayer> ().returnFromBattle = true;
 			SceneManager.LoadScene ("Overworld");
 		}
 

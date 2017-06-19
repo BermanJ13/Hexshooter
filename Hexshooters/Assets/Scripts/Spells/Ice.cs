@@ -129,17 +129,17 @@ public class Ice : Spell {
 						spellTimer = 50;
 					}
 
-					//c.gameObject.GetComponent<Enemy>()takeDamage(damageCalc (damageTier, hitNum));
+					//c.gameObject.GetComponent<Enemy>()takeDamage (damageCalc(damageTier, hitNum), attributes);
 						}
 				}
 				else if(c.gameObject.tag == "Obstacle")
 				{
-					c.GetComponent<Obstacle>().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Obstacle>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					markedForDeletion = true;
 				}
 				else if(c.gameObject.tag == "Player" && PlayerNum == 2)
 				{
-					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					markedForDeletion = true;
 					StatusEffect slow = new StatusEffect (5);
 					slow.m_type = StatusType.Slow;
@@ -154,7 +154,7 @@ public class Ice : Spell {
 				}
 				else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
 				{
-					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					markedForDeletion = true;
 					StatusEffect slow = new StatusEffect (5);
 					slow.m_type = StatusType.Slow;
@@ -185,19 +185,19 @@ public class Ice : Spell {
 							StatusEffect freeze = new StatusEffect (8);
 							freeze.m_type = StatusType.Freeze;
 							c.gameObject.GetComponent<Enemy> ().myStatus.AddEffect (freeze);
-							c.gameObject.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							c.gameObject.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 							markedForDeletion = true;
 						}
 				} else if (c.gameObject.tag == "Obstacle")
 				{
-					c.GetComponent<Obstacle> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Obstacle> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					markedForDeletion = true;
 				} else if (c.gameObject.tag == "Player" && PlayerNum == 2)
 				{
 					StatusEffect freeze = new StatusEffect (8);
 					freeze.m_type = StatusType.Freeze;
 					c.gameObject.GetComponent<Player> ().myStatus.AddEffect (freeze);
-					c.gameObject.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.gameObject.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					markedForDeletion = true;
 
                     }

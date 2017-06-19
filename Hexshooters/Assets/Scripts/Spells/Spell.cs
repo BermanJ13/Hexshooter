@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Spell : MonoBehaviour {
 
-	public string[] attributes;
+	public Attributes[] attributes;
 	public string[] effects;
 	public int damage;
 	public int damageTier;

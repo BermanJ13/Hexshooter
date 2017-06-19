@@ -41,7 +41,7 @@ public class Flames : Obstacle {
 			else if (d.gameObject.tag == "Enemy") 
 			{
 				Enemy e = d.GetComponent<Enemy> ();
-				e.takeDamage (damage); //enemy takes dmg
+				e.takeDamage (damage, attributes); //enemy takes dmg
 				if (e.transform.position.x != 9) 
 				{
 					//e.transform.position = new Vector3 (e.transform.position.x + 1, e.transform.position.y, e.transform.position.z);
@@ -50,7 +50,7 @@ public class Flames : Obstacle {
 			} 
 			else if (d.gameObject.tag == "Player2") 
 			{
-				d.GetComponent<Player> ().takeDamage (damage); //player takes dmg 
+				d.GetComponent<Player> ().takeDamage (damage, attributes); //player takes dmg 
 
 				if (d.transform.position.x != 9)
 				{
@@ -61,7 +61,7 @@ public class Flames : Obstacle {
 			} 
 			else if(d.gameObject.tag == "Player")
 			{
-				d.GetComponent<Player> ().takeDamage (damage); //player takes dmg
+				d.GetComponent<Player> ().takeDamage (damage, attributes); //player takes dmg
 
 
 				if (d.GetComponent<Player> ().transform.position.x != 0) 

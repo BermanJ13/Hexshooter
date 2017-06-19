@@ -20,6 +20,9 @@ public enum EnemyState
 
 public abstract class Enemy : MonoBehaviour {
 
+	public Attributes[] weaknesses;
+	public Attributes[] strengths;
+
 	//health 
 	public int health = 100;
 	public int armorWeakness;
@@ -396,7 +399,7 @@ public abstract class Enemy : MonoBehaviour {
         }
 
     }
-	public void takeDamage(int damage) //created for "break" status
+	public void takeDamage(int damage, Attributes[] effects) //created for "break" status
 	{
         sounds[0].Play();
 		int multipliers = 1;
@@ -418,6 +421,22 @@ public abstract class Enemy : MonoBehaviour {
 			stackDmg = 0;
 		}
 
+		foreach (Attributes a1 in weaknesses)
+		{
+			foreach (Attributes b1 in effects)
+			{
+				if (b1 == a1)
+					multipliers *= 2;
+			}
+		}
+		foreach (Attributes c1 in strengths)
+		{
+			foreach (Attributes d1 in effects)
+			{
+				if (d1 == c1)
+					multipliers /= 2;
+			}
+		}
 		this.health -= damage* multipliers + stackDmg;
 		if (damage * multipliers + stackDmg > 0)
 			hit = true;

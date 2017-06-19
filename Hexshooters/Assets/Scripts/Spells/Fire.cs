@@ -146,7 +146,7 @@ public class Fire : Spell {
 						if (PlayerNum == 1)
 						{
 							//does damage to the enemy
-							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 							//boundary for pushing them back a panel to make room for the fire obstacle
 							//if not against the farthest panel move them back on
 							if (c.transform.position.x != 9)
@@ -169,7 +169,7 @@ public class Fire : Spell {
 				else if (c.gameObject.tag == "Obstacle")
 				{
 					//does damage to the obstacle and deletes bullet. does not create obstacle
-					c.GetComponent<Obstacle> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Obstacle> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					markedForDeletion = true;
 					colided = true;
 				}
@@ -177,7 +177,7 @@ public class Fire : Spell {
 				else if (c.gameObject.tag == "Player" && PlayerNum == 2)
 				{
 					//does damage to the player
-					c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					//pushes them back to make room for the fire obstacle
 					if (c.transform.position.x != 0) {
 						c.transform.position += new Vector3 (-1f, 0f, 0f);
@@ -198,7 +198,7 @@ public class Fire : Spell {
 				else if (c.gameObject.tag == "Player2" && PlayerNum == 1)
 				{
 					//does damage
-					c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					//pushes player 2 back a space to make room for fire obstacle
 					if (c.transform.position.x != 9) {
 						c.transform.position += new Vector3 (1f, 0f, 0f);
@@ -249,7 +249,7 @@ public class Fire : Spell {
 						if (PlayerNum == 1)
 						{
 							//initial strike
-							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum)); 
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes); 
 							markedForDeletion = true; //used to delete bullet
 							//burn them for 5 seconds
 							StatusEffect burn = new StatusEffect (500);
@@ -260,7 +260,7 @@ public class Fire : Spell {
 							{
 								if (c.GetComponent<Enemy> ().myStatus.IsAffected (StatusType.Burn))
 								{
-									c.GetComponent<Enemy> ().takeDamage (2);
+									c.GetComponent<Enemy> ().takeDamage (2,attributes);
 								}	
 							}
 							burn.m_timer--;
@@ -274,7 +274,7 @@ public class Fire : Spell {
 				else if (c.gameObject.tag == "Obstacle") 
 				{
 					//obstacle takes damage
-					c.GetComponent<Obstacle> ().takeDamage (damageCalc (damageTier, hitNum)); 
+					c.GetComponent<Obstacle> ().takeDamage (damageCalc (damageTier, hitNum),attributes); 
 					markedForDeletion = true; //used to delete bullet
 
 				}
@@ -282,7 +282,7 @@ public class Fire : Spell {
 				else if (c.gameObject.tag == "Player" && PlayerNum == 2) 
 				{
 					//initial damage
-					c.GetComponent<Player>().takeDamage (damageCalc (damageTier, hitNum)); 
+					c.GetComponent<Player>().takeDamage (damageCalc (damageTier, hitNum),attributes); 
 					markedForDeletion = true; //used to delete bullet
 					//burn them
 					StatusEffect burn = new StatusEffect (500);
@@ -292,7 +292,7 @@ public class Fire : Spell {
 					if (burn.m_timer % 100 == 0)
 					{
 						if(c.GetComponent<Player>().myStatus.IsAffected(StatusType.Burn)){
-							c.GetComponent<Player> ().takeDamage (2);
+								c.GetComponent<Player> ().takeDamage (2,attributes);
 						}	
 					}
 					burn.m_timer--;
@@ -306,7 +306,7 @@ public class Fire : Spell {
 				else if (c.gameObject.tag == "Player2" && PlayerNum == 1) 
 				{
 					//initial damage
-					c.GetComponent<Player>().takeDamage (damageCalc (damageTier, hitNum)); 
+					c.GetComponent<Player>().takeDamage (damageCalc (damageTier, hitNum),attributes); 
 					markedForDeletion = true; //used to delete bullet
 					//burn them
 					StatusEffect burn = new StatusEffect (500);
@@ -316,7 +316,7 @@ public class Fire : Spell {
 					if (burn.m_timer % 100 == 0) //modulo ensures that enemy not immediately pushed to back
 					{
 						if(c.GetComponent<Player>().myStatus.IsAffected(StatusType.Burn)){
-							c.GetComponent<Player> ().takeDamage (2);
+								c.GetComponent<Player> ().takeDamage (2,attributes);
 						}	
 					}
 					burn.m_timer--;
@@ -360,18 +360,18 @@ public class Fire : Spell {
 
 						if (PlayerNum == 1)
 						{
-							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 							hitEnemies.Add (c.gameObject);
 							markedForDeletion = true;
 						}
 				} else if (c.gameObject.tag == "Player" && PlayerNum == 2 && hit) {
 					//Debug.Log (damageCalc (damageTier, hitNum));
-					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum));
+					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 					hitEnemies.Add (c.gameObject);
 					markedForDeletion = true;
 
 				} else if (c.gameObject.tag == "Player2" && PlayerNum == 1 && hit) {
-					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum));
+					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 					hitEnemies.Add (c.gameObject);
 					markedForDeletion = true;
 				}
@@ -404,27 +404,27 @@ public class Fire : Spell {
 							if (PlayerNum == 1)
 							{
 						//initial strike
-						c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum)); 
+						c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes); 
 						markedForDeletion = true; //used to delete bullet
 							}
 					}
 					//if hit an obstacle does nothing but dmg
 					else if (c.gameObject.tag == "Obstacle") {
 						//obstacle takes damage
-						c.GetComponent<Obstacle> ().takeDamage (damageCalc (damageTier, hitNum)); 
+						c.GetComponent<Obstacle> ().takeDamage (damageCalc (damageTier, hitNum),attributes); 
 						markedForDeletion = true; //used to delete bullet
 
 					}
 					// if hit player 1
 					else if (c.gameObject.tag == "Player" && PlayerNum == 2) {
 						//initial damage
-						c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum)); 
+						c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum),attributes); 
 						markedForDeletion = true; //used to delete bullet
 					}
 					// if hit player 2
 					else if (c.gameObject.tag == "Player2" && PlayerNum == 1) {
 						//initial damage
-						c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum)); 
+						c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum),attributes); 
 						markedForDeletion = true; //used to delete bullet
 					}
 					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone") {

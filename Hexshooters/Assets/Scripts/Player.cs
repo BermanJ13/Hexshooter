@@ -7,7 +7,8 @@ using System.IO;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
-
+	public Attributes[] weaknesses;
+	public Attributes[] strengths;
     public int health;
 	public Transform spell;
 	public int weapon;
@@ -144,6 +145,18 @@ public class Player : MonoBehaviour {
 		updateCurrentSpell ();
 		pHealth.text = health.ToString();
 		buttonPresed = false;
+
+		if (weapon == 1)
+		{
+			if (Input.GetButtonDown("Ability 1_P1"))
+			{
+				chamberLeft ();
+			}
+			if (Input.GetButtonDown("Ability 2_P1"))
+			{
+				chamberRight ();
+			}
+		}
 		if (!myStatus.IsAffected( StatusType.Bound) && !myStatus.IsAffected( StatusType.MoveLag))
 		{
 			movement ();
@@ -494,7 +507,7 @@ public class Player : MonoBehaviour {
 			currentBullet.text = "";
 		}
 	}
-	public void takeDamage(int damage) //created for "break" status
+	public void takeDamage(int damage, Attributes[] effects) //created for "break" status
 	{
         AudioSource hitSound = this.gameObject.GetComponent<AudioSource>();
         hitSound.Play();
@@ -518,6 +531,22 @@ public class Player : MonoBehaviour {
 			stackDmg = 0;
 		}
 
+		foreach (Attributes a1 in weaknesses)
+		{
+			foreach (Attributes b1 in effects)
+			{
+				if (b1 == a1)
+					multipliers *= 2;
+			}
+		}
+		foreach (Attributes c1 in strengths)
+		{
+			foreach (Attributes d1 in effects)
+			{
+				if (d1 == c1)
+					multipliers /= 2;
+			}
+		}
 		this.health -= damage* multipliers + stackDmg;
 
 		if (damage * multipliers + stackDmg > 0)
@@ -526,6 +555,7 @@ public class Player : MonoBehaviour {
 			if (damage * multipliers + stackDmg < 0)
 				heal = true;
 	}
+
 	public void updatePlayerImage()
 	{
 		switch (weapon)
@@ -555,5 +585,20 @@ public class Player : MonoBehaviour {
 	public void activeUpdate()
 	{
 			pHealth.text = health.ToString();
+	}
+	void chamberLeft()
+	{
+		Object temp = Chamber [0];
+		Chamber.RemoveAt (0);
+		Chamber.Add (temp);
+		updateCurrentSpell ();
+		Debug.Log("Pressed g");
+	}
+	void chamberRight()
+	{
+		Object temp = Chamber [Chamber.Count-1];
+		Chamber.RemoveAt (Chamber.Count-1);
+		Chamber.Insert (0, temp);
+		updateCurrentSpell ();
 	}
 }
