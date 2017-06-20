@@ -166,7 +166,7 @@ public class Earth : Spell {
 						c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 						c.transform.position += new Vector3 (1, 0, 0);
 						damage = 0;
-						Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
+						Instantiate (Resources.Load ("EarthWall"), transform.position, Quaternion.identity);
 						markedForDeletion = true;
 						colided = true;
 					}
@@ -184,7 +184,7 @@ public class Earth : Spell {
 					c.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					c.transform.position += new Vector3 (-1, 0, 0);
 					damage = 0;
-					Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
+					Instantiate (Resources.Load ("EarthWall"), transform.position, Quaternion.identity);
 					markedForDeletion = true;
 					colided = true;
 
@@ -194,7 +194,7 @@ public class Earth : Spell {
 						c.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 						c.transform.position += new Vector3 (1, 0, 0);
 						damage = 0;
-						Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
+						Instantiate (Resources.Load ("EarthWall"), transform.position, Quaternion.identity);
 						markedForDeletion = true;
 						colided = true;
 					}
@@ -216,7 +216,7 @@ public class Earth : Spell {
 			{
 				//Debug.Log ("Here");
 				damage = 0;
-				Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
+				Instantiate (Resources.Load ("EarthWall"), transform.position, Quaternion.identity);
 				created = true;
 				markedForDeletion = true;
 			}
