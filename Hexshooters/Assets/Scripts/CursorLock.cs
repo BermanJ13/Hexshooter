@@ -18,7 +18,7 @@ public class CursorLock : MonoBehaviour {
 		pointer.position = Input.mousePosition;
 
 		List<RaycastResult> raycastResults = new List<RaycastResult>();
-		EventSystem.current.RaycastAll(pointer, raycastResults);
+		//EventSystem.current.RaycastAll(pointer, raycastResults);
 
 		if(raycastResults.Count > 0)
 		{

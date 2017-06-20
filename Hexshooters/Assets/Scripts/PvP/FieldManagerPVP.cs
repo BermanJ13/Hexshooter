@@ -27,6 +27,12 @@ public class FieldManagerPVP : FieldManager
 	protected Text curBullet_2;
 	public GameObject[] weapons_2;
 	public int weaponMax_2;
+	protected static GameObject[] pauseUI_2;
+	protected GameObject[] bulletIndicators_2;
+	protected GameObject[] battleObjects_2;
+	public bool p1reload;
+	public bool p2reload;
+	UniversalSettings us;
 
     
     // Use this for initialization
@@ -55,14 +61,352 @@ public class FieldManagerPVP : FieldManager
 		updateEnemyList ();
 		updateSpellList ();
 		updateObstacleList ();
+
+		us = GameObject.Find("__app").GetComponent<UniversalSettings> ();
+		mapFile = us.mapfile;
+		style = us.pvpStyle;
+		if (style == 0)
+		{
+			pause = false;
+			firstPause = false;
+		}
+		else
+		{
+			pause = true;
+			firstPause = true;
+		}
 	}
-	
+
+	void Update()
+	{
+		if (style == 0)
+		{
+			stationaryUpdate ();
+		}
+		else
+		{
+			activeUpdate ();
+		}
+	}
+	// Use this for initialization
+	void activeUpdate () 
+	{
+		//Cooses the proper guns and starts the reload screen simultaneously for the first time
+		if (once)
+		{
+			chooseGun (player.weapon, false);
+			chooseGun_2 (player2.weapon, false);
+			showReloadScreen (1);
+			showReloadScreen (2);
+			once = false;
+		}
+
+		if (player.health <= 0 || player2.health <=0)
+		{
+			SceneManager.LoadScene ("Results");
+		}
+
+		//Updates the Reload screen UI to reflect the currentl selected bullet
+		if (ES_P1.currentSelectedGameObject != null)
+		{
+			if (ES_P1.currentSelectedGameObject.tag == "SpellHolder")
+			{
+				runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
+				runeDamage.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
+				runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
+				runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
+				runeDisplay.GetComponent<Image> ().color = new Color (0, 0, 0, 255);
+			}
+		}
+		if (ES_P2.currentSelectedGameObject != null)
+		{
+			if (ES_P2.currentSelectedGameObject.tag == "SpellHolder")
+			{
+				runeName_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
+				runeDamage_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
+				runeDesc_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
+				runeDisplay_2.GetComponent<Image> ().sprite = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
+				runeDisplay_2.GetComponent<Image> ().color = new Color (0, 0, 0, 255);
+			}
+		}
+
+		if (pause)
+		{
+			if (Input.GetButtonDown ("Cancel_P1"))
+			{
+				if (Temp.Count > 0)
+				{
+					removeBullet ();
+				}
+			}
+			if (Input.GetButtonDown ("Cancel_P2"))
+			{
+				if (Temp_2.Count > 0)
+				{
+					removeBullet_P2 ();
+				}
+			}
+			if (p1Ready)
+			{
+				ES_P1.SetSelectedGameObject(null);
+			}
+			if (p2Ready)
+			{
+				ES_P2.SetSelectedGameObject(null);
+			}
+			if (firstPause)
+			{
+				//Shows the battle screen for both players
+				if (p1Ready && p2Ready)
+				{
+					//firstPause = false;
+					showBattleScreen (1);
+					showBattleScreen (2);
+				}
+			} 
+			else
+			{
+				//Allows the player to move and shoot when not reloading
+				if(!p1reload)
+					player.playerUpdate ();
+				if(!p2reload)
+					player2.playerUpdate ();
+
+				bool enemyReload = true;
+				foreach (Spell spell in spells)
+				{
+					if (spell != null)
+						spell.spellUpdate ();
+				}
+				foreach (Enemy enemy in enemies)
+				{
+					if (enemy != null)
+					{
+						enemy.enemyUpdate ();
+					}
+				}
+				foreach (Obstacle ob in obstacles)
+				{
+					if (ob != null)
+						ob.obstacleUpdate ();
+				}
+				updateSpellList ();
+				deleteSpells ();
+				updateObstacleList ();
+				deleteObstacles ();
+				if (p1Ready)
+				{
+					showBattleScreen (1);
+				}
+				if (p2Ready)
+				{
+					showBattleScreen (2);
+				}
+
+				//Allows the player back into the reload screen 
+				if (!p1reload && Input.GetButtonDown("Start_P1") && player.reload)
+					showReloadScreen (1);
+				if(!p2reload && Input.GetButtonDown("Start_P2") && player2.reload)
+					showReloadScreen (2);
+			}
+
+			if(Temp.Count == weaponMax)
+				ES_P1.SetSelectedGameObject(GameObject.Find("BattleButton"));
+			if(Temp_2.Count == weaponMax_2)
+				ES_P2.SetSelectedGameObject(GameObject.Find("BattleButton_2"));
+		} 
+		else
+		{
+			if(!p1reload)
+				player.playerUpdate ();
+			if(!p2reload)
+				player2.playerUpdate ();
+			foreach (Spell spell in spells)
+			{
+				if (spell != null)
+					spell.spellUpdate ();
+			}
+			foreach (Enemy enemy in enemies)
+			{
+				if (enemy != null)
+				{
+					enemy.enemyUpdate ();
+				}
+			}
+			foreach (Obstacle ob in obstacles)
+			{
+				if (ob != null)
+					ob.obstacleUpdate ();
+			}
+			updateSpellList ();
+			deleteSpells ();
+			updateObstacleList ();
+			deleteObstacles ();
+
+			if (player.reload && Input.GetButtonDown("Start_P1"))
+			{
+				showReloadScreen (1);
+			}
+			if ( player2.reload && Input.GetButtonDown("Start_P2"))
+			{
+				showReloadScreen (2);
+			}
+		}
+		if (p1reload || p2reload)
+			pause = true;
+	}
+	public void showReloadScreen(int num)
+	{
+		pause = true;
+		if (num == 1)
+		{
+			p1reload = true;
+			foreach (GameObject g in bulletIndicators)
+			{
+				g.SetActive (true);
+			}
+			for (int i = 0; i < spellSlots.Count; i++)
+			{
+				spellSlots [i].GetComponent<Image> ().sprite = defaultSlot;
+				spellSlots [i].GetComponent<Image> ().color = Color.white;
+			}
+			for (int i = Temp.Count - 1; i > -1; i--)
+			{
+				if (Temp [i] != null)
+				{
+					Temp.RemoveAt (i);
+				}
+				if (TempNum [i] != null)
+				{
+					Handful.RemoveAt (TempNum [i]);
+					TempNum.RemoveAt (i);
+				}
+			}
+
+			for (int i = 0; i < pauseObjects.Length; i++)
+			{
+				if (i < Handful.Count)
+				{
+					pauseObjects [i].SetActive (true);
+				}
+				else
+				{
+					pauseObjects [pauseObjects.Length - 1].SetActive (true);
+				}
+			}
+			for (int i = 0; i< battleObjects.Length;i++)
+			{
+				if(battleObjects[i] != null)
+					battleObjects [i].SetActive (false);
+			}
+			for (int i = 0; i< pauseUI.Length;i++)
+			{
+				pauseUI [i].SetActive (true);
+			}
+			selectButton ();
+			for (int i = 0; i < spellHold.children.Count; i++)
+			{
+				Button b = spellHold.children [i].gameObject.GetComponent<Button> ();
+				int currentHolder = i;
+				b.onClick.RemoveAllListeners ();
+				b.onClick.AddListener (delegate{addBullet(currentHolder);});
+				if (Handful.Count > i)
+				{
+					GameObject curSpell = ((GameObject)Resources.Load (Handful [i].name));
+					curSpell.GetComponent<Spell> ().setDescription (player.weapon);
+					b.GetComponent<Image> ().sprite = curSpell.GetComponent<Spell> ().bulletImage;
+
+					if (b.GetComponent<Image> ().sprite.name == "Knob")
+						b.GetComponent<Image> ().color = curSpell.GetComponent<SpriteRenderer> ().color;
+					else
+						b.GetComponent<Image> ().color = Color.white;
+
+					RuneInfo r = spellHold.children [i].gameObject.GetComponent<RuneInfo> ();
+					r.runeName = curSpell.GetComponent<Spell>().name;
+					r.runeImage = curSpell.GetComponent<Spell> ().runeImage;
+					r.runeDamage = curSpell.GetComponent<Spell>().damage.ToString();
+					r.runeDesc = curSpell.GetComponent<Spell> ().description;
+				}
+			}
+		}
+		else
+		{
+			p2reload = true;
+			foreach(GameObject g in bulletIndicators_2)
+			{
+				g.SetActive (true);
+			}
+			for (int i = 0; i < spellSlots_2.Count; i++)
+			{
+				spellSlots_2[i].GetComponent<Image>().sprite = defaultSlot;
+				spellSlots_2[i].GetComponent<Image>().color = Color.white;
+			}
+			for(int i=Temp_2.Count-1;i>-1;i--)
+			{
+				if (Temp_2 [i] != null)
+				{
+					Temp_2.RemoveAt (i);
+				}
+				if (TempNum_2 [i] != null)
+				{
+					Handful_2.RemoveAt (TempNum_2 [i]);
+					TempNum_2.RemoveAt (i);
+				}
+			}
+			for (int i = 0; i< pauseObjects_p2.Length;i++)
+			{
+				if (i < Handful_2.Count)
+				{
+					pauseObjects_p2 [i].SetActive (true);
+				} 
+				else
+				{
+					pauseObjects_p2 [pauseObjects.Length-1].SetActive (true);
+				}
+			}
+			for (int i = 0; i< battleObjects_2.Length;i++)
+			{
+				if(battleObjects_2[i] != null)
+					battleObjects_2 [i].SetActive (false);
+			}
+			for (int i = 0; i< pauseUI_2.Length;i++)
+			{
+				pauseUI_2 [i].SetActive (true);
+			}
+			selectButton_2 ();
+			for (int i = 0; i < spellHold_2.children.Count; i++)
+			{
+				Button b = spellHold_2.children [i].gameObject.GetComponent<Button> ();
+				int currentHolder = i;
+				b.onClick.RemoveAllListeners ();
+				b.onClick.AddListener (delegate{addBullet_2(currentHolder);});
+				if (Handful_2.Count > i)
+				{
+					GameObject curSpell = ((GameObject)Resources.Load (Handful_2 [i].name));
+					curSpell.GetComponent<Spell> ().setDescription (player2.weapon);
+					b.GetComponent<Image> ().sprite = curSpell.GetComponent<Spell> ().bulletImage;
+
+					if (b.GetComponent<Image> ().sprite.name == "Knob")
+						b.GetComponent<Image> ().color = curSpell.GetComponent<SpriteRenderer> ().color;
+					else
+					{b.GetComponent<Image> ().color = Color.white;}
+
+					RuneInfo r = spellHold_2.children [i].gameObject.GetComponent<RuneInfo> ();
+					r.runeName = curSpell.GetComponent<Spell>().name;
+					r.runeImage = curSpell.GetComponent<Spell> ().runeImage;
+					r.runeDamage = curSpell.GetComponent<Spell>().damage.ToString();
+					r.runeDesc = curSpell.GetComponent<Spell> ().description;
+				}
+			}
+		}
+	}
 	// Update is called once per frame
-	void Update () 
+	void stationaryUpdate () 
 	{
 		if (once)
 		{
 			chooseGun (player.weapon, false);
+			chooseGun_2 (player2.weapon, false);
 			chooseGun_2 (player2.weapon, false);
 			once = false;
 		}
@@ -179,6 +523,10 @@ public class FieldManagerPVP : FieldManager
 		{
 			g.SetActive (true);
 		}
+		foreach(GameObject f in bulletIndicators_2)
+		{
+			f.SetActive (true);
+		}
 		for (int i = 0; i < spellSlots.Count; i++)
 		{
 			spellSlots[i].GetComponent<Image>().sprite = defaultSlot;
@@ -238,11 +586,20 @@ public class FieldManagerPVP : FieldManager
 		for (int i = 0; i< battleObjects.Length;i++)
 		{
 			if(battleObjects[i] != null)
-			battleObjects [i].SetActive (false);
+				battleObjects [i].SetActive (false);
+		}
+		for (int i = 0; i< battleObjects_2.Length;i++)
+		{
+			if(battleObjects_2[i] != null)
+				battleObjects_2 [i].SetActive (false);
 		}
 		for (int i = 0; i< pauseUI.Length;i++)
 		{
 			pauseUI [i].SetActive (true);
+		}
+		for (int i = 0; i< pauseUI_2.Length;i++)
+		{
+			pauseUI_2 [i].SetActive (true);
 		}
 		selectButton ();
 		selectButton_2 ();
@@ -330,7 +687,75 @@ public class FieldManagerPVP : FieldManager
 		pause = false;
 		player.reload = false;
 	}
-
+	public void showBattleScreen( int num)
+	{
+		if (num == 1)
+		{
+			p1Ready = false;
+			p1reload = false;
+			player.reload = false;
+			player2.reload = false;
+			for (int i = 0; i < Temp.Count; i++)
+			{
+				player.Chamber.Add(Temp [i]);
+			}
+			foreach (GameObject g in pauseObjects)
+			{
+				g.SetActive (false);
+			}
+			for (int i = 0; i< battleObjects.Length;i++)
+			{
+				if(battleObjects[i] != null)
+					battleObjects [i].SetActive (true);
+			}
+			for (int i = 0; i< pauseUI.Length;i++)
+			{
+				pauseUI [i].SetActive (false);
+			}
+			if (player.Chamber.Count > weaponMax)
+			{
+				for (int i = player.Chamber.Count - 1; i >= weaponMax; i--)
+				{
+					player.Chamber.RemoveAt (i);
+				}
+			}
+			pause = false;
+			firstPause = false;
+		}
+		else
+		{
+			p2Ready = false;
+			p2reload = false;
+			player.reload = false;
+			player2.reload = false;
+			for (int i = 0; i < Temp_2.Count; i++)
+			{
+				player2.Chamber.Add(Temp_2 [i]);
+			}
+			foreach (GameObject g in pauseObjects_p2)
+			{
+				g.SetActive (false);
+			}
+			for (int i = 0; i< battleObjects_2.Length;i++)
+			{
+				if(battleObjects_2[i] != null)
+					battleObjects_2 [i].SetActive (true);
+			}
+			for (int i = 0; i< pauseUI_2.Length;i++)
+			{
+				pauseUI_2 [i].SetActive (false);
+			}
+			if (player2.Chamber.Count > weaponMax_2)
+			{
+				for (int i = player2.Chamber.Count - 1; i >= weaponMax_2; i--)
+				{
+					player2.Chamber.RemoveAt (i);
+				}
+			}
+			pause = false;
+			firstPause = false;
+		}
+	}
 
 	//Adds a bullet ot te selected list and prevents it from being s;lected again -P2
 	protected void addBullet_2(int num)
@@ -431,10 +856,9 @@ public class FieldManagerPVP : FieldManager
 		pauseObjects_p2[8] = GameObject.Find("Spell 8_2");
 		pauseObjects_p2[9] = GameObject.Find("Spell 9_2");
 		pauseObjects_p2[10] = GameObject.Find("BattleButton_2");
-		pauseUI = GameObject.FindGameObjectsWithTag ("PauseUI");
 
-
-		bulletIndicators = new GameObject[16];
+		bulletIndicators = new GameObject[8];
+		bulletIndicators_2  = new GameObject[8];
 		bulletIndicators [0] = GameObject.Find ("Player 1 Bottle 1");
 		bulletIndicators [1] = GameObject.Find ("Player 1 Bottle 2");
 		bulletIndicators [2] = GameObject.Find ("Player 1 Bottle 3");
@@ -443,22 +867,28 @@ public class FieldManagerPVP : FieldManager
 		bulletIndicators [5] = GameObject.Find ("Player 1 Bottle 6");
 		bulletIndicators [6] = GameObject.Find ("Player 1 Bottle 7");
 		bulletIndicators [7] = GameObject.Find ("Player 1 Bottle 8");
-		bulletIndicators [8] = GameObject.Find ("Player 2 Bottle 1");
-		bulletIndicators [9] = GameObject.Find ("Player 2 Bottle 2");
-		bulletIndicators [10] = GameObject.Find ("Player 2 Bottle 3");
-		bulletIndicators [11] = GameObject.Find ("Player 2 Bottle 4");
-		bulletIndicators [12] = GameObject.Find ("Player 2 Bottle 5");
-		bulletIndicators [13] = GameObject.Find ("Player 2 Bottle 6");
-		bulletIndicators [14] = GameObject.Find ("Player 2 Bottle 7");
-		bulletIndicators [15] = GameObject.Find ("Player 2 Bottle 8");
+		bulletIndicators_2 [0] = GameObject.Find ("Player 2 Bottle 1");
+		bulletIndicators_2 [1] = GameObject.Find ("Player 2 Bottle 2");
+		bulletIndicators_2 [2] = GameObject.Find ("Player 2 Bottle 3");
+		bulletIndicators_2 [3] = GameObject.Find ("Player 2 Bottle 4");
+		bulletIndicators_2 [4] = GameObject.Find ("Player 2 Bottle 5");
+		bulletIndicators_2 [5] = GameObject.Find ("Player 2 Bottle 6");
+		bulletIndicators_2 [6] = GameObject.Find ("Player 2 Bottle 7");
+		bulletIndicators_2 [7] = GameObject.Find ("Player 2 Bottle 8");
+
+		pauseUI = GameObject.FindGameObjectsWithTag ("PauseUI");
+		pauseUI_2 = GameObject.FindGameObjectsWithTag ("PauseUI_P2");
 
 		runeDisplay_2 = GameObject.Find ("RuneHolder_2");
 		runeDamage_2 = GameObject.Find ("RuneDamage_2").GetComponent<Text>();
 		runeName_2 = GameObject.Find ("Rune Name_2").GetComponent<Text>();
 		runeDesc_2 = GameObject.Find ("Rune Description_2").GetComponent<Text>();
 
-		battleObjects = new GameObject[2];
-		battleObjects[1] = GameObject.Find("Current Bullet_2");
+		//battleObjects[1] = null;
+		battleObjects = new GameObject[1];
+		battleObjects[0] = GameObject.Find("Current Bullet");
+		battleObjects_2 = new GameObject[1];
+		battleObjects_2[0] = GameObject.Find("Current Bullet_2");
 	}
 	protected void buildDeck()
 	{
@@ -487,9 +917,8 @@ public class FieldManagerPVP : FieldManager
 		}
 		Shuffle(Handful_2);
 	}
-	public void chooseGun_2(int weapon, bool first)
+	public void chooseGun_2 (int weapon, bool first)
 	{
-		Debug.Log (weapon);
 		if (first)
 		{
 			weapons_2 [0] = GameObject.Find ("UI_GunCylinder_2");
@@ -499,6 +928,7 @@ public class FieldManagerPVP : FieldManager
 		}
 		else
 			pauseUI= GameObject.FindGameObjectsWithTag ("PauseUI");
+		pauseUI_2= GameObject.FindGameObjectsWithTag ("PauseUI_P2");
 
 		for (int i = 0; i < weapons.Length; i++)
 		{
@@ -573,8 +1003,8 @@ public class FieldManagerPVP : FieldManager
 				{
 					spellSlots_2[0] = GameObject.Find ("SpellSlot1_2");
 					spellSlots_2[1] = GameObject.Find ("SpellSlot2_2");
-					spellSlots_2[2] = GameObject.Find ("SpellSlot3_2");
-					spellSlots_2[3] = GameObject.Find ("SpellSlot4_2");
+					spellSlots_2 [2] = GameObject.Find ("SpellSlot3_2");
+					spellSlots_2 [3] = GameObject.Find ("SpellSlot4_2");
 				}
 				p2Gun = weapons_2[2];
 				weaponMax_2 = 4;
@@ -610,5 +1040,6 @@ public class FieldManagerPVP : FieldManager
 
 		}
 		player2.updatePlayerImage ();
+
 	}
 }

@@ -73,10 +73,7 @@ public class PvPStarter : MonoBehaviour {
 	}
 	public void toPvP()
 	{
-		if(us.pvpStyle == 0)
 			SceneManager.LoadScene ("PVP");
-		else
-			SceneManager.LoadScene ("Active PVP");
 	}
 	public void toActive()
 	{
