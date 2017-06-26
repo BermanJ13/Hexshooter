@@ -12,13 +12,16 @@ public enum Menus
 	Main,
 	PvP,
 	Options,
-	Credits
+	Credits,
+	CharSelect
 }
 public class PvPStarter : MonoBehaviour {
 	public GameObject[] menuObjects;
 	public GameObject[] pvpMenuObjects;
 	public GameObject[] opMenuObjects;
 	public GameObject[] creditsMenuObjects;
+	public GameObject[] charMenuObjects;
+	public GameObject[] extraMenuObjects;
 	public Menus menu;
 	public bool pvpMenu;
 	public bool change;
@@ -41,6 +44,8 @@ public class PvPStarter : MonoBehaviour {
 		pvpMenuObjects = GameObject.FindGameObjectsWithTag ("PVP Menu");
 		opMenuObjects = GameObject.FindGameObjectsWithTag ("Options Menu");
 		creditsMenuObjects = GameObject.FindGameObjectsWithTag ("Credits");
+		charMenuObjects = GameObject.FindGameObjectsWithTag ("CharSelect");
+		extraMenuObjects = GameObject.FindGameObjectsWithTag ("ExtraMenu");
 		menu = Menus.Main; 
 		pvpMenu = false;
 		change = true;
@@ -54,120 +59,89 @@ public class PvPStarter : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () 
+	void Update ()
 	{
+		//[main,pvp,options,credits,character select, Quit/Options buttons]
 		if (menu == Menus.Main)
 		{
-			if (change)
-			{
-				foreach (GameObject g in menuObjects)
-				{
-					g.SetActive (true);
-				}
-				foreach (GameObject g in pvpMenuObjects)
-				{
-					g.SetActive (false);
-				}
-				foreach (GameObject g in opMenuObjects)
-				{
-					g.SetActive (false);
-				}
-				foreach (GameObject g in creditsMenuObjects)
-				{
-					g.SetActive (false);
-				}
-				ES.SetSelectedGameObject (GameObject.Find ("Over"));
-				change = false;
-			}
+			bool[] menuSettings = new bool[] {true, false, false, false, false, true};
+			menuChanger (menuSettings);
 		}
-		if(menu == Menus.PvP)
+		if (menu == Menus.PvP)
 		{
-			if (change)
-			{
-				foreach (GameObject g in menuObjects)
-				{
-					g.SetActive (false);
-				}
-				foreach (GameObject g in pvpMenuObjects)
-				{
-					g.SetActive (true);
-				}
-				foreach (GameObject g in opMenuObjects)
-				{
-					g.SetActive (false);
-				}
-				foreach (GameObject g in creditsMenuObjects)
-				{
-					g.SetActive (false);
-				}
-				ES.SetSelectedGameObject (GameObject.Find ("Active"));
-				change = false;
-			}
+			bool[] menuSettings = new bool[] {false, true, false, false, false, true};
+			menuChanger (menuSettings);
 		}
-		if(menu == Menus.Options)
+		if (menu == Menus.Options)
 		{
-			if (change)
-			{
-				foreach (GameObject g in menuObjects)
-				{
-					g.SetActive (false);
-				}
-				foreach (GameObject g in pvpMenuObjects)
-				{
-					g.SetActive (false);
-				}
-				foreach (GameObject g in opMenuObjects)
-				{
-					g.SetActive (true);
-				}
-				foreach (GameObject g in creditsMenuObjects)
-				{
-					g.SetActive (false);
-				}
-				ES.SetSelectedGameObject (GameObject.Find ("Filter Button"));
-				change = false;
-			}
+			bool[] menuSettings = new bool[] {false, false, true, false, false, true};
+			menuChanger (menuSettings);
 			opUpdate ();
 		}
-		if(menu == Menus.Credits)
+		if (menu == Menus.Credits)
 		{
-			if (change)
-			{
-				foreach (GameObject g in menuObjects)
-				{
-					g.SetActive (false);
-				}
-				foreach (GameObject g in pvpMenuObjects)
-				{
-					g.SetActive (false);
-				}
-				foreach (GameObject g in opMenuObjects)
-				{
-					g.SetActive (false);
-				}
-				foreach (GameObject g in creditsMenuObjects)
-				{
-					g.SetActive (true);
-				}
-				ES.SetSelectedGameObject (GameObject.Find ("Credits Main"));
-				change = false;
-			}
+			bool[] menuSettings = new bool[] {false, false, false, true, false, true}; 
+			menuChanger (menuSettings);
 		}
-
-		if (EventSystem.current.currentSelectedGameObject == null)
+		if (menu == Menus.CharSelect)
 		{
-			EventSystem.current.SetSelectedGameObject (EventSystem.current.firstSelectedGameObject);
+			bool[] menuSettings = new bool[] {false, false, false, false, true, false};
+			menuChanger (menuSettings);
+		}
+	}
+	public void menuChanger(bool[] settings)
+	{
+
+		if (change)
+		{
+			foreach (GameObject g in menuObjects)
+			{
+				g.SetActive (settings[0]);
+				if(settings[0])
+					ES.SetSelectedGameObject (GameObject.Find ("Over"));
+			}
+			foreach (GameObject g in pvpMenuObjects)
+			{
+				g.SetActive (settings[1]);
+				if(settings[1])
+					ES.SetSelectedGameObject (GameObject.Find ("Active"));
+			}
+			foreach (GameObject g in opMenuObjects)
+			{
+				g.SetActive (settings[2]);
+				if(settings[2])
+					ES.SetSelectedGameObject (GameObject.Find ("Filter Button"));
+			}
+			foreach (GameObject g in creditsMenuObjects)
+			{
+				g.SetActive (settings[3]);
+				if(settings[3])
+					ES.SetSelectedGameObject (GameObject.Find ("Credits Main"));
+			}
+			foreach (GameObject g in charMenuObjects)
+			{
+				g.SetActive (settings[4]);
+				if(settings[4])
+					ES.SetSelectedGameObject (GameObject.Find ("Continue"));
+			}
+			foreach (GameObject g in extraMenuObjects)
+			{
+				g.SetActive (settings[5]);
+			}
+			change = false;
 		}
 	}
 	public void toCharacterSelect()
 	{
 		us.pvpStyle = 0;
-		SceneManager.LoadScene ("PvP Character Select");
+		menu = Menus.CharSelect;
+		change = true;
 	}
 	public void toActiveCharacterSelect()
 	{
 		us.pvpStyle = 1;
-		SceneManager.LoadScene ("PvP Character Select");
+		menu = Menus.CharSelect;
+		change = true;
 	}
 	public void toPvP()
 	{

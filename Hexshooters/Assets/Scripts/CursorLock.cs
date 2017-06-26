@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CursorLock : MonoBehaviour {
-
+	EventSystem_Multiplayer e1;
+	EventSystem_Multiplayer e2;
 	// Use this for initialization
 	void Start () {
 		Cursor.visible = false;
@@ -14,11 +16,25 @@ public class CursorLock : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		if (SceneManager.GetActiveScene().name == "PvP")
+		{
+			e1 = GameObject.Find ("ES_P1").GetComponent<EventSystem_Multiplayer> ();
+			e2 = GameObject.Find ("ES_P2").GetComponent<EventSystem_Multiplayer> ();
+		}
+			
 		PointerEventData pointer = new PointerEventData(EventSystem.current);
 		pointer.position = Input.mousePosition;
 
 		List<RaycastResult> raycastResults = new List<RaycastResult>();
-		//EventSystem.current.RaycastAll(pointer, raycastResults);
+		if (SceneManager.GetActiveScene().name != "PvP")
+			EventSystem.current.RaycastAll (pointer, raycastResults);
+		else
+		{
+			e1.RaycastAll (pointer, raycastResults);
+			e2.RaycastAll (pointer, raycastResults);
+		}
+			
 
 		if(raycastResults.Count > 0)
 		{
