@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ScorpionStrike : EnemySpell
 {
-
     
     [Header("Scorpion Strike Vars")]
     public float basicAttackStayTime = 1;
@@ -14,8 +13,8 @@ public class ScorpionStrike : EnemySpell
     Vector3 playerPos;
     bool hitPlayer = false;
     public float backFromPlayerDist = 0.2f;
-
-
+    public string animationName;
+    bool animating = false;
 
 
     new void Start()
@@ -45,6 +44,11 @@ public class ScorpionStrike : EnemySpell
         //if true then we do the attack cycle
         if (RearBack())
         {
+            if(!animating)
+            {
+                gameObject.GetComponent<Animator>().Play(animationName);
+                animating = true;
+            }
             attackCounter = attackCounter + Time.deltaTime;
             gameObject.transform.position = playerPos;
             if (!hitAlready)
@@ -54,12 +58,14 @@ public class ScorpionStrike : EnemySpell
             if (attackCounter > basicAttackStayTime)
             {
                 //THIS IS WHERE WE RESET EVERYTHING INCLUDING THE REARBACK VARIABLES IN CLEARREAR()
+                animating = false;
                 hitAlready = false;
                 attacking = false;
                 attackCounter = 0;
                 EnemyScript.isMoving = true;
                 hitPlayer = false;
                 clearRear();
+                
             }
         }
     }

@@ -23,7 +23,6 @@ public class CursorLock : MonoBehaviour {
 		if(raycastResults.Count > 0)
 		{
 			foreach (RaycastResult raycastResult in raycastResults) {
-				Debug.Log(raycastResult.gameObject.name);
 				GameObject hoveredObj = raycastResult.gameObject;
 
 				if (hoveredObj.GetComponent<Button>()) {

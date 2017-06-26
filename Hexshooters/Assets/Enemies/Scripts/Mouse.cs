@@ -8,7 +8,7 @@ public class Mouse : Enemy
 
 
     //interval for attack TEMPORARY
-    [Header("WildCat Vars")]
+    [Header("Mouse Vars")]
     public Vector2 randomAttackTimerRange = new Vector2(2, 3);
     private float attackInterval = 0;
     private float attackTime = 0;

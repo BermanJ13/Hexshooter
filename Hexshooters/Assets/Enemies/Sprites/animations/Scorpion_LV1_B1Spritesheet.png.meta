@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: ff2033585866bb24c81bbc89b44a93d9
-timeCreated: 1491309762
+guid: c98a872862503c24796102fc3731a86d
+timeCreated: 1498516680
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: scorpion test_0
-    21300002: scorpion test_1
-    21300004: scorpion test_2
-    21300006: scorpion test_3
-    21300008: scorpion test_4
-    21300010: scorpion test_5
-    21300012: scorpion test_6
-    21300014: scorpion test_7
-    21300016: scorpion test_8
-    21300018: scorpion test_9
+    21300000: Scorpion_LV1_B1Spritesheet_0
+    21300002: Scorpion_LV1_B1Spritesheet_1
+    21300004: Scorpion_LV1_B1Spritesheet_2
+    21300006: Scorpion_LV1_B1Spritesheet_3
+    21300008: Scorpion_LV1_B1Spritesheet_4
+    21300010: Scorpion_LV1_B1Spritesheet_5
+    21300012: Scorpion_LV1_B1Spritesheet_6
+    21300014: Scorpion_LV1_B1Spritesheet_7
+    21300016: Scorpion_LV1_B1Spritesheet_8
+    21300018: Scorpion_LV1_B1Spritesheet_9
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -45,12 +45,12 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 0
+  spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 128
+  spritePixelsToUnits: 100
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -80,7 +80,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: scorpion test_0
+      name: Scorpion_LV1_B1Spritesheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -93,7 +93,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: scorpion test_1
+      name: Scorpion_LV1_B1Spritesheet_1
       rect:
         serializedVersion: 2
         x: 128
@@ -106,7 +106,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: scorpion test_2
+      name: Scorpion_LV1_B1Spritesheet_2
       rect:
         serializedVersion: 2
         x: 256
@@ -119,7 +119,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: scorpion test_3
+      name: Scorpion_LV1_B1Spritesheet_3
       rect:
         serializedVersion: 2
         x: 384
@@ -132,7 +132,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: scorpion test_4
+      name: Scorpion_LV1_B1Spritesheet_4
       rect:
         serializedVersion: 2
         x: 512
@@ -145,7 +145,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: scorpion test_5
+      name: Scorpion_LV1_B1Spritesheet_5
       rect:
         serializedVersion: 2
         x: 640
@@ -158,7 +158,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: scorpion test_6
+      name: Scorpion_LV1_B1Spritesheet_6
       rect:
         serializedVersion: 2
         x: 768
@@ -171,7 +171,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: scorpion test_7
+      name: Scorpion_LV1_B1Spritesheet_7
       rect:
         serializedVersion: 2
         x: 896
@@ -184,7 +184,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: scorpion test_8
+      name: Scorpion_LV1_B1Spritesheet_8
       rect:
         serializedVersion: 2
         x: 1024
@@ -197,7 +197,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: scorpion test_9
+      name: Scorpion_LV1_B1Spritesheet_9
       rect:
         serializedVersion: 2
         x: 1152
