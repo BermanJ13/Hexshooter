@@ -58,7 +58,7 @@ public class OverPlayer : MonoBehaviour {
 			{
 				foreach (string t2 in activatedTriggers)
 				{
-					GameObject.Find (t2).GetComponent<Trigger> ().activated = true;
+					GameObject.Find (t2).GetComponent<Trigger> ().interacted = true;
 				}
 				interactTrigger ();
 				if(currentTrig !=null)
@@ -100,12 +100,12 @@ public class OverPlayer : MonoBehaviour {
 					cutscene = false;
 				}
 
-				if (currentTrig != null & !cutscene)
+				if (currentTrig != null && !cutscene)
 				{
-					if (currentTrig.battle && !currentTrig.activated)
+					if (currentTrig.battle && !currentTrig.interacted)
 					{
 						us.mapfile = currentTrig.scenario;
-						currentTrig.activated = true;
+						currentTrig.interacted = true;
 						activatedTriggers.Add(currentTrig.name);
 						SceneManager.LoadScene ("Battle");
 					}
@@ -118,7 +118,7 @@ public class OverPlayer : MonoBehaviour {
 		else
 		{
 			this.GetComponent<SpriteRenderer> ().color = new Color (255, 0, 0, 0);
-			currentTrig.activated = true;
+			currentTrig.interacted = true;
 		}
 	}
 	void movement()
@@ -260,12 +260,12 @@ public class OverPlayer : MonoBehaviour {
 				currentTrig = hitCollider.GetComponent<Trigger> ();
 				if (currentTrig.touch)
 				{
-					if (currentTrig.activated == false || (currentTrig.repeatable == true && currentTrig.activated == true))
+					if (currentTrig.interacted == false || (currentTrig.repeatable == true && currentTrig.interacted == true))
 					{
 						dialog.Load (currentTrig.script);
 						if (!currentTrig.battle)
 						{
-							currentTrig.activated = true;
+							currentTrig.interacted = true;
 							activatedTriggers.Add(currentTrig.name);
 						}
 						//cutscene = true;

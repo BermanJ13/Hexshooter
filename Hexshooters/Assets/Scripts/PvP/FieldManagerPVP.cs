@@ -684,6 +684,10 @@ public class FieldManagerPVP : FieldManager
 		{
 			pauseUI [i].SetActive (false);
 		}
+		for (int i = 0; i< pauseUI_2.Length;i++)
+		{
+			pauseUI_2 [i].SetActive (false);
+		}
 		pause = false;
 		player.reload = false;
 	}

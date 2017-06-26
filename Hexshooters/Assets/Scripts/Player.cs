@@ -37,6 +37,8 @@ public class Player : MonoBehaviour {
 	StatusEffect moveLag;
 	StatusEffect shotLag;
 	public bool basic;
+	bool canMove = true;
+	int shotLimiter = 0;
 
     // Use this for initialization
     void Start () 
@@ -136,27 +138,68 @@ public class Player : MonoBehaviour {
         	health = 100;
 
     }
-	
+
+	public void weaponAbility(int weaponUsed)
+	{
+		switch (weaponUsed)
+		{
+			case 1:
+				if (Input.GetButtonDown("Ability 1_P1"))
+				{
+					chamberLeft ();
+				}
+				if (Input.GetButtonDown("Ability 2_P1"))
+				{
+					chamberRight ();
+				}
+			break;
+			case 2:
+				//Fusion
+			break;
+			case 3:
+				
+			break;
+			case 4:
+				if (shotLimiter == 10)
+				{
+					if (Input.GetButton ("Ability 1_P1") || Input.GetButton ("Ability 2_P1"))
+					{
+						if (!myStatus.IsAffected (StatusType.Disabled) && !myStatus.IsAffected (StatusType.ShotLag))
+						{
+							GameObject go = (GameObject)Instantiate (Resources.Load ("Rapid"), new Vector2 (transform.position.x, transform.position.y), Quaternion.identity);
+					
+							////get thething component on your instantiated object
+							Spell mything = go.GetComponent<Spell> ();
+					
+							////set a mmber variable (must be PUBLIC)
+							mything.weaponUsed = weapon; 
+							mything.PlayerNum = PlayerNum;
+						}
+						shotLimiter = 0;
+						allowShot = false;
+						moveLag = new StatusEffect (.7f);
+						moveLag.m_type = StatusType.Bound;
+						myStatus.AddEffect (moveLag);
+					}
+				}
+				else if(shotLimiter !=10)
+				{
+					shotLimiter++;
+				}
+			break;
+		}
+	}
 	// Update is called once per frame
 	public void playerUpdate () 
 	{
-		bool canMove = true;
+		canMove = true;
 		hideEmpty ();
 		updateCurrentSpell ();
 		pHealth.text = health.ToString();
 		buttonPresed = false;
 
-		if (weapon == 1)
-		{
-			if (Input.GetButtonDown("Ability 1_P1"))
-			{
-				chamberLeft ();
-			}
-			if (Input.GetButtonDown("Ability 2_P1"))
-			{
-				chamberRight ();
-			}
-		}
+		weaponAbility(weapon);
+
 		if (!myStatus.IsAffected( StatusType.Bound) && !myStatus.IsAffected( StatusType.MoveLag))
 		{
 			movement ();
@@ -588,17 +631,24 @@ public class Player : MonoBehaviour {
 	}
 	void chamberLeft()
 	{
-		Object temp = Chamber [0];
-		Chamber.RemoveAt (0);
-		Chamber.Add (temp);
-		updateCurrentSpell ();
-		Debug.Log("Pressed g");
+		if (Chamber.Count > 1)
+		{
+			Object temp = Chamber [0];
+			Chamber.RemoveAt (0);
+			Chamber.Add (temp);
+			updateCurrentSpell ();
+			allowShot = false;
+		}
 	}
 	void chamberRight()
 	{
-		Object temp = Chamber [Chamber.Count-1];
-		Chamber.RemoveAt (Chamber.Count-1);
-		Chamber.Insert (0, temp);
-		updateCurrentSpell ();
+		if (Chamber.Count > 1)
+		{
+			Object temp = Chamber [Chamber.Count - 1];
+			Chamber.RemoveAt (Chamber.Count - 1);
+			Chamber.Insert (0, temp);
+			updateCurrentSpell ();
+			allowShot = false;
+		}
 	}
 }

@@ -12,16 +12,19 @@ public class Trigger : MonoBehaviour {
 	[Header("Battle Settings")]
 	public string background;
 	public string scenario;
+	public bool scriptedLoss;
 
 	[Header("Scene Changing Settings")]
 	public bool battle;
 	public bool exit;
+	public bool postBattleExit;
 
 
 	[Header("Activation Settings")]
 	public bool repeatable;
 	public bool touch;
-	public bool activated;
+	public bool interacted;
+	public bool active;
 
 	[Header("Reward Settings")]
 	public RewardType preRewardChoice;
@@ -69,6 +72,20 @@ public class Trigger : MonoBehaviour {
 					op.charUnlock = true;
 				}
 			}
+		}
+	}
+	public void activateOthers(Trigger[] others)
+	{
+		foreach (Trigger t in others)
+		{
+			t.active = true;
+		}
+	}
+	public void deactivateOthers(Trigger[] others)
+	{
+		foreach (Trigger t in others)
+		{
+			t.active = false;
 		}
 	}
 }

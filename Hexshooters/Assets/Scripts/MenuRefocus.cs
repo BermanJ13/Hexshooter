@@ -7,18 +7,26 @@ public class MenuRefocus : MonoBehaviour
 	public PvPStarter p;
 	void Update()
 	{
-		if (p.menu)
+		if (p.menu == Menus.Main)
 		{
 			if (EventSystem.current.currentSelectedGameObject == null)
 			{
 				EventSystem.current.SetSelectedGameObject (EventSystem.current.firstSelectedGameObject);
 			}
 		}
-		else
+		else if (p.menu == Menus.PvP)
+		{
 			if (EventSystem.current.currentSelectedGameObject == null)
 			{
-				EventSystem.current.SetSelectedGameObject (GameObject.Find("Active"));
+				EventSystem.current.SetSelectedGameObject (GameObject.Find ("Active"));
 			}
-			
+		}
+		else if (p.menu == Menus.Options && !p.changeVolume)
+		{
+			if (EventSystem.current.currentSelectedGameObject == null)
+			{
+				EventSystem.current.SetSelectedGameObject (GameObject.Find ("Filter Button"));
+			}
+		}
 	}
 }

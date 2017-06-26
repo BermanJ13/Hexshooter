@@ -94,4 +94,8 @@ public class Spell : MonoBehaviour {
 	{
 		c.gameObject.gameObject.GetComponent<Panel> ().attacked = true;
 	}
+	public void specialEffect(Attributes a)
+	{
+		
+	}
 }
