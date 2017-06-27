@@ -48,10 +48,9 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\ActiveFieldManager.cs" />
      <Compile Include="Assets\Scripts\CameraSettings.cs" />
-     <Compile Include="Assets\Scripts\CharSelect.cs" />
-     <Compile Include="Assets\Scripts\ControlDisplay.cs" />
-     <Compile Include="Assets\Scripts\ControllerRefocus.cs" />
-     <Compile Include="Assets\Scripts\CursorLock.cs" />
+     <Compile Include="Assets\Scripts\Cursor Controllers\ControllerRefocus.cs" />
+     <Compile Include="Assets\Scripts\Cursor Controllers\CursorLock.cs" />
+     <Compile Include="Assets\Scripts\Cursor Controllers\MenuRefocus.cs" />
      <Compile Include="Assets\Scripts\DialogueManager.cs" />
      <Compile Include="Assets\Scripts\Enemies\Attacks\BasicEnemyAttack.cs" />
      <Compile Include="Assets\Scripts\Enemies\Attacks\BuffaloPlow.cs" />
@@ -69,19 +68,20 @@
      <Compile Include="Assets\Scripts\Enemies\WildCat.cs" />
      <Compile Include="Assets\Scripts\FieldManager.cs" />
      <Compile Include="Assets\Scripts\GameInfo.cs" />
-     <Compile Include="Assets\Scripts\GameResults.cs" />
-     <Compile Include="Assets\Scripts\Instructions.cs" />
-     <Compile Include="Assets\Scripts\MenuRefocus.cs" />
+     <Compile Include="Assets\Scripts\Menus\CharSelect.cs" />
+     <Compile Include="Assets\Scripts\Menus\ControlDisplay.cs" />
+     <Compile Include="Assets\Scripts\Menus\GameResults.cs" />
+     <Compile Include="Assets\Scripts\Menus\Instructions.cs" />
+     <Compile Include="Assets\Scripts\Menus\OptionsMenu.cs" />
+     <Compile Include="Assets\Scripts\Menus\PvPStarter.cs" />
      <Compile Include="Assets\Scripts\Movement.cs" />
      <Compile Include="Assets\Scripts\Music\BattleMusic.cs" />
      <Compile Include="Assets\Scripts\Music\MenuMusic.cs" />
      <Compile Include="Assets\Scripts\Obstacles\Flames.cs" />
      <Compile Include="Assets\Scripts\Obstacles\Obstacle.cs" />
      <Compile Include="Assets\Scripts\Obstacles\Steam.cs" />
-     <Compile Include="Assets\Scripts\OptionsMenu.cs" />
      <Compile Include="Assets\Scripts\OverPlayer.cs" />
      <Compile Include="Assets\Scripts\Panel.cs" />
-     <Compile Include="Assets\Scripts\Particle.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\Preload\DDOL.cs" />
      <Compile Include="Assets\Scripts\Preload\Load.cs" />
@@ -91,9 +91,6 @@
      <Compile Include="Assets\Scripts\PvP\EventSystem_Multiplayer.cs" />
      <Compile Include="Assets\Scripts\PvP\EventSystemholder.cs" />
      <Compile Include="Assets\Scripts\PvP\FieldManagerPVP.cs" />
-     <Compile Include="Assets\Scripts\PvPStarter.cs" />
-     <Compile Include="Assets\Scripts\RuneInfo.cs" />
-     <Compile Include="Assets\Scripts\SpellHolder.cs" />
      <Compile Include="Assets\Scripts\Spells\Basic.cs" />
      <Compile Include="Assets\Scripts\Spells\Boomerang.cs" />
      <Compile Include="Assets\Scripts\Spells\Chains.cs" />
@@ -104,6 +101,9 @@
      <Compile Include="Assets\Scripts\Spells\Lightning.cs" />
      <Compile Include="Assets\Scripts\Spells\Rain.cs" />
      <Compile Include="Assets\Scripts\Spells\Rapid.cs" />
+     <Compile Include="Assets\Scripts\Spells\Spell Componets\Particle.cs" />
+     <Compile Include="Assets\Scripts\Spells\Spell Componets\RuneInfo.cs" />
+     <Compile Include="Assets\Scripts\Spells\Spell Componets\SpellHolder.cs" />
      <Compile Include="Assets\Scripts\Spells\Spell Template.cs" />
      <Compile Include="Assets\Scripts\Spells\Spell.cs" />
      <Compile Include="Assets\Scripts\Spells\Trains.cs" />
@@ -154,9 +154,6 @@
      <None Include="Assets\Dialogue\Text\Resources\Cutscene1b2.txt" />
      <None Include="Assets\Dialogue\Text\Resources\Cutscene2b.txt" />
      <None Include="Assets\Dialogue\Text\Resources\Cutscene0.txt" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -171,9 +168,6 @@
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>

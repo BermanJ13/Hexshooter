@@ -19,7 +19,6 @@ public class Trigger : MonoBehaviour {
 	public bool exit;
 	public bool postBattleExit;
 
-
 	[Header("Activation Settings")]
 	public bool repeatable;
 	public bool touch;
@@ -35,6 +34,13 @@ public class Trigger : MonoBehaviour {
 	public bool preRewardActivator;
 	public bool preReward;
 	public string preRewardedItem;
+
+	[Header("Boundary")]
+	public bool left;
+	public bool right;
+	public bool up;
+	public bool down;
+	public bool passable;
 
 	[HideInInspector]
 	public OverPlayer op;
@@ -86,6 +92,13 @@ public class Trigger : MonoBehaviour {
 		foreach (Trigger t in others)
 		{
 			t.active = false;
+		}
+	}
+	public void unblockBoundaries(Trigger[] others)
+	{
+		foreach (Trigger t in others)
+		{
+			t.passable = true;
 		}
 	}
 }

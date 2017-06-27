@@ -24,6 +24,8 @@ public class Player : MonoBehaviour {
 	public int armorWeakness;
 	public StatusManager myStatus;
 	protected string atkbutton;
+	protected string abilButton1;
+	protected string abilButton2;
 	public string stat;
 	bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
 	int stackDmg;
@@ -44,87 +46,9 @@ public class Player : MonoBehaviour {
     void Start () 
 	{
 		basic = false;
-		if (playerDisplay != null)
-		{
-			if (PlayerNum == 1)
-			{
-				playerDisplay = GameObject.Find ("PlayerImage").GetComponent<Image> ();
-			}
-			else
-			{				
-				playerDisplay = GameObject.Find ("PlayerImage_2").GetComponent<Image> ();
-			}
-		}
-		hit = false;
-		if (GameObject.Find ("CharSelect") != null)
-		{
-			if (PlayerNum == 1)
-			{
-				weapon = GameObject.Find ("CharSelect").GetComponent<CharSelect> ().p1;
-			}
-			else
-			{				
-				weapon = GameObject.Find ("CharSelect").GetComponent<CharSelect> ().p2;
-			}
-		}
-		 myStatus = GetComponent<StatusManager>();
-		if (PlayerNum == 1)
-		{
-			if (GameObject.FindGameObjectWithTag("Player2") != null && PlayerNum == 1)
-			{
-				atkbutton = "Fire_P1";
-			} 
-			else
-			{
-				atkbutton = "Fire_Solo";
-			}
 
-		}
-		else
-		{
-			atkbutton = "Fire_P2";
-		}
-		if (PlayerNum == 1)
-		{
-			currentBullet = GameObject.Find("Current Bullet").GetComponent<Text>();
-		}
-		else
-		{
-			currentBullet = GameObject.Find("Current Bullet_P2").GetComponent<Text>();
-		}
+		setPlayer ();
 
-		if (PlayerNum == 1)
-		{
-			pHealth = GameObject.Find("PlayerHealth").GetComponent<Text>();
-		}
-		else
-		{
-			pHealth = GameObject.Find("PlayerHealth_2").GetComponent<Text>();
-		}
-
-		bulletIndicators = new GameObject[8];
-		if (PlayerNum == 1)
-		{
-			bulletIndicators [0] = GameObject.Find ("Player 1 Bottle 1");
-			bulletIndicators [1] = GameObject.Find ("Player 1 Bottle 2");
-			bulletIndicators [2] = GameObject.Find ("Player 1 Bottle 3");
-			bulletIndicators [3] = GameObject.Find ("Player 1 Bottle 4");
-			bulletIndicators [4] = GameObject.Find ("Player 1 Bottle 5");
-			bulletIndicators [5] = GameObject.Find ("Player 1 Bottle 6");
-			bulletIndicators [6] = GameObject.Find ("Player 1 Bottle 7");
-			bulletIndicators [7] = GameObject.Find ("Player 1 Bottle 8");
-		} 
-		else
-		{
-			bulletIndicators [0] = GameObject.Find ("Player 2 Bottle 1");
-			bulletIndicators [1] = GameObject.Find ("Player 2 Bottle 2");
-			bulletIndicators [2] = GameObject.Find ("Player 2 Bottle 3");
-			bulletIndicators [3] = GameObject.Find ("Player 2 Bottle 4");
-			bulletIndicators [4] = GameObject.Find ("Player 2 Bottle 5");
-			bulletIndicators [5] = GameObject.Find ("Player 2 Bottle 6");
-			bulletIndicators [6] = GameObject.Find ("Player 2 Bottle 7");
-			bulletIndicators [7] = GameObject.Find ("Player 2 Bottle 8");
-		}
 		GameObject p2 = GameObject.FindGameObjectWithTag("Player2");
 		if (p2 != null || PlayerNum != 1)
 		{
@@ -144,11 +68,11 @@ public class Player : MonoBehaviour {
 		switch (weaponUsed)
 		{
 			case 1:
-				if (Input.GetButtonDown("Ability 1_P1"))
+				if (Input.GetButtonDown(abilButton1))
 				{
 					chamberLeft ();
 				}
-				if (Input.GetButtonDown("Ability 2_P1"))
+				if (Input.GetButtonDown(abilButton2))
 				{
 					chamberRight ();
 				}
@@ -204,13 +128,32 @@ public class Player : MonoBehaviour {
 		{
 			movement ();
 		}
-		//if (Input.GetButtonDown (atkbutton) && Chamber.Count > 0)
-		//{
-		//	if (!myStatus.IsAffected (StatusType.Disabled))
-		//	{
-		//		initiateSpell ();
-		//	}
-		//}
+
+		fire();
+
+		if (Chamber.Count == 0 && field.Handful.Count > 0)
+		{
+			reload = true;
+		}
+
+		if (hit)
+		{
+			GetComponent<SpriteRenderer> ().color = Color.red;
+			hit = false;
+		}
+		else if (heal)
+		{
+			GetComponent<SpriteRenderer> ().color = Color.blue;
+			heal = false;
+		}
+		else
+		{
+			GetComponent<SpriteRenderer>().color = Color.white;
+		}
+	}
+
+	void fire()
+	{
 		if (allowShot)
 		{
 			if (Input.GetAxisRaw (atkbutton) > 0 && Chamber.Count > 0)
@@ -250,28 +193,7 @@ public class Player : MonoBehaviour {
 		}
 		if (Input.GetAxisRaw (atkbutton) == 0)
 			allowShot = true;
-		if (Chamber.Count == 0 && field.Handful.Count > 0)
-		{
-			reload = true;
-		}
-
-		if (hit)
-		{
-			GetComponent<SpriteRenderer> ().color = Color.red;
-			hit = false;
-		}
-		else if (heal)
-		{
-			GetComponent<SpriteRenderer> ().color = Color.blue;
-			heal = false;
-		}
-		else
-		{
-			GetComponent<SpriteRenderer>().color = Color.white;
-		}
 	}
-
-		
 	
 	void movement()
 	{
@@ -649,6 +571,94 @@ public class Player : MonoBehaviour {
 			Chamber.Insert (0, temp);
 			updateCurrentSpell ();
 			allowShot = false;
+		}
+	}
+	void setPlayer()
+	{
+		if (playerDisplay != null)
+		{
+			if (PlayerNum == 1)
+			{
+				playerDisplay = GameObject.Find ("PlayerImage").GetComponent<Image> ();
+			}
+			else
+			{				
+				playerDisplay = GameObject.Find ("PlayerImage_2").GetComponent<Image> ();
+			}
+		}
+		hit = false;
+		if (GameObject.Find ("CharSelect") != null)
+		{
+			if (PlayerNum == 1)
+			{
+				weapon = GameObject.Find ("CharSelect").GetComponent<CharSelect> ().p1;
+			}
+			else
+			{				
+				weapon = GameObject.Find ("CharSelect").GetComponent<CharSelect> ().p2;
+			}
+		}
+		myStatus = GetComponent<StatusManager>();
+		if (PlayerNum == 1)
+		{
+			if (GameObject.FindGameObjectWithTag("Player2") != null && PlayerNum == 1)
+			{
+				atkbutton = "Fire_P1";
+				abilButton1 = "Ability 1_P1";
+				abilButton2 = "Ability 2_P1";
+			} 
+			else
+			{
+				atkbutton = "Fire_Solo";
+				abilButton1 = "Ability 1_P1";
+				abilButton2 = "Ability 2_P1";
+			}
+
+		}
+		else
+		{
+			atkbutton = "Fire_P2";
+		}
+		if (PlayerNum == 1)
+		{
+			currentBullet = GameObject.Find("Current Bullet").GetComponent<Text>();
+		}
+		else
+		{
+			currentBullet = GameObject.Find("Current Bullet_P2").GetComponent<Text>();
+		}
+
+		if (PlayerNum == 1)
+		{
+			pHealth = GameObject.Find("PlayerHealth").GetComponent<Text>();
+		}
+		else
+		{
+			pHealth = GameObject.Find("PlayerHealth_2").GetComponent<Text>();
+		}
+
+		bulletIndicators = new GameObject[8];
+		if (PlayerNum == 1)
+		{
+			bulletIndicators [0] = GameObject.Find ("Player 1 Bottle 1");
+			bulletIndicators [1] = GameObject.Find ("Player 1 Bottle 2");
+			bulletIndicators [2] = GameObject.Find ("Player 1 Bottle 3");
+			bulletIndicators [3] = GameObject.Find ("Player 1 Bottle 4");
+			bulletIndicators [4] = GameObject.Find ("Player 1 Bottle 5");
+			bulletIndicators [5] = GameObject.Find ("Player 1 Bottle 6");
+			bulletIndicators [6] = GameObject.Find ("Player 1 Bottle 7");
+			bulletIndicators [7] = GameObject.Find ("Player 1 Bottle 8");
+		} 
+		else
+		{
+			bulletIndicators [0] = GameObject.Find ("Player 2 Bottle 1");
+			bulletIndicators [1] = GameObject.Find ("Player 2 Bottle 2");
+			bulletIndicators [2] = GameObject.Find ("Player 2 Bottle 3");
+			bulletIndicators [3] = GameObject.Find ("Player 2 Bottle 4");
+			bulletIndicators [4] = GameObject.Find ("Player 2 Bottle 5");
+			bulletIndicators [5] = GameObject.Find ("Player 2 Bottle 6");
+			bulletIndicators [6] = GameObject.Find ("Player 2 Bottle 7");
+			bulletIndicators [7] = GameObject.Find ("Player 2 Bottle 8");
 		}
 	}
 }
