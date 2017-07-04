@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: f2ed11be02db45140b13905d0d3d2f92
+timeCreated: 1498584909
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Adventurejournal
+  fontNames:
+  - Adventurejournal
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
