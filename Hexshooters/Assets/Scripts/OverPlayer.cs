@@ -28,7 +28,7 @@ public class OverPlayer : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
-		weapon = 1;
+		weapon = 6;
 		dialog = GameObject.FindGameObjectWithTag("DialogMngr").GetComponent<DialogueManager>();
 		us = GameObject.Find("__app").GetComponent<UniversalSettings> ();
 		style = us.style;

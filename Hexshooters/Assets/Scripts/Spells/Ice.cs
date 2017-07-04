@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Ice : Spell {
 
-    private int spellTimer;
+	private int spellTimer;
+	private bool targetNeeded;
 
     // Use this for initialization
     new void Start () {
@@ -20,7 +21,6 @@ public class Ice : Spell {
 
     public override void movement(int weapon)
     {
-		Vector2 target;
         Vector2 position;
         switch (weapon)
         {
@@ -97,7 +97,33 @@ public class Ice : Spell {
 			position = Vector2.Lerp(transform.position, target, (Time.deltaTime * speed));
                 transform.position = position;
                 break;
+			case 6:
+				//Player one
+				if (PlayerNum == 1)
+				{
+					if (targetNeeded)
+					{
+						target = new Vector2 (transform.position.x + 3, transform.position.y);
+						targetNeeded = false;
+					}
+				}
+				//player 2
+				else
+				{
+					if (targetNeeded)
+					{
+						target = new Vector2 (transform.position.x - 3, transform.position.y);
+						targetNeeded = false;
+					}
+				}
+				position = Vector2.Lerp (transform.position, target, (Time.deltaTime * speed));
+				transform.position = position;
 
+				if (transform.position == new Vector3 (target.x, target.y, 0))
+				{
+					hitBehavior (6);
+				}
+			break;
         }
     }
 
@@ -281,6 +307,12 @@ public class Ice : Spell {
 					}
                 }
                 break;
+			case 6:
+				Instantiate (Resources.Load ("Icicle"), new Vector2 (transform.position.x, transform.position.y-1), Quaternion.identity);
+				Instantiate (Resources.Load ("Icicle"), new Vector2 (transform.position.x, transform.position.y), Quaternion.identity);
+				Instantiate (Resources.Load ("Icicle"), new Vector2 (transform.position.x, transform.position.y+1), Quaternion.identity);
+				markedForDeletion = true;
+			break;
         }
     }
 	public override void setDescription(int weapon)

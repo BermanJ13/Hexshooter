@@ -28,7 +28,6 @@ public class FieldManagerPVP : FieldManager
 	public GameObject[] weapons_2;
 	public int weaponMax_2;
 	protected static GameObject[] pauseUI_2;
-	protected GameObject[] bulletIndicators_2;
 	protected GameObject[] battleObjects_2;
 	public bool p1reload;
 	public bool p2reload;
@@ -261,10 +260,6 @@ public class FieldManagerPVP : FieldManager
 		if (num == 1)
 		{
 			p1reload = true;
-			foreach (GameObject g in bulletIndicators)
-			{
-				g.SetActive (true);
-			}
 			for (int i = 0; i < spellSlots.Count; i++)
 			{
 				spellSlots [i].GetComponent<Image> ().sprite = defaultSlot;
@@ -332,10 +327,6 @@ public class FieldManagerPVP : FieldManager
 		else
 		{
 			p2reload = true;
-			foreach(GameObject g in bulletIndicators_2)
-			{
-				g.SetActive (true);
-			}
 			for (int i = 0; i < spellSlots_2.Count; i++)
 			{
 				spellSlots_2[i].GetComponent<Image>().sprite = defaultSlot;
@@ -519,14 +510,6 @@ public class FieldManagerPVP : FieldManager
 	{
 		p1Ready = false;
 		p2Ready = false;
-		foreach(GameObject g in bulletIndicators)
-		{
-			g.SetActive (true);
-		}
-		foreach(GameObject f in bulletIndicators_2)
-		{
-			f.SetActive (true);
-		}
 		for (int i = 0; i < spellSlots.Count; i++)
 		{
 			spellSlots[i].GetComponent<Image>().sprite = defaultSlot;
@@ -861,24 +844,6 @@ public class FieldManagerPVP : FieldManager
 		pauseObjects_p2[9] = GameObject.Find("Spell 9_2");
 		pauseObjects_p2[10] = GameObject.Find("BattleButton_2");
 
-		bulletIndicators = new GameObject[8];
-		bulletIndicators_2  = new GameObject[8];
-		bulletIndicators [0] = GameObject.Find ("Player 1 Bottle 1");
-		bulletIndicators [1] = GameObject.Find ("Player 1 Bottle 2");
-		bulletIndicators [2] = GameObject.Find ("Player 1 Bottle 3");
-		bulletIndicators [3] = GameObject.Find ("Player 1 Bottle 4");
-		bulletIndicators [4] = GameObject.Find ("Player 1 Bottle 5");
-		bulletIndicators [5] = GameObject.Find ("Player 1 Bottle 6");
-		bulletIndicators [6] = GameObject.Find ("Player 1 Bottle 7");
-		bulletIndicators [7] = GameObject.Find ("Player 1 Bottle 8");
-		bulletIndicators_2 [0] = GameObject.Find ("Player 2 Bottle 1");
-		bulletIndicators_2 [1] = GameObject.Find ("Player 2 Bottle 2");
-		bulletIndicators_2 [2] = GameObject.Find ("Player 2 Bottle 3");
-		bulletIndicators_2 [3] = GameObject.Find ("Player 2 Bottle 4");
-		bulletIndicators_2 [4] = GameObject.Find ("Player 2 Bottle 5");
-		bulletIndicators_2 [5] = GameObject.Find ("Player 2 Bottle 6");
-		bulletIndicators_2 [6] = GameObject.Find ("Player 2 Bottle 7");
-		bulletIndicators_2 [7] = GameObject.Find ("Player 2 Bottle 8");
 
 		pauseUI = GameObject.FindGameObjectsWithTag ("PauseUI");
 		pauseUI_2 = GameObject.FindGameObjectsWithTag ("PauseUI_P2");

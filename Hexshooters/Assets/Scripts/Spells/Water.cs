@@ -337,6 +337,37 @@ public class Water : Spell {
 					}
                 }
                 break;
+			case 6:
+				colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
+				foreach (Collider2D c in colliders)
+				{
+					if(c.gameObject.tag == "Player" && PlayerNum == 2)
+					{
+						StatusEffect bubbled = new StatusEffect (5);
+						bubbled.m_type = StatusType.Bubbled;
+						c.gameObject.GetComponent<Player> ().myStatus.AddEffect (bubbled);
+						c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
+						markedForDeletion = true;
+
+					}
+					else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
+					{
+						StatusEffect bubbled = new StatusEffect (5);
+						bubbled.m_type = StatusType.Bubbled;
+						c.gameObject.GetComponent<Player> ().myStatus.AddEffect (bubbled);
+						c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
+						markedForDeletion = true;
+					}
+					else if(c.gameObject.tag == "Enemy")
+					{
+						StatusEffect bubbled = new StatusEffect (5);
+						bubbled.m_type = StatusType.Bubbled;
+						c.gameObject.GetComponent<Enemy> ().myStatus.AddEffect (bubbled);
+						c.GetComponent<Enemy>().takeDamage (damageCalc(damageTier, hitNum), attributes);
+						markedForDeletion = true;
+					}
+				}
+			break;
         }
     }
 

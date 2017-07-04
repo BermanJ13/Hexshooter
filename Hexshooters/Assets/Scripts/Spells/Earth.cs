@@ -381,6 +381,49 @@ public class Earth : Spell {
 					}
 			}
 			break;
+			case 6:
+				//Creates shockwaves originating at each enemy hit by the bullet or shockwave.
+				colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
+				foreach(Collider2D c in colliders)
+				{
+					bool hit = true;
+					foreach (GameObject e in hitEnemies)
+					{
+						if(c.gameObject == e)
+						{
+							hit = false;
+						}
+					}
+					if (c.gameObject.tag == "Enemy" && hit) 
+					{
+						if (PlayerNum == 1)
+						{
+							//Debug.Log (damageCalc (damageTier, hitNum));
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
+							hitEnemies.Add (c.gameObject);
+						}
+					}
+					else if(c.gameObject.tag == "Player" && PlayerNum == 2 && hit)
+					{
+						//Debug.Log (damageCalc (damageTier, hitNum));
+						c.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
+						hitEnemies.Add (c.gameObject);
+
+					}
+					else if(c.gameObject.tag == "Player2"&& PlayerNum == 1 && hit)
+					{
+						//Debug.Log (damageCalc (damageTier, hitNum));
+						c.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
+						hitEnemies.Add (c.gameObject);
+					}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
+				}
+			break;
+				
 		}
 	}
 

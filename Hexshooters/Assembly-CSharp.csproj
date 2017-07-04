@@ -78,6 +78,8 @@
      <Compile Include="Assets\Scripts\Music\BattleMusic.cs" />
      <Compile Include="Assets\Scripts\Music\MenuMusic.cs" />
      <Compile Include="Assets\Scripts\Obstacles\Flames.cs" />
+     <Compile Include="Assets\Scripts\Obstacles\Icicle.cs" />
+     <Compile Include="Assets\Scripts\Obstacles\Lightningrod.cs" />
      <Compile Include="Assets\Scripts\Obstacles\Obstacle.cs" />
      <Compile Include="Assets\Scripts\Obstacles\Steam.cs" />
      <Compile Include="Assets\Scripts\OverPlayer.cs" />

@@ -11,7 +11,6 @@ public class Fire : Spell {
 	private int spellTimer;
 	private int gattlingTimer; //time for how long the gattling gun flamethrower last
 	public Transform obstacle;
-	Vector2 target;
 	Vector2 position;
 	Collider2D[] colliders;	
 	private bool created;
@@ -41,88 +40,116 @@ public class Fire : Spell {
 
 	public override void movement(int weapon)
 	{
-		switch (weapon) 
+		switch (weapon)
 		{
 		//Revolver = hits 5 spaces ahead
-		case 1:
+			case 1:
 			//if player 1
-			if (PlayerNum == 1)
-			{
-				if (targetNeeded)
+				if (PlayerNum == 1)
 				{
-					target = new Vector2 (transform.position.x + 5, transform.position.y);
-					targetNeeded = false;
+					if (targetNeeded)
+					{
+						target = new Vector2 (transform.position.x + 5, transform.position.y);
+						targetNeeded = false;
 
+					}
 				}
-			}
 			//if player 2
 			else
-			{
-				if (targetNeeded)
 				{
-					target = new Vector2 (transform.position.x - 5, transform.position.y);
-					targetNeeded = false;
+					if (targetNeeded)
+					{
+						target = new Vector2 (transform.position.x - 5, transform.position.y);
+						targetNeeded = false;
+					}
 				}
-			}
-			position = Vector2.Lerp (transform.position, target, (Time.deltaTime * speed));
-			transform.position = position;
+				position = Vector2.Lerp (transform.position, target, (Time.deltaTime * speed));
+				transform.position = position;
 
-				if (transform.position == new Vector3 (target.x, target.y, 0) || transform.position.x == 0|| transform.position.x == 9)
-			{
-				hitBehavior (1);
-			}
+				if (transform.position == new Vector3 (target.x, target.y, 0) || transform.position.x == 0 || transform.position.x == 9)
+				{
+					hitBehavior (1);
+				}
 			break;
 		//Rifle = moves forward indefinitely 
-		case 2:
+			case 2:
 			//if player 1
-			if (PlayerNum == 1)
-			{
-				target = new Vector2 (transform.position.x, transform.position.y) + direction;
-			} 
+				if (PlayerNum == 1)
+				{
+					target = new Vector2 (transform.position.x, transform.position.y) + direction;
+				} 
 			//if player 2
 			else
-			{
-				target = new Vector2 (transform.position.x, transform.position.y) - direction;
+				{
+					target = new Vector2 (transform.position.x, transform.position.y) - direction;
 
-			}
-			position = Vector2.Lerp (transform.position, target, Time.deltaTime*speed);
-			transform.position = position;
+				}
+				position = Vector2.Lerp (transform.position, target, Time.deltaTime * speed);
+				transform.position = position;
 			break;
 		//Shotgun = moves 2 ahead
-		case 3:
+			case 3:
 			//Player one
-			if (PlayerNum == 1)
-			{
-				if (targetNeeded)
+				if (PlayerNum == 1)
 				{
-					target = new Vector2 (transform.position.x + 2, transform.position.y);
-					targetNeeded = false;
+					if (targetNeeded)
+					{
+						target = new Vector2 (transform.position.x + 2, transform.position.y);
+						targetNeeded = false;
+					}
 				}
-			}
 			//player 2
 			else
-			{
-				if (targetNeeded)
 				{
-					target = new Vector2 (transform.position.x - 2, transform.position.y);
-					targetNeeded = false;
+					if (targetNeeded)
+					{
+						target = new Vector2 (transform.position.x - 2, transform.position.y);
+						targetNeeded = false;
+					}
 				}
-			}
-			position = Vector2.Lerp (transform.position, target, (Time.deltaTime * speed));
-			transform.position = position;
+				position = Vector2.Lerp (transform.position, target, (Time.deltaTime * speed));
+				transform.position = position;
 
-			if (transform.position == new Vector3(target.x, target.y,0))
-			{
-				hitBehavior (3);
-			}
+				if (transform.position == new Vector3 (target.x, target.y, 0))
+				{
+					hitBehavior (3);
+				}
 			break;
 		//Gatling = moves for 5 spaces 
-		case 4:
+			case 4:
 			
-			hitBehavior (4);
+				hitBehavior (4);
 			
 			break;
 
+		
+			case 6:
+				//Player one
+				if (PlayerNum == 1)
+				{
+					if (targetNeeded)
+					{
+						target = new Vector2 (transform.position.x + 4, transform.position.y);
+						targetNeeded = false;
+					}
+				}
+				//player 2
+				else
+				{
+					if (targetNeeded)
+					{
+						target = new Vector2 (transform.position.x - 4, transform.position.y);
+						targetNeeded = false;
+					}
+				}
+				position = Vector2.Lerp (transform.position, target, (Time.deltaTime * speed));
+				transform.position = position;
+
+				if (transform.position == new Vector3 (target.x, target.y, 0))
+				{
+					hitBehavior (6);
+				}
+			break;
 		}
 	}
 
@@ -437,7 +464,49 @@ public class Fire : Spell {
 				markedForDeletion = true;
 				gattlingTimer = 50;
 			} 
-			markedForDeletion = true;
+			break;
+			case 6:
+				//if statement to change the postion of the explosion depending if player 1 or 2
+				if(PlayerNum==1)
+				{
+					hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x+1, transform.position.y), 1.25f);
+				}
+				else
+				{
+					hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x-1, transform.position.y), 1.25f);
+				}
+				//goes through the array
+				foreach (Collider2D c in hitColliders) {
+					bool hit = true;
+					foreach (GameObject e in hitEnemies) {
+						if (c.gameObject == e) {
+							hit = false;
+						}
+					}
+
+					if (c.gameObject.tag == "Enemy" && hit) {
+
+						if (PlayerNum == 1)
+						{
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
+							hitEnemies.Add (c.gameObject);
+						}
+					} else if (c.gameObject.tag == "Player" && PlayerNum == 2 && hit) {
+						//Debug.Log (damageCalc (damageTier, hitNum));
+						c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
+						hitEnemies.Add (c.gameObject);
+
+					} else if (c.gameObject.tag == "Player2" && PlayerNum == 1 && hit) {
+						c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
+						hitEnemies.Add (c.gameObject);
+					}
+
+					//show area of affect
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone") {
+						showPanels (c);
+					}
+				}
+				markedForDeletion = true;
 			break;
 		}
 	}

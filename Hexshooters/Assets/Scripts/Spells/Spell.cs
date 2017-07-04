@@ -17,6 +17,7 @@ public class Spell : MonoBehaviour {
 	public Sprite bulletImage;
 	public Sprite runeImage;
 	public int PlayerNum;
+	public Vector2 target;
 	public bool MarkedForDeletion
 	{
 		get { return markedForDeletion;}
@@ -97,5 +98,10 @@ public class Spell : MonoBehaviour {
 	public void specialEffect(Attributes a)
 	{
 		
+	}
+	public void reverseSpell()
+	{
+		direction = -direction;
+		target = -target;
 	}
 }

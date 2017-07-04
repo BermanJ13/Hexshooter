@@ -23,7 +23,6 @@ public class FieldManager : MonoBehaviour
 	protected Spell[] spells;
 	protected Enemy[] enemies;
 	protected Obstacle[] obstacles;
-	protected GameObject[] bulletIndicators;
 	protected Player player;
 	public bool pause = false;
 	public List<Object> Handful = new List<Object>();
@@ -84,6 +83,11 @@ public class FieldManager : MonoBehaviour
 
 		if (GameObject.Find ("OverPlayer") != null)
 			player.weapon = GameObject.Find ("OverPlayer").GetComponent<OverPlayer>().weapon;
+		
+		if(player.weapon == 6)
+			player.Chamber = Handful;
+		else
+			Shuffle(Handful);
 
 		//Selects and enables the cooresponding UI based on the character
 		chooseGun (player.weapon, false);
@@ -137,11 +141,14 @@ public class FieldManager : MonoBehaviour
 
 		if (pause)
 		{
-			if (Input.GetButtonDown ("Cancel_Solo"))
+			if (player.weapon != 6)
 			{
-				if (Temp.Count > 0)
+				if (Input.GetButtonDown ("Cancel_Solo"))
 				{
-					removeBullet ();
+					if (Temp.Count > 0)
+					{
+						removeBullet ();
+					}
 				}
 			}
 
@@ -256,12 +263,15 @@ public class FieldManager : MonoBehaviour
 			}
 		}
 
-		//Removes the last bullet from the camber and places it back in he selection screen.
-		if (pause && Input.GetButtonDown("Cancel_Solo"))
+		if (player.weapon != 6)
 		{
-			if (Temp.Count > 0)
+			//Removes the last bullet from the camber and places it back in he selection screen.
+			if (pause && Input.GetButtonDown ("Cancel_Solo"))
 			{
-				removeBullet ();
+				if (Temp.Count > 0)
+				{
+					removeBullet ();
+				}
 			}
 		}
 
@@ -457,30 +467,31 @@ public class FieldManager : MonoBehaviour
 	//REnables the UI for the reload menu
 	public void showReloadScreen()
 	{
-		//resets the bottle indicators of bullet number
-		foreach(GameObject g in bulletIndicators)
-		{
-			g.SetActive (true);
-		}
 		//resets the default staus to the rune holding ui
 		for (int i = 0; i < spellSlots.Count; i++)
 		{
 			spellSlots[i].GetComponent<Image>().sprite = defaultSlot;
 			spellSlots[i].GetComponent<Image>().color = Color.white;
 		}
-
-		//removes the bullets used in the last round from the deck
-		for(int i=Temp.Count-1;i>-1;i--)
+		if (player.weapon != 6)
 		{
-			if (Temp [i] != null)
+			//removes the bullets used in the last round from the deck
+			for (int i = Temp.Count - 1; i > -1; i--)
 			{
-				Temp.RemoveAt (i);
+				if (Temp [i] != null)
+				{
+					Temp.RemoveAt (i);
+				}
+				if (TempNum [i] != null)
+				{
+					Handful.RemoveAt (TempNum [i]);
+					TempNum.RemoveAt (i);
+				}
 			}
-			if (TempNum [i] != null)
-			{
-				Handful.RemoveAt (TempNum [i]);
-				TempNum.RemoveAt (i);
-			}
+		}
+		else
+		{
+			Handful = player.Chamber;
 		}
 		//reenables the UI for the reload screen
 		for (int i = 0; i< pauseObjects.Length;i++)
@@ -534,6 +545,11 @@ public class FieldManager : MonoBehaviour
 				r.runeDesc = curSpell.GetComponent<Spell> ().description;
 				r.runeDamage = curSpell.GetComponent<Spell>().damage.ToString();
 			}
+			if (player.weapon == 6)
+			{
+				b.interactable = false;
+				EventSystem.current.SetSelectedGameObject (GameObject.Find("BattleButton"));
+			}
 		}
 
 		//Sets the player's reload value to false preventing it from reactivating the reload screen immediately
@@ -547,10 +563,13 @@ public class FieldManager : MonoBehaviour
 		player.myStatus.AddEffect (shotLag);
 		firstPause = false;
 
-		//Adds the selected bullets to the chamber
-		for (int i = 0; i < Temp.Count; i++)
+		if (player.weapon != 6)
 		{
-			player.Chamber.Add(Temp [i]);
+			//Adds the selected bullets to the chamber
+			for (int i = 0; i < Temp.Count; i++)
+			{
+				player.Chamber.Add (Temp [i]);
+			}
 		}
 
 		//DIsbales the pause UI
@@ -680,15 +699,6 @@ public class FieldManager : MonoBehaviour
 		pauseUI = GameObject.FindGameObjectsWithTag ("PauseUI");
 
 
-		bulletIndicators = new GameObject[8];
-		bulletIndicators [0] = GameObject.Find ("Player 1 Bottle 1");
-		bulletIndicators [1] = GameObject.Find ("Player 1 Bottle 2");
-		bulletIndicators [2] = GameObject.Find ("Player 1 Bottle 3");
-		bulletIndicators [3] = GameObject.Find ("Player 1 Bottle 4");
-		bulletIndicators [4] = GameObject.Find ("Player 1 Bottle 5");
-		bulletIndicators [5] = GameObject.Find ("Player 1 Bottle 6");
-		bulletIndicators [6] = GameObject.Find ("Player 1 Bottle 7");
-		bulletIndicators [7] = GameObject.Find ("Player 1 Bottle 8");
 
 		runeDisplay = GameObject.Find ("RuneHolder");
 		runeDamage = GameObject.Find ("RuneDamage").GetComponent<Text>();
@@ -709,7 +719,6 @@ public class FieldManager : MonoBehaviour
 			Handful.Add(Resources.Load ("Water"));
 			Handful.Add(Resources.Load ("Wind"));
 		}
-		Shuffle(Handful);
 	}
 
 	//Chooses the Proper gun for the character and activates the cooresponding UI

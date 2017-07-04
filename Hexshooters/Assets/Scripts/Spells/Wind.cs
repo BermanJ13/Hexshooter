@@ -37,7 +37,8 @@ public class Wind : Spell {
 		case 3:
         //gatling
 		case 4:
-			//cane gun - not priority
+		//bow
+		case 6:
 			if (PlayerNum == 1)
 			{
 				target = new Vector2(transform.position.x, transform.position.y) + direction;
@@ -420,6 +421,23 @@ public class Wind : Spell {
 						showPanels (c);
 					}
 			}
+			break;
+			case 6:
+
+				colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
+				foreach (Collider2D c in colliders)
+				{
+					if (c.gameObject.tag == "Spell")
+					{
+						c.GetComponent<Spell> ().PlayerNum = PlayerNum;
+						c.GetComponent<Spell> ().reverseSpell ();
+						markedForDeletion = true; //used to delete bullet
+					}
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
+				}
 			break;
 		}
 	}

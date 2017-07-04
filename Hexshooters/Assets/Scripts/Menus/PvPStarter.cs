@@ -13,7 +13,8 @@ public enum Menus
 	PvP,
 	Options,
 	Credits,
-	CharSelect
+	CharSelect,
+	Win
 }
 public class PvPStarter : MonoBehaviour {
 	public GameObject[] menuObjects;
@@ -46,7 +47,8 @@ public class PvPStarter : MonoBehaviour {
 		creditsMenuObjects = GameObject.FindGameObjectsWithTag ("Credits");
 		charMenuObjects = GameObject.FindGameObjectsWithTag ("CharSelect");
 		extraMenuObjects = GameObject.FindGameObjectsWithTag ("ExtraMenu");
-		menu = Menus.Main; 
+		if(SceneManager.GetActiveScene().name != "Win" &&SceneManager.GetActiveScene().name != "Results" && SceneManager.GetActiveScene().name != "Game Over")
+			menu = Menus.Main; 
 		pvpMenu = false;
 		change = true;
 		us = GameObject.Find("__app").GetComponent<UniversalSettings> ();
@@ -87,6 +89,10 @@ public class PvPStarter : MonoBehaviour {
 		{
 			bool[] menuSettings = new bool[] {false, false, false, false, true, false};
 			menuChanger (menuSettings);
+		}
+		if (menu == Menus.Win)
+		{
+			ES.SetSelectedGameObject (GameObject.Find ("Home"));
 		}
 	}
 	public void menuChanger(bool[] settings)

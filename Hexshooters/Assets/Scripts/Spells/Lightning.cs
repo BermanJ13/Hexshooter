@@ -8,7 +8,6 @@ public class Lightning : Spell {
 	private GameObject[] enemyPanels; 
 	public Transform lightning;
 	private bool targetNeeded;
-	Vector2 target;
 	Vector2 position;
 	Collider2D[] colliders;	
 	// Use this for initialization
@@ -96,6 +95,33 @@ public class Lightning : Spell {
 				colliders = Physics2D.OverlapAreaAll (new Vector2 (transform.position.x-1, transform.position.y - 1.2f), new Vector2 (transform.position.x-1, transform.position.y + 1.2f));
 			}
 			hitBehavior (5);
+			break;
+		//Bow
+		case 6:
+
+				if (PlayerNum == 1)
+				{
+					//Picks a target square to lerp to before activating effect
+					if (targetNeeded) {
+						target = new Vector2 (transform.position.x+3, transform.position.y);
+						targetNeeded= false;
+					}
+				} 
+				else
+				{
+					//Picks a target square to lerp to before activating effect
+					if (targetNeeded) {
+						target = new Vector2 (transform.position.x-3, transform.position.y);
+						targetNeeded= false;
+					}
+				}
+
+				position = Vector2.Lerp (transform.position,target, (Time.deltaTime*speed));
+				transform.position = position;
+				if (transform.position == new Vector3(target.x, target.y,0))
+				{
+					markedForDeletion = true;
+				}
 			break;
 		}
 	}
@@ -426,8 +452,11 @@ public class Lightning : Spell {
 					}
 			}
 			markedForDeletion = true;
-			break;
-
+		break;
+		case 6:
+				Instantiate (Resources.Load ("Lightningrod"), transform.position, Quaternion.identity);
+				markedForDeletion = true;
+		break;
 		}
 	}
 

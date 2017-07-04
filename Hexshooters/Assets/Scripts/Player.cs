@@ -7,8 +7,8 @@ using System.IO;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
-	public Attributes[] weaknesses;
-	public Attributes[] strengths;
+	public List<Attributes> weaknesses = new List<Attributes>();
+	public List<Attributes> strengths = new List<Attributes>();
     public int health;
 	public Transform spell;
 	public int weapon;
@@ -18,7 +18,6 @@ public class Player : MonoBehaviour {
 	public int PlayerNum;
 	private bool yAxisInUse = false;
 	private bool xAxisInUse = false;
-	GameObject[] bulletIndicators;
 	Text currentBullet;
 	Text pHealth;
 	public int armorWeakness;
@@ -111,20 +110,27 @@ public class Player : MonoBehaviour {
 					shotLimiter++;
 				}
 			break;
+			case 5:
+
+			break;
+			case 6:
+
+			break;
 		}
 	}
 	// Update is called once per frame
 	public void playerUpdate () 
 	{
 		canMove = true;
-		hideEmpty ();
 		updateCurrentSpell ();
 		pHealth.text = health.ToString();
 		buttonPresed = false;
 
 		weaponAbility(weapon);
 
-		if (!myStatus.IsAffected( StatusType.Bound) && !myStatus.IsAffected( StatusType.MoveLag))
+		statusAtrributes ();
+
+		if (!myStatus.IsAffected( StatusType.Bound) && !myStatus.IsAffected( StatusType.MoveLag) && !myStatus.IsAffected( StatusType.Bubbled))
 		{
 			movement ();
 		}
@@ -453,13 +459,6 @@ public class Player : MonoBehaviour {
 		//myStatus.AddEffect (shotLag);
 	}
 
-	void hideEmpty()
-	{
-		for (int i = bulletIndicators.Length - 1; i >= Chamber.Count; i--)
-		{
-			bulletIndicators [i].SetActive (false);
-		}
-	}
 	void updateCurrentSpell()
 	{
 		if (Chamber.Count > 0)
@@ -545,6 +544,12 @@ public class Player : MonoBehaviour {
 			break;
 			case 4:
 			break;
+			case 5:
+
+			break;
+			case 6:
+
+			break;
 		}
 	}
 	public void activeUpdate()
@@ -610,8 +615,8 @@ public class Player : MonoBehaviour {
 			else
 			{
 				atkbutton = "Fire_Solo";
-				abilButton1 = "Ability 1_P1";
-				abilButton2 = "Ability 2_P1";
+				abilButton1 = "Ability 1_P2";
+				abilButton2 = "Ability 2_P2";
 			}
 
 		}
@@ -636,29 +641,38 @@ public class Player : MonoBehaviour {
 		{
 			pHealth = GameObject.Find("PlayerHealth_2").GetComponent<Text>();
 		}
-
-		bulletIndicators = new GameObject[8];
-		if (PlayerNum == 1)
+	}
+	public void statusAtrributes()
+	{
+		if(myStatus.IsAffected (StatusType.Bubbled))
 		{
-			bulletIndicators [0] = GameObject.Find ("Player 1 Bottle 1");
-			bulletIndicators [1] = GameObject.Find ("Player 1 Bottle 2");
-			bulletIndicators [2] = GameObject.Find ("Player 1 Bottle 3");
-			bulletIndicators [3] = GameObject.Find ("Player 1 Bottle 4");
-			bulletIndicators [4] = GameObject.Find ("Player 1 Bottle 5");
-			bulletIndicators [5] = GameObject.Find ("Player 1 Bottle 6");
-			bulletIndicators [6] = GameObject.Find ("Player 1 Bottle 7");
-			bulletIndicators [7] = GameObject.Find ("Player 1 Bottle 8");
-		} 
+			bool weak = false;
+			foreach (Attributes a in weaknesses)
+			{
+				if (a == Attributes.Electric)
+				{
+					weak = true;
+				}
+			}
+			if (!weak)
+			{
+				weaknesses.Add (Attributes.Electric);
+			}
+		}
 		else
 		{
-			bulletIndicators [0] = GameObject.Find ("Player 2 Bottle 1");
-			bulletIndicators [1] = GameObject.Find ("Player 2 Bottle 2");
-			bulletIndicators [2] = GameObject.Find ("Player 2 Bottle 3");
-			bulletIndicators [3] = GameObject.Find ("Player 2 Bottle 4");
-			bulletIndicators [4] = GameObject.Find ("Player 2 Bottle 5");
-			bulletIndicators [5] = GameObject.Find ("Player 2 Bottle 6");
-			bulletIndicators [6] = GameObject.Find ("Player 2 Bottle 7");
-			bulletIndicators [7] = GameObject.Find ("Player 2 Bottle 8");
+			int deleter = -1;
+			for (int i = 0; i < weaknesses.Count ; i++)
+			{
+				if (weaknesses[i] == Attributes.Electric)
+				{
+					deleter = i;
+				}
+			}
+			if (deleter != -1)
+			{
+				weaknesses.RemoveAt (deleter);
+			}
 		}
 	}
 }

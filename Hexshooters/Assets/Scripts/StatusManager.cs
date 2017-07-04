@@ -17,7 +17,8 @@ public enum StatusType
 	Disabled,
     Stacking,
 	MoveLag,
-	ShotLag
+	ShotLag,
+	Bubbled
 }
 
 /// <summary>
@@ -119,13 +120,19 @@ public class StatusManager : MonoBehaviour
                     effect.m_timer += 5;
                 else
                     m_effects.Add(effect);
-                break;
-            case StatusType.Stacking:
-                if (m_effects.Contains(effect))
-                    effect.m_timer += 6;
-                else
-                    m_effects.Add(effect);
-                break;
+			break;
+			case StatusType.Stacking:
+				if (m_effects.Contains(effect))
+					effect.m_timer += 6;
+				else
+					m_effects.Add(effect);
+			break;
+			case StatusType.Bubbled:
+				if (m_effects.Contains(effect))
+					effect.m_timer += 3;
+				else
+					m_effects.Add(effect);
+			break;
             default:
                 m_effects.Add(effect);
                 break;
