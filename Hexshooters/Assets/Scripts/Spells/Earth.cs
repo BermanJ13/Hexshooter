@@ -10,7 +10,6 @@ public class Earth : Spell {
 	private bool targetNeeded;
 	bool inBounds;
 	public Transform obstacle;
-	Vector2 target;
 	Vector2 position;
 	Collider2D[] colliders;	
 	private bool created;
@@ -145,6 +144,19 @@ public class Earth : Spell {
 				hitBehavior (3);
 			}
 			break;
+			case 6:
+				if (PlayerNum == 1)
+				{
+					target = new Vector2 (transform.position.x, transform.position.y) + direction;
+				} 
+				else
+				{
+					target = new Vector2 (transform.position.x, transform.position.y) - direction;
+				}
+				position = Vector2.Lerp(transform.position, target, Time.deltaTime*speed);
+				transform.position = position;
+			break;
+				
 		}
 	}
 

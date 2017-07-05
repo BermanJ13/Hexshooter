@@ -117,20 +117,33 @@ public class Water : Spell {
                 position = Vector2.Lerp(transform.position, target, Time.deltaTime * speed);
                 transform.position = position;
                 break;
-            //cane gun - not priority
-            case 5:
-			if (PlayerNum == 1)
-			{
-				target = new Vector2 (transform.position.x, transform.position.y) + direction;
-			} 
-			else
-			{
-				target = new Vector2 (transform.position.x, transform.position.y) - direction;
-			}
-                position = Vector2.Lerp(transform.position, target, Time.deltaTime*speed);
-                transform.position = position;
-                break;
+				//cane gun - not priority
+			case 5:
+				if (PlayerNum == 1)
+				{
+					target = new Vector2 (transform.position.x, transform.position.y) + direction;
+				} 
+				else
+				{
+					target = new Vector2 (transform.position.x, transform.position.y) - direction;
+				}
+				position = Vector2.Lerp(transform.position, target, Time.deltaTime*speed);
+				transform.position = position;
+			break;
 
+			case 6:
+				if (PlayerNum == 1)
+				{
+					target = new Vector2 (transform.position.x, transform.position.y) + direction;
+				} 
+				else
+				{
+					target = new Vector2 (transform.position.x, transform.position.y) - direction;
+				}
+				position = Vector2.Lerp(transform.position, target, Time.deltaTime*speed);
+				transform.position = position;
+			break;
+				
         }
     }
 

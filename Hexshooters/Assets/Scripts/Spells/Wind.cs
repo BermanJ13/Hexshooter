@@ -24,7 +24,7 @@ public class Wind : Spell {
 
     public override void movement(int weapon)
     {
-		Vector2 target, position;
+		Vector2 position;
         switch (weapon)
         {
         //rifle
