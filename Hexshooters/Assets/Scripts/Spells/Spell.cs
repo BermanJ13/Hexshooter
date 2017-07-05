@@ -34,6 +34,10 @@ public class Spell : MonoBehaviour {
 		{
 			transform.localEulerAngles = new Vector3(0f,0f,180f);
 		}
+        if (weaponUsed == 2)
+        {
+            direction = new Vector2(direction.x * 2.0f, direction.y * 2.0f);
+        }
 	}
 	// Update is called once per frame
 	public void spellUpdate () 
