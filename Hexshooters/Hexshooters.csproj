@@ -81,21 +81,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\ActivateAttack.cs" />
     <Compile Include="Assets\Scripts\ActiveFieldManager.cs" />
+    <Compile Include="Assets\Scripts\CameraSettings.cs" />
     <Compile Include="Assets\Scripts\CharSelect.cs" />
     <Compile Include="Assets\Scripts\ControlDisplay.cs" />
     <Compile Include="Assets\Scripts\ControllerRefocus.cs" />
+    <Compile Include="Assets\Scripts\CursorLock.cs" />
     <Compile Include="Assets\Scripts\DialogueManager.cs" />
     <Compile Include="Assets\Scripts\Enemies\Attacks\BasicEnemyAttack.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Attacks\BuffaloPlow.cs" />
     <Compile Include="Assets\Scripts\Enemies\Attacks\EnemySpell.cs" />
     <Compile Include="Assets\Scripts\Enemies\Attacks\ScorpionStrike.cs" />
     <Compile Include="Assets\Scripts\Enemies\Attacks\WildCatStrike.cs" />
     <Compile Include="Assets\Scripts\Enemies\Bandit.cs" />
     <Compile Include="Assets\Scripts\Enemies\Bosses\Ransom.cs" />
     <Compile Include="Assets\Scripts\Enemies\Bosses\Rob.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Buffalo.cs" />
     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Mouse.cs" />
     <Compile Include="Assets\Scripts\Enemies\Scorpion.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Snake.cs" />
     <Compile Include="Assets\Scripts\Enemies\WildCat.cs" />
     <Compile Include="Assets\Scripts\FieldManager.cs" />
     <Compile Include="Assets\Scripts\GameInfo.cs" />
@@ -107,6 +112,8 @@
     <Compile Include="Assets\Scripts\Music\MenuMusic.cs" />
     <Compile Include="Assets\Scripts\Obstacles\Flames.cs" />
     <Compile Include="Assets\Scripts\Obstacles\Obstacle.cs" />
+    <Compile Include="Assets\Scripts\Obstacles\Steam.cs" />
+    <Compile Include="Assets\Scripts\OptionsMenu.cs" />
     <Compile Include="Assets\Scripts\OverPlayer.cs" />
     <Compile Include="Assets\Scripts\Panel.cs" />
     <Compile Include="Assets\Scripts\Particle.cs" />
@@ -122,6 +129,7 @@
     <Compile Include="Assets\Scripts\PvPStarter.cs" />
     <Compile Include="Assets\Scripts\RuneInfo.cs" />
     <Compile Include="Assets\Scripts\SpellHolder.cs" />
+    <Compile Include="Assets\Scripts\Spells\Basic.cs" />
     <Compile Include="Assets\Scripts\Spells\Boomerang.cs" />
     <Compile Include="Assets\Scripts\Spells\Chains.cs" />
     <Compile Include="Assets\Scripts\Spells\Deputy.cs" />
@@ -139,6 +147,8 @@
     <Compile Include="Assets\Scripts\Spells\Wind.cs" />
     <Compile Include="Assets\Scripts\Spells\Wood.cs" />
     <Compile Include="Assets\Scripts\StatusManager.cs" />
+    <Compile Include="Assets\Scripts\Trigger.cs" />
+    <Compile Include="Assets\Scripts\UniversalSettings.cs" />
     <Compile Include="Assets\Scripts\tmp.cs" />
     <Compile Include="Assets\Vortex Game Studios\FilterBehavior\FilterBehaviour.cs" />
     <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\OLDTVScreen.cs" />

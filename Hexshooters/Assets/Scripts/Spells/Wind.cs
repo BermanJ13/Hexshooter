@@ -24,7 +24,7 @@ public class Wind : Spell {
 
     public override void movement(int weapon)
     {
-		Vector2 target, position;
+		Vector2 position;
         switch (weapon)
         {
         //rifle
@@ -37,7 +37,8 @@ public class Wind : Spell {
 		case 3:
         //gatling
 		case 4:
-			//cane gun - not priority
+		//bow
+		case 6:
 			if (PlayerNum == 1)
 			{
 				target = new Vector2(transform.position.x, transform.position.y) + direction;
@@ -81,7 +82,7 @@ public class Wind : Spell {
 
 						if (PlayerNum == 1)
 						{
-							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum)); //enemy takes dmg
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes); //enemy takes dmg
 							if (c.transform.position.y != 4) 
 							{
 								c.transform.position += new Vector3 (0, 1f, 0); //moves the enemy up a penel
@@ -126,7 +127,7 @@ public class Wind : Spell {
 				// if hit player 1
 				else if (c.gameObject.tag == "Player" && PlayerNum == 2) 
 				{
-					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum)); //player 1 takes dmg
+					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum),attributes); //player 1 takes dmg
 					//checking boundary and then moving position accordingly 
 					if (c.transform.position.y != 4) 
 					{
@@ -142,7 +143,7 @@ public class Wind : Spell {
 				// if hit player 2
 				else if (c.gameObject.tag == "Player2" && PlayerNum == 1) 
 				{
-					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum));
+					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 					//checking boundary and then moving position accordingly
 					if (c.transform.position.y != 4) {
 						c.transform.position += new Vector3 (0, 1f, 0);
@@ -261,7 +262,7 @@ public class Wind : Spell {
 
 						if (PlayerNum == 1)
 						{
-					c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum)); //enemy takes dmg
+					c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes); //enemy takes dmg
 					//checking boundary and then moving accordingly
 					if (c.transform.position.x < 8) {
 						c.transform.position += new Vector3 (2f, 0f, 0f);
@@ -315,7 +316,7 @@ public class Wind : Spell {
 				// if hit player 1
 				else if (c.gameObject.tag == "Player" && PlayerNum == 2) 
 				{
-					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum)); //player 1 takes dmg
+					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum),attributes); //player 1 takes dmg
 
 					//checking boundaries and movings accordlingly
 					if (c.transform.position.x > 1) 
@@ -336,7 +337,7 @@ public class Wind : Spell {
 				// if hit player 2
 				else if (c.gameObject.tag == "Player2" && PlayerNum == 1) 
 				{
-					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum));
+					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 					if (c.transform.position.x < 8) {
 						c.transform.position += new Vector3 (2f, 0f, 0f);
 					} 
@@ -368,7 +369,7 @@ public class Wind : Spell {
 					if (c.gameObject.tag == "Enemy") {
 						if (PlayerNum == 1)
 						{
-					c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum)); //enemy takes dmg
+					c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes); //enemy takes dmg
 					c.transform.position += new Vector3 (-1f, 0f, 0.0f); //moves the enemy two panels back
 					markedForDeletion = true; //used to delete bullet
 						}
@@ -389,7 +390,7 @@ public class Wind : Spell {
 				// if hit player 1
 				else if (c.gameObject.tag == "Player" && PlayerNum == 2) 
 				{
-					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum)); //player 1 takes dmg
+					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum),attributes); //player 1 takes dmg
 					//checks boundary and moves accordingly
 					if (c.transform.position.x != 4) {
 						c.transform.position += new Vector3 (1f, 0f, 0f);
@@ -404,7 +405,7 @@ public class Wind : Spell {
 				// if hit player 2
 				else if (c.gameObject.tag == "Player2" && PlayerNum == 1) 
 				{
-					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum));
+					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 					if (c.transform.position.x != 5) {
 						c.transform.position += new Vector3 (-1f, 0f, 0f);
 					} 
@@ -421,6 +422,23 @@ public class Wind : Spell {
 					}
 			}
 			break;
+			case 6:
+
+				colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
+				foreach (Collider2D c in colliders)
+				{
+					if (c.gameObject.tag == "Spell")
+					{
+						c.GetComponent<Spell> ().PlayerNum = PlayerNum;
+						c.GetComponent<Spell> ().reverseSpell ();
+						markedForDeletion = true; //used to delete bullet
+					}
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
+				}
+			break;
 		}
 	}
 
@@ -430,19 +448,23 @@ public class Wind : Spell {
 		{
 			//Revolver
 			case 1:
-			description = "Knocks the enemy up a tile or pushes an obstacle away.";
+				description = "Knocks the enemy up a tile or pushes an obstacle away.";
+				damage = 10;
 			break;
 			//Rifle
 			case 2:
-			description = "Leaves a gust of wind that increases bullet speed";
+				description = "Leaves a gust of wind that increases bullet speed";
+				damage = 0;
 			break;
 			//Shotgun
 			case 3:
-			description = "Knocks the enemy or obstacle back with a burst of compressed air.";
+				description = "Knocks the enemy or obstacle back with a burst of compressed air.";
+				damage = 20;
 			break;
 			//Gatling
 			case 4:
-			description = "Pulls enemies or obstacles towards you.";
+				description = "Pulls enemies or obstacles towards you.";
+				damage = 15;
 			break;
 			//Cane Gun
 			case 5:

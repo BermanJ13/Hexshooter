@@ -49,14 +49,14 @@ public class Chains : Spell {
 					StatusEffect bound = new StatusEffect (3);
 					bound.m_type = StatusType.Bound;
 					c.gameObject.GetComponent<Enemy> ().myStatus.AddEffect (bound);
-					c.gameObject.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+					c.gameObject.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 					returnShot = true;
 					markedForDeletion = true;
 				}
 			} 
 			else if (c.gameObject.tag == "Obstacle")
 			{
-				c.GetComponent<Obstacle> ().takeDamage(damageCalc (damageTier, hitNum));
+				c.GetComponent<Obstacle> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 				returnShot = true;
 				markedForDeletion = true;
 			} 
@@ -65,7 +65,7 @@ public class Chains : Spell {
 				StatusEffect bound = new StatusEffect (10);
 				bound.m_type = StatusType.Bound;
 				c.gameObject.GetComponent<Player> ().myStatus.AddEffect (bound);
-				c.gameObject.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+				c.gameObject.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 				returnShot = true;
 				markedForDeletion = true;
 
@@ -75,7 +75,7 @@ public class Chains : Spell {
 				StatusEffect bound = new StatusEffect (10);
 				bound.m_type = StatusType.Bound;
 				c.gameObject.GetComponent<Player> ().myStatus.AddEffect (bound);
-				c.gameObject.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+				c.gameObject.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 				returnShot = true;
 				markedForDeletion = true;
 			}

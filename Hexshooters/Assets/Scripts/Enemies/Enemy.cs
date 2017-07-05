@@ -20,6 +20,9 @@ public enum EnemyState
 
 public abstract class Enemy : MonoBehaviour {
 
+	public Attributes[] weaknesses;
+	public Attributes[] strengths;
+
 	//health 
 	public int health = 100;
 	public int armorWeakness;
@@ -49,6 +52,8 @@ public abstract class Enemy : MonoBehaviour {
 
     [System.NonSerialized]
     public StatusManager statMngr = new StatusManager();
+
+    protected AudioSource[] sounds;
 
 
     // The timer for determining when to take an action.
@@ -129,6 +134,7 @@ public abstract class Enemy : MonoBehaviour {
         myState = EnemyState.IShouldRunUp;
 
         this.myStatus = this.GetComponent<StatusManager>();
+        sounds = this.gameObject.GetComponents<AudioSource>();
 
     }
 
@@ -216,7 +222,7 @@ public abstract class Enemy : MonoBehaviour {
                 hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y + 1), 0.2f);
                 foreach (Collider2D c in hitColliders)
                 {
-                    //Debug.Log(c.gameObject.tag);
+                    Debug.Log(c.gameObject.tag);
                     //Checks whether or not something is in the way or if the desired spot is within the enemy.
                     if (c.gameObject.tag == "Obstacle" && c.gameObject.GetComponent<Obstacle>().canPass)
                     {
@@ -234,7 +240,7 @@ public abstract class Enemy : MonoBehaviour {
                 hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x-1, transform.position.y), 0.2f);
                 foreach (Collider2D c in hitColliders)
                 {
-                    //Debug.Log(c.gameObject.tag);
+                    Debug.Log(c.gameObject.tag);
                     //Checks whether or not something is in the way or if the desired spot is within the enemy.
                     if (c.gameObject.tag == "Obstacle" && c.gameObject.GetComponent<Obstacle>().canPass)
                     {
@@ -393,8 +399,9 @@ public abstract class Enemy : MonoBehaviour {
         }
 
     }
-	public void takeDamage(int damage) //created for "break" status
+	public void takeDamage(int damage, Attributes[] effects) //created for "break" status
 	{
+        sounds[0].Play();
 		int multipliers = 1;
 		if (myStatus.IsAffected(StatusType.Break))
 		{
@@ -414,6 +421,22 @@ public abstract class Enemy : MonoBehaviour {
 			stackDmg = 0;
 		}
 
+		foreach (Attributes a1 in weaknesses)
+		{
+			foreach (Attributes b1 in effects)
+			{
+				if (b1 == a1)
+					multipliers *= 2;
+			}
+		}
+		foreach (Attributes c1 in strengths)
+		{
+			foreach (Attributes d1 in effects)
+			{
+				if (d1 == c1)
+					multipliers /= 2;
+			}
+		}
 		this.health -= damage* multipliers + stackDmg;
 		if (damage * multipliers + stackDmg > 0)
 			hit = true;

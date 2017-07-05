@@ -37,11 +37,45 @@ public class Flames : Obstacle {
 			{
 				
 			}
+            //else to check if hit by specifically water spell
+            else if (d.gameObject.tag == "Spell")
+            {
+                //creates steam
+                if (d.gameObject.name.Equals("Water"))
+                {
+
+                    if (this.transform.position.y > 9)
+                    {
+                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + (direction.x * 3), transform.position.y), Quaternion.identity);
+                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x, transform.position.y - 1), Quaternion.identity);
+                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + (direction.x * 2), transform.position.y), Quaternion.identity);
+                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + (direction.x * 2), transform.position.y - 1), Quaternion.identity);
+                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + direction.x, transform.position.y - 1), Quaternion.identity);
+                    }
+                    else if (this.transform.position.y < 1)
+                    {
+                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + (direction.x * 3), transform.position.y), Quaternion.identity);
+                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x, transform.position.y + 1), Quaternion.identity);
+                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + (direction.x * 2), transform.position.y), Quaternion.identity);
+                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + (direction.x * 2), transform.position.y + 1), Quaternion.identity);
+                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + direction.x, transform.position.y + 1), Quaternion.identity);
+                    }
+                    else
+                    {
+                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x, transform.position.y + 1), Quaternion.identity);
+                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x, transform.position.y - 1), Quaternion.identity);
+                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + (direction.x * 2), transform.position.y), Quaternion.identity);
+                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + direction.x, transform.position.y + 1), Quaternion.identity);
+                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + direction.x, transform.position.y - 1), Quaternion.identity);
+                    }
+                    MarkedforDeletion = true;
+                }
+            }
 			//else means hit a player enemy
 			else if (d.gameObject.tag == "Enemy") 
 			{
 				Enemy e = d.GetComponent<Enemy> ();
-				e.takeDamage (damage); //enemy takes dmg
+				e.takeDamage (damage, attributes); //enemy takes dmg
 				if (e.transform.position.x != 9) 
 				{
 					//e.transform.position = new Vector3 (e.transform.position.x + 1, e.transform.position.y, e.transform.position.z);
@@ -50,7 +84,7 @@ public class Flames : Obstacle {
 			} 
 			else if (d.gameObject.tag == "Player2") 
 			{
-				d.GetComponent<Player> ().takeDamage (damage); //player takes dmg 
+				d.GetComponent<Player> ().takeDamage (damage, attributes); //player takes dmg 
 
 				if (d.transform.position.x != 9)
 				{
@@ -61,7 +95,7 @@ public class Flames : Obstacle {
 			} 
 			else if(d.gameObject.tag == "Player")
 			{
-				d.GetComponent<Player> ().takeDamage (damage); //player takes dmg
+				d.GetComponent<Player> ().takeDamage (damage, attributes); //player takes dmg
 
 
 				if (d.GetComponent<Player> ().transform.position.x != 0) 

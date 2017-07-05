@@ -7,7 +7,8 @@ using System.IO;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
-
+	public List<Attributes> weaknesses = new List<Attributes>();
+	public List<Attributes> strengths = new List<Attributes>();
     public int health;
 	public Transform spell;
 	public int weapon;
@@ -17,12 +18,13 @@ public class Player : MonoBehaviour {
 	public int PlayerNum;
 	private bool yAxisInUse = false;
 	private bool xAxisInUse = false;
-	GameObject[] bulletIndicators;
 	Text currentBullet;
 	Text pHealth;
 	public int armorWeakness;
 	public StatusManager myStatus;
 	protected string atkbutton;
+	protected string abilButton1;
+	protected string abilButton2;
 	public string stat;
 	bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
 	int stackDmg;
@@ -36,92 +38,16 @@ public class Player : MonoBehaviour {
 	StatusEffect moveLag;
 	StatusEffect shotLag;
 	public bool basic;
+	bool canMove = true;
+	int shotLimiter = 0;
 
     // Use this for initialization
     void Start () 
 	{
 		basic = false;
-		if (playerDisplay != null)
-		{
-			if (PlayerNum == 1)
-			{
-				playerDisplay = GameObject.Find ("PlayerImage").GetComponent<Image> ();
-			}
-			else
-			{				
-				playerDisplay = GameObject.Find ("PlayerImage_2").GetComponent<Image> ();
-			}
-		}
-		hit = false;
-		if (GameObject.Find ("CharSelect") != null)
-		{
-			if (PlayerNum == 1)
-			{
-				weapon = GameObject.Find ("CharSelect").GetComponent<CharSelect> ().p1;
-			}
-			else
-			{				
-				weapon = GameObject.Find ("CharSelect").GetComponent<CharSelect> ().p2;
-			}
-		}
-		 myStatus = GetComponent<StatusManager>();
-		if (PlayerNum == 1)
-		{
-			if (GameObject.FindGameObjectWithTag("Player2") != null && PlayerNum == 1)
-			{
-				atkbutton = "Fire_P1";
-			} 
-			else
-			{
-				atkbutton = "Fire_Solo";
-			}
 
-		}
-		else
-		{
-			atkbutton = "Fire_P2";
-		}
-		if (PlayerNum == 1)
-		{
-			currentBullet = GameObject.Find("Current Bullet").GetComponent<Text>();
-		}
-		else
-		{
-			currentBullet = GameObject.Find("Current Bullet_P2").GetComponent<Text>();
-		}
+		setPlayer ();
 
-		if (PlayerNum == 1)
-		{
-			pHealth = GameObject.Find("PlayerHealth").GetComponent<Text>();
-		}
-		else
-		{
-			pHealth = GameObject.Find("PlayerHealth_2").GetComponent<Text>();
-		}
-
-		bulletIndicators = new GameObject[8];
-		if (PlayerNum == 1)
-		{
-			bulletIndicators [0] = GameObject.Find ("Player 1 Bottle 1");
-			bulletIndicators [1] = GameObject.Find ("Player 1 Bottle 2");
-			bulletIndicators [2] = GameObject.Find ("Player 1 Bottle 3");
-			bulletIndicators [3] = GameObject.Find ("Player 1 Bottle 4");
-			bulletIndicators [4] = GameObject.Find ("Player 1 Bottle 5");
-			bulletIndicators [5] = GameObject.Find ("Player 1 Bottle 6");
-			bulletIndicators [6] = GameObject.Find ("Player 1 Bottle 7");
-			bulletIndicators [7] = GameObject.Find ("Player 1 Bottle 8");
-		} 
-		else
-		{
-			bulletIndicators [0] = GameObject.Find ("Player 2 Bottle 1");
-			bulletIndicators [1] = GameObject.Find ("Player 2 Bottle 2");
-			bulletIndicators [2] = GameObject.Find ("Player 2 Bottle 3");
-			bulletIndicators [3] = GameObject.Find ("Player 2 Bottle 4");
-			bulletIndicators [4] = GameObject.Find ("Player 2 Bottle 5");
-			bulletIndicators [5] = GameObject.Find ("Player 2 Bottle 6");
-			bulletIndicators [6] = GameObject.Find ("Player 2 Bottle 7");
-			bulletIndicators [7] = GameObject.Find ("Player 2 Bottle 8");
-		}
 		GameObject p2 = GameObject.FindGameObjectWithTag("Player2");
 		if (p2 != null || PlayerNum != 1)
 		{
@@ -135,26 +61,105 @@ public class Player : MonoBehaviour {
         	health = 100;
 
     }
-	
+
+	public void weaponAbility(int weaponUsed)
+	{
+		switch (weaponUsed)
+		{
+			case 1:
+				if (Input.GetButtonDown(abilButton1))
+				{
+					chamberLeft ();
+				}
+				if (Input.GetButtonDown(abilButton2))
+				{
+					chamberRight ();
+				}
+			break;
+			case 2:
+				//Fusion
+			break;
+			case 3:
+				
+			break;
+			case 4:
+				if (shotLimiter == 10)
+				{
+					if (Input.GetButton ("Ability 1_P1") || Input.GetButton ("Ability 2_P1"))
+					{
+						if (!myStatus.IsAffected (StatusType.Disabled) && !myStatus.IsAffected (StatusType.ShotLag))
+						{
+							GameObject go = (GameObject)Instantiate (Resources.Load ("Rapid"), new Vector2 (transform.position.x, transform.position.y), Quaternion.identity);
+					
+							////get thething component on your instantiated object
+							Spell mything = go.GetComponent<Spell> ();
+					
+							////set a mmber variable (must be PUBLIC)
+							mything.weaponUsed = weapon; 
+							mything.PlayerNum = PlayerNum;
+						}
+						shotLimiter = 0;
+						allowShot = false;
+						moveLag = new StatusEffect (.7f);
+						moveLag.m_type = StatusType.Bound;
+						myStatus.AddEffect (moveLag);
+					}
+				}
+				else if(shotLimiter !=10)
+				{
+					shotLimiter++;
+				}
+			break;
+			case 5:
+
+			break;
+			case 6:
+
+			break;
+		}
+	}
 	// Update is called once per frame
 	public void playerUpdate () 
 	{
-		bool canMove = true;
-		hideEmpty ();
+		canMove = true;
 		updateCurrentSpell ();
 		pHealth.text = health.ToString();
 		buttonPresed = false;
-		if (!myStatus.IsAffected( StatusType.Bound) && !myStatus.IsAffected( StatusType.MoveLag))
+
+		weaponAbility(weapon);
+
+		statusAtrributes ();
+
+		if (!myStatus.IsAffected( StatusType.Bound) && !myStatus.IsAffected( StatusType.MoveLag) && !myStatus.IsAffected( StatusType.Bubbled))
 		{
 			movement ();
 		}
-		//if (Input.GetButtonDown (atkbutton) && Chamber.Count > 0)
-		//{
-		//	if (!myStatus.IsAffected (StatusType.Disabled))
-		//	{
-		//		initiateSpell ();
-		//	}
-		//}
+
+		fire();
+
+		if (Chamber.Count == 0 && field.Handful.Count > 0)
+		{
+			reload = true;
+		}
+
+		if (hit)
+		{
+			GetComponent<SpriteRenderer> ().color = Color.red;
+			hit = false;
+		}
+		else if (heal)
+		{
+			GetComponent<SpriteRenderer> ().color = Color.blue;
+			heal = false;
+		}
+		else
+		{
+			GetComponent<SpriteRenderer>().color = Color.white;
+		}
+	}
+
+	void fire()
+	{
 		if (allowShot)
 		{
 			if (Input.GetAxisRaw (atkbutton) > 0 && Chamber.Count > 0)
@@ -186,7 +191,7 @@ public class Player : MonoBehaviour {
 						mything.PlayerNum = PlayerNum;
 						shotLag = new StatusEffect (0.5f);
 						shotLag.m_type = StatusType.ShotLag;
-						myStatus.AddEffect (shotLag);
+						//myStatus.AddEffect (shotLag);
 					}
 					allowShot = false;
 				}
@@ -194,28 +199,7 @@ public class Player : MonoBehaviour {
 		}
 		if (Input.GetAxisRaw (atkbutton) == 0)
 			allowShot = true;
-		if (Chamber.Count == 0 && field.Handful.Count > 0)
-		{
-			reload = true;
-		}
-
-		if (hit)
-		{
-			GetComponent<SpriteRenderer> ().color = Color.red;
-			hit = false;
-		}
-		else if (heal)
-		{
-			GetComponent<SpriteRenderer> ().color = Color.blue;
-			heal = false;
-		}
-		else
-		{
-			GetComponent<SpriteRenderer>().color = Color.white;
-		}
 	}
-
-		
 	
 	void movement()
 	{
@@ -296,7 +280,7 @@ public class Player : MonoBehaviour {
 					transform.position = new Vector2 (transform.position.x + 1, transform.position.y);
 					moveLag = new StatusEffect (0.1f);
 					moveLag.m_type = StatusType.Bound;
-					myStatus.AddEffect (moveLag);
+					//myStatus.AddEffect (moveLag);
 				}
 			}
 		} 
@@ -336,7 +320,7 @@ public class Player : MonoBehaviour {
 					transform.position = new Vector2 (transform.position.x - 1, transform.position.y);
 					moveLag = new StatusEffect (0.1f);
 					moveLag.m_type = StatusType.Bound;
-					myStatus.AddEffect (moveLag);
+					//myStatus.AddEffect (moveLag);
 				}
 			}
 		}
@@ -377,7 +361,7 @@ public class Player : MonoBehaviour {
 					transform.position = new Vector2 (transform.position.x, transform.position.y + 1);
 					moveLag = new StatusEffect (0.1f);
 					moveLag.m_type = StatusType.Bound;
-					myStatus.AddEffect (moveLag);
+					//myStatus.AddEffect (moveLag);
 				}
 			} 
 		} else if (vertical < 0)
@@ -416,7 +400,7 @@ public class Player : MonoBehaviour {
 					transform.position = new Vector2 (transform.position.x, transform.position.y - 1);
 					moveLag = new StatusEffect (0.1f);
 					moveLag.m_type = StatusType.Bound;
-					myStatus.AddEffect (moveLag);
+					//myStatus.AddEffect (moveLag);
 				}
 			}
 		}
@@ -472,16 +456,9 @@ public class Player : MonoBehaviour {
 		Chamber.RemoveAt (0);
 		shotLag = new StatusEffect (0.1f);
 		shotLag.m_type = StatusType.ShotLag;
-		myStatus.AddEffect (shotLag);
+		//myStatus.AddEffect (shotLag);
 	}
 
-	void hideEmpty()
-	{
-		for (int i = bulletIndicators.Length - 1; i >= Chamber.Count; i--)
-		{
-			bulletIndicators [i].SetActive (false);
-		}
-	}
 	void updateCurrentSpell()
 	{
 		if (Chamber.Count > 0)
@@ -494,8 +471,11 @@ public class Player : MonoBehaviour {
 			currentBullet.text = "";
 		}
 	}
-	public void takeDamage(int damage) //created for "break" status
+	public void takeDamage(int damage, Attributes[] effects) //created for "break" status
 	{
+        AudioSource hitSound = this.gameObject.GetComponent<AudioSource>();
+        hitSound.Play();
+
 		int multipliers = 1;
 		if (myStatus.IsAffected(StatusType.Break))
 		{
@@ -515,6 +495,22 @@ public class Player : MonoBehaviour {
 			stackDmg = 0;
 		}
 
+		foreach (Attributes a1 in weaknesses)
+		{
+			foreach (Attributes b1 in effects)
+			{
+				if (b1 == a1)
+					multipliers *= 2;
+			}
+		}
+		foreach (Attributes c1 in strengths)
+		{
+			foreach (Attributes d1 in effects)
+			{
+				if (d1 == c1)
+					multipliers /= 2;
+			}
+		}
 		this.health -= damage* multipliers + stackDmg;
 
 		if (damage * multipliers + stackDmg > 0)
@@ -523,6 +519,7 @@ public class Player : MonoBehaviour {
 			if (damage * multipliers + stackDmg < 0)
 				heal = true;
 	}
+
 	public void updatePlayerImage()
 	{
 		switch (weapon)
@@ -547,10 +544,135 @@ public class Player : MonoBehaviour {
 			break;
 			case 4:
 			break;
+			case 5:
+
+			break;
+			case 6:
+
+			break;
 		}
 	}
 	public void activeUpdate()
 	{
 			pHealth.text = health.ToString();
+	}
+	void chamberLeft()
+	{
+		if (Chamber.Count > 1)
+		{
+			Object temp = Chamber [0];
+			Chamber.RemoveAt (0);
+			Chamber.Add (temp);
+			updateCurrentSpell ();
+			allowShot = false;
+		}
+	}
+	void chamberRight()
+	{
+		if (Chamber.Count > 1)
+		{
+			Object temp = Chamber [Chamber.Count - 1];
+			Chamber.RemoveAt (Chamber.Count - 1);
+			Chamber.Insert (0, temp);
+			updateCurrentSpell ();
+			allowShot = false;
+		}
+	}
+	void setPlayer()
+	{
+		if (playerDisplay != null)
+		{
+			if (PlayerNum == 1)
+			{
+				playerDisplay = GameObject.Find ("PlayerImage").GetComponent<Image> ();
+			}
+			else
+			{				
+				playerDisplay = GameObject.Find ("PlayerImage_2").GetComponent<Image> ();
+			}
+		}
+		hit = false;
+		if (GameObject.Find ("CharSelect") != null)
+		{
+			if (PlayerNum == 1)
+			{
+				weapon = GameObject.Find ("CharSelect").GetComponent<CharSelect> ().p1;
+			}
+			else
+			{				
+				weapon = GameObject.Find ("CharSelect").GetComponent<CharSelect> ().p2;
+			}
+		}
+		myStatus = GetComponent<StatusManager>();
+		if (PlayerNum == 1)
+		{
+			if (GameObject.FindGameObjectWithTag("Player2") != null && PlayerNum == 1)
+			{
+				atkbutton = "Fire_P1";
+				abilButton1 = "Ability 1_P1";
+				abilButton2 = "Ability 2_P1";
+			} 
+			else
+			{
+				atkbutton = "Fire_Solo";
+				abilButton1 = "Ability 1_P2";
+				abilButton2 = "Ability 2_P2";
+			}
+
+		}
+		else
+		{
+			atkbutton = "Fire_P2";
+		}
+		if (PlayerNum == 1)
+		{
+			currentBullet = GameObject.Find("Current Bullet").GetComponent<Text>();
+		}
+		else
+		{
+			currentBullet = GameObject.Find("Current Bullet_P2").GetComponent<Text>();
+		}
+
+		if (PlayerNum == 1)
+		{
+			pHealth = GameObject.Find("PlayerHealth").GetComponent<Text>();
+		}
+		else
+		{
+			pHealth = GameObject.Find("PlayerHealth_2").GetComponent<Text>();
+		}
+	}
+	public void statusAtrributes()
+	{
+		if(myStatus.IsAffected (StatusType.Bubbled))
+		{
+			bool weak = false;
+			foreach (Attributes a in weaknesses)
+			{
+				if (a == Attributes.Electric)
+				{
+					weak = true;
+				}
+			}
+			if (!weak)
+			{
+				weaknesses.Add (Attributes.Electric);
+			}
+		}
+		else
+		{
+			int deleter = -1;
+			for (int i = 0; i < weaknesses.Count ; i++)
+			{
+				if (weaknesses[i] == Attributes.Electric)
+				{
+					deleter = i;
+				}
+			}
+			if (deleter != -1)
+			{
+				weaknesses.RemoveAt (deleter);
+			}
+		}
 	}
 }

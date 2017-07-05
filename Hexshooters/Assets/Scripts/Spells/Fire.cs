@@ -11,7 +11,6 @@ public class Fire : Spell {
 	private int spellTimer;
 	private int gattlingTimer; //time for how long the gattling gun flamethrower last
 	public Transform obstacle;
-	Vector2 target;
 	Vector2 position;
 	Collider2D[] colliders;	
 	private bool created;
@@ -41,88 +40,116 @@ public class Fire : Spell {
 
 	public override void movement(int weapon)
 	{
-		switch (weapon) 
+		switch (weapon)
 		{
 		//Revolver = hits 5 spaces ahead
-		case 1:
+			case 1:
 			//if player 1
-			if (PlayerNum == 1)
-			{
-				if (targetNeeded)
+				if (PlayerNum == 1)
 				{
-					target = new Vector2 (transform.position.x + 5, transform.position.y);
-					targetNeeded = false;
+					if (targetNeeded)
+					{
+						target = new Vector2 (transform.position.x + 5, transform.position.y);
+						targetNeeded = false;
 
+					}
 				}
-			}
 			//if player 2
 			else
-			{
-				if (targetNeeded)
 				{
-					target = new Vector2 (transform.position.x - 5, transform.position.y);
-					targetNeeded = false;
+					if (targetNeeded)
+					{
+						target = new Vector2 (transform.position.x - 5, transform.position.y);
+						targetNeeded = false;
+					}
 				}
-			}
-			position = Vector2.Lerp (transform.position, target, (Time.deltaTime * speed));
-			transform.position = position;
+				position = Vector2.Lerp (transform.position, target, (Time.deltaTime * speed));
+				transform.position = position;
 
-				if (transform.position == new Vector3 (target.x, target.y, 0) || transform.position.x == 0|| transform.position.x == 9)
-			{
-				hitBehavior (1);
-			}
+				if (transform.position == new Vector3 (target.x, target.y, 0) || transform.position.x == 0 || transform.position.x == 9)
+				{
+					hitBehavior (1);
+				}
 			break;
 		//Rifle = moves forward indefinitely 
-		case 2:
+			case 2:
 			//if player 1
-			if (PlayerNum == 1)
-			{
-				target = new Vector2 (transform.position.x, transform.position.y) + direction;
-			} 
+				if (PlayerNum == 1)
+				{
+					target = new Vector2 (transform.position.x, transform.position.y) + direction;
+				} 
 			//if player 2
 			else
-			{
-				target = new Vector2 (transform.position.x, transform.position.y) - direction;
+				{
+					target = new Vector2 (transform.position.x, transform.position.y) - direction;
 
-			}
-			position = Vector2.Lerp (transform.position, target, Time.deltaTime*speed);
-			transform.position = position;
+				}
+				position = Vector2.Lerp (transform.position, target, Time.deltaTime * speed);
+				transform.position = position;
 			break;
 		//Shotgun = moves 2 ahead
-		case 3:
+			case 3:
 			//Player one
-			if (PlayerNum == 1)
-			{
-				if (targetNeeded)
+				if (PlayerNum == 1)
 				{
-					target = new Vector2 (transform.position.x + 2, transform.position.y);
-					targetNeeded = false;
+					if (targetNeeded)
+					{
+						target = new Vector2 (transform.position.x + 2, transform.position.y);
+						targetNeeded = false;
+					}
 				}
-			}
 			//player 2
 			else
-			{
-				if (targetNeeded)
 				{
-					target = new Vector2 (transform.position.x - 2, transform.position.y);
-					targetNeeded = false;
+					if (targetNeeded)
+					{
+						target = new Vector2 (transform.position.x - 2, transform.position.y);
+						targetNeeded = false;
+					}
 				}
-			}
-			position = Vector2.Lerp (transform.position, target, (Time.deltaTime * speed));
-			transform.position = position;
+				position = Vector2.Lerp (transform.position, target, (Time.deltaTime * speed));
+				transform.position = position;
 
-			if (transform.position == new Vector3(target.x, target.y,0))
-			{
-				hitBehavior (3);
-			}
+				if (transform.position == new Vector3 (target.x, target.y, 0))
+				{
+					hitBehavior (3);
+				}
 			break;
 		//Gatling = moves for 5 spaces 
-		case 4:
+			case 4:
 			
-			hitBehavior (4);
+				hitBehavior (4);
 			
 			break;
 
+		
+			case 6:
+				//Player one
+				if (PlayerNum == 1)
+				{
+					if (targetNeeded)
+					{
+						target = new Vector2 (transform.position.x + 4, transform.position.y);
+						targetNeeded = false;
+					}
+				}
+				//player 2
+				else
+				{
+					if (targetNeeded)
+					{
+						target = new Vector2 (transform.position.x - 4, transform.position.y);
+						targetNeeded = false;
+					}
+				}
+				position = Vector2.Lerp (transform.position, target, (Time.deltaTime * speed));
+				transform.position = position;
+
+				if (transform.position == new Vector3 (target.x, target.y, 0))
+				{
+					hitBehavior (6);
+				}
+			break;
 		}
 	}
 
@@ -146,7 +173,7 @@ public class Fire : Spell {
 						if (PlayerNum == 1)
 						{
 							//does damage to the enemy
-							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 							//boundary for pushing them back a panel to make room for the fire obstacle
 							//if not against the farthest panel move them back on
 							if (c.transform.position.x != 9)
@@ -169,7 +196,7 @@ public class Fire : Spell {
 				else if (c.gameObject.tag == "Obstacle")
 				{
 					//does damage to the obstacle and deletes bullet. does not create obstacle
-					c.GetComponent<Obstacle> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Obstacle> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					markedForDeletion = true;
 					colided = true;
 				}
@@ -177,7 +204,7 @@ public class Fire : Spell {
 				else if (c.gameObject.tag == "Player" && PlayerNum == 2)
 				{
 					//does damage to the player
-					c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					//pushes them back to make room for the fire obstacle
 					if (c.transform.position.x != 0) {
 						c.transform.position += new Vector3 (-1f, 0f, 0f);
@@ -198,7 +225,7 @@ public class Fire : Spell {
 				else if (c.gameObject.tag == "Player2" && PlayerNum == 1)
 				{
 					//does damage
-					c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					//pushes player 2 back a space to make room for fire obstacle
 					if (c.transform.position.x != 9) {
 						c.transform.position += new Vector3 (1f, 0f, 0f);
@@ -249,7 +276,7 @@ public class Fire : Spell {
 						if (PlayerNum == 1)
 						{
 							//initial strike
-							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum)); 
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes); 
 							markedForDeletion = true; //used to delete bullet
 							//burn them for 5 seconds
 							StatusEffect burn = new StatusEffect (500);
@@ -260,7 +287,7 @@ public class Fire : Spell {
 							{
 								if (c.GetComponent<Enemy> ().myStatus.IsAffected (StatusType.Burn))
 								{
-									c.GetComponent<Enemy> ().takeDamage (2);
+									c.GetComponent<Enemy> ().takeDamage (2,attributes);
 								}	
 							}
 							burn.m_timer--;
@@ -274,7 +301,7 @@ public class Fire : Spell {
 				else if (c.gameObject.tag == "Obstacle") 
 				{
 					//obstacle takes damage
-					c.GetComponent<Obstacle> ().takeDamage (damageCalc (damageTier, hitNum)); 
+					c.GetComponent<Obstacle> ().takeDamage (damageCalc (damageTier, hitNum),attributes); 
 					markedForDeletion = true; //used to delete bullet
 
 				}
@@ -282,7 +309,7 @@ public class Fire : Spell {
 				else if (c.gameObject.tag == "Player" && PlayerNum == 2) 
 				{
 					//initial damage
-					c.GetComponent<Player>().takeDamage (damageCalc (damageTier, hitNum)); 
+					c.GetComponent<Player>().takeDamage (damageCalc (damageTier, hitNum),attributes); 
 					markedForDeletion = true; //used to delete bullet
 					//burn them
 					StatusEffect burn = new StatusEffect (500);
@@ -292,7 +319,7 @@ public class Fire : Spell {
 					if (burn.m_timer % 100 == 0)
 					{
 						if(c.GetComponent<Player>().myStatus.IsAffected(StatusType.Burn)){
-							c.GetComponent<Player> ().takeDamage (2);
+								c.GetComponent<Player> ().takeDamage (2,attributes);
 						}	
 					}
 					burn.m_timer--;
@@ -306,7 +333,7 @@ public class Fire : Spell {
 				else if (c.gameObject.tag == "Player2" && PlayerNum == 1) 
 				{
 					//initial damage
-					c.GetComponent<Player>().takeDamage (damageCalc (damageTier, hitNum)); 
+					c.GetComponent<Player>().takeDamage (damageCalc (damageTier, hitNum),attributes); 
 					markedForDeletion = true; //used to delete bullet
 					//burn them
 					StatusEffect burn = new StatusEffect (500);
@@ -316,7 +343,7 @@ public class Fire : Spell {
 					if (burn.m_timer % 100 == 0) //modulo ensures that enemy not immediately pushed to back
 					{
 						if(c.GetComponent<Player>().myStatus.IsAffected(StatusType.Burn)){
-							c.GetComponent<Player> ().takeDamage (2);
+								c.GetComponent<Player> ().takeDamage (2,attributes);
 						}	
 					}
 					burn.m_timer--;
@@ -360,18 +387,18 @@ public class Fire : Spell {
 
 						if (PlayerNum == 1)
 						{
-							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 							hitEnemies.Add (c.gameObject);
 							markedForDeletion = true;
 						}
 				} else if (c.gameObject.tag == "Player" && PlayerNum == 2 && hit) {
 					//Debug.Log (damageCalc (damageTier, hitNum));
-					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum));
+					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 					hitEnemies.Add (c.gameObject);
 					markedForDeletion = true;
 
 				} else if (c.gameObject.tag == "Player2" && PlayerNum == 1 && hit) {
-					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum));
+					c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 					hitEnemies.Add (c.gameObject);
 					markedForDeletion = true;
 				}
@@ -404,27 +431,27 @@ public class Fire : Spell {
 							if (PlayerNum == 1)
 							{
 						//initial strike
-						c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum)); 
+						c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes); 
 						markedForDeletion = true; //used to delete bullet
 							}
 					}
 					//if hit an obstacle does nothing but dmg
 					else if (c.gameObject.tag == "Obstacle") {
 						//obstacle takes damage
-						c.GetComponent<Obstacle> ().takeDamage (damageCalc (damageTier, hitNum)); 
+						c.GetComponent<Obstacle> ().takeDamage (damageCalc (damageTier, hitNum),attributes); 
 						markedForDeletion = true; //used to delete bullet
 
 					}
 					// if hit player 1
 					else if (c.gameObject.tag == "Player" && PlayerNum == 2) {
 						//initial damage
-						c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum)); 
+						c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum),attributes); 
 						markedForDeletion = true; //used to delete bullet
 					}
 					// if hit player 2
 					else if (c.gameObject.tag == "Player2" && PlayerNum == 1) {
 						//initial damage
-						c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum)); 
+						c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum),attributes); 
 						markedForDeletion = true; //used to delete bullet
 					}
 					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone") {
@@ -437,7 +464,49 @@ public class Fire : Spell {
 				markedForDeletion = true;
 				gattlingTimer = 50;
 			} 
-			markedForDeletion = true;
+			break;
+			case 6:
+				//if statement to change the postion of the explosion depending if player 1 or 2
+				if(PlayerNum==1)
+				{
+					hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x+1, transform.position.y), 1.25f);
+				}
+				else
+				{
+					hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x-1, transform.position.y), 1.25f);
+				}
+				//goes through the array
+				foreach (Collider2D c in hitColliders) {
+					bool hit = true;
+					foreach (GameObject e in hitEnemies) {
+						if (c.gameObject == e) {
+							hit = false;
+						}
+					}
+
+					if (c.gameObject.tag == "Enemy" && hit) {
+
+						if (PlayerNum == 1)
+						{
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
+							hitEnemies.Add (c.gameObject);
+						}
+					} else if (c.gameObject.tag == "Player" && PlayerNum == 2 && hit) {
+						//Debug.Log (damageCalc (damageTier, hitNum));
+						c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
+						hitEnemies.Add (c.gameObject);
+
+					} else if (c.gameObject.tag == "Player2" && PlayerNum == 1 && hit) {
+						c.GetComponent<Player> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
+						hitEnemies.Add (c.gameObject);
+					}
+
+					//show area of affect
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone") {
+						showPanels (c);
+					}
+				}
+				markedForDeletion = true;
 			break;
 		}
 	}
@@ -448,24 +517,28 @@ public class Fire : Spell {
 		switch (weapon)
 		{
 		//Revolver
-		case 1:
-			description = "Shoots a fireball 5 spaces ahead and creates fire.";
+			case 1:
+				description = "Shoots a fireball 5 spaces ahead and creates fire.";
+				damage = 15;
 			break;
 			//Rifle
-		case 2:
-			description = "Shoot across a row and burn an enemy if it hits them";
+			case 2:
+				description = "Shoot across a row and burn an enemy if it hits them";
+				damage = 10;
 			break;
 		//Shotgun
-		case 3:
-			description = "A blast area of damage";
+			case 3:
+				description = "A blast area of damage";
+				damage = 20;
 			break;
 		//Gatling
-		case 4:
-			description = "Flamethrower";
+			case 4:
+				description = "Flamethrower";
+				damage = 10;
 			break;
 		//Cane Gun
-		case 5:
-			description = "";
+			case 5:
+				description = "";
 			break;
 		}
 	}

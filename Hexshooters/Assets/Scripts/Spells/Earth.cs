@@ -10,7 +10,6 @@ public class Earth : Spell {
 	private bool targetNeeded;
 	bool inBounds;
 	public Transform obstacle;
-	Vector2 target;
 	Vector2 position;
 	Collider2D[] colliders;	
 	private bool created;
@@ -145,6 +144,19 @@ public class Earth : Spell {
 				hitBehavior (3);
 			}
 			break;
+			case 6:
+				if (PlayerNum == 1)
+				{
+					target = new Vector2 (transform.position.x, transform.position.y) + direction;
+				} 
+				else
+				{
+					target = new Vector2 (transform.position.x, transform.position.y) - direction;
+				}
+				position = Vector2.Lerp(transform.position, target, Time.deltaTime*speed);
+				transform.position = position;
+			break;
+				
 		}
 	}
 
@@ -163,17 +175,17 @@ public class Earth : Spell {
 				{
 					if (PlayerNum == 1)
 					{
-						c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+						c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 						c.transform.position += new Vector3 (1, 0, 0);
 						damage = 0;
-						Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
+						Instantiate (Resources.Load ("EarthWall"), transform.position, Quaternion.identity);
 						markedForDeletion = true;
 						colided = true;
 					}
 				} 
 				else if (c.gameObject.tag == "Obstacle")
 				{
-					c.GetComponent<Obstacle> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Obstacle> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					//c.transform.position += new Vector3 (1, 0, 0);
 					//Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
 					markedForDeletion = true;
@@ -181,20 +193,20 @@ public class Earth : Spell {
 				} 
 					else if (c.gameObject.tag == "Player" && PlayerNum == 2)
 				{
-					c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					c.transform.position += new Vector3 (-1, 0, 0);
 					damage = 0;
-					Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
+					Instantiate (Resources.Load ("EarthWall"), transform.position, Quaternion.identity);
 					markedForDeletion = true;
 					colided = true;
 
 					} 
 					else if (c.gameObject.tag == "Player2" && PlayerNum == 1)
 					{
-						c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+						c.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 						c.transform.position += new Vector3 (1, 0, 0);
 						damage = 0;
-						Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
+						Instantiate (Resources.Load ("EarthWall"), transform.position, Quaternion.identity);
 						markedForDeletion = true;
 						colided = true;
 					}
@@ -216,7 +228,7 @@ public class Earth : Spell {
 			{
 				//Debug.Log ("Here");
 				damage = 0;
-				Instantiate (Resources.Load ("TestObstacle"), transform.position, Quaternion.identity);
+				Instantiate (Resources.Load ("EarthWall"), transform.position, Quaternion.identity);
 				created = true;
 				markedForDeletion = true;
 			}
@@ -231,24 +243,24 @@ public class Earth : Spell {
 					{
 						if (PlayerNum == 1)
 						{
-							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 							markedForDeletion = true;
 						}
 				}
 				else if(c.gameObject.tag == "Obstacle")
 				{
-					c.GetComponent<Obstacle>().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Obstacle>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					markedForDeletion = true;
 				}
 				else if(c.gameObject.tag == "Player" && PlayerNum == 2)
 				{
-					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					markedForDeletion = true;
 
 				}
 				else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
 				{
-					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					markedForDeletion = true;
 				}
 
@@ -271,24 +283,24 @@ public class Earth : Spell {
 						{
 							if (PlayerNum == 1)
 							{
-								c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+								c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 								markedForDeletion = true;
 							}
 					}
 					else if(c.gameObject.tag == "Obstacle")
 					{
-						c.GetComponent<Obstacle>().takeDamage(damageCalc (damageTier, hitNum));
+						c.GetComponent<Obstacle>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 						markedForDeletion = true;
 					}
 					else if(c.gameObject.tag == "Player" && PlayerNum == 2)
 					{
-						c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+						c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 						markedForDeletion = true;
 
 					}
 					else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
 					{
-						c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+						c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 						markedForDeletion = true;
 					}
 
@@ -313,24 +325,24 @@ public class Earth : Spell {
 					{
 						if (PlayerNum == 1)
 						{
-							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 							markedForDeletion = true;
 						}
 				}
 				else if(c.gameObject.tag == "Obstacle")
 				{
-					c.GetComponent<Obstacle>().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Obstacle>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					markedForDeletion = true;
 				}
 				else if(c.gameObject.tag == "Player" && PlayerNum == 2)
 				{
-					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					markedForDeletion = true;
 
 				}
 				else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
 				{
-					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					markedForDeletion = true;
 				}
 
@@ -349,27 +361,27 @@ public class Earth : Spell {
 					{
 						if (PlayerNum == 1)
 						{
-							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 							c.GetComponent<Enemy> ().health -= c.GetComponent<Enemy> ().armorWeakness;
 							c.GetComponent<Enemy> ().armorWeakness++;
 							markedForDeletion = true;
 						}
 				} else if (c.gameObject.tag == "Obstacle")
 				{
-					c.GetComponent<Obstacle> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Obstacle> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					c.GetComponent<Obstacle> ().health -= c.GetComponent<Enemy> ().armorWeakness;
 					c.GetComponent<Obstacle> ().armorWeakness++;
 					markedForDeletion = true;
 				} else if (c.gameObject.tag == "Player" && PlayerNum == 2)
 				{
-					c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					c.GetComponent<Player> ().health -= c.GetComponent<Enemy> ().armorWeakness;
 					c.GetComponent<Player> ().armorWeakness++;
 					markedForDeletion = true;
 
 				} else if (c.gameObject.tag == "Player2" && PlayerNum == 1)
 				{
-					c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					c.GetComponent<Player> ().health -= c.GetComponent<Enemy> ().armorWeakness;
 					c.GetComponent<Player> ().armorWeakness++;
 					markedForDeletion = true;
@@ -381,6 +393,49 @@ public class Earth : Spell {
 					}
 			}
 			break;
+			case 6:
+				//Creates shockwaves originating at each enemy hit by the bullet or shockwave.
+				colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
+				foreach(Collider2D c in colliders)
+				{
+					bool hit = true;
+					foreach (GameObject e in hitEnemies)
+					{
+						if(c.gameObject == e)
+						{
+							hit = false;
+						}
+					}
+					if (c.gameObject.tag == "Enemy" && hit) 
+					{
+						if (PlayerNum == 1)
+						{
+							//Debug.Log (damageCalc (damageTier, hitNum));
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
+							hitEnemies.Add (c.gameObject);
+						}
+					}
+					else if(c.gameObject.tag == "Player" && PlayerNum == 2 && hit)
+					{
+						//Debug.Log (damageCalc (damageTier, hitNum));
+						c.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
+						hitEnemies.Add (c.gameObject);
+
+					}
+					else if(c.gameObject.tag == "Player2"&& PlayerNum == 1 && hit)
+					{
+						//Debug.Log (damageCalc (damageTier, hitNum));
+						c.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
+						hitEnemies.Add (c.gameObject);
+					}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
+				}
+			break;
+				
 		}
 	}
 
@@ -391,19 +446,23 @@ public class Earth : Spell {
 		{
 		//Revolver
 		case 1:
-			description = "Makes an obstacle 3 panels ahead.";
+				description = "Makes an obstacle 3 panels ahead.";
+				damage = 10;
 			break;
 			//Rifle
 		case 2:
-			description = "Shoot past the last row, to strike the entire back row.";
+				description = "Shoot past the last row, to strike the entire back row.";
+				damage = 15;
 			break;
 			//Shotgun
 		case 3:
-			description = "Creates a fissure striking the row ahead and inflicts stun.";
+				description = "Creates a fissure striking the row ahead and inflicts stun.";
+				damage = 15;
 			break;
 			//Gatling
 		case 4:
-			description = "Stacking Damage";
+				description = "Stacking Damage";
+				damage = 5;
 			break;
 			//Cane Gun
 		case 5:

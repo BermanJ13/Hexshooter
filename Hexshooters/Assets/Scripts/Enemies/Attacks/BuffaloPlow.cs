@@ -85,12 +85,12 @@ public class BuffaloPlow : EnemySpell
             Debug.Log(c.gameObject.name);
             if (c.gameObject.tag == "Obstacle")
             {
-                c.GetComponent<Obstacle>().takeDamage(damageCalc(damageTier, hitNum));
+				c.GetComponent<Obstacle>().takeDamage(damageCalc(damageTier, hitNum), attributes);
                 hitAlready = true;
             }
             else if (c.gameObject.tag == "Player")
             {
-                c.gameObject.GetComponent<Player>().takeDamage(damageCalc(damageTier, hitNum));
+                c.gameObject.GetComponent<Player>().takeDamage (damageCalc (damageTier, hitNum),attributes);
                 hitAlready = true;
             }
             if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")

@@ -13,8 +13,8 @@ public class Scorpion : Enemy {
     private float attackTime = 0;
     Random rnd = new Random();
     private ScorpionStrike scorpionStrike;
-
     
+
 
     new void Start()
     {
@@ -24,6 +24,7 @@ public class Scorpion : Enemy {
         //
         scorpionStrike = gameObject.GetComponent<ScorpionStrike>();
         attackInterval = Random.Range(randomAttackTimerRange.x,randomAttackTimerRange.y);
+        
     }
     public override void enemyUpdate()
     {
@@ -34,6 +35,7 @@ public class Scorpion : Enemy {
 
         if(attackInterval < attackTime || scorpionStrike.attacking)
         {
+            sounds[1].Play();
             scorpionStrike.movement(0);
             if(!scorpionStrike.attacking)
             {

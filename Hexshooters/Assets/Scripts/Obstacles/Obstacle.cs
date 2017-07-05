@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Attributes {None,Fire,Water,Earth,Wind,Wood,Metal,Darkness,Light,Electric,Ice};
 public class Obstacle : MonoBehaviour {
-
+	public Attributes[] weaknesses;
+	public Attributes[] strengths;
+	public Attributes[] attributes;
 	public int health;
 	public int armorWeakness;
 	public Vector2 direction;
@@ -35,7 +38,7 @@ public class Obstacle : MonoBehaviour {
 			MarkedforDeletion = true;
 		}
 	}
-	public virtual void takeDamage(int damage) //created for "break" status
+	public virtual void takeDamage(int damage, Attributes[] effects) //created for "break" status
 	{
 		int multipliers = 1;
 		if (this.stat == "break")
@@ -43,6 +46,22 @@ public class Obstacle : MonoBehaviour {
 			multipliers *= 2;
 			stat = "normal";
 			breakImmune = true;
+		}
+		foreach (Attributes a1 in weaknesses)
+		{
+			foreach (Attributes b1 in effects)
+			{
+				if (b1 == a1)
+					multipliers *= 2;
+			}
+		}
+		foreach (Attributes c1 in strengths)
+		{
+			foreach (Attributes d1 in effects)
+			{
+				if (d1 == c1)
+					multipliers /= 2;
+			}
 		}
 		this.health -= damage* multipliers;
 	}
@@ -75,7 +94,7 @@ public class Obstacle : MonoBehaviour {
 			else if (d.gameObject.tag == "Enemy") 
 			{
 				Enemy e = d.GetComponent<Enemy> ();
-				e.takeDamage (damage); //enemy takes dmg
+				e.takeDamage (damage, attributes); //enemy takes dmg
 				if (e.transform.position.x != 9) 
 				{
 					e.transform.position = new Vector3 (e.transform.position.x + 1, e.transform.position.y, e.transform.position.z);
@@ -84,7 +103,7 @@ public class Obstacle : MonoBehaviour {
 			} 
 			else if (d.gameObject.tag == "Player2") 
 			{
-				d.GetComponent<Player> ().takeDamage (damage); //player takes dmg 
+				d.GetComponent<Player> ().takeDamage (damage, attributes); //player takes dmg 
 
 					if (d.transform.position.x != 9)
 					{
@@ -95,7 +114,7 @@ public class Obstacle : MonoBehaviour {
 			} 
 			else if(d.gameObject.tag == "Player")
 			{
-				d.GetComponent<Player> ().takeDamage (damage); //player takes dmg
+				d.GetComponent<Player> ().takeDamage (damage, attributes); //player takes dmg
 
 
 					if (d.GetComponent<Player> ().transform.position.x != 0) 

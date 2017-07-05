@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Spell : MonoBehaviour {
 
-	public string[] attributes;
+	public Attributes[] attributes;
 	public string[] effects;
 	public int damage;
 	public int damageTier;
@@ -17,6 +17,7 @@ public class Spell : MonoBehaviour {
 	public Sprite bulletImage;
 	public Sprite runeImage;
 	public int PlayerNum;
+	public Vector2 target;
 	public bool MarkedForDeletion
 	{
 		get { return markedForDeletion;}
@@ -93,5 +94,14 @@ public class Spell : MonoBehaviour {
 	public void showPanels(Collider2D c)
 	{
 		c.gameObject.gameObject.GetComponent<Panel> ().attacked = true;
+	}
+	public void specialEffect(Attributes a)
+	{
+		
+	}
+	public void reverseSpell()
+	{
+		direction = -direction;
+		target = -target;
 	}
 }

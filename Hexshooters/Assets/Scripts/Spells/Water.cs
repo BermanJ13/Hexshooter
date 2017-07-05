@@ -117,20 +117,33 @@ public class Water : Spell {
                 position = Vector2.Lerp(transform.position, target, Time.deltaTime * speed);
                 transform.position = position;
                 break;
-            //cane gun - not priority
-            case 5:
-			if (PlayerNum == 1)
-			{
-				target = new Vector2 (transform.position.x, transform.position.y) + direction;
-			} 
-			else
-			{
-				target = new Vector2 (transform.position.x, transform.position.y) - direction;
-			}
-                position = Vector2.Lerp(transform.position, target, Time.deltaTime*speed);
-                transform.position = position;
-                break;
+				//cane gun - not priority
+			case 5:
+				if (PlayerNum == 1)
+				{
+					target = new Vector2 (transform.position.x, transform.position.y) + direction;
+				} 
+				else
+				{
+					target = new Vector2 (transform.position.x, transform.position.y) - direction;
+				}
+				position = Vector2.Lerp(transform.position, target, Time.deltaTime*speed);
+				transform.position = position;
+			break;
 
+			case 6:
+				if (PlayerNum == 1)
+				{
+					target = new Vector2 (transform.position.x, transform.position.y) + direction;
+				} 
+				else
+				{
+					target = new Vector2 (transform.position.x, transform.position.y) - direction;
+				}
+				position = Vector2.Lerp(transform.position, target, Time.deltaTime*speed);
+				transform.position = position;
+			break;
+				
         }
     }
 
@@ -146,31 +159,31 @@ public class Water : Spell {
 					{
 						if (PlayerNum == 1)
 						{
-							c.gameObject.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							c.gameObject.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 							revolverMove = true;
 						}
 					} 
 					else if (c.gameObject.tag == "Obstacle")
 					{
-					c.GetComponent<Obstacle> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Obstacle> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					revolverMove = true;
 					} 
 					else if (c.gameObject.tag == "Player" && PlayerNum == 2)
 					{
-					c.gameObject.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.gameObject.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 						revolverMove = true;
 					
 					} 
 					else if (c.gameObject.tag == "Player2" && PlayerNum == 1)
 					{
-					c.gameObject.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.gameObject.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 						revolverMove = true;
 					}
 					else if (c.gameObject.tag == "Player2" && PlayerNum == 2)
 					{
 						if (revolverMove)
 						{
-						c.gameObject.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum)*-1);
+						c.gameObject.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum)*-1, attributes);
 							revolverMove = false;
 							markedForDeletion = true;
 						}
@@ -179,7 +192,7 @@ public class Water : Spell {
 					{
 						if (revolverMove)
 						{
-						c.gameObject.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum)*-1);
+						c.gameObject.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum)*-1, attributes);
 							revolverMove = false;
 							markedForDeletion = true;
 						}
@@ -207,7 +220,7 @@ public class Water : Spell {
                     }
                     if (c.gameObject.tag == "Obstacle")
                     {
-                        //c.gameObject.GetComponent<Obstacle>()takeDamage(damageCalc (damageTier, hitNum));
+                        //c.gameObject.GetComponent<Obstacle>()takeDamage (damageCalc(damageTier, hitNum), attributes);
                         markedForDeletion = true;
                     }
 					else if(c.gameObject.tag == "Player" && PlayerNum == 2)
@@ -237,7 +250,7 @@ public class Water : Spell {
 					{
 						if (PlayerNum == 1)
 						{
-                        c.gameObject.GetComponent<Enemy>().takeDamage(3);
+							c.gameObject.GetComponent<Enemy>().takeDamage(3,attributes);
 
                         if (c.gameObject.GetComponent<Enemy>().stat == "normal")
                             c.gameObject.GetComponent<Enemy>().Status("break");
@@ -248,23 +261,23 @@ public class Water : Spell {
                         //c.gameObject.GetComponent<Enemy>().myStatus.AddEffect(broken);
                         
                         markedForDeletion = true;
-                        //c.gameObject.GetComponent<Enemy>().takeDamage(damageCalc (damageTier, hitNum));
+                        //c.gameObject.GetComponent<Enemy>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 						}
                     }
                     if (c.gameObject.tag == "Obstacle")
                     {
                         markedForDeletion = true;
-                        c.gameObject.GetComponent<Obstacle>().takeDamage(damageCalc (damageTier, hitNum));
+                        c.gameObject.GetComponent<Obstacle>().takeDamage (damageCalc(damageTier, hitNum), attributes);
                     }
 					else if(c.gameObject.tag == "Player" && PlayerNum == 2)
 					{
-						c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+						c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 						markedForDeletion = true;
 					
 					}
 					else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
 					{
-						c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+						c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 						markedForDeletion = true;
 					}
 
@@ -297,7 +310,7 @@ public class Water : Spell {
                     }
                     if (c.gameObject.tag == "Obstacle")
                     {
-                        //c.gameObject.GetComponent<Obstacle>()takeDamage(damageCalc (damageTier, hitNum));
+                        //c.gameObject.GetComponent<Obstacle>()takeDamage (damageCalc(damageTier, hitNum), attributes);
                     }
 					else if(c.gameObject.tag == "Player" && PlayerNum == 2)
 				{
@@ -337,6 +350,37 @@ public class Water : Spell {
 					}
                 }
                 break;
+			case 6:
+				colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
+				foreach (Collider2D c in colliders)
+				{
+					if(c.gameObject.tag == "Player" && PlayerNum == 2)
+					{
+						StatusEffect bubbled = new StatusEffect (5);
+						bubbled.m_type = StatusType.Bubbled;
+						c.gameObject.GetComponent<Player> ().myStatus.AddEffect (bubbled);
+						c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
+						markedForDeletion = true;
+
+					}
+					else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
+					{
+						StatusEffect bubbled = new StatusEffect (5);
+						bubbled.m_type = StatusType.Bubbled;
+						c.gameObject.GetComponent<Player> ().myStatus.AddEffect (bubbled);
+						c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
+						markedForDeletion = true;
+					}
+					else if(c.gameObject.tag == "Enemy")
+					{
+						StatusEffect bubbled = new StatusEffect (5);
+						bubbled.m_type = StatusType.Bubbled;
+						c.gameObject.GetComponent<Enemy> ().myStatus.AddEffect (bubbled);
+						c.GetComponent<Enemy>().takeDamage (damageCalc(damageTier, hitNum), attributes);
+						markedForDeletion = true;
+					}
+				}
+			break;
         }
     }
 
@@ -346,19 +390,23 @@ public class Water : Spell {
 		{
 		//Revolver
 		case 1:
-			description = "Bounces off the enemy and heals the player if contact is made with the spell.";
+				description = "Bounces off the enemy and heals the player if contact is made with the spell.";
+				damage = 5;
 			break;
 			//Rifle
 		case 2:
-			description = "Pulls a nearby enemy toward the panel.";
+				description = "Pulls a nearby enemy toward the panel.";
+				damage = 10;
 			break;
 			//Shotgun
 		case 3:
-			description = "Increases damage for a period of time.";
+				description = "Increases damage for a period of time after striking an enemy.";
+				damage = 15;
 			break;
 			//Gatling
 		case 4:
-			description = "Uses a hose to push back the opponent.";
+				description = "Uses a hose to push back the opponent.";
+				damage = 10;
 			break;
 			//Cane Gun
 		case 5:

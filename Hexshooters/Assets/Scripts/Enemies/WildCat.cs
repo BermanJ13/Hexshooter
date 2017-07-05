@@ -8,7 +8,7 @@ public class WildCat : Enemy
 
 
     //interval for attack TEMPORARY
-    [Header("Scorpion Vars")]
+    [Header("WildCat Vars")]
     public Vector2 randomAttackTimerRange = new Vector2(2, 3);
     private float attackInterval = 0;
     private float attackTime = 0;
@@ -25,6 +25,7 @@ public class WildCat : Enemy
         //
         wildCatStrike = gameObject.GetComponent<WildCatStrike>();
         attackInterval = Random.Range(randomAttackTimerRange.x, randomAttackTimerRange.y);
+        
     }
     public override void enemyUpdate()
     {
@@ -34,6 +35,7 @@ public class WildCat : Enemy
 
         if (attackInterval < attackTime || wildCatStrike.attacking)
         {
+            sounds[1].Play();
             wildCatStrike.movement(0);
             if (!wildCatStrike.attacking)
             {

@@ -216,10 +216,6 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 		if (num == 1)
 		{
 			p1reload = true;
-			foreach (GameObject g in bulletIndicators)
-			{
-				g.SetActive (true);
-			}
 			for (int i = 0; i < spellSlots.Count; i++)
 			{
 				spellSlots [i].GetComponent<Image> ().sprite = defaultSlot;
@@ -427,24 +423,6 @@ public class ActiveFieldManagerPvP : FieldManagerPVP {
 	public void getUI()
 	{
 		base.getUI ();
-		bulletIndicators = new GameObject[8];
-		bulletIndicators_2  = new GameObject[8];
-		bulletIndicators [0] = GameObject.Find ("Player 1 Bottle 1");
-		bulletIndicators [1] = GameObject.Find ("Player 1 Bottle 2");
-		bulletIndicators [2] = GameObject.Find ("Player 1 Bottle 3");
-		bulletIndicators [3] = GameObject.Find ("Player 1 Bottle 4");
-		bulletIndicators [4] = GameObject.Find ("Player 1 Bottle 5");
-		bulletIndicators [5] = GameObject.Find ("Player 1 Bottle 6");
-		bulletIndicators [6] = GameObject.Find ("Player 1 Bottle 7");
-		bulletIndicators [7] = GameObject.Find ("Player 1 Bottle 8");
-		bulletIndicators_2 [0] = GameObject.Find ("Player 2 Bottle 1");
-		bulletIndicators_2 [1] = GameObject.Find ("Player 2 Bottle 2");
-		bulletIndicators_2 [2] = GameObject.Find ("Player 2 Bottle 3");
-		bulletIndicators_2 [3] = GameObject.Find ("Player 2 Bottle 4");
-		bulletIndicators_2 [4] = GameObject.Find ("Player 2 Bottle 5");
-		bulletIndicators_2 [5] = GameObject.Find ("Player 2 Bottle 6");
-		bulletIndicators_2 [6] = GameObject.Find ("Player 2 Bottle 7");
-		bulletIndicators_2 [7] = GameObject.Find ("Player 2 Bottle 8");
 
 		pauseUI_2 = GameObject.FindGameObjectsWithTag ("PauseUI_P2");
 

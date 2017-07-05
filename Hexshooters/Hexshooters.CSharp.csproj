@@ -92,7 +92,9 @@
     <Compile Include="Assets\Scripts\Enemies\Bosses\Rob.cs" />
     <Compile Include="Assets\Scripts\Enemies\Buffalo.cs" />
     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Mouse.cs" />
     <Compile Include="Assets\Scripts\Enemies\Scorpion.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Snake.cs" />
     <Compile Include="Assets\Scripts\Enemies\WildCat.cs" />
     <Compile Include="Assets\Scripts\FieldManager.cs" />
     <Compile Include="Assets\Scripts\GameInfo.cs" />

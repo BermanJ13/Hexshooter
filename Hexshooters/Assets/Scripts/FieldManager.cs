@@ -23,7 +23,6 @@ public class FieldManager : MonoBehaviour
 	protected Spell[] spells;
 	protected Enemy[] enemies;
 	protected Obstacle[] obstacles;
-	protected GameObject[] bulletIndicators;
 	protected Player player;
 	public bool pause = false;
 	public List<Object> Handful = new List<Object>();
@@ -46,13 +45,20 @@ public class FieldManager : MonoBehaviour
 	public GameObject[] weapons;
 	public bool once;
 	UniversalSettings us;
+	public int style = 3;
 
 	// Use this for initialization
 	public void Start () 
 	{
 		us = GameObject.Find("__app").GetComponent<UniversalSettings> ();
 		mapFile = us.mapfile;
+		style = us.style;
 		once =true;
+		firstPause = true;
+		if (style == 1)
+			pause = true;
+		else
+			pause = false;
 		weapons = new GameObject[4];
 		ES_P1 = EventSystem.current;
 
@@ -77,13 +83,147 @@ public class FieldManager : MonoBehaviour
 
 		if (GameObject.Find ("OverPlayer") != null)
 			player.weapon = GameObject.Find ("OverPlayer").GetComponent<OverPlayer>().weapon;
+		
+		if(player.weapon == 6)
+			player.Chamber = Handful;
+		else
+			Shuffle(Handful);
 
 		//Selects and enables the cooresponding UI based on the character
 		chooseGun (player.weapon, false);
 	}
-	
+
+	void Update()
+	{
+		switch(style)
+		{
+			case 0:
+				stationaryUpdate ();
+			break;
+				
+			case 1:
+				activeUpdate ();
+			break;
+		}
+	}
+
+	// Use this for initialization
+	void activeUpdate () 
+	{
+		if (once)
+		{
+			chooseGun (player.weapon, false);
+			showReloadScreen ();
+			once = false;
+		}
+		if (player.health <= 0 )
+		{
+			SceneManager.LoadScene ("Game Over");
+		}
+		updateEnemyList ();
+		if(enemies.Length == 0)
+		{
+			GameObject.Find ("OverPlayer").GetComponent<OverPlayer> ().returnFromBattle = true;
+			SceneManager.LoadScene ("Overworld");
+		}
+		//updateHealth ();
+		if (ES_P1.currentSelectedGameObject != null)
+		{
+			if (ES_P1.currentSelectedGameObject.tag == "SpellHolder")
+			{
+				runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
+				runeDamage.text = "Damage:" + ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
+				runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
+				runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
+				runeDisplay.GetComponent<Image> ().color = new Color (0, 0, 0, 255);
+			}
+		}
+
+		if (pause)
+		{
+			if (player.weapon != 6)
+			{
+				if (Input.GetButtonDown ("Cancel_Solo"))
+				{
+					if (Temp.Count > 0)
+					{
+						removeBullet ();
+					}
+				}
+			}
+
+			//Pauses both sides until ready for the first pus eof the game
+			if (firstPause)
+			{
+
+			} 
+			//COntinues the battle during all subsequent reloads
+			else
+			{
+				player.activeUpdate ();
+				bool enemyReload = true;
+				foreach (Spell spell in spells)
+				{
+					if (spell != null)
+						spell.spellUpdate ();
+				}
+				foreach (Enemy enemy in enemies)
+				{
+					if (enemy != null)
+					{
+						enemy.enemyUpdate ();
+					}
+				}
+				foreach (Obstacle ob in obstacles)
+				{
+					if (ob != null)
+						ob.obstacleUpdate ();
+				}
+				updateSpellList ();
+				deleteSpells ();
+				updateObstacleList ();
+				deleteObstacles ();
+				updateEnemyList ();
+				deleteEnemies ();
+			}
+		} 
+		else
+		{
+			player.playerUpdate ();
+			foreach (Spell spell in spells)
+			{
+				if (spell != null)
+					spell.spellUpdate ();
+			}
+			foreach (Enemy enemy in enemies)
+			{
+				if (enemy != null)
+				{
+					enemy.enemyUpdate ();
+				}
+			}
+			foreach (Obstacle ob in obstacles)
+			{
+				if (ob != null)
+					ob.obstacleUpdate ();
+			}
+			updateSpellList ();
+			deleteSpells ();
+			updateObstacleList ();
+			deleteObstacles ();
+			updateEnemyList ();
+			deleteEnemies ();
+
+			//Pulls up the reload screen on a button press
+			if ( player.reload && (Input.GetButtonDown("Submit_Solo")||Input.GetButtonDown("Start_Solo")))
+			{
+				showReloadScreen ();
+			}
+		}
+	}
+
 	// Update is called once per frame
-	void Update () 
+	void stationaryUpdate () 
 	{
 		//Checks to see if tis battle originate in story mode, and if so it sets the playe rin battle to match the charcter being used in te overworld.
 		if (GameObject.Find ("OverPlayer") != null)
@@ -106,6 +246,7 @@ public class FieldManager : MonoBehaviour
 		updateEnemyList ();
 		if(enemies.Length == 0)
 		{
+			GameObject.Find ("OverPlayer").GetComponent<OverPlayer> ().returnFromBattle = true;
 			SceneManager.LoadScene ("Overworld");
 		}
 
@@ -122,12 +263,15 @@ public class FieldManager : MonoBehaviour
 			}
 		}
 
-		//Removes the last bullet from the camber and places it back in he selection screen.
-		if (pause && Input.GetButtonDown("Cancel_Solo"))
+		if (player.weapon != 6)
 		{
-			if (Temp.Count > 0)
+			//Removes the last bullet from the camber and places it back in he selection screen.
+			if (pause && Input.GetButtonDown ("Cancel_Solo"))
 			{
-				removeBullet ();
+				if (Temp.Count > 0)
+				{
+					removeBullet ();
+				}
 			}
 		}
 
@@ -323,30 +467,31 @@ public class FieldManager : MonoBehaviour
 	//REnables the UI for the reload menu
 	public void showReloadScreen()
 	{
-		//resets the bottle indicators of bullet number
-		foreach(GameObject g in bulletIndicators)
-		{
-			g.SetActive (true);
-		}
 		//resets the default staus to the rune holding ui
 		for (int i = 0; i < spellSlots.Count; i++)
 		{
 			spellSlots[i].GetComponent<Image>().sprite = defaultSlot;
 			spellSlots[i].GetComponent<Image>().color = Color.white;
 		}
-
-		//removes the bullets used in the last round from the deck
-		for(int i=Temp.Count-1;i>-1;i--)
+		if (player.weapon != 6)
 		{
-			if (Temp [i] != null)
+			//removes the bullets used in the last round from the deck
+			for (int i = Temp.Count - 1; i > -1; i--)
 			{
-				Temp.RemoveAt (i);
+				if (Temp [i] != null)
+				{
+					Temp.RemoveAt (i);
+				}
+				if (TempNum [i] != null)
+				{
+					Handful.RemoveAt (TempNum [i]);
+					TempNum.RemoveAt (i);
+				}
 			}
-			if (TempNum [i] != null)
-			{
-				Handful.RemoveAt (TempNum [i]);
-				TempNum.RemoveAt (i);
-			}
+		}
+		else
+		{
+			Handful = player.Chamber;
 		}
 		//reenables the UI for the reload screen
 		for (int i = 0; i< pauseObjects.Length;i++)
@@ -400,6 +545,11 @@ public class FieldManager : MonoBehaviour
 				r.runeDesc = curSpell.GetComponent<Spell> ().description;
 				r.runeDamage = curSpell.GetComponent<Spell>().damage.ToString();
 			}
+			if (player.weapon == 6)
+			{
+				b.interactable = false;
+				EventSystem.current.SetSelectedGameObject (GameObject.Find("BattleButton"));
+			}
 		}
 
 		//Sets the player's reload value to false preventing it from reactivating the reload screen immediately
@@ -413,10 +563,13 @@ public class FieldManager : MonoBehaviour
 		player.myStatus.AddEffect (shotLag);
 		firstPause = false;
 
-		//Adds the selected bullets to the chamber
-		for (int i = 0; i < Temp.Count; i++)
+		if (player.weapon != 6)
 		{
-			player.Chamber.Add(Temp [i]);
+			//Adds the selected bullets to the chamber
+			for (int i = 0; i < Temp.Count; i++)
+			{
+				player.Chamber.Add (Temp [i]);
+			}
 		}
 
 		//DIsbales the pause UI
@@ -458,7 +611,7 @@ public class FieldManager : MonoBehaviour
 	//Adds a bullet ot te selected list and prevents it from being s;lected again
 	protected void addBullet(int num)
 	{
-		//Debug.Log (p1Gun);
+		Debug.Log (p1Gun);
 		if (Temp.Count < weaponMax)
 		{
 			Temp.Add (Handful [num]);
@@ -546,15 +699,6 @@ public class FieldManager : MonoBehaviour
 		pauseUI = GameObject.FindGameObjectsWithTag ("PauseUI");
 
 
-		bulletIndicators = new GameObject[8];
-		bulletIndicators [0] = GameObject.Find ("Player 1 Bottle 1");
-		bulletIndicators [1] = GameObject.Find ("Player 1 Bottle 2");
-		bulletIndicators [2] = GameObject.Find ("Player 1 Bottle 3");
-		bulletIndicators [3] = GameObject.Find ("Player 1 Bottle 4");
-		bulletIndicators [4] = GameObject.Find ("Player 1 Bottle 5");
-		bulletIndicators [5] = GameObject.Find ("Player 1 Bottle 6");
-		bulletIndicators [6] = GameObject.Find ("Player 1 Bottle 7");
-		bulletIndicators [7] = GameObject.Find ("Player 1 Bottle 8");
 
 		runeDisplay = GameObject.Find ("RuneHolder");
 		runeDamage = GameObject.Find ("RuneDamage").GetComponent<Text>();
@@ -572,14 +716,9 @@ public class FieldManager : MonoBehaviour
 		{
 			Handful.Add(Resources.Load ("Fire"));
 			Handful.Add(Resources.Load ("Earth"));
-			Handful.Add(Resources.Load ("Lightning"));
-			Handful.Add(Resources.Load ("Boomerang"));
 			Handful.Add(Resources.Load ("Water"));
-			Handful.Add(Resources.Load ("Chains"));
 			Handful.Add(Resources.Load ("Wind"));
-			Handful.Add(Resources.Load ("Ice"));
 		}
-		Shuffle(Handful);
 	}
 
 	//Chooses the Proper gun for the character and activates the cooresponding UI

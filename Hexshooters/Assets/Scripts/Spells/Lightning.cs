@@ -8,7 +8,6 @@ public class Lightning : Spell {
 	private GameObject[] enemyPanels; 
 	public Transform lightning;
 	private bool targetNeeded;
-	Vector2 target;
 	Vector2 position;
 	Collider2D[] colliders;	
 	// Use this for initialization
@@ -97,6 +96,33 @@ public class Lightning : Spell {
 			}
 			hitBehavior (5);
 			break;
+		//Bow
+		case 6:
+
+				if (PlayerNum == 1)
+				{
+					//Picks a target square to lerp to before activating effect
+					if (targetNeeded) {
+						target = new Vector2 (transform.position.x+3, transform.position.y);
+						targetNeeded= false;
+					}
+				} 
+				else
+				{
+					//Picks a target square to lerp to before activating effect
+					if (targetNeeded) {
+						target = new Vector2 (transform.position.x-3, transform.position.y);
+						targetNeeded= false;
+					}
+				}
+
+				position = Vector2.Lerp (transform.position,target, (Time.deltaTime*speed));
+				transform.position = position;
+				if (transform.position == new Vector3(target.x, target.y,0))
+				{
+					markedForDeletion = true;
+				}
+			break;
 		}
 	}
 
@@ -118,24 +144,24 @@ public class Lightning : Spell {
 					{
 						if (PlayerNum == 1)
 						{
-					c.gameObject.GetComponent<Enemy> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.gameObject.GetComponent<Enemy> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					//Debug.Log (c.gameObject.GetComponent<Enemy> ().health);
 						}
 				}
 				if (c.gameObject.tag == "Obstacle")
 				{
-					//c.gameObject.GetComponent<Obstacle>().takeDamage(damageCalc (damageTier, hitNum));
+					//c.gameObject.GetComponent<Obstacle>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 				}
 				else if(c.gameObject.tag == "Player" && PlayerNum == 2)
 				{
-					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					markedForDeletion = true;
 
 				}
 				else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
 				{
 					//Debug.Log ("Damage");
-					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					markedForDeletion = true;
 				}
 
@@ -156,7 +182,7 @@ public class Lightning : Spell {
 					{
 						if (PlayerNum == 1)
 						{
-							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 							StatusEffect disabled = new StatusEffect (5);
 							disabled.m_type = StatusType.Disabled;
 							//c.gameObject.GetComponent<Enemy> ().myStatus.AddEffect (disabled);
@@ -165,12 +191,12 @@ public class Lightning : Spell {
 				}
 				else if(c.gameObject.tag == "Obstacle")
 				{
-					c.GetComponent<Obstacle>().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Obstacle>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					markedForDeletion = true;
 				}
 				else if(c.gameObject.tag == "Player" && PlayerNum == 2)
 				{
-					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					StatusEffect disabled = new StatusEffect (5);
 					disabled.m_type = StatusType.Disabled;
 					c.gameObject.GetComponent<Enemy> ().myStatus.AddEffect (disabled);
@@ -179,7 +205,7 @@ public class Lightning : Spell {
 				}
 				else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
 				{
-					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					StatusEffect disabled = new StatusEffect (5);
 					disabled.m_type = StatusType.Disabled;
 					c.gameObject.GetComponent<Enemy> ().myStatus.AddEffect (disabled);
@@ -211,7 +237,7 @@ public class Lightning : Spell {
 						if (PlayerNum == 1)
 						{
 							//Debug.Log (damageCalc (damageTier, hitNum));
-							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 							hitEnemies.Add (c.gameObject);
 							markedForDeletion = true;
 							GameObject spread = (GameObject)Instantiate (Resources.Load ("Lightning"), c.gameObject.transform.position, Quaternion.identity);
@@ -221,7 +247,7 @@ public class Lightning : Spell {
 				else if(c.gameObject.tag == "Player" && PlayerNum == 2 && hit)
 				{
 					//Debug.Log (damageCalc (damageTier, hitNum));
-					c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					hitEnemies.Add (c.gameObject);
 					markedForDeletion = true;
 					GameObject spread = (GameObject)Instantiate (Resources.Load("Lightning"), c.gameObject.transform.position, Quaternion.identity);
@@ -231,7 +257,7 @@ public class Lightning : Spell {
 				else if(c.gameObject.tag == "Player2"&& PlayerNum == 1 && hit)
 				{
 					//Debug.Log (damageCalc (damageTier, hitNum));
-					c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					hitEnemies.Add (c.gameObject);
 					markedForDeletion = true;
 					GameObject spread = (GameObject)Instantiate (Resources.Load("Lightning"), c.gameObject.transform.position, Quaternion.identity);
@@ -265,7 +291,7 @@ public class Lightning : Spell {
 
 						if (PlayerNum == 1)
 						{
-							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							c.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 							hitEnemies [0] = c.gameObject;
 							int decider = UnityEngine.Random.Range (1, 5);
 							switch (decider)
@@ -298,7 +324,7 @@ public class Lightning : Spell {
 						}
 				}if (c.gameObject.tag == "Obstacle" && hit)
 				{
-					c.GetComponent<Obstacle> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Obstacle> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					hitEnemies[0] = c.gameObject;
 					int decider = UnityEngine.Random.Range (1,5);
 					switch (decider)
@@ -331,7 +357,7 @@ public class Lightning : Spell {
 				}
 				if (c.gameObject.tag == "Player" && PlayerNum == 2 && hit)
 				{
-					c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					hitEnemies[0] = c.gameObject;
 					int decider = UnityEngine.Random.Range (1,5);
 					switch (decider)
@@ -364,7 +390,7 @@ public class Lightning : Spell {
 				}
 				if (c.gameObject.tag == "Player2"&& PlayerNum == 1 && hit)
 				{
-					c.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					hitEnemies[0] = c.gameObject;
 					int decider = UnityEngine.Random.Range (1,5);
 					switch (decider)
@@ -411,13 +437,13 @@ public class Lightning : Spell {
 					{
 						if (PlayerNum == 1)
 						{
-							c.gameObject.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							c.gameObject.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 							c.gameObject.GetComponent<Enemy> ().Status ("disabled");
 						}
 				}
 				if (c.gameObject.tag == "Obstacle" ) 
 				{
-					c.gameObject.GetComponent<Obstacle>().takeDamage(damageCalc (damageTier, hitNum));
+					c.gameObject.GetComponent<Obstacle>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 				}
 
 					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
@@ -426,8 +452,11 @@ public class Lightning : Spell {
 					}
 			}
 			markedForDeletion = true;
-			break;
-
+		break;
+		case 6:
+				Instantiate (Resources.Load ("Lightningrod"), transform.position, Quaternion.identity);
+				markedForDeletion = true;
+		break;
 		}
 	}
 
@@ -437,19 +466,23 @@ public class Lightning : Spell {
 		{
 		//Revolver
 		case 1:
-			description = "After striking an object hits every panel ahead with a lightning bolt.";
+				description = "After striking an object hits every panel ahead with a lightning bolt.";
+				damage = 10;
 			break;
 			//Rifle
 		case 2:
-			description = "Hits the opponent with a shot that disables their shooting for a time.";
+				description = "Hits the opponent with a shot that disables their shooting for a time.";
+				damage = 5;
 			break;
 			//Shotgun
 		case 3:
-			description = "Sends a shockwave out from each opponent that is hit.";
+				description = "Sends a shockwave out from each opponent that is hit.";
+				damage = 20;
 			break;
 			//Gatling
 		case 4:
-			description = "The spell redirects after striking something.";
+				description = "The spell redirects after striking something.";
+				damage = 10;
 			break;
 			//Cane Gun
 		case 5:

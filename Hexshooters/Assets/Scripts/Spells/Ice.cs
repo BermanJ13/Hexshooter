@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Ice : Spell {
 
-    private int spellTimer;
+	private int spellTimer;
+	private bool targetNeeded;
 
     // Use this for initialization
     new void Start () {
@@ -20,7 +21,6 @@ public class Ice : Spell {
 
     public override void movement(int weapon)
     {
-		Vector2 target;
         Vector2 position;
         switch (weapon)
         {
@@ -97,7 +97,33 @@ public class Ice : Spell {
 			position = Vector2.Lerp(transform.position, target, (Time.deltaTime * speed));
                 transform.position = position;
                 break;
+			case 6:
+				//Player one
+				if (PlayerNum == 1)
+				{
+					if (targetNeeded)
+					{
+						target = new Vector2 (transform.position.x + 3, transform.position.y);
+						targetNeeded = false;
+					}
+				}
+				//player 2
+				else
+				{
+					if (targetNeeded)
+					{
+						target = new Vector2 (transform.position.x - 3, transform.position.y);
+						targetNeeded = false;
+					}
+				}
+				position = Vector2.Lerp (transform.position, target, (Time.deltaTime * speed));
+				transform.position = position;
 
+				if (transform.position == new Vector3 (target.x, target.y, 0))
+				{
+					hitBehavior (6);
+				}
+			break;
         }
     }
 
@@ -129,17 +155,17 @@ public class Ice : Spell {
 						spellTimer = 50;
 					}
 
-					//c.gameObject.GetComponent<Enemy>()takeDamage(damageCalc (damageTier, hitNum));
+					//c.gameObject.GetComponent<Enemy>()takeDamage (damageCalc(damageTier, hitNum), attributes);
 						}
 				}
 				else if(c.gameObject.tag == "Obstacle")
 				{
-					c.GetComponent<Obstacle>().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Obstacle>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					markedForDeletion = true;
 				}
 				else if(c.gameObject.tag == "Player" && PlayerNum == 2)
 				{
-					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					markedForDeletion = true;
 					StatusEffect slow = new StatusEffect (5);
 					slow.m_type = StatusType.Slow;
@@ -154,7 +180,7 @@ public class Ice : Spell {
 				}
 				else if(c.gameObject.tag == "Player2"&& PlayerNum == 1)
 				{
-					c.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Player>().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					markedForDeletion = true;
 					StatusEffect slow = new StatusEffect (5);
 					slow.m_type = StatusType.Slow;
@@ -185,19 +211,19 @@ public class Ice : Spell {
 							StatusEffect freeze = new StatusEffect (8);
 							freeze.m_type = StatusType.Freeze;
 							c.gameObject.GetComponent<Enemy> ().myStatus.AddEffect (freeze);
-							c.gameObject.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum));
+							c.gameObject.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
 							markedForDeletion = true;
 						}
 				} else if (c.gameObject.tag == "Obstacle")
 				{
-					c.GetComponent<Obstacle> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.GetComponent<Obstacle> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					markedForDeletion = true;
 				} else if (c.gameObject.tag == "Player" && PlayerNum == 2)
 				{
 					StatusEffect freeze = new StatusEffect (8);
 					freeze.m_type = StatusType.Freeze;
 					c.gameObject.GetComponent<Player> ().myStatus.AddEffect (freeze);
-					c.gameObject.GetComponent<Player> ().takeDamage(damageCalc (damageTier, hitNum));
+					c.gameObject.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 					markedForDeletion = true;
 
                     }
@@ -281,6 +307,12 @@ public class Ice : Spell {
 					}
                 }
                 break;
+			case 6:
+				Instantiate (Resources.Load ("Icicle"), new Vector2 (transform.position.x, transform.position.y-1), Quaternion.identity);
+				Instantiate (Resources.Load ("Icicle"), new Vector2 (transform.position.x, transform.position.y), Quaternion.identity);
+				Instantiate (Resources.Load ("Icicle"), new Vector2 (transform.position.x, transform.position.y+1), Quaternion.identity);
+				markedForDeletion = true;
+			break;
         }
     }
 	public override void setDescription(int weapon)
@@ -289,19 +321,23 @@ public class Ice : Spell {
 		{
 		//Revolver
 		case 1:
-			description = "Coats a Row in frost Slowing Enemy Movement";
+				description = "Coats a Row in frost Slowing Enemy Movement";
+				damage = 15;
 			break;
 			//Rifle
 		case 2:
-			description = "Freezes the opponent for an Instant.";
+				description = "Freezes the opponent for an Instant.";
+				damage = 10;
 			break;
 			//Shotgun
 		case 3:
-			description = "Sield the player who uses the spell.";
+				description = "Sield the player who uses the spell.";
+				damage = 0;
 			break;
 			//Gatling
 		case 4:
-			description = "Does damage to the opponent that gets more powerful with each hit.";
+				description = "Does damage to the opponent that gets more powerful with each hit.";
+				damage = 5;
 			break;
 			//Cane Gun
 		case 5:
