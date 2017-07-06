@@ -75,6 +75,7 @@
      <Compile Include="Assets\Scripts\Menus\Instructions.cs" />
      <Compile Include="Assets\Scripts\Menus\OptionsMenu.cs" />
      <Compile Include="Assets\Scripts\Menus\PvPStarter.cs" />
+     <Compile Include="Assets\Scripts\Menus\StartMenu.cs" />
      <Compile Include="Assets\Scripts\Movement.cs" />
      <Compile Include="Assets\Scripts\Music\BattleMusic.cs" />
      <Compile Include="Assets\Scripts\Music\MenuMusic.cs" />
