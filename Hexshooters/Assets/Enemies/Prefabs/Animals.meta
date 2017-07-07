@@ -1,6 +1,14 @@
 fileFormatVersion: 2
-guid: fbbcb5df82a0c7647be363655f6a80b2
+<<<<<<< HEAD:Hexshooters/Assets/Tilemaps.meta
+guid: 8c3eafa024028aa44957d68a681b2a5a
 folderAsset: yes
+timeCreated: 1496255375
+=======
+guid: 4949fca3405730f4c87982dc2545a745
+folderAsset: yes
+timeCreated: 1496380247
+>>>>>>> f983157c3103aa962e68462015ef8d645d73eaa4:Hexshooters/Assets/Prefabs/Enemies/Resources/Animals.meta
+licenseType: Free
 DefaultImporter:
   userData: 
   assetBundleName: 

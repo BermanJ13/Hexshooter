@@ -143,6 +143,7 @@
     <None Include="Assets\Dialogue\Text\Resources\Cutscene9.txt" />
     <None Include="Assets\Dialogue\Text\Resources\TestCutscene.txt" />
     <None Include="Assets\Dialogue\Text\Resources\TestTalk.txt" />
+    <None Include="Assets\Enemies\ProjectSettings\ProjectVersion.txt" />
     <None Include="Assets\Maps\Resources\BossFIght.txt" />
     <None Include="Assets\Maps\Resources\DB1.txt" />
     <None Include="Assets\Maps\Resources\DB2.txt" />
@@ -156,7 +157,6 @@
     <None Include="Assets\Maps\Resources\base.txt" />
     <None Include="Assets\Maps\Resources\testmap.txt" />
     <None Include="Assets\Particles\ProjectSettings\ProjectVersion.txt" />
-    <None Include="Assets\Prefabs\Enemies\ProjectSettings\ProjectVersion.txt" />
     <None Include="Assets\Vortex Game Studios\OLD TV Filter 2\Shader\OLDTVFilter_Screen.shader" />
     <None Include="Assets\Vortex Game Studios\OLD TV Filter 2\Shader\OLDTVFilter_Tube.shader" />
   </ItemGroup>
