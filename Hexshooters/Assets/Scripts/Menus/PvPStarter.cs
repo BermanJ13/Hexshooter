@@ -44,9 +44,9 @@ public class PvPStarter : MonoBehaviour {
 		menuObjects = GameObject.FindGameObjectsWithTag ("Menu");
 		pvpMenuObjects = GameObject.FindGameObjectsWithTag ("PVP Menu");
 		opMenuObjects = GameObject.FindGameObjectsWithTag ("Options Menu");
-		creditsMenuObjects = GameObject.FindGameObjectsWithTag ("Credits");
+		//creditsMenuObjects = GameObject.FindGameObjectsWithTag ("Credits");
 		charMenuObjects = GameObject.FindGameObjectsWithTag ("CharSelect");
-		extraMenuObjects = GameObject.FindGameObjectsWithTag ("ExtraMenu");
+		//extraMenuObjects = GameObject.FindGameObjectsWithTag ("ExtraMenu");
 		if(SceneManager.GetActiveScene().name != "Win" &&SceneManager.GetActiveScene().name != "Results" && SceneManager.GetActiveScene().name != "Game Over")
 			menu = Menus.Main; 
 		pvpMenu = false;

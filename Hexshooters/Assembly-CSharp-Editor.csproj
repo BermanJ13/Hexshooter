@@ -49,7 +49,6 @@
      <Compile Include="Assets\Vortex Game Studios\Editor\UEditor.cs" />
      <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\Editor\OLDTVScreenEditor.cs" />
      <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\Editor\OLDTVTubeEditor.cs" />
-     <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\Editor\TileWindow.cs" />
      <None Include="Assets\Maps\Resources\DB2.txt" />
      <None Include="Assets\Maps\Resources\VSempty.txt" />
      <None Include="Assets\Dialogue\Text\Resources\Cutscene1c.txt" />
