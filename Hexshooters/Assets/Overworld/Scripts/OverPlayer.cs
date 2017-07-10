@@ -87,6 +87,10 @@ public class OverPlayer : MonoBehaviour {
 			}
 			else
 			{
+				if (!currentTrig.passable)
+				{
+					currentTrig.enforceBoundary ();
+				}
 				if (currentTrig.preRewardActivator)
 				{
 					currentTrig.preBattle ();

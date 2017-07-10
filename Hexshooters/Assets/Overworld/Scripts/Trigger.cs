@@ -36,10 +36,7 @@ public class Trigger : MonoBehaviour {
 	public string preRewardedItem;
 
 	[Header("Boundary")]
-	public bool left;
-	public bool right;
-	public bool up;
-	public bool down;
+	public Vector2 distance;
 	public bool passable;
 
 	[HideInInspector]
@@ -100,5 +97,16 @@ public class Trigger : MonoBehaviour {
 		{
 			t.passable = true;
 		}
+	}
+	public void blockBoundaries(Trigger[] others)
+	{
+		foreach (Trigger t in others)
+		{
+			t.passable = false;
+		}
+	}
+	public void enforceBoundary()
+	{
+			op.transform.position = new Vector2 (transform.position.x + distance.x, transform.position.y + distance.y);
 	}
 }
