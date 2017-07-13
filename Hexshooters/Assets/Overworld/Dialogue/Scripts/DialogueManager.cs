@@ -78,7 +78,7 @@ public class DialogueManager : MonoBehaviour {
             string[] dialogue= dialogueLines[0].Split('/');
             name.text = dialogue[0];
             string portName = name.text + dialogue[1];
-            Sprite newPic = Resources.Load<Sprite>("Portrait/"+portName);
+            Sprite newPic = Resources.Load<Sprite>(portName);
             characterPic.GetComponent<Image>().sprite = newPic;
             words.text = dialogue[2];
         }

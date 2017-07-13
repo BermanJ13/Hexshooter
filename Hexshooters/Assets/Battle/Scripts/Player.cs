@@ -67,13 +67,16 @@ public class Player : MonoBehaviour {
 		switch (weaponUsed)
 		{
 			case 1:
-				if (Input.GetButtonDown(abilButton1))
+				if (abilButton1 != null && abilButton2 != null)
 				{
-					chamberLeft ();
-				}
-				if (Input.GetButtonDown(abilButton2))
-				{
-					chamberRight ();
+					if (Input.GetButtonDown (abilButton1))
+					{
+						chamberLeft ();
+					}
+					if (Input.GetButtonDown (abilButton2))
+					{
+						chamberRight ();
+					}
 				}
 			break;
 			case 2:
