@@ -44,7 +44,7 @@ public class FieldManager : MonoBehaviour
 	protected GameObject[] battleObjects;
 	public GameObject[] weapons;
 	public bool once;
-	UniversalSettings us;
+	protected UniversalSettings us;
 	public int style = 3;
 
 	// Use this for initialization
@@ -59,7 +59,7 @@ public class FieldManager : MonoBehaviour
 			pause = true;
 		else
 			pause = false;
-		weapons = new GameObject[4];
+		weapons = new GameObject[5];
 		ES_P1 = EventSystem.current;
 
 		//Hnadful= Deck
@@ -730,6 +730,7 @@ public class FieldManager : MonoBehaviour
 			weapons [1] = GameObject.Find ("8 Rifle");
 			weapons [2] = GameObject.Find ("4 Shot Gun");
 			weapons [3] = GameObject.Find ("2 Shot Gun");
+			weapons [4] = GameObject.Find ("Bow");
 		}
 		else
 		{
@@ -833,6 +834,10 @@ public class FieldManager : MonoBehaviour
 			break;
 			case 5:
 
+			break;
+			case 6:
+				weapons[4].SetActive (true);
+				p1Gun = weapons[4];
 			break;
 				
 		}

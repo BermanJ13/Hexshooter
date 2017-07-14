@@ -20,8 +20,8 @@ public enum EnemyState
 
 public abstract class Enemy : MonoBehaviour {
 
-	public Attributes[] weaknesses;
-	public Attributes[] strengths;
+	public List<Attributes> weaknesses = new List<Attributes>();
+	public List<Attributes> strengths = new List<Attributes>();
 
 	//health 
 	public int health = 100;
@@ -141,6 +141,7 @@ public abstract class Enemy : MonoBehaviour {
     // Update is called once per frame
     public virtual void enemyUpdate()
     {
+		statusAtrributes();
 		healthDisplay.text = health.ToString();
         if ((myStatus.IsAffected(StatusType.Slow) || myStatus.IsAffected(StatusType.Freeze))&isMoving)
         {
@@ -453,5 +454,38 @@ public abstract class Enemy : MonoBehaviour {
 		timeCount.Interval = wait * 1000;
 		timeCount.Start ();
 	}
-    
+
+	public void statusAtrributes()
+	{
+		if(myStatus.IsAffected (StatusType.Bubbled))
+		{
+			bool weak = false;
+			foreach (Attributes a in weaknesses)
+			{
+				if (a == Attributes.Electric)
+				{
+					weak = true;
+				}
+			}
+			if (!weak)
+			{
+				weaknesses.Add (Attributes.Electric);
+			}
+		}
+		else
+		{
+			int deleter = -1;
+			for (int i = 0; i < weaknesses.Count ; i++)
+			{
+				if (weaknesses[i] == Attributes.Electric)
+				{
+					deleter = i;
+				}
+			}
+			if (deleter != -1)
+			{
+				weaknesses.RemoveAt (deleter);
+			}
+		}
+	}
 }

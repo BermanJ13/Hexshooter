@@ -470,6 +470,10 @@ public class Wind : Spell {
 			case 5:
 			description = "";
 			break;
+				//Bow
+			case 6:
+				description = "Reflects an oncoming attack.";
+			break;
 		}
 	}
 }

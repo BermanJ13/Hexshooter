@@ -488,6 +488,10 @@ public class Lightning : Spell {
 		case 5:
 			description = "";
 			break;
+				//Bow
+			case 6:
+				description = "Creates a lightning rod that counts down and the explodes.";
+			break;
 		}
 	}
 }

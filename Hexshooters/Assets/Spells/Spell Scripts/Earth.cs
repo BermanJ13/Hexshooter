@@ -465,9 +465,13 @@ public class Earth : Spell {
 				description = "Stacking Damage";
 				damage = 5;
 			break;
-			//Cane Gun
-		case 5:
-			description = "";
+				//Cane Gun
+			case 5:
+				description = "";
+			break;
+				//Bow
+			case 6:
+				description = "Shoots a damaging shot that keeps going through other objects";
 			break;
 		}
 	}

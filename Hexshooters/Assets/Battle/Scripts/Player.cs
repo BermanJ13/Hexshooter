@@ -626,6 +626,8 @@ public class Player : MonoBehaviour {
 		else
 		{
 			atkbutton = "Fire_P2";
+			abilButton1 = "Ability 1_P2";
+			abilButton2 = "Ability 2_P2";
 		}
 		if (PlayerNum == 1)
 		{

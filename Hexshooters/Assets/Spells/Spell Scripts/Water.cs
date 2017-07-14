@@ -412,6 +412,10 @@ public class Water : Spell {
 		case 5:
 			description = "";
 			break;
+				//Bow
+			case 6:
+				description = "Traps the opponent in a bvubble making them weak to lightning";
+			break;
 		}
 	}
 }

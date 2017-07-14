@@ -31,7 +31,6 @@ public class FieldManagerPVP : FieldManager
 	protected GameObject[] battleObjects_2;
 	public bool p1reload;
 	public bool p2reload;
-	UniversalSettings us;
 
     
     // Use this for initialization
@@ -40,8 +39,8 @@ public class FieldManagerPVP : FieldManager
         mapFile = maps[Random.Range(0, maps.Length)];
         Debug.Log(mapFile);
 		once = true;
-		weapons = new GameObject[4];
-		weapons_2 = new GameObject[4];
+		weapons = new GameObject[5];
+		weapons_2 = new GameObject[5];
 		battleObjects = new GameObject[2];
 		//Debug.Log (pauseObjects[0]);
 		//Hnadful= Deck
@@ -55,6 +54,17 @@ public class FieldManagerPVP : FieldManager
 		player2 = GameObject.FindGameObjectWithTag ("Player2").GetComponent<Player> ();
 		player.basic = true;
 		player2.basic = true;
+
+		if(player.weapon == 6)
+			player.Chamber = Handful;
+		else
+			Shuffle(Handful);
+
+		if(player2.weapon == 6)
+			player2.Chamber = Handful_2;
+		else
+			Shuffle(Handful_2);
+		
 		chooseGun_2 (player2.weapon, true);
 		getUI ();
 		updateEnemyList ();
@@ -74,6 +84,7 @@ public class FieldManagerPVP : FieldManager
 			pause = true;
 			firstPause = true;
 		}
+
 	}
 
 	void Update()
@@ -265,19 +276,21 @@ public class FieldManagerPVP : FieldManager
 				spellSlots [i].GetComponent<Image> ().sprite = defaultSlot;
 				spellSlots [i].GetComponent<Image> ().color = Color.white;
 			}
-			for (int i = Temp.Count - 1; i > -1; i--)
+			if (player.weapon != 6)
 			{
-				if (Temp [i] != null)
+				for (int i = Temp.Count - 1; i > -1; i--)
 				{
-					Temp.RemoveAt (i);
-				}
-				if (TempNum [i] != null)
-				{
-					Handful.RemoveAt (TempNum [i]);
-					TempNum.RemoveAt (i);
+					if (Temp [i] != null)
+					{
+						Temp.RemoveAt (i);
+					}
+					if (TempNum [i] != null)
+					{
+						Handful.RemoveAt (TempNum [i]);
+						TempNum.RemoveAt (i);
+					}
 				}
 			}
-
 			for (int i = 0; i < pauseObjects.Length; i++)
 			{
 				if (i < Handful.Count)
@@ -322,6 +335,11 @@ public class FieldManagerPVP : FieldManager
 					r.runeDamage = curSpell.GetComponent<Spell>().damage.ToString();
 					r.runeDesc = curSpell.GetComponent<Spell> ().description;
 				}
+				if (player.weapon == 6)
+				{
+					b.interactable = false;
+					ES_P1.SetSelectedGameObject (GameObject.Find("BattleButton"));
+				}
 			}
 		}
 		else
@@ -332,16 +350,19 @@ public class FieldManagerPVP : FieldManager
 				spellSlots_2[i].GetComponent<Image>().sprite = defaultSlot;
 				spellSlots_2[i].GetComponent<Image>().color = Color.white;
 			}
-			for(int i=Temp_2.Count-1;i>-1;i--)
+			if (player2.weapon != 6)
 			{
-				if (Temp_2 [i] != null)
+				for (int i = Temp_2.Count - 1; i > -1; i--)
 				{
-					Temp_2.RemoveAt (i);
-				}
-				if (TempNum_2 [i] != null)
-				{
-					Handful_2.RemoveAt (TempNum_2 [i]);
-					TempNum_2.RemoveAt (i);
+					if (Temp_2 [i] != null)
+					{
+						Temp_2.RemoveAt (i);
+					}
+					if (TempNum_2 [i] != null)
+					{
+						Handful_2.RemoveAt (TempNum_2 [i]);
+						TempNum_2.RemoveAt (i);
+					}
 				}
 			}
 			for (int i = 0; i< pauseObjects_p2.Length;i++)
@@ -388,6 +409,11 @@ public class FieldManagerPVP : FieldManager
 					r.runeDamage = curSpell.GetComponent<Spell>().damage.ToString();
 					r.runeDesc = curSpell.GetComponent<Spell> ().description;
 				}
+				if (player2.weapon == 6)
+				{
+					b.interactable = false;
+					ES_P2.SetSelectedGameObject (GameObject.Find("BattleButton"));
+				}
 			}
 		}
 	}
@@ -397,7 +423,6 @@ public class FieldManagerPVP : FieldManager
 		if (once)
 		{
 			chooseGun (player.weapon, false);
-			chooseGun_2 (player2.weapon, false);
 			chooseGun_2 (player2.weapon, false);
 			once = false;
 		}
@@ -431,18 +456,24 @@ public class FieldManagerPVP : FieldManager
 				}
 			}
 		}
-		if (pause && Input.GetButtonDown("Cancel_P1"))
+		if (player.weapon != 6)
 		{
-			if (Temp.Count > 0)
+			if (pause && Input.GetButtonDown ("Cancel_P1"))
 			{
-				removeBullet ();
+				if (Temp.Count > 0)
+				{
+					removeBullet ();
+				}
 			}
 		}
-		if (pause && Input.GetButtonDown("Cancel_P2"))
+		if (player2.weapon != 6)
 		{
-			if (Temp_2.Count > 0)
+			if (pause && Input.GetButtonDown ("Cancel_P2"))
 			{
-				removeBullet_P2 ();
+				if (Temp_2.Count > 0)
+				{
+					removeBullet_P2 ();
+				}
 			}
 		}
 		if (pause)
@@ -520,28 +551,34 @@ public class FieldManagerPVP : FieldManager
 			spellSlots_2[i].GetComponent<Image>().sprite = defaultSlot;
 			spellSlots_2[i].GetComponent<Image>().color = Color.white;
 		}
-		for(int i=Temp.Count-1;i>-1;i--)
+		if (player.weapon != 6)
 		{
-			if (Temp [i] != null)
+			for (int i = Temp.Count - 1; i > -1; i--)
 			{
-				Temp.RemoveAt (i);
-			}
-			if (TempNum [i] != null)
-			{
-				Handful.RemoveAt (TempNum [i]);
-				TempNum.RemoveAt (i);
+				if (Temp [i] != null)
+				{
+					Temp.RemoveAt (i);
+				}
+				if (TempNum [i] != null)
+				{
+					Handful.RemoveAt (TempNum [i]);
+					TempNum.RemoveAt (i);
+				}
 			}
 		}
-		for(int i=Temp_2.Count-1;i>-1;i--)
+		if (player2.weapon != 6)
 		{
-			if (Temp_2 [i] != null)
+			for (int i = Temp_2.Count - 1; i > -1; i--)
 			{
-				Temp_2.RemoveAt (i);
-			}
-			if (TempNum_2 [i] != null)
-			{
-				Handful_2.RemoveAt (TempNum_2 [i]);
-				TempNum_2.RemoveAt (i);
+				if (Temp_2 [i] != null)
+				{
+					Temp_2.RemoveAt (i);
+				}
+				if (TempNum_2 [i] != null)
+				{
+					Handful_2.RemoveAt (TempNum_2 [i]);
+					TempNum_2.RemoveAt (i);
+				}
 			}
 		}
 		for (int i = 0; i< pauseObjects.Length;i++)
@@ -610,6 +647,11 @@ public class FieldManagerPVP : FieldManager
 				r.runeDamage = curSpell.GetComponent<Spell>().damage.ToString();
 				r.runeDesc = curSpell.GetComponent<Spell> ().description;
 			}
+			if (player.weapon == 6)
+			{
+				b.interactable = false;
+				ES_P1.SetSelectedGameObject (GameObject.Find("BattleButton"));
+			}
 		}
 		for (int i = 0; i < spellHold_2.children.Count; i++)
 		{
@@ -634,6 +676,11 @@ public class FieldManagerPVP : FieldManager
 				r.runeDamage = curSpell.GetComponent<Spell>().damage.ToString();
 				r.runeDesc = curSpell.GetComponent<Spell> ().description;
 			}
+			if (player2.weapon == 6)
+			{
+				b.interactable = false;
+				ES_P2.SetSelectedGameObject (GameObject.Find("BattleButton"));
+			}
 		}
 		pause = true;
 
@@ -642,17 +689,23 @@ public class FieldManagerPVP : FieldManager
 	}
 	public void showBattleScreen()
 	{
-		for (int i = 0; i < Temp.Count; i++)
+		if (player.weapon != 6)
 		{
-			player.Chamber.Add(Temp [i]);
+			for (int i = 0; i < Temp.Count; i++)
+			{
+				player.Chamber.Add (Temp [i]);
+			}
 		}
 		foreach (GameObject g in pauseObjects)
 		{
 			g.SetActive (false);
 		}
-		for (int i = 0; i < Temp_2.Count; i++)
+		if (player2.weapon != 6)
 		{
-			player2.Chamber.Add(Temp_2 [i]);
+			for (int i = 0; i < Temp_2.Count; i++)
+			{
+				player2.Chamber.Add (Temp_2 [i]);
+			}
 		}
 		foreach (GameObject g in pauseObjects_p2)
 		{
@@ -871,7 +924,6 @@ public class FieldManagerPVP : FieldManager
 			Handful.Add(Resources.Load ("Boomerang"));
 			Handful.Add(Resources.Load ("Lightning"));
 		}
-		Shuffle(Handful);
 
 		//Placeholder Fils Deck with Lighnin and Eart Spells
 		for (int i = 0; i < 10; i++)
@@ -884,7 +936,6 @@ public class FieldManagerPVP : FieldManager
 			Handful.Add(Resources.Load ("Boomerang"));
 			Handful.Add(Resources.Load ("Lightning"));
 		}
-		Shuffle(Handful_2);
 	}
 	public void chooseGun_2 (int weapon, bool first)
 	{
@@ -894,10 +945,13 @@ public class FieldManagerPVP : FieldManager
 			weapons_2 [1] = GameObject.Find ("8 Rifle_2");
 			weapons_2 [2] = GameObject.Find ("4 Shot Gun_2");
 			weapons_2 [3] = GameObject.Find ("2 Shot Gun_2");
+			weapons_2 [4] = GameObject.Find ("Bow_2");
 		}
 		else
-			pauseUI= GameObject.FindGameObjectsWithTag ("PauseUI");
-		pauseUI_2= GameObject.FindGameObjectsWithTag ("PauseUI_P2");
+		{
+			pauseUI = GameObject.FindGameObjectsWithTag ("PauseUI");
+			pauseUI_2 = GameObject.FindGameObjectsWithTag ("PauseUI_P2");
+		}
 
 		for (int i = 0; i < weapons.Length; i++)
 		{
@@ -1005,6 +1059,10 @@ public class FieldManagerPVP : FieldManager
 			break;
 			case 5:
 
+			break;
+			case 6:
+				weapons_2[4].SetActive (true);
+				p2Gun = weapons_2[4];
 			break;
 
 		}

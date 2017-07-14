@@ -540,6 +540,10 @@ public class Fire : Spell {
 			case 5:
 				description = "";
 			break;
+				//Bow
+			case 6:
+				description = "Shoots an arrow 4 squares ahead that expldes on contact";
+			break;
 		}
 	}
 }
