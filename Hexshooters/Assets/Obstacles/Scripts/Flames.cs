@@ -24,6 +24,10 @@ public class Flames : Obstacle {
 			MarkedforDeletion = true;
 			flameTimer = 200;
 		}
+		if(wet)
+		{
+			douse ();
+		}
 	}
 	public override void collide ()
 	{
@@ -37,40 +41,6 @@ public class Flames : Obstacle {
 			{
 				
 			}
-            //else to check if hit by specifically water spell
-            else if (d.gameObject.tag == "Spell")
-            {
-                //creates steam
-                if (d.gameObject.name.Equals("Water"))
-                {
-
-                    if (this.transform.position.y > 9)
-                    {
-                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + (direction.x * 3), transform.position.y), Quaternion.identity);
-                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x, transform.position.y - 1), Quaternion.identity);
-                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + (direction.x * 2), transform.position.y), Quaternion.identity);
-                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + (direction.x * 2), transform.position.y - 1), Quaternion.identity);
-                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + direction.x, transform.position.y - 1), Quaternion.identity);
-                    }
-                    else if (this.transform.position.y < 1)
-                    {
-                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + (direction.x * 3), transform.position.y), Quaternion.identity);
-                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x, transform.position.y + 1), Quaternion.identity);
-                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + (direction.x * 2), transform.position.y), Quaternion.identity);
-                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + (direction.x * 2), transform.position.y + 1), Quaternion.identity);
-                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + direction.x, transform.position.y + 1), Quaternion.identity);
-                    }
-                    else
-                    {
-                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x, transform.position.y + 1), Quaternion.identity);
-                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x, transform.position.y - 1), Quaternion.identity);
-                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + (direction.x * 2), transform.position.y), Quaternion.identity);
-                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + direction.x, transform.position.y + 1), Quaternion.identity);
-                        Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + direction.x, transform.position.y - 1), Quaternion.identity);
-                    }
-                    MarkedforDeletion = true;
-                }
-            }
 			//else means hit a player enemy
 			else if (d.gameObject.tag == "Enemy") 
 			{
@@ -124,6 +94,34 @@ public class Flames : Obstacle {
 						hitPanels.Add (d.gameObject);
 				}
 			}
+		}
+	}
+	public void douse()
+	{
+		MarkedforDeletion = true;
+		if (this.transform.position.y > 9)
+		{
+			Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + (direction.x * 3), transform.position.y), Quaternion.identity);
+			Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x, transform.position.y - 1), Quaternion.identity);
+			Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + (direction.x * 2), transform.position.y), Quaternion.identity);
+			Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + (direction.x * 2), transform.position.y - 1), Quaternion.identity);
+			Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + direction.x, transform.position.y - 1), Quaternion.identity);
+		}
+		else if (this.transform.position.y < 1)
+		{
+			Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + (direction.x * 3), transform.position.y), Quaternion.identity);
+			Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x, transform.position.y + 1), Quaternion.identity);
+			Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + (direction.x * 2), transform.position.y), Quaternion.identity);
+			Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + (direction.x * 2), transform.position.y + 1), Quaternion.identity);
+			Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + direction.x, transform.position.y + 1), Quaternion.identity);
+		}
+		else
+		{
+			Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x, transform.position.y + 1), Quaternion.identity);
+			Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x, transform.position.y - 1), Quaternion.identity);
+			Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + (direction.x * 2), transform.position.y), Quaternion.identity);
+			Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + direction.x, transform.position.y + 1), Quaternion.identity);
+			Instantiate(Resources.Load("Steam"), new Vector2(transform.position.x + direction.x, transform.position.y - 1), Quaternion.identity);
 		}
 	}
 }

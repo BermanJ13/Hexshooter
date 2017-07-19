@@ -13,6 +13,8 @@ public class Spell : MonoBehaviour {
 	public Vector2 direction;
 	public int hitNum;
 	protected bool markedForDeletion;
+	public bool holdable;
+	public int holdFactor, holdLevelMax, currentholdLevel;
 	public List<GameObject> hitEnemies= new List<GameObject> (); 
 	public Sprite bulletImage;
 	public Sprite runeImage;
@@ -46,10 +48,16 @@ public class Spell : MonoBehaviour {
 		Collider2D[] colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
 		foreach (Collider2D c in colliders)
 		{
-			if (c.gameObject.tag == "Player" || c.gameObject.tag == "Enemy" || c.gameObject.tag == "Obstacle"|| c.gameObject.tag == "Player2" )
+			if (c.gameObject.tag == "Player" || c.gameObject.tag == "Enemy" ||  c.gameObject.tag == "Player2" )
 			{
 				hitBehavior(weaponUsed);
 			} 
+			if (c.gameObject.tag == "Obstacle")
+			{
+				c.GetComponent<Obstacle> ().specialEffects (this);
+				if(c.GetComponent<Obstacle> ().hittable)
+					hitBehavior(weaponUsed);
+			}
 			if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
 			{
 				showPanels (c);
@@ -107,5 +115,21 @@ public class Spell : MonoBehaviour {
 	{
 		direction = -direction;
 		target = -target;
+	}
+	public void delete()
+	{
+		markedForDeletion = true;
+	}
+	public void affectDamage(string type, int factor)
+	{
+		switch (type)
+		{
+			case "divide":
+				damage = damage/factor;
+			break;
+			case "multiply":
+				damage = damage * factor;
+			break;
+		}
 	}
 }

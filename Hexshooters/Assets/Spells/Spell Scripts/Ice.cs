@@ -345,7 +345,7 @@ public class Ice : Spell {
 			break;
 				//Bow
 			case 6:
-				description = "Creates 3 Icicles vertically 3 quares ahead.";
+				description = "Creates 3 Icicles vertically 3 squares ahead.";
 			break;
 		}
 	}

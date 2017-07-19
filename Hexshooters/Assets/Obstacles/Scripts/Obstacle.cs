@@ -15,11 +15,14 @@ public class Obstacle : MonoBehaviour {
 	public int damage;
 	bool breakImmune; //flag to ensure that every water shotgun spell doesn't endlessly apply break
 	public bool canPass;
-
+	public bool specialCondition; 
+	public bool hittable;
+	protected bool burning, shocked, wet, blown, frozen, quaked, overgrown, lit, darkened, metalled;
 
 	// Use this for initialization
 	void Start () 
 	{
+		specialCondition = false;
 		MarkedforDeletion = false;
 		transform.position = new Vector3 (Mathf.Round (transform.position.x), Mathf.Round (transform.position.y), Mathf.Round (transform.position.z));
 	}
@@ -124,6 +127,173 @@ public class Obstacle : MonoBehaviour {
 				MarkedforDeletion = true;
 			}
 						
+		}
+	}
+	public void specialEffects(Spell s)
+	{
+		bool damageTaken = false;
+		Debug.Log (s.direction);
+		//Checks each attribute of the spell it's colliding with
+		foreach(Attributes spellAtt in s.attributes)
+		{
+			//Checks each attribute of the current object - a
+			foreach (Attributes ObstAtt in attributes)
+			{
+				//Picks a set of options depending on the type of spell
+				switch (spellAtt)
+				{
+					case Attributes.Darkness:
+						//Picks an option to do based on the attributes of the colliding obstacle.
+						switch (ObstAtt)
+						{
+							default: 
+								darkened = true;
+								if (!damageTaken && hittable)
+								{
+									takeDamage (s.damageCalc (s.damageTier, s.hitNum), s.attributes);
+									damageTaken = true;
+								}
+							break;
+						}
+					break;
+					case Attributes.Earth:
+						//Picks an option to do based on the colliding obstacle.
+						switch (ObstAtt)
+						{
+							default: 
+								quaked = true;
+								if (!damageTaken && hittable)
+								{
+									takeDamage (s.damageCalc (s.damageTier, s.hitNum), s.attributes);
+									damageTaken = true;
+								}
+							break;
+						}
+					break;
+					case Attributes.Electric:
+						//Picks an option to do based on the colliding obstacle.
+						switch (ObstAtt)
+						{
+							default: 
+								shocked = true;
+								if (!damageTaken && hittable)
+								{
+									takeDamage (s.damageCalc (s.damageTier, s.hitNum), s.attributes);
+									damageTaken = true;
+								}
+							break;
+						}
+					break;
+					case Attributes.Fire:
+						//Picks an option to do based on the colliding obstacle.
+						switch (ObstAtt)
+						{
+							default: 
+								burning = true;
+								if (!damageTaken && hittable)
+								{
+									takeDamage (s.damageCalc (s.damageTier, s.hitNum), s.attributes);
+									damageTaken = true;
+								}
+							break;
+						}
+					break;
+					case Attributes.Ice:
+						//Picks an option to do based on the colliding obstacle.
+						switch (ObstAtt)
+						{
+							default: 
+								frozen = true;
+								if (!damageTaken && hittable)
+								{
+									takeDamage (s.damageCalc (s.damageTier, s.hitNum), s.attributes);
+									damageTaken = true;
+								}
+							break;
+						}
+					break;
+					case Attributes.Light:
+						//Picks an option to do based on the colliding obstacle.
+						switch (ObstAtt)
+						{
+							default: 
+								lit = true;
+								if (!damageTaken && hittable)
+								{
+									takeDamage (s.damageCalc (s.damageTier, s.hitNum), s.attributes);
+									damageTaken = true;
+								}
+							break;
+						}
+					break;
+					case Attributes.Metal:
+						//Picks an option to do based on the colliding obstacle.
+						switch (ObstAtt)
+						{
+							default: 
+								metalled = true;
+								if (!damageTaken && hittable)
+								{
+									takeDamage (s.damageCalc (s.damageTier, s.hitNum), s.attributes);
+									damageTaken = true;
+								}
+							break;
+						}
+					break;
+					case Attributes.Water:
+						//Picks an option to do based on the colliding obstacle.
+						switch (ObstAtt)
+						{
+							default: 
+								wet = true;
+								if (!damageTaken && hittable)
+								{
+									takeDamage (s.damageCalc (s.damageTier, s.hitNum), s.attributes);
+									damageTaken = true;
+								}							
+							break;
+						}
+					break;
+					case Attributes.Wind:
+						//Picks an option to do based on the colliding obstacle.
+						switch (ObstAtt)
+						{
+							//Transfers Momentum from spell
+							case Attributes.Earth:
+							case Attributes.Fire:
+								blown = true;
+								if (s.PlayerNum == 1)
+									direction = s.direction * 2;
+								else
+									direction = s.direction * -2;
+								s.delete ();
+							break;
+							default: 
+								blown = true;
+								if (!damageTaken && hittable)
+								{
+									takeDamage (s.damageCalc (s.damageTier, s.hitNum), s.attributes);
+									damageTaken = true;
+								}
+							break;
+						}
+					break;
+					case Attributes.Wood:
+						//Picks an option to do based on the colliding obstacle.
+						switch (ObstAtt)
+						{
+							default: 
+								overgrown = true;
+								if (!damageTaken && hittable)
+								{
+									takeDamage (s.damageCalc (s.damageTier, s.hitNum), s.attributes);
+									damageTaken = true;
+								}
+							break;
+						}
+					break;
+				}
+			}
 		}
 	}
 }

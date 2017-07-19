@@ -165,7 +165,7 @@ public class Water : Spell {
 					} 
 					else if (c.gameObject.tag == "Obstacle")
 					{
-					c.GetComponent<Obstacle> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
+						c.GetComponent<Obstacle> ().specialEffects (this);
 					revolverMove = true;
 					} 
 					else if (c.gameObject.tag == "Player" && PlayerNum == 2)
@@ -267,7 +267,7 @@ public class Water : Spell {
                     if (c.gameObject.tag == "Obstacle")
                     {
                         markedForDeletion = true;
-                        c.gameObject.GetComponent<Obstacle>().takeDamage (damageCalc(damageTier, hitNum), attributes);
+						c.gameObject.GetComponent<Obstacle> ().specialEffects (this);
                     }
 					else if(c.gameObject.tag == "Player" && PlayerNum == 2)
 					{
@@ -310,7 +310,7 @@ public class Water : Spell {
                     }
                     if (c.gameObject.tag == "Obstacle")
                     {
-                        //c.gameObject.GetComponent<Obstacle>()takeDamage (damageCalc(damageTier, hitNum), attributes);
+						c.gameObject.GetComponent<Obstacle> ().specialEffects (this);
                     }
 					else if(c.gameObject.tag == "Player" && PlayerNum == 2)
 				{
@@ -335,18 +335,19 @@ public class Water : Spell {
 						if (c.gameObject.GetComponent<Player>().transform.position.x <= 8)
 							c.gameObject.GetComponent<Player>().transform.position = new Vector2(c.gameObject.GetComponent<Enemy>().transform.position.x + 1, c.gameObject.GetComponent<Player>().transform.position.y);
 					}
+						markedForDeletion = true;
+				}
+
+					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
+					{
+						showPanels (c);
+					}
+
 					spellTimer--;
 					if (spellTimer <= 0)
 					{
 						markedForDeletion = true;
 						spellTimer = 50;
-					}
-						markedForDeletion = true;
-					}
-
-					if (c.gameObject.tag == "playerZone" || c.gameObject.tag == "enemyZone")
-					{
-						showPanels (c);
 					}
                 }
                 break;

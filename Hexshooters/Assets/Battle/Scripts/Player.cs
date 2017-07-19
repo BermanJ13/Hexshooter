@@ -40,6 +40,7 @@ public class Player : MonoBehaviour {
 	public bool basic;
 	bool canMove = true;
 	int shotLimiter = 0;
+	int heldNum =0;
 
     // Use this for initialization
     void Start () 
@@ -450,16 +451,40 @@ public class Player : MonoBehaviour {
 
 		GameObject go = (GameObject)Instantiate(Chamber[0],new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
 
-		////get the thing component on your instantiated object
 		Spell mything = go.GetComponent<Spell>();
-
-		////set a member variable (must be PUBLIC)
 		mything.weaponUsed = weapon; 
 		mything.PlayerNum = PlayerNum;
-		Chamber.RemoveAt (0);
-		shotLag = new StatusEffect (0.1f);
-		shotLag.m_type = StatusType.ShotLag;
-		//myStatus.AddEffect (shotLag);
+		mything.setDescription (mything.weaponUsed);
+		if (!mything.holdable)
+		{
+			////get the thing component on your instantiated object
+			
+			////set a member variable (must be PUBLIC)
+			Chamber.RemoveAt (0);
+			shotLag = new StatusEffect (0.1f);
+			shotLag.m_type = StatusType.ShotLag;
+			//myStatus.AddEffect (shotLag);
+		}
+		else
+		{
+			while (Input.GetAxisRaw (atkbutton) > 0 && buttonPresed)
+			{
+				mything.transform.position = transform.position;
+				if (heldNum == mything.holdFactor)
+				{
+					heldNum = 0;
+					if (mything.currentholdLevel < mything.holdLevelMax)
+						mything.currentholdLevel++;
+				}
+				else
+				{
+					heldNum++;
+				}
+			}
+			Chamber.RemoveAt (0);
+			if(mything.currentholdLevel>0)
+				mything.damage = mything.damage * mything.currentholdLevel;
+		}
 	}
 
 	void updateCurrentSpell()

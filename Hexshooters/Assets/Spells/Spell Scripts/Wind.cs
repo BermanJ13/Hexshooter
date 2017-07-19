@@ -97,30 +97,16 @@ public class Wind : Spell {
 				//if attack an obstacle
 				else if (c.gameObject.tag == "Obstacle") {
 					//makes a variable depending if bullet is coming from the left or right side
-					if (PlayerNum == 1)
-					{
-						
-						c.GetComponent<Obstacle> ().direction = new Vector2(direction.x,direction.y);
-						//boundary
-						if (c.transform.position.x != 9) {
-							c.transform.position += new Vector3 (1f, 0f, 0f);
-						} 
-						else
-						{
-							c.transform.position += new Vector3 (0f, 0f, 0f); //moves the enemy up a penel
-						}
-
-					} else 
-					{
-						c.GetComponent<Obstacle> ().direction = direction * -1;
-						if (c.transform.position.x != 9) {
-							c.transform.position += new Vector3 (-1f, 0f, 0f);
-						} 
-						else
-						{
-							c.transform.position += new Vector3 (0f, 0f, 0f); //moves the enemy up a penel
-						}
-					}
+					//if (PlayerNum == 1)
+					//{
+					//	
+					//	c.GetComponent<Obstacle> ().direction = new Vector2(direction.x,direction.y);
+					//
+					//} else 
+					//{
+					//	c.GetComponent<Obstacle> ().direction = direction * -1;
+					//}
+						c.GetComponent<Obstacle>().specialEffects(this);
 					markedForDeletion = true; //used to delete bullet
 
 					}
@@ -278,38 +264,14 @@ public class Wind : Spell {
 				//if hit an obstacle
 				else if (c.gameObject.tag == "Obstacle") {
 					//makes a variable depending if bullet is coming from the left or right side
-					if (PlayerNum == 1) {
-						c.GetComponent<Obstacle> ().direction = direction *2;
-						//checking boundary and movings accordingly
-						if (c.transform.position.x < 8) {
-							c.transform.position += new Vector3 (2f, 0f, 0f);
-						} 
-						else if(c.transform.position.x == 8)
-						{
-							c.transform.position += new Vector3 (1f, 0f, 0f);
-						}
-						else
-						{
-							c.transform.position += new Vector3 (0f, 0f, 0f); //moves the enemy up a penel
-						}
-					} 
-					else 
-					{
-						c.GetComponent<Obstacle> ().direction = direction * -2;
-						//checking boundaries and movings accordlingly
-						if (c.transform.position.x > 1) 
-						{
-							c.transform.position += new Vector3 (-2f, 0f, 0f);
-						} 
-						else if(c.transform.position.x == 1)
-						{
-							c.transform.position += new Vector3 (-1f, 0f, 0f);
-						}
-						else
-						{
-							c.transform.position += new Vector3 (0f, 0f, 0f); //moves the enemy up a penel
-						}
-					}
+					//if (PlayerNum == 1) {
+					//	c.GetComponent<Obstacle> ().direction = direction *2;
+					//} 
+					//else 
+					//{
+					//	c.GetComponent<Obstacle> ().direction = direction * -2;
+					//}
+						c.GetComponent<Obstacle>().specialEffects(this);
 					markedForDeletion = true; //used to delete bullet
 
 				}
