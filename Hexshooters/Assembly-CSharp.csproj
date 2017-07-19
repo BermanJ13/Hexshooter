@@ -80,6 +80,8 @@
      <Compile Include="Assets\Enemies\Scripts\WildCat.cs" />
      <Compile Include="Assets\Menus\PauseMenuScripts\ClosedBook.cs" />
      <Compile Include="Assets\Menus\PauseMenuScripts\DeckMenu.cs" />
+     <Compile Include="Assets\Menus\PauseMenuScripts\QuestMenu.cs" />
+     <Compile Include="Assets\Menus\PauseMenuScripts\questListButton.cs" />
      <Compile Include="Assets\Menus\Scripts\CharSelect.cs" />
      <Compile Include="Assets\Menus\Scripts\ControlDisplay.cs" />
      <Compile Include="Assets\Menus\Scripts\CursorLock.cs" />

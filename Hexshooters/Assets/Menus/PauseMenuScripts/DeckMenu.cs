@@ -130,6 +130,17 @@ public class DeckMenu : MonoBehaviour {
     /*
      * different menu button code 
      * */
+
+	//Paramters: None
+	//Purpose: Takes the player to main pause menu
+	//Known Errors: None
+	public void ToClosedBook()
+	{
+		//In Theory only need to disable the main pause menu and active the deck Menu
+		//turns off title canvas and turns on level select canvas
+		deckCanvas.SetActive(false);
+		closedCanvas.SetActive(true);
+	}
     //Paramters: None
     //Purpose: Takes the player to the list of Quest Section of the Menu
     //Known Errors: None
