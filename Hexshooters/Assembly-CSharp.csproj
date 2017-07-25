@@ -81,7 +81,11 @@
      <Compile Include="Assets\Menus\PauseMenuScripts\ClosedBook.cs" />
      <Compile Include="Assets\Menus\PauseMenuScripts\DeckMenu.cs" />
      <Compile Include="Assets\Menus\PauseMenuScripts\QuestMenu.cs" />
-     <Compile Include="Assets\Menus\PauseMenuScripts\questListButton.cs" />
+     <Compile Include="Assets\Menus\PauseMenuScripts\QuestMenuScripts\DescriptionPanel.cs" />
+     <Compile Include="Assets\Menus\PauseMenuScripts\QuestMenuScripts\SimpleObjectPool.cs" />
+     <Compile Include="Assets\Menus\PauseMenuScripts\QuestMenuScripts\TownName.cs" />
+     <Compile Include="Assets\Menus\PauseMenuScripts\QuestMenuScripts\questNameScrollList.cs" />
+     <Compile Include="Assets\Menus\PauseMenuScripts\QuestMenuScripts\sampleQuestButton.cs" />
      <Compile Include="Assets\Menus\Scripts\CharSelect.cs" />
      <Compile Include="Assets\Menus\Scripts\ControlDisplay.cs" />
      <Compile Include="Assets\Menus\Scripts\CursorLock.cs" />
@@ -158,6 +162,9 @@
      <None Include="Assets\Overworld\Dialogue\Text\Resources\Cutscene1b2.txt" />
      <None Include="Assets\Overworld\Dialogue\Text\Resources\Cutscene2b.txt" />
      <None Include="Assets\Overworld\Dialogue\Text\Resources\Cutscene0.txt" />
+ <Reference Include="UnityEngine.Advertisements">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -172,6 +179,9 @@
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Purchasing">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
