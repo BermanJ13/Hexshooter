@@ -132,7 +132,7 @@ public class OverEnemy : MonoBehaviour {
         Vector2 pos = startPosition;
         switch (wander)
         {
-            case WanderType.patrolRectangle:
+            case WanderType.patrolDiamond:
                 if (pointTraveled == 0)
                     target.transform.position = new Vector2(pos.x + horizontalDistance, pos.y);
                 else if (pointTraveled == 1)
@@ -147,7 +147,7 @@ public class OverEnemy : MonoBehaviour {
                 else
                     pointTraveled = 0;
                 break;
-            case WanderType.patrolElbow:
+            case WanderType.patrolZag:
                 if (pointTraveled == 0)
                     target.transform.position = new Vector2(pos.x + horizontalDistance, pos.y);
                 else if (pointTraveled == 1)
