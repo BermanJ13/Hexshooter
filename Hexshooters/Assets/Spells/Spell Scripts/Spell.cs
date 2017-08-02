@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+public enum Spell_Types {Heal, Create, Trap, Attack};
 public class Spell : MonoBehaviour {
 
 	public Attributes[] attributes;

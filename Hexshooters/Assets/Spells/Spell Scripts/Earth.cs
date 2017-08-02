@@ -179,7 +179,7 @@ public class Earth : Spell {
 						c.transform.position += new Vector3 (1, 0, 0);
 						damage = 0;
 						Instantiate (Resources.Load ("EarthWall"), transform.position, Quaternion.identity);
-                        Instantiate (Resources.Load ("EarthWall"), new Vector2(transform.position.x+direction.x, transform.position.y), Quaternion.identity);
+                        //Instantiate (Resources.Load ("EarthWall"), new Vector2(transform.position.x+direction.x, transform.position.y), Quaternion.identity);
 						markedForDeletion = true;
 						colided = true;
 					}

@@ -24,6 +24,13 @@ public class DeckMenu : MonoBehaviour {
     public Text deck;
     public Text inven;
 
+
+	//Prevents Destruction upon scene switching
+	void Awake()
+	{
+		DontDestroyOnLoad (transform.gameObject);
+	}
+
     // Use this for initialization
     void Start ()
     {
@@ -206,46 +213,42 @@ public class DeckMenu : MonoBehaviour {
         }
     }
 
-    /*
     //Parameters: not sure how the multiple decks attached to each character is handled data wise
     //Functions: displays the deck of the character depending if it's their first or second deck on left side of the menu
     //Known errors: I have no idea what the parameters are. 
-    public void displayDeck(not sure how the multiple decks attached to each character is handled) //assuming the list has spell names already
+	public void displayDeck(List<Object> Deck) //assuming the list has spell names already
     {
-         //list of spells within the deck. to later be displayed
-        List<string> spells = new List<string>;
-        //new line string to be added between each spell for readability.
-        string newline = "\n";
-
-        //the character's 1st deck variable is on
-        if(aDeck)
-        {
-            //again not sure how handling data of deck tied to character atm
-            foreach(var spell in adecklist?)
-            {
-              spells.add(deckA.name?);
-              spells.add(newline);  
-
-            }
-        }
-        //if adeck is false means that bdeck should be down 
-        else
-        {
-            //again not sure how handling data of deck tied to character atm
-             foreach(var spell in bdecklist?)
-            {
-                spells.add(deckB.name?);
-                spells.add(newline);  
-
-            }
-        }
+		//Image displayImage;
+		//Text name;
+		//Get current selected Weapon andpick out it's maximum
+		int currentWeapon = 0; //Replace with getting the current selected weapon
+		int weaponDeckSize;
+		switch (currentWeapon)
+		{
+			//Set weapon deck size based on the current weapon
+			default:
+				weaponDeckSize = 0;
+			break;
+		}
         //then start displaying it on the apporiate text box
-           foreach(var name in spells)
-           {
-                deck.text+= name;
-           }
+		for(int i =0;i<weaponDeckSize;i++)
+        {
+			if (Deck [i] != null)
+			{
+				Spell currentSpell = ((GameObject)Deck [i]).GetComponent<Spell> ();
+				currentSpell.setDescription (currentWeapon);
+				//Change Display Image and name to the objects that make up a button in the deck list. 
+				//displayImage.sprite = currentSpell.bulletImage;
+				//name.text = currentSpell.gameObject.name;
+			}
+			else
+			{
+
+			}
+        }
      }
 
+	/*
     //Parameters: not sure 
     //Functions: displays the list of spells in the inventory 
     //Known errors: I have no idea what the parameters are. 

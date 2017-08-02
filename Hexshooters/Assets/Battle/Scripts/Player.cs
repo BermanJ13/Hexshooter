@@ -18,7 +18,6 @@ public class Player : MonoBehaviour {
 	public int PlayerNum;
 	private bool yAxisInUse = false;
 	private bool xAxisInUse = false;
-	Text currentBullet;
 	Text pHealth;
 	public int armorWeakness;
 	public StatusManager myStatus;
@@ -35,6 +34,8 @@ public class Player : MonoBehaviour {
 	public bool hit;
 	public bool heal;
 	public Image playerDisplay;
+	public Image topSpell;
+	public Sprite defaultSlot;
 	StatusEffect moveLag;
 	StatusEffect shotLag;
 	public bool basic;
@@ -127,6 +128,8 @@ public class Player : MonoBehaviour {
 	{
 		canMove = true;
 		updateCurrentSpell ();
+		if(Chamber.Count >0)
+		field.updateChamberImages ();
 		pHealth.text = health.ToString();
 		buttonPresed = false;
 
@@ -448,7 +451,6 @@ public class Player : MonoBehaviour {
 	}
 	void initiateSpell()
 	{
-
 		GameObject go = (GameObject)Instantiate(Chamber[0],new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
 
 		Spell mything = go.GetComponent<Spell>();
@@ -491,12 +493,15 @@ public class Player : MonoBehaviour {
 	{
 		if (Chamber.Count > 0)
 		{
-			Spell curSpell = ((GameObject)Resources.Load (Chamber [0].name)).GetComponent<Spell> ();
-			currentBullet.text = curSpell.name + ": " + curSpell.damage;
-		} 
+			Sprite rune = ((GameObject)Resources.Load (Chamber [0].name)).GetComponent<Spell> ().bulletImage;
+			if (rune != null)
+			{
+				topSpell.sprite = rune;
+			}
+		}
 		else
 		{
-			currentBullet.text = "";
+			topSpell.sprite = defaultSlot;
 		}
 	}
 	public void takeDamage(int damage, Attributes[] effects) //created for "break" status
@@ -592,6 +597,7 @@ public class Player : MonoBehaviour {
 			Chamber.RemoveAt (0);
 			Chamber.Add (temp);
 			updateCurrentSpell ();
+			field.updateChamberImages ();
 			allowShot = false;
 		}
 	}
@@ -603,21 +609,19 @@ public class Player : MonoBehaviour {
 			Chamber.RemoveAt (Chamber.Count - 1);
 			Chamber.Insert (0, temp);
 			updateCurrentSpell ();
+			field.updateChamberImages ();
 			allowShot = false;
 		}
 	}
 	void setPlayer()
 	{
-		if (playerDisplay != null)
+		if (PlayerNum == 1)
 		{
-			if (PlayerNum == 1)
-			{
-				playerDisplay = GameObject.Find ("PlayerImage").GetComponent<Image> ();
-			}
-			else
-			{				
-				playerDisplay = GameObject.Find ("PlayerImage_2").GetComponent<Image> ();
-			}
+			playerDisplay = GameObject.Find ("PlayerImage").GetComponent<Image> ();
+		}
+		else
+		{				
+			playerDisplay = GameObject.Find ("PlayerImage_2").GetComponent<Image> ();
 		}
 		hit = false;
 		if (GameObject.Find ("CharSelect") != null)
@@ -653,14 +657,6 @@ public class Player : MonoBehaviour {
 			atkbutton = "Fire_P2";
 			abilButton1 = "Ability 1_P2";
 			abilButton2 = "Ability 2_P2";
-		}
-		if (PlayerNum == 1)
-		{
-			currentBullet = GameObject.Find("Current Bullet").GetComponent<Text>();
-		}
-		else
-		{
-			currentBullet = GameObject.Find("Current Bullet_P2").GetComponent<Text>();
 		}
 
 		if (PlayerNum == 1)

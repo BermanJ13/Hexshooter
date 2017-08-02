@@ -9,6 +9,13 @@ public class questListButton : MonoBehaviour {
 	public Text questName;
 	public Image done;
 
+
+	//Prevents Destruction upon scene switching
+	void Awake()
+	{
+		DontDestroyOnLoad (transform.gameObject);
+	}
+
 	void Start () {
 		
 	}

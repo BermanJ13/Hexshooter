@@ -16,6 +16,13 @@ public class ClosedBook : MonoBehaviour
     public bool amSure = false;
     public bool nevermind = false;
     //to tell between the characters
+
+	//Prevents Destruction upon scene switching
+	void Awake()
+	{
+		DontDestroyOnLoad (transform.gameObject);
+	}
+
     // Use this for initialization
     void Start()
     {

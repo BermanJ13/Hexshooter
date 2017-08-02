@@ -16,7 +16,7 @@ public class FieldManagerPVP : FieldManager
 	protected static System.Random rand = new System.Random();  
 	protected static GameObject[] pauseObjects_p2;
 	protected SpellHolder spellHold_2;
-	protected List<GameObject> spellSlots_2 = new List<GameObject>();
+	protected GameObject[] spellSlots_2 = new GameObject[8];
 	protected GameObject runeDisplay_2;
 	protected Text runeDamage_2;
 	protected Text runeName_2;
@@ -271,7 +271,7 @@ public class FieldManagerPVP : FieldManager
 		if (num == 1)
 		{
 			p1reload = true;
-			for (int i = 0; i < spellSlots.Count; i++)
+			for (int i = 0; i < spellSlots.Length; i++)
 			{
 				spellSlots [i].GetComponent<Image> ().sprite = defaultSlot;
 				spellSlots [i].GetComponent<Image> ().color = Color.white;
@@ -345,7 +345,7 @@ public class FieldManagerPVP : FieldManager
 		else
 		{
 			p2reload = true;
-			for (int i = 0; i < spellSlots_2.Count; i++)
+			for (int i = 0; i < spellSlots_2.Length; i++)
 			{
 				spellSlots_2[i].GetComponent<Image>().sprite = defaultSlot;
 				spellSlots_2[i].GetComponent<Image>().color = Color.white;
@@ -541,12 +541,12 @@ public class FieldManagerPVP : FieldManager
 	{
 		p1Ready = false;
 		p2Ready = false;
-		for (int i = 0; i < spellSlots.Count; i++)
+		for (int i = 0; i < spellSlots.Length; i++)
 		{
 			spellSlots[i].GetComponent<Image>().sprite = defaultSlot;
 			spellSlots[i].GetComponent<Image>().color = Color.white;
 		}
-		for (int i = 0; i < spellSlots_2.Count; i++)
+		for (int i = 0; i < spellSlots_2.Length; i++)
 		{
 			spellSlots_2[i].GetComponent<Image>().sprite = defaultSlot;
 			spellSlots_2[i].GetComponent<Image>().color = Color.white;
@@ -962,97 +962,47 @@ public class FieldManagerPVP : FieldManager
 		{
 			case 1:
 				weapons_2 [0].SetActive (true);
-				spellSlots_2.Add (GameObject.Find ("SpellSlot1_2"));
-				spellSlots_2.Add (GameObject.Find ("SpellSlot2_2"));
-				spellSlots_2.Add (GameObject.Find ("SpellSlot3_2"));
-				spellSlots_2.Add (GameObject.Find ("SpellSlot4_2"));
-				spellSlots_2.Add (GameObject.Find ("SpellSlot5_2"));
-				spellSlots_2.Add (GameObject.Find ("SpellSlot6_2"));
-				if (!first)
-				{
-					spellSlots_2[0] = GameObject.Find ("SpellSlot1_2");
-					spellSlots_2[1] = GameObject.Find ("SpellSlot2_2");
-					spellSlots_2[2] = GameObject.Find ("SpellSlot3_2");
-					spellSlots_2[3] = GameObject.Find ("SpellSlot4_2");
-					spellSlots_2[4] = GameObject.Find ("SpellSlot5_2");
-					spellSlots_2[5] = GameObject.Find ("SpellSlot6_2");
-				}
-
+				spellSlots_2[0] = GameObject.Find ("SpellSlot1_2");
+				spellSlots_2[1] = GameObject.Find ("SpellSlot2_2");
+				spellSlots_2[2] = GameObject.Find ("SpellSlot3_2");
+				spellSlots_2[3] = GameObject.Find ("SpellSlot4_2");
+				spellSlots_2[4] = GameObject.Find ("SpellSlot5_2");
+				spellSlots_2[5] = GameObject.Find ("SpellSlot6_2");
 				p2Gun = weapons_2 [0];
 				weaponMax_2 = 6;
 			break;
 			case 2:
 				weapons_2 [1].SetActive (true);
-				spellSlots_2.Add (GameObject.Find ("SpellSlot1_2"));
-				spellSlots_2.Add (GameObject.Find ("SpellSlot2_2"));
-				spellSlots_2.Add (GameObject.Find ("SpellSlot3_2"));
-				spellSlots_2.Add (GameObject.Find ("SpellSlot4_2"));
-				spellSlots_2.Add (GameObject.Find ("SpellSlot5_2"));
-				spellSlots_2.Add (GameObject.Find ("SpellSlot6_2"));
-				spellSlots_2.Add (GameObject.Find ("SpellSlot7_2"));
-				spellSlots_2.Add (GameObject.Find ("SpellSlot8_2"));
-				if (!first)
-				{
-					spellSlots_2[0] = GameObject.Find ("SpellSlot1_2");
-					spellSlots_2[1] = GameObject.Find ("SpellSlot2_2");
-					spellSlots_2[2] = GameObject.Find ("SpellSlot3_2");
-					spellSlots_2[3] = GameObject.Find ("SpellSlot4_2");
-					spellSlots_2[4] = GameObject.Find ("SpellSlot5_2");
-					spellSlots_2[5] = GameObject.Find ("SpellSlot6_2");
-					spellSlots_2[6] = GameObject.Find ("SpellSlot7_2");
-					spellSlots_2[7] = GameObject.Find ("SpellSlot8_2");
-				}
+				spellSlots_2[0] = GameObject.Find ("SpellSlot1_2");
+				spellSlots_2[1] = GameObject.Find ("SpellSlot2_2");
+				spellSlots_2[2] = GameObject.Find ("SpellSlot3_2");
+				spellSlots_2[3] = GameObject.Find ("SpellSlot4_2");
+				spellSlots_2[4] = GameObject.Find ("SpellSlot5_2");
+				spellSlots_2[5] = GameObject.Find ("SpellSlot6_2");
+				spellSlots_2[6] = GameObject.Find ("SpellSlot7_2");
+				spellSlots_2[7] = GameObject.Find ("SpellSlot8_2");
 				p2Gun = weapons_2 [1];
 				weaponMax_2 = 8;
 			break;
 			case 3:
-				//weapons_2 [3].SetActive (true);
-				//spellSlots_2.Add (GameObject.Find ("SpellSlot1_2"));
-				//spellSlots_2.Add (GameObject.Find ("SpellSlot2_2"));
-				//if (!first)
-				//{
-				//	spellSlots_2[0] = GameObject.Find ("SpellSlot1_2");
-				//	spellSlots_2[1] = GameObject.Find ("SpellSlot2_2");
-				//}
-				//p2Gun = weapons_2 [3];
-				//weaponMax_2 = 2;
-
 				weapons_2[2].SetActive (true);
-				spellSlots.Add (GameObject.Find("SpellSlot1_2"));
-				spellSlots.Add (GameObject.Find("SpellSlot2_2"));
-				spellSlots.Add (GameObject.Find("SpellSlot3_2"));
-				spellSlots.Add (GameObject.Find("SpellSlot4_2"));
-				if (!first)
-				{
-					spellSlots_2[0] = GameObject.Find ("SpellSlot1_2");
-					spellSlots_2[1] = GameObject.Find ("SpellSlot2_2");
-					spellSlots_2 [2] = GameObject.Find ("SpellSlot3_2");
-					spellSlots_2 [3] = GameObject.Find ("SpellSlot4_2");
-				}
+				spellSlots_2[0] = GameObject.Find ("SpellSlot1_2");
+				spellSlots_2[1] = GameObject.Find ("SpellSlot2_2");
+				spellSlots_2 [2] = GameObject.Find ("SpellSlot3_2");
+				spellSlots_2 [3] = GameObject.Find ("SpellSlot4_2");
 				p2Gun = weapons_2[2];
 				weaponMax_2 = 4;
 			break;
 			case 4:
 				weapons_2 [1].SetActive (true);
-				spellSlots_2.Add (GameObject.Find ("SpellSlot1_2"));
-				spellSlots_2.Add (GameObject.Find ("SpellSlot2_2"));
-				spellSlots_2.Add (GameObject.Find ("SpellSlot3_2"));
-				spellSlots_2.Add (GameObject.Find ("SpellSlot4_2"));
-				spellSlots_2.Add (GameObject.Find ("SpellSlot5_2"));
-				spellSlots_2.Add (GameObject.Find ("SpellSlot6_2"));
-				spellSlots_2.Add (GameObject.Find ("SpellSlot7_2"));
-				spellSlots_2.Add (GameObject.Find ("SpellSlot8_2"));
-				if (!first)
-				{
-					spellSlots_2[0] = GameObject.Find ("SpellSlot1_2");
-					spellSlots_2[1] = GameObject.Find ("SpellSlot2_2");
-					spellSlots_2[2] = GameObject.Find ("SpellSlot3_2");
-					spellSlots_2[3] = GameObject.Find ("SpellSlot4_2");
-					spellSlots_2[4] = GameObject.Find ("SpellSlot5_2");
-					spellSlots_2[5] = GameObject.Find ("SpellSlot6_2");
-					spellSlots_2[6] = GameObject.Find ("SpellSlot7_2");
-					spellSlots_2[7] = GameObject.Find ("SpellSlot8_2");
-				}
+				spellSlots_2[0] = GameObject.Find ("SpellSlot1_2");
+				spellSlots_2[1] = GameObject.Find ("SpellSlot2_2");
+				spellSlots_2[2] = GameObject.Find ("SpellSlot3_2");
+				spellSlots_2[3] = GameObject.Find ("SpellSlot4_2");
+				spellSlots_2[4] = GameObject.Find ("SpellSlot5_2");
+				spellSlots_2[5] = GameObject.Find ("SpellSlot6_2");
+				spellSlots_2[6] = GameObject.Find ("SpellSlot7_2");
+				spellSlots_2[7] = GameObject.Find ("SpellSlot8_2");
 				p2Gun = weapons_2 [1];
 				weaponMax_2 = 8;
 

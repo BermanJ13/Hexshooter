@@ -14,6 +14,13 @@ public class QuestMenu : MonoBehaviour {
 	public Text questNames; //list of quest names displayed
 	public Text description; //description of said quest
 
+
+	//Prevents Destruction upon scene switching
+	void Awake()
+	{
+		DontDestroyOnLoad (transform.gameObject);
+	}
+
 	// Use this for initialization
 	void Start ()
 	{
