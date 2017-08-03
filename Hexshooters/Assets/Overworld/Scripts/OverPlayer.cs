@@ -301,20 +301,24 @@ public class OverPlayer : MonoBehaviour {
 			{
 				//If the trigger you're overlapping with is touch activated
 				currentTrig = hitCollider.GetComponent<Trigger> ();
-				if (currentTrig.touch)
+				//Checks to see if the trigger is active and ready to be interacted with
+				if (currentTrig.active)
 				{
-					//Checks to see if it's already been interacted with or if it has, but is repeatable
-					if (currentTrig.interacted == false || (currentTrig.repeatable == true && currentTrig.interacted == true))
+					if (currentTrig.touch)
 					{
-						//Loads dialouge and sets it to interacted if it doesnt involve a battle.
-						dialog.Load (currentTrig.script);
-						if (!currentTrig.battle)
+						//Checks to see if it's already been interacted with or if it has, but is repeatable
+						if (currentTrig.interacted == false || (currentTrig.repeatable == true && currentTrig.interacted == true))
 						{
-							currentTrig.interacted = true;
-							activatedTriggers.Add(currentTrig.name);
+							//Loads dialouge and sets it to interacted if it doesnt involve a battle.
+							dialog.Load (currentTrig.script);
+							if (!currentTrig.battle)
+							{
+								currentTrig.interacted = true;
+								activatedTriggers.Add (currentTrig.name);
+							}
+							//cutscene = true;
+							Debug.Log ("made it");
 						}
-						//cutscene = true;
-						Debug.Log ("made it");
 					}
 				}
 			}
