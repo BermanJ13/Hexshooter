@@ -100,6 +100,8 @@
      <Compile Include="Assets\Overworld\Scripts\Trigger.cs" />
      <Compile Include="Assets\Preload\DDOL.cs" />
      <Compile Include="Assets\Preload\Load.cs" />
+     <Compile Include="Assets\Scripts\Explosion.cs" />
+     <Compile Include="Assets\Scripts\SparkParticles.cs" />
      <Compile Include="Assets\Spells\Component Scripts\Particle.cs" />
      <Compile Include="Assets\Spells\Component Scripts\RuneInfo.cs" />
      <Compile Include="Assets\Spells\Component Scripts\SpellHolder.cs" />
@@ -108,6 +110,7 @@
      <Compile Include="Assets\Spells\Spell Scripts\Chains.cs" />
      <Compile Include="Assets\Spells\Spell Scripts\Deputy.cs" />
      <Compile Include="Assets\Spells\Spell Scripts\Earth.cs" />
+     <Compile Include="Assets\Spells\Spell Scripts\FX_ChangeColor.cs" />
      <Compile Include="Assets\Spells\Spell Scripts\Fire.cs" />
      <Compile Include="Assets\Spells\Spell Scripts\Ice.cs" />
      <Compile Include="Assets\Spells\Spell Scripts\Lightning.cs" />
@@ -156,9 +159,6 @@
      <None Include="Assets\Overworld\Dialogue\Text\Resources\Cutscene1b2.txt" />
      <None Include="Assets\Overworld\Dialogue\Text\Resources\Cutscene2b.txt" />
      <None Include="Assets\Overworld\Dialogue\Text\Resources\Cutscene0.txt" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -173,9 +173,6 @@
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
