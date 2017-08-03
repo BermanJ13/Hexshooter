@@ -750,7 +750,7 @@ public class FieldManager : MonoBehaviour
 	}
 
 	//Update the spell images
-	public void updateChamberImages()
+	public void updateChamberImages(int num)
 	{
 		for (int i = 0; i < weaponMax; i++)
 		{

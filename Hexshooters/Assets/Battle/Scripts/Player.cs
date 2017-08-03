@@ -128,8 +128,8 @@ public class Player : MonoBehaviour {
 	{
 		canMove = true;
 		updateCurrentSpell ();
-		if(Chamber.Count >0)
-		field.updateChamberImages ();
+		if(Chamber.Count >=0)
+			field.updateChamberImages (PlayerNum);
 		pHealth.text = health.ToString();
 		buttonPresed = false;
 
@@ -597,7 +597,7 @@ public class Player : MonoBehaviour {
 			Chamber.RemoveAt (0);
 			Chamber.Add (temp);
 			updateCurrentSpell ();
-			field.updateChamberImages ();
+			field.updateChamberImages (PlayerNum);
 			allowShot = false;
 		}
 	}
@@ -609,7 +609,7 @@ public class Player : MonoBehaviour {
 			Chamber.RemoveAt (Chamber.Count - 1);
 			Chamber.Insert (0, temp);
 			updateCurrentSpell ();
-			field.updateChamberImages ();
+			field.updateChamberImages (PlayerNum);
 			allowShot = false;
 		}
 	}

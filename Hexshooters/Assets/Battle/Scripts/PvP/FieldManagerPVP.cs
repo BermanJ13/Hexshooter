@@ -17,6 +17,7 @@ public class FieldManagerPVP : FieldManager
 	protected static GameObject[] pauseObjects_p2;
 	protected SpellHolder spellHold_2;
 	protected GameObject[] spellSlots_2 = new GameObject[8];
+	protected List<GameObject> displaySlots_2 = new List<GameObject>();
 	protected GameObject runeDisplay_2;
 	protected Text runeDamage_2;
 	protected Text runeName_2;
@@ -31,6 +32,7 @@ public class FieldManagerPVP : FieldManager
 	protected GameObject[] battleObjects_2;
 	public bool p1reload;
 	public bool p2reload;
+	protected GameObject selector_2;
 
     
     // Use this for initialization
@@ -65,7 +67,6 @@ public class FieldManagerPVP : FieldManager
 		else
 			Shuffle(Handful_2);
 		
-		chooseGun_2 (player2.weapon, true);
 		getUI ();
 		updateEnemyList ();
 		updateSpellList ();
@@ -123,9 +124,10 @@ public class FieldManagerPVP : FieldManager
 			{
 				runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
 				runeDamage.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
-				runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
+				//runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
 				runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
 				runeDisplay.GetComponent<Image> ().color = new Color (0, 0, 0, 255);
+				selector.transform.position = ES_P1.currentSelectedGameObject.transform.position;
 			}
 		}
 		if (ES_P2.currentSelectedGameObject != null)
@@ -134,9 +136,10 @@ public class FieldManagerPVP : FieldManager
 			{
 				runeName_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
 				runeDamage_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
-				runeDesc_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
+				//runeDesc_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
 				runeDisplay_2.GetComponent<Image> ().sprite = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
 				runeDisplay_2.GetComponent<Image> ().color = new Color (0, 0, 0, 255);
+				selector_2.transform.position = ES_P2.currentSelectedGameObject.transform.position;
 			}
 		}
 
@@ -271,10 +274,13 @@ public class FieldManagerPVP : FieldManager
 		if (num == 1)
 		{
 			p1reload = true;
-			for (int i = 0; i < spellSlots.Length; i++)
+			for (int i = 0; i < weaponMax; i++)
 			{
-				spellSlots [i].GetComponent<Image> ().sprite = defaultSlot;
-				spellSlots [i].GetComponent<Image> ().color = Color.white;
+				displaySlots[i].GetComponent<Image>().sprite = defaultSlot;
+				displaySlots[i].GetComponent<Image>().color = Color.white;
+
+				spellSlots[i].GetComponent<Image>().sprite = defaultSlot;
+				spellSlots[i].GetComponent<Image>().color = Color.white;
 			}
 			if (player.weapon != 6)
 			{
@@ -311,6 +317,15 @@ public class FieldManagerPVP : FieldManager
 			{
 				pauseUI [i].SetActive (true);
 			}
+			foreach (GameObject d in displaySlots)
+			{
+				d.SetActive (false);
+			}
+			for (int i = 0; i < weaponMax; i++)
+			{
+				displaySlots [i].SetActive (true);
+			}
+
 			selectButton ();
 			for (int i = 0; i < spellHold.children.Count; i++)
 			{
@@ -333,7 +348,7 @@ public class FieldManagerPVP : FieldManager
 					r.runeName = curSpell.GetComponent<Spell>().name;
 					r.runeImage = curSpell.GetComponent<Spell> ().runeImage;
 					r.runeDamage = curSpell.GetComponent<Spell>().damage.ToString();
-					r.runeDesc = curSpell.GetComponent<Spell> ().description;
+					//r.runeDesc = curSpell.GetComponent<Spell> ().description;
 				}
 				if (player.weapon == 6)
 				{
@@ -345,8 +360,11 @@ public class FieldManagerPVP : FieldManager
 		else
 		{
 			p2reload = true;
-			for (int i = 0; i < spellSlots_2.Length; i++)
+			for (int i = 0; i < weaponMax_2; i++)
 			{
+				displaySlots_2[i].GetComponent<Image>().sprite = defaultSlot;
+				displaySlots_2[i].GetComponent<Image>().color = Color.white;
+
 				spellSlots_2[i].GetComponent<Image>().sprite = defaultSlot;
 				spellSlots_2[i].GetComponent<Image>().color = Color.white;
 			}
@@ -385,6 +403,14 @@ public class FieldManagerPVP : FieldManager
 			{
 				pauseUI_2 [i].SetActive (true);
 			}
+			foreach (GameObject d in displaySlots_2)
+			{
+				d.SetActive (false);
+			}
+			for (int i = 0; i < weaponMax_2; i++)
+			{
+				displaySlots_2 [i].SetActive (true);
+			}
 			selectButton_2 ();
 			for (int i = 0; i < spellHold_2.children.Count; i++)
 			{
@@ -407,7 +433,7 @@ public class FieldManagerPVP : FieldManager
 					r.runeName = curSpell.GetComponent<Spell>().name;
 					r.runeImage = curSpell.GetComponent<Spell> ().runeImage;
 					r.runeDamage = curSpell.GetComponent<Spell>().damage.ToString();
-					r.runeDesc = curSpell.GetComponent<Spell> ().description;
+					//r.runeDesc = curSpell.GetComponent<Spell> ().description;
 				}
 				if (player2.weapon == 6)
 				{
@@ -439,9 +465,10 @@ public class FieldManagerPVP : FieldManager
 				{
 					runeName.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
 					runeDamage.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
-					runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
+					//runeDesc.text = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
 					runeDisplay.GetComponent<Image> ().sprite = ES_P1.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
 					runeDisplay.GetComponent<Image> ().color = new Color(0,0,0,255);
+					selector.transform.position = ES_P1.currentSelectedGameObject.transform.position;
 				}
 			}
 			if (ES_P2.currentSelectedGameObject != null)
@@ -450,9 +477,10 @@ public class FieldManagerPVP : FieldManager
 				{
 					runeName_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeName;
 					runeDamage_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDamage;
-					runeDesc_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
+					//runeDesc_2.text = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeDesc;
 					runeDisplay_2.GetComponent<Image> ().sprite = ES_P2.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
 					runeDisplay_2.GetComponent<Image> ().color = new Color(0,0,0,255);
+					selector_2.transform.position = ES_P2.currentSelectedGameObject.transform.position;
 				}
 			}
 		}
@@ -541,13 +569,19 @@ public class FieldManagerPVP : FieldManager
 	{
 		p1Ready = false;
 		p2Ready = false;
-		for (int i = 0; i < spellSlots.Length; i++)
+		for (int i = 0; i < weaponMax; i++)
 		{
+			displaySlots[i].GetComponent<Image>().sprite = defaultSlot;
+			displaySlots[i].GetComponent<Image>().color = Color.white;
+
 			spellSlots[i].GetComponent<Image>().sprite = defaultSlot;
 			spellSlots[i].GetComponent<Image>().color = Color.white;
 		}
-		for (int i = 0; i < spellSlots_2.Length; i++)
+		for (int i = 0; i < weaponMax_2; i++)
 		{
+			displaySlots_2[i].GetComponent<Image>().sprite = defaultSlot;
+			displaySlots_2[i].GetComponent<Image>().color = Color.white;
+
 			spellSlots_2[i].GetComponent<Image>().sprite = defaultSlot;
 			spellSlots_2[i].GetComponent<Image>().color = Color.white;
 		}
@@ -645,7 +679,7 @@ public class FieldManagerPVP : FieldManager
 				r.runeName = curSpell.GetComponent<Spell>().name;
 				r.runeImage = curSpell.GetComponent<Spell> ().runeImage;
 				r.runeDamage = curSpell.GetComponent<Spell>().damage.ToString();
-				r.runeDesc = curSpell.GetComponent<Spell> ().description;
+				//r.runeDesc = curSpell.GetComponent<Spell> ().description;
 			}
 			if (player.weapon == 6)
 			{
@@ -674,7 +708,7 @@ public class FieldManagerPVP : FieldManager
 				r.runeName = curSpell.GetComponent<Spell>().name;
 				r.runeImage = curSpell.GetComponent<Spell> ().runeImage;
 				r.runeDamage = curSpell.GetComponent<Spell>().damage.ToString();
-				r.runeDesc = curSpell.GetComponent<Spell> ().description;
+				//r.runeDesc = curSpell.GetComponent<Spell> ().description;
 			}
 			if (player2.weapon == 6)
 			{
@@ -797,6 +831,35 @@ public class FieldManagerPVP : FieldManager
 		}
 	}
 
+	//Update the spell images
+	public void updateChamberImages(int num)
+	{
+		if (num == 1)
+		{
+			base.updateChamberImages (num);
+		}
+		else
+		{
+			for (int i = 0; i < weaponMax_2; i++)
+			{
+				if (player2.Chamber.Count > i)
+				{
+					Image slot = spellSlots_2 [i].GetComponent<Image> ();
+					Sprite rune = ((GameObject)Resources.Load (player2.Chamber [i].name)).GetComponent<Spell> ().bulletImage;
+					if (rune != null)
+					{
+						slot.sprite = rune;
+					}
+				}
+				else
+				{
+					Image slot = spellSlots_2 [i].GetComponent<Image> ();
+					slot.sprite = defaultSlot;
+				}
+			}
+		}
+	}
+
 	//Adds a bullet ot te selected list and prevents it from being s;lected again -P2
 	protected void addBullet_2(int num)
 	{
@@ -806,15 +869,18 @@ public class FieldManagerPVP : FieldManager
 			Temp_2.Add (Handful_2 [num]);
 			Image slot = spellSlots_2 [Temp_2.Count - 1].GetComponent<Image> ();
 			Image rune = spellHold_2.children [num].gameObject.GetComponent<Image> ();
+			Image slot2 = displaySlots_2 [Temp_2.Count - 1].GetComponent<Image> ();
 			slot.sprite = rune.sprite;
 			slot.color = rune.color;
+			slot2.sprite = rune.sprite;
+			slot2.color = rune.color;
 			spellHold_2.deactivateSpell ("Spell " + num + "_2");
 			TempNum_2.Add (num);
 			selectButton_2 ();
-			if(player2.weapon == 1)
-				p2Gun.transform.Rotate (new Vector3 (0.0f, 0.0f, 60.0f));
-			else if (player2.weapon == 2 || player2.weapon == 4)
-				p2Gun.transform.Rotate (new Vector3 (0.0f,0.0f,45.0f));
+			//if(player2.weapon == 1)
+			//	p2Gun.transform.Rotate (new Vector3 (0.0f, 0.0f, 60.0f));
+			//else if (player2.weapon == 2 || player2.weapon == 4)
+			//	p2Gun.transform.Rotate (new Vector3 (0.0f,0.0f,45.0f));
 			
 			//p2Gun.transform.rotation = Quaternion.Lerp(transform.rotation,  Quaternion.Euler(transform.rotation.x,transform.rotation.y,transform.rotation.z + 60), Time.time*0.1f);
 			if(Temp_2.Count == weaponMax_2)
@@ -835,10 +901,10 @@ public class FieldManagerPVP : FieldManager
 		spellSlots_2[Temp_2.Count-1].GetComponent<Image>().color = Color.white;
 		Temp_2.RemoveAt (Temp_2.Count - 1);
 		TempNum_2.RemoveAt (TempNum_2.Count - 1);
-		if(player2.weapon == 1)
-			p2Gun.transform.Rotate (new Vector3 (0.0f, 0.0f, -60.0f));
-		else if (player2.weapon == 2 || player2.weapon == 4)
-			p2Gun.transform.Rotate (new Vector3 (0.0f,0.0f,-45.0f));
+		//if(player2.weapon == 1)
+		//	p2Gun.transform.Rotate (new Vector3 (0.0f, 0.0f, -60.0f));
+		//else if (player2.weapon == 2 || player2.weapon == 4)
+		//	p2Gun.transform.Rotate (new Vector3 (0.0f,0.0f,-45.0f));
 		//p2Gun.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x,transform.rotation.y,transform.rotation.z - 60), Time.time*0.1f);
 
 	}
@@ -882,6 +948,7 @@ public class FieldManagerPVP : FieldManager
 	public void getUI()
 	{
 		base.getUI ();
+		chooseGun_2 (player2.weapon, true);
 		spellHold_2 = GameObject.Find ("SpellHolder_2").GetComponent<SpellHolder>();
 
 		pauseObjects_p2 = new GameObject[11];
@@ -904,13 +971,23 @@ public class FieldManagerPVP : FieldManager
 		runeDisplay_2 = GameObject.Find ("RuneHolder_2");
 		runeDamage_2 = GameObject.Find ("RuneDamage_2").GetComponent<Text>();
 		runeName_2 = GameObject.Find ("Rune Name_2").GetComponent<Text>();
-		runeDesc_2 = GameObject.Find ("Rune Description_2").GetComponent<Text>();
+		selector_2 = GameObject.Find ("Selected Spell_2");
 
 		//battleObjects[1] = null;
 		battleObjects = new GameObject[1];
 		battleObjects[0] = GameObject.Find("Current Bullet");
 		battleObjects_2 = new GameObject[1];
 		battleObjects_2[0] = GameObject.Find("Current Bullet_2");
+
+
+		displaySlots_2.Add (GameObject.Find ("SpellSlot1_2"));
+		displaySlots_2.Add (GameObject.Find ("SpellSlot2_2"));
+		displaySlots_2.Add (GameObject.Find ("SpellSlot3_2"));
+		displaySlots_2.Add (GameObject.Find ("SpellSlot4_2"));
+		displaySlots_2.Add (GameObject.Find ("SpellSlot5_2"));
+		displaySlots_2.Add (GameObject.Find ("SpellSlot6_2"));
+		displaySlots_2.Add (GameObject.Find ("SpellSlot7_2"));
+		displaySlots_2.Add (GameObject.Find ("SpellSlot8_2"));
 	}
 	protected void buildDeck()
 	{
@@ -953,56 +1030,57 @@ public class FieldManagerPVP : FieldManager
 			pauseUI_2 = GameObject.FindGameObjectsWithTag ("PauseUI_P2");
 		}
 
-		for (int i = 0; i < weapons.Length; i++)
+		for (int i = 0; i < weapons_2.Length; i++)
 		{
 			if(weapons_2[i] != null)
 				weapons_2 [i].SetActive (false);
 		}
+		Debug.Log(weapons_2[2]);
 		switch (weapon)
 		{
 			case 1:
 				weapons_2 [0].SetActive (true);
-				spellSlots_2[0] = GameObject.Find ("SpellSlot1_2");
-				spellSlots_2[1] = GameObject.Find ("SpellSlot2_2");
-				spellSlots_2[2] = GameObject.Find ("SpellSlot3_2");
-				spellSlots_2[3] = GameObject.Find ("SpellSlot4_2");
-				spellSlots_2[4] = GameObject.Find ("SpellSlot5_2");
-				spellSlots_2[5] = GameObject.Find ("SpellSlot6_2");
+				spellSlots_2[0] = GameObject.Find ("ChamberSlot1_2");
+				spellSlots_2[1] = GameObject.Find ("ChamberSlot2_2");
+				spellSlots_2[2] = GameObject.Find ("ChamberSlot3_2");
+				spellSlots_2[3] = GameObject.Find ("ChamberSlot4_2");
+				spellSlots_2[4] = GameObject.Find ("ChamberSlot5_2");
+				spellSlots_2[5] = GameObject.Find ("ChamberSlot6_2");
 				p2Gun = weapons_2 [0];
 				weaponMax_2 = 6;
 			break;
 			case 2:
 				weapons_2 [1].SetActive (true);
-				spellSlots_2[0] = GameObject.Find ("SpellSlot1_2");
-				spellSlots_2[1] = GameObject.Find ("SpellSlot2_2");
-				spellSlots_2[2] = GameObject.Find ("SpellSlot3_2");
-				spellSlots_2[3] = GameObject.Find ("SpellSlot4_2");
-				spellSlots_2[4] = GameObject.Find ("SpellSlot5_2");
-				spellSlots_2[5] = GameObject.Find ("SpellSlot6_2");
-				spellSlots_2[6] = GameObject.Find ("SpellSlot7_2");
-				spellSlots_2[7] = GameObject.Find ("SpellSlot8_2");
+				spellSlots_2[0] = GameObject.Find ("ChamberSlot1_2");
+				spellSlots_2[1] = GameObject.Find ("ChamberSlot2_2");
+				spellSlots_2[2] = GameObject.Find ("ChamberSlot3_2");
+				spellSlots_2[3] = GameObject.Find ("ChamberSlot4_2");
+				spellSlots_2[4] = GameObject.Find ("ChamberSlot5_2");
+				spellSlots_2[5] = GameObject.Find ("ChamberSlot6_2");
+				spellSlots_2[6] = GameObject.Find ("ChamberSlot7_2");
+				spellSlots_2[7] = GameObject.Find ("ChamberSlot8_2");
 				p2Gun = weapons_2 [1];
 				weaponMax_2 = 8;
 			break;
 			case 3:
 				weapons_2[2].SetActive (true);
-				spellSlots_2[0] = GameObject.Find ("SpellSlot1_2");
-				spellSlots_2[1] = GameObject.Find ("SpellSlot2_2");
-				spellSlots_2 [2] = GameObject.Find ("SpellSlot3_2");
-				spellSlots_2 [3] = GameObject.Find ("SpellSlot4_2");
+				spellSlots_2[0] = GameObject.Find ("ChamberSlot1_2");
+				spellSlots_2[1] = GameObject.Find ("ChamberSlot2_2");
+				spellSlots_2 [2] = GameObject.Find ("ChamberSlot3_2");
+				spellSlots_2 [3] = GameObject.Find ("ChamberSlot4_2");
 				p2Gun = weapons_2[2];
 				weaponMax_2 = 4;
 			break;
 			case 4:
 				weapons_2 [1].SetActive (true);
-				spellSlots_2[0] = GameObject.Find ("SpellSlot1_2");
-				spellSlots_2[1] = GameObject.Find ("SpellSlot2_2");
-				spellSlots_2[2] = GameObject.Find ("SpellSlot3_2");
-				spellSlots_2[3] = GameObject.Find ("SpellSlot4_2");
-				spellSlots_2[4] = GameObject.Find ("SpellSlot5_2");
-				spellSlots_2[5] = GameObject.Find ("SpellSlot6_2");
-				spellSlots_2[6] = GameObject.Find ("SpellSlot7_2");
-				spellSlots_2[7] = GameObject.Find ("SpellSlot8_2");
+				spellSlots_2[0] = GameObject.Find ("ChamberSlot1_2");
+				spellSlots_2[1] = GameObject.Find ("ChamberSlot2_2");
+				spellSlots_2[2] = GameObject.Find ("ChamberSlot3_2");
+				spellSlots_2[3] = GameObject.Find ("ChamberSlot4_2");
+				spellSlots_2[4] = GameObject.Find ("ChamberSlot5_2");
+				spellSlots_2[5] = GameObject.Find ("ChamberSlot6_2");
+				spellSlots_2[6] = GameObject.Find ("ChamberSlot7_2");
+				spellSlots_2[7] = GameObject.Find ("ChamberSlot8_2");
 				p2Gun = weapons_2 [1];
 				weaponMax_2 = 8;
 
