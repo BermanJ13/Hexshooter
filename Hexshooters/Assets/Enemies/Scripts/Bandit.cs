@@ -142,7 +142,7 @@ public class Bandit : Enemy
         Spell mything = go.GetComponent<Spell>();
 
 		////set a member variable (must be PUBLIC)
-		mything.weaponUsed = 1; 
+		mything.weaponUsed = Weapon_Types.Revolver; 
 		mything.PlayerNum = 2;
 
     }
@@ -174,7 +174,7 @@ public class Bandit : Enemy
         Spell mything = go.GetComponent<Spell>();
 
         ////set a member variable (must be PUBLIC)
-        mything.weaponUsed = 1;
+		mything.weaponUsed = Weapon_Types.Revolver;
         mything.PlayerNum = 2;
 
     }

@@ -8,7 +8,7 @@ public class Spell : MonoBehaviour {
 	public string[] effects;
 	public int damage;
 	public int damageTier;
-	public int weaponUsed;
+	public Weapon_Types weaponUsed;
 	public int speed; //time.deltatime multiplier which is typically 8
 	public Vector2 direction;
 	public int hitNum;
@@ -36,7 +36,7 @@ public class Spell : MonoBehaviour {
 		{
 			transform.localEulerAngles = new Vector3(0f,0f,180f);
 		}
-        if (weaponUsed == 2)
+		if (weaponUsed == Weapon_Types.Shotgun)
         {
             direction = new Vector2(direction.x * 2.0f, direction.y * 2.0f);
         }
@@ -66,7 +66,7 @@ public class Spell : MonoBehaviour {
 	}
 
 	//Movement of the bullets through the grid. Split up by weapon if necessary.
-	public virtual void movement(int weapon)
+	public virtual void movement(Weapon_Types weapon)
 	{
 
 	}
@@ -81,7 +81,7 @@ public class Spell : MonoBehaviour {
 	}
 
 	//Dictatees any effects that happen wqhen the bullet hits an enemy
-	public virtual void hitBehavior(int weapon)
+	public virtual void hitBehavior(Weapon_Types weapon)
 	{
 
 	}
@@ -92,7 +92,7 @@ public class Spell : MonoBehaviour {
 
 	}
 	//Dictates bullet beavior on the player
-	public virtual void setDescription(int weapon)
+	public virtual void setDescription(Weapon_Types weapon)
 	{
 
 	}

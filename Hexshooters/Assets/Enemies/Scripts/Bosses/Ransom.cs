@@ -272,7 +272,7 @@ public class Ransom : Enemy {
 				Spell mything = go.GetComponent<Spell>();
 
 				////set a member variable (must be PUBLIC)
-				mything.weaponUsed = 1; 
+				mything.weaponUsed = Weapon_Types.Revolver; 
 				mything.PlayerNum = 2;
             }
             else
@@ -287,7 +287,7 @@ public class Ransom : Enemy {
 					Spell mything = go.GetComponent<Spell>();
 
 					////set a member variable (must be PUBLIC)
-					mything.weaponUsed = 1; 
+					mything.weaponUsed = Weapon_Types.Revolver; 
 					mything.PlayerNum = 2;
                 }
                 else
@@ -298,7 +298,7 @@ public class Ransom : Enemy {
 					Spell mything = go.GetComponent<Spell>();
 
 					////set a member variable (must be PUBLIC)
-					mything.weaponUsed = 1; 
+					mything.weaponUsed = Weapon_Types.Revolver; 
 					mything.PlayerNum = 2;
 					recentFireCounter = RECENT_FIRE_RESET;
                 }
@@ -318,7 +318,7 @@ public class Ransom : Enemy {
 					Spell mything = go.GetComponent<Spell>();
 
 					////set a member variable (must be PUBLIC)
-					mything.weaponUsed = 1; 
+					mything.weaponUsed = Weapon_Types.Revolver; 
 					mything.PlayerNum = 2;
                 }
                 else
@@ -329,7 +329,7 @@ public class Ransom : Enemy {
 					Spell mything = go.GetComponent<Spell>();
 
 					////set a member variable (must be PUBLIC)
-					mything.weaponUsed = 1; 
+					mything.weaponUsed = Weapon_Types.Revolver; 
 					mything.PlayerNum = 2;
                     recentFireCounter = RECENT_FIRE_RESET;
                 }
@@ -345,7 +345,7 @@ public class Ransom : Enemy {
 					Spell mything = go.GetComponent<Spell>();
 
 					////set a member variable (must be PUBLIC)
-					mything.weaponUsed = 1; 
+					mything.weaponUsed = Weapon_Types.Revolver; 
 					mything.PlayerNum = 2;
                 }
                 else if(rand < 0.66f) //33%
@@ -356,7 +356,7 @@ public class Ransom : Enemy {
 					Spell mything = go.GetComponent<Spell>();
 
 					////set a member variable (must be PUBLIC)
-					mything.weaponUsed = 1; 
+					mything.weaponUsed = Weapon_Types.Revolver; 
 					mything.PlayerNum = 2;
                 }
                 else //34%
@@ -367,7 +367,7 @@ public class Ransom : Enemy {
 					Spell mything = go.GetComponent<Spell>();
 
 					////set a member variable (must be PUBLIC)
-					mything.weaponUsed = 1; 
+					mything.weaponUsed = Weapon_Types.Revolver; 
 					mything.PlayerNum = 2;
 					recentFireCounter = RECENT_FIRE_RESET;
                     recentFireCounter = RECENT_FIRE_RESET;

@@ -15,12 +15,14 @@ public class OverPlayer : MonoBehaviour {
 	public bool battle;
 	public bool charUnlock;
 
-	public int weapon;
+	public Weapon_Types weapon;
+	public int currentCharacter;
 	UniversalSettings us;
 	public GameObject pause,deck;
 	public Trigger currentTrig; 
 	public Trigger[] triggers; 
 	public List<string> activatedTriggers = new List<string>();
+	public List<Weapon_Types> availableWeapons = new List<Weapon_Types>();
 	public bool returnFromBattle;
 	public bool once = false;
     void Awake()
@@ -29,8 +31,11 @@ public class OverPlayer : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
-		//Sets the players original weapon - Currently Bow
-		weapon = 1;
+		//Sets the players original weapon 
+		availableWeapons.Add (Weapon_Types.Revolver);
+		weapon = Weapon_Types.Revolver;
+		currentCharacter = 1;
+
 		//FInds the Dialouge Manager, Pause Menu and Settings Files
 		dialog = GameObject.FindGameObjectWithTag("DialogMngr").GetComponent<DialogueManager>();
 		us = GameObject.Find("__app").GetComponent<UniversalSettings> ();
@@ -92,7 +97,7 @@ public class OverPlayer : MonoBehaviour {
 			}
 
 			//Changes sprite according to weapon - WIll change to a swithc when more chars are available
-			if (weapon == 1)
+			if (weapon == Weapon_Types.Revolver)
 				this.gameObject.GetComponent<SpriteRenderer> ().color = new Color (255, 255, 255, 1);
 			else
 				this.gameObject.GetComponent<SpriteRenderer> ().color = new Color (0, 0, 255, 1);
@@ -281,14 +286,16 @@ public class OverPlayer : MonoBehaviour {
 	{
 		if (Input.GetButtonDown ("SwitchButton"))
 		{
-			weapon++;
-			if (weapon > 3)
-				weapon = 1;
-			if (weapon == 2)
-				weapon = 3;
-			if (weapon < 0)
-				weapon = 3;
-			
+			currentCharacter++;
+			if (currentCharacter >= availableWeapons.Count)
+			{
+				currentCharacter = 0;
+			}
+			else if (currentCharacter < 0)
+			{
+				currentCharacter = availableWeapons.Count-1;
+			}
+			weapon = availableWeapons[currentCharacter];
 		}
 	}
 	void interactTrigger()

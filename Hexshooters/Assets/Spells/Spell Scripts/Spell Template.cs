@@ -22,7 +22,7 @@ public class Spell_Template : Spell {
 		base.spellUpdate();
 	}
 
-	public override void movement(int weapon)
+	public override void movement(Weapon_Types weapon)
 	{
 		Vector2 target, position;
 		switch (weapon)
@@ -89,7 +89,7 @@ public class Spell_Template : Spell {
 		}
 	}
 
-	public override void hitBehavior(int weapon)
+	public override void hitBehavior(Weapon_Types weapon)
 	{
 		Collider2D[] colliders;
 		switch (weapon)
@@ -241,7 +241,7 @@ public class Spell_Template : Spell {
 	}
 
 	//If the Spell has multiple descriptions, then set the here using the description string variable. If not Set in the inspector.
-	public override void setDescription(int weapon)
+	public override void setDescription(Weapon_Types weapon)
 	{
 		switch (weapon)
 		{

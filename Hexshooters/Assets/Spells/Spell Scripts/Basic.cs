@@ -20,7 +20,7 @@ public class Basic : Spell {
 		base.spellUpdate();
 	}
 
-	public override void movement(int weapon)
+	public override void movement(Weapon_Types weapon)
 	{
 		Vector2 target, position;
 
@@ -36,7 +36,7 @@ public class Basic : Spell {
 		transform.position = position;
 	}
 
-	public override void hitBehavior(int weapon)
+	public override void hitBehavior(Weapon_Types weapon)
 	{
 		Collider2D[] colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
 		foreach (Collider2D c in colliders)

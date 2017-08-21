@@ -7,10 +7,10 @@ public class Rapid : Spell {
 	public LayerMask mask;
 	// Use this for initialization
 	void spellUpdate () {
-		hitBehavior (4);
+		hitBehavior (Weapon_Types.Gatling);
 	}
 	
-	public override void hitBehavior(int weapon)
+	public override void hitBehavior(Weapon_Types weapon)
 	{
 		RaycastHit2D hit;
 		if(PlayerNum == 1)

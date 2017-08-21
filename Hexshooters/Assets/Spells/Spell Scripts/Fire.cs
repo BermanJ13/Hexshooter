@@ -31,19 +31,19 @@ public class Fire : Spell {
 
 		foreach (GameObject p in enemyPanels) 
 		{
-			if (GetComponent<Collider2D> ().IsTouching (p.GetComponent<Collider2D> ())  && weaponUsed == 1) 
+			if (GetComponent<Collider2D> ().IsTouching (p.GetComponent<Collider2D> ())  && weaponUsed == Weapon_Types.Revolver) 
 			{
-				hitBehavior (1);
+				hitBehavior (Weapon_Types.Revolver);
 			}
 		}
 	}
 
-	public override void movement(int weapon)
+	public override void movement(Weapon_Types weapon)
 	{
 		switch (weapon)
 		{
 		//Revolver = hits 5 spaces ahead
-			case 1:
+			case Weapon_Types.Revolver:
 			//if player 1
 				if (PlayerNum == 1)
 				{
@@ -68,11 +68,11 @@ public class Fire : Spell {
 
 				if (transform.position == new Vector3 (target.x, target.y, 0) || transform.position.x == 0 || transform.position.x == 9)
 				{
-					hitBehavior (1);
+					hitBehavior (Weapon_Types.Revolver);
 				}
 			break;
 		//Rifle = moves forward indefinitely 
-			case 2:
+			case Weapon_Types.Rifle:
 			//if player 1
 				if (PlayerNum == 1)
 				{
@@ -88,7 +88,7 @@ public class Fire : Spell {
 				transform.position = position;
 			break;
 		//Shotgun = moves 2 ahead
-			case 3:
+			case Weapon_Types.Shotgun:
 			//Player one
 				if (PlayerNum == 1)
 				{
@@ -112,18 +112,18 @@ public class Fire : Spell {
 
 				if (transform.position == new Vector3 (target.x, target.y, 0))
 				{
-					hitBehavior (3);
+					hitBehavior (Weapon_Types.Shotgun);
 				}
 			break;
 		//Gatling = moves for 5 spaces 
-			case 4:
+			case Weapon_Types.Gatling:
 			
-				hitBehavior (4);
+				hitBehavior (Weapon_Types.Gatling);
 			
 			break;
 
 		
-			case 6:
+			case Weapon_Types.Bow:
 				//Player one
 				if (PlayerNum == 1)
 				{
@@ -147,18 +147,18 @@ public class Fire : Spell {
 
 				if (transform.position == new Vector3 (target.x, target.y, 0))
 				{
-					hitBehavior (6);
+					hitBehavior (Weapon_Types.Bow);
 				}
 			break;
 		}
 	}
 
-	public override void hitBehavior(int weapon)
+	public override void hitBehavior(Weapon_Types weapon)
 	{
 		switch (weapon) 
 		{
 		//Revolver
-			case 1:
+			case Weapon_Types.Revolver:
 			bool self = false;
 			//checks to see if colided with anything for obstacle
 			bool colided = false;
@@ -265,7 +265,7 @@ public class Fire : Spell {
 			}
 			break;
 		//Rifle = initial strike + burn damage
-		case 2:
+		case Weapon_Types.Rifle:
 			//goes through the array of things can collide with
 			colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
 			foreach (Collider2D c in colliders) 
@@ -362,7 +362,7 @@ public class Fire : Spell {
 			}
 			break;
 		//Shotgun =  3x3 aoe damage area
-		case 3:
+		case Weapon_Types.Shotgun:
 			//array of colliders
 			Collider2D[] hitColliders;
 			//if statement to change the postion of the explosion depending if player 1 or 2
@@ -411,7 +411,7 @@ public class Fire : Spell {
 			markedForDeletion = true;
 			break;
 		//Gatling = flamethrower
-		case 4:
+		case Weapon_Types.Gatling:
 			// if it collides with anything and 5 spaces behind it 
 			if (PlayerNum == 1) {
 				colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x + 4, transform.position.y));
@@ -465,7 +465,7 @@ public class Fire : Spell {
 				gattlingTimer = 50;
 			} 
 			break;
-			case 6:
+			case Weapon_Types.Bow:
 				//if statement to change the postion of the explosion depending if player 1 or 2
 				if(PlayerNum==1)
 				{
@@ -511,37 +511,37 @@ public class Fire : Spell {
 		}
 	}
 
-	public override void setDescription(int weapon)
+	public override void setDescription(Weapon_Types weapon)
 	{
 
 		switch (weapon)
 		{
 		//Revolver
-			case 1:
+			case Weapon_Types.Revolver:
 				description = "Shoots a fireball 5 spaces ahead and creates fire.";
 				damage = 15;
 			break;
 			//Rifle
-			case 2:
+			case Weapon_Types.Rifle:
 				description = "Shoot across a row and burn an enemy if it hits them";
 				damage = 10;
 			break;
 		//Shotgun
-			case 3:
+			case Weapon_Types.Shotgun:
 				description = "A blast area of damage";
 				damage = 20;
 			break;
 		//Gatling
-			case 4:
+			case Weapon_Types.Gatling:
 				description = "Flamethrower";
 				damage = 10;
 			break;
 		//Cane Gun
-			case 5:
+			case Weapon_Types.Canegun:
 				description = "";
 			break;
 				//Bow
-			case 6:
+			case Weapon_Types.Bow:
 				description = "Shoots an arrow 4 squares ahead that expldes on contact";
 			break;
 		}

@@ -221,7 +221,7 @@ public class DeckMenu : MonoBehaviour {
 		//Image displayImage;
 		//Text name;
 		//Get current selected Weapon andpick out it's maximum
-		int currentWeapon = 0; //Replace with getting the current selected weapon
+		Weapon_Types currentWeapon = Weapon_Types.Revolver; //Replace with getting the current selected weapon
 		int weaponDeckSize;
 		switch (currentWeapon)
 		{

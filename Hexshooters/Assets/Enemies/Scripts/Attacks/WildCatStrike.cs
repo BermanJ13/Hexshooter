@@ -30,7 +30,7 @@ public class WildCatStrike : EnemySpell
         Debug.Log(speed);
     }
 
-    public override void movement(int weapon)
+    public override void movement(Weapon_Types weapon)
     {
         if (!attacking)
         {
@@ -61,7 +61,7 @@ public class WildCatStrike : EnemySpell
 
 
 
-    public override void hitBehavior(int weapon)
+    public override void hitBehavior(Weapon_Types weapon)
     {
         Collider2D[] colliders = Physics2D.OverlapAreaAll(new Vector2(transform.position.x - backFromPlayerDist, transform.position.y), transform.position);
         foreach (Collider2D c in colliders)
@@ -82,7 +82,7 @@ public class WildCatStrike : EnemySpell
 			}
         }
     }
-    public override void setDescription(int weapon)
+    public override void setDescription(Weapon_Types weapon)
     {
         description = "Go up to player and stike them quickly";
     }

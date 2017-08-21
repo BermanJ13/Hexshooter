@@ -28,7 +28,7 @@ public class ScorpionStrike : EnemySpell
         base.spellUpdate();
     }
 
-    public override void movement(int weapon)
+    public override void movement(Weapon_Types weapon)
     {
         //if the player is not yet attacking
         if (!attacking)
@@ -72,7 +72,7 @@ public class ScorpionStrike : EnemySpell
 
 
 
-    public override void hitBehavior(int weapon)
+    public override void hitBehavior(Weapon_Types weapon)
     {
         Collider2D[] colliders = Physics2D.OverlapAreaAll(new Vector2(transform.position.x - 1 - backFromPlayerDist, transform.position.y), transform.position);
         foreach (Collider2D c in colliders)
@@ -93,7 +93,7 @@ public class ScorpionStrike : EnemySpell
 			}
         }
     }
-    public override void setDescription(int weapon)
+    public override void setDescription(Weapon_Types weapon)
     {
         description = "rears back, and then teleports to target position at start of rearing. then attacks forward two spaces";
     }

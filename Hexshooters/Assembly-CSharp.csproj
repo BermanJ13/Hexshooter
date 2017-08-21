@@ -99,6 +99,7 @@
      <Compile Include="Assets\Obstacles\Scripts\Icicle.cs" />
      <Compile Include="Assets\Obstacles\Scripts\Lightningrod.cs" />
      <Compile Include="Assets\Obstacles\Scripts\Obstacle.cs" />
+     <Compile Include="Assets\Obstacles\Scripts\Puddle.cs" />
      <Compile Include="Assets\Obstacles\Scripts\Steam.cs" />
      <Compile Include="Assets\Overworld\Dialogue\Scripts\DialogueManager.cs" />
      <Compile Include="Assets\Overworld\Scripts\OverPlayer.cs" />
@@ -166,9 +167,6 @@
      <None Include="Assets\Overworld\Dialogue\Text\Resources\Cutscene1b2.txt" />
      <None Include="Assets\Overworld\Dialogue\Text\Resources\Cutscene2b.txt" />
      <None Include="Assets\Overworld\Dialogue\Text\Resources\Cutscene0.txt" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -183,9 +181,6 @@
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>

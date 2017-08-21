@@ -29,7 +29,7 @@ public class BasicEnemyAttack : EnemySpell {
         //Debug.Log(speed);
     }
     
-    public override void movement(int weapon)
+    public override void movement(Weapon_Types weapon)
     {
         if (!attacking)
         {
@@ -58,7 +58,7 @@ public class BasicEnemyAttack : EnemySpell {
 
 
 
-    public override void hitBehavior(int weapon)
+    public override void hitBehavior(Weapon_Types weapon)
     {
         Collider2D[] colliders = Physics2D.OverlapAreaAll(transform.position, transform.position);
         foreach (Collider2D c in colliders)
@@ -75,7 +75,7 @@ public class BasicEnemyAttack : EnemySpell {
             }
         }
     }
-    public override void setDescription(int weapon)
+    public override void setDescription(Weapon_Types weapon)
     {
         description = "Go up to guy and smack'em";
     }

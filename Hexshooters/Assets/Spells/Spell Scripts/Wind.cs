@@ -12,7 +12,6 @@ public class Wind : Spell {
         base.Start();
 		riflePowered = new List<Spell>();
 		spellTimer = 500;
-		setDescription (1);
     }
 
     // Update is called once per frame
@@ -22,23 +21,23 @@ public class Wind : Spell {
 	
     }
 
-    public override void movement(int weapon)
+    public override void movement(Weapon_Types weapon)
     {
 		Vector2 position;
         switch (weapon)
         {
         //rifle
-		case 2:
-			hitBehavior (2);
+		case Weapon_Types.Rifle:
+				hitBehavior (Weapon_Types.Rifle);
 			break;
 			//revolver
-		case 1:
+		case Weapon_Types.Revolver:
         //shotgun
-		case 3:
+		case Weapon_Types.Shotgun:
         //gatling
-		case 4:
+		case Weapon_Types.Gatling:
 		//bow
-		case 6:
+		case Weapon_Types.Bow:
 			if (PlayerNum == 1)
 			{
 				target = new Vector2(transform.position.x, transform.position.y) + direction;
@@ -51,7 +50,7 @@ public class Wind : Spell {
 			transform.position = position;
 			break;
 			//Cane Gun
-		case 5:
+		case Weapon_Types.Canegun:
 			if (PlayerNum == 1)
 			{
 				target = new Vector2(transform.position.x, transform.position.y) + direction;
@@ -66,14 +65,14 @@ public class Wind : Spell {
         }
     }
 
-	public override void hitBehavior(int weapon)
+	public override void hitBehavior(Weapon_Types weapon)
 	{
 		//array of everything can collide with
 		Collider2D[] colliders;
 		switch (weapon) 
 		{
 		//Revolver, does damage and knocks an enemy up a tile
-		case 1:
+		case Weapon_Types.Revolver:
 			colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
 			foreach (Collider2D c in colliders) 
 			{
@@ -151,7 +150,7 @@ public class Wind : Spell {
 
 
 		//Rifle //if spell hits the wind portal == doubles the speed of the spell
-		case 2:
+		case Weapon_Types.Rifle:
 			//used to see if already touched the speed
 			// Hits the entire row ahead once it strikes and enemy object or enters the enemy side of the field.
 			if (PlayerNum == 1) 
@@ -238,7 +237,7 @@ public class Wind : Spell {
 
 
 		//Shotgun:Compressed air blast knockback's enemy by 2 space
-		case 3:
+		case Weapon_Types.Shotgun:
 			//goes through the array of things can collide with
 			colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
 			foreach (Collider2D c in colliders) 
@@ -321,7 +320,7 @@ public class Wind : Spell {
 			}
 			break;
 		//Gatling = vaccum
-		case 4:
+		case Weapon_Types.Gatling:
 			//goes through the array of things can collide with
 			colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
 			foreach (Collider2D c in colliders) 
@@ -384,7 +383,7 @@ public class Wind : Spell {
 					}
 			}
 			break;
-			case 6:
+			case Weapon_Types.Bow:
 
 				colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
 				foreach (Collider2D c in colliders)
@@ -404,36 +403,36 @@ public class Wind : Spell {
 		}
 	}
 
-	public override void setDescription(int weapon)
+	public override void setDescription(Weapon_Types weapon)
 	{
 		switch (weapon)
 		{
 			//Revolver
-			case 1:
+			case Weapon_Types.Revolver:
 				description = "Knocks the enemy up a tile or pushes an obstacle away.";
 				damage = 10;
 			break;
 			//Rifle
-			case 2:
+			case Weapon_Types.Rifle:
 				description = "Leaves a gust of wind that increases bullet speed";
 				damage = 0;
 			break;
 			//Shotgun
-			case 3:
+			case Weapon_Types.Shotgun:
 				description = "Knocks the enemy or obstacle back with a burst of compressed air.";
 				damage = 20;
 			break;
 			//Gatling
-			case 4:
+			case Weapon_Types.Gatling:
 				description = "Pulls enemies or obstacles towards you.";
 				damage = 15;
 			break;
 			//Cane Gun
-			case 5:
+			case Weapon_Types.Canegun:
 			description = "";
 			break;
 				//Bow
-			case 6:
+			case Weapon_Types.Bow:
 				description = "Reflects an oncoming attack.";
 			break;
 		}

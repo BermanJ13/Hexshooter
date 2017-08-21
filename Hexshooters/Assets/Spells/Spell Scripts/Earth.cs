@@ -30,19 +30,19 @@ public class Earth : Spell {
 		foreach (GameObject p in enemyPanels) 
 		{
 			//Debug.Log(p.GetComponent<Collider2D> ());
-			if (GetComponent<Collider2D> ().IsTouching (p.GetComponent<Collider2D> ())  && weaponUsed == 1) 
+			if (GetComponent<Collider2D> ().IsTouching (p.GetComponent<Collider2D> ())  && weaponUsed == Weapon_Types.Revolver) 
 			{
-				hitBehavior (1);
+				hitBehavior (Weapon_Types.Revolver);
 			}
 		}
 	}
 
-	public override void movement(int weapon)
+	public override void movement(Weapon_Types weapon)
 	{
 		switch (weapon) 
 		{
 		//Revolver
-		case 1:
+			case Weapon_Types.Revolver:
 			if (PlayerNum == 1)
 			{
 				
@@ -68,11 +68,11 @@ public class Earth : Spell {
 
 				if (transform.position == new Vector3 (target.x, target.y, 0))
 				{
-					hitBehavior (1);
+					hitBehavior (Weapon_Types.Revolver);
 				}
 			break;
 		//Rifle
-		case 2:
+		case Weapon_Types.Rifle:
 			//Moves Forward indefinitely and has an effect if it goes out of bounds
 			inBounds = false;
 			if (PlayerNum == 1)
@@ -98,10 +98,10 @@ public class Earth : Spell {
 			//Debug.Log (inBounds);
 
 			if (!inBounds)
-				hitBehavior (2);
+					hitBehavior (Weapon_Types.Rifle);
 			break;
 		//Gatling
-		case 4:
+		case Weapon_Types.Gatling:
 			// Moves FOrward Indefinitely
 			if (PlayerNum == 1)
 			{
@@ -116,7 +116,7 @@ public class Earth : Spell {
 			transform.position = position;
 			break;
 		//Shotgun
-		case 3:
+		case Weapon_Types.Shotgun:
 			//Targets one space ahead
 			if (PlayerNum == 1)
 			{
@@ -141,10 +141,10 @@ public class Earth : Spell {
 
 			if (transform.position == new Vector3(target.x, target.y,0))
 			{
-				hitBehavior (3);
+					hitBehavior (Weapon_Types.Shotgun);
 			}
 			break;
-			case 6:
+			case Weapon_Types.Bow:
 				if (PlayerNum == 1)
 				{
 					target = new Vector2 (transform.position.x, transform.position.y) + direction;
@@ -160,12 +160,12 @@ public class Earth : Spell {
 		}
 	}
 
-	public override void hitBehavior(int weapon)
+	public override void hitBehavior(Weapon_Types weapon)
 	{
 		switch (weapon) 
 		{
 		//Revolver
-			case 1:
+			case Weapon_Types.Revolver:
 			bool self = false;
 			bool colided = false;
 			colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
@@ -235,7 +235,7 @@ public class Earth : Spell {
 			}
 			break;
 		//Rifle
-		case 2:
+		case Weapon_Types.Rifle:
 			//Hits the whole back row if it goes out of bounds
 			colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
 			foreach (Collider2D c in colliders)
@@ -314,7 +314,7 @@ public class Earth : Spell {
 					
 			break;
 		//Shotgun
-		case 3:
+		case Weapon_Types.Shotgun:
 			//HIts the whole row ahead of the player
 			if(PlayerNum == 1)
 				colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x + 10, transform.position.y));
@@ -354,7 +354,7 @@ public class Earth : Spell {
 			}
 			break;
 		//Gatling
-		case 4:
+		case Weapon_Types.Gatling:
 			colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
 			foreach (Collider2D c in colliders)
 			{
@@ -394,7 +394,7 @@ public class Earth : Spell {
 					}
 			}
 			break;
-			case 6:
+			case Weapon_Types.Bow:
 				//Creates shockwaves originating at each enemy hit by the bullet or shockwave.
 				colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
 				foreach(Collider2D c in colliders)
@@ -440,37 +440,37 @@ public class Earth : Spell {
 		}
 	}
 
-	public override void setDescription(int weapon)
+	public override void setDescription(Weapon_Types weapon)
 	{
 		
 		switch (weapon)
 		{
 		//Revolver
-		case 1:
+		case Weapon_Types.Revolver:
 				description = "Makes an obstacle 3 panels ahead.";
 				damage = 10;
 			break;
 			//Rifle
-		case 2:
+		case Weapon_Types.Rifle:
 				description = "Shoot past the last row, to strike the entire back row.";
 				damage = 15;
 			break;
 			//Shotgun
-		case 3:
+		case Weapon_Types.Shotgun:
 				description = "Creates a fissure striking the row ahead and inflicts stun.";
 				damage = 15;
 			break;
 			//Gatling
-		case 4:
+		case Weapon_Types.Gatling:
 				description = "Stacking Damage";
 				damage = 5;
 			break;
 				//Cane Gun
-			case 5:
+			case Weapon_Types.Canegun:
 				description = "";
 			break;
 				//Bow
-			case 6:
+			case Weapon_Types.Bow:
 				description = "Shoots a damaging shot that keeps going through other objects";
 			break;
 		}

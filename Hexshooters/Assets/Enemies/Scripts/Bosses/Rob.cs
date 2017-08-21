@@ -210,7 +210,7 @@ public class Rob : Enemy {
 				Spell mything = go.GetComponent<Spell>();
 
 				////set a member variable (must be PUBLIC)
-				mything.weaponUsed = 3; 
+				mything.weaponUsed = Weapon_Types.Shotgun; 
 				mything.PlayerNum = 2;
             }
             else
@@ -222,7 +222,7 @@ public class Rob : Enemy {
 				Spell mything = go.GetComponent<Spell>();
 
 				////set a member variable (must be PUBLIC)
-				mything.weaponUsed = 1; 
+				mything.weaponUsed = Weapon_Types.Shotgun; 
 				mything.PlayerNum = 2;
             }
         }
@@ -238,7 +238,7 @@ public class Rob : Enemy {
 				Spell mything = go.GetComponent<Spell>();
 
 				////set a member variable (must be PUBLIC)
-				mything.weaponUsed = 3; 
+				mything.weaponUsed = Weapon_Types.Shotgun; 
 				mything.PlayerNum = 2;
             }
             else
@@ -253,7 +253,7 @@ public class Rob : Enemy {
 					Spell mything = go.GetComponent<Spell>();
 
 					////set a member variable (must be PUBLIC)
-					mything.weaponUsed = 1; 
+					mything.weaponUsed = Weapon_Types.Shotgun; 
 					mything.PlayerNum = 2;
                 }
                 else
@@ -266,7 +266,7 @@ public class Rob : Enemy {
 					Spell mything = go.GetComponent<Spell>();
 
 					////set a member variable (must be PUBLIC)
-					mything.weaponUsed = 3; 
+					mything.weaponUsed = Weapon_Types.Shotgun; 
 					mything.PlayerNum = 2;
                     recentWaterCounter = RECENT_WATER_RESET;
                 }

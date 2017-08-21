@@ -87,7 +87,7 @@ public class FieldManager : MonoBehaviour
 		if (GameObject.Find ("OverPlayer") != null)
 			player.weapon = GameObject.Find ("OverPlayer").GetComponent<OverPlayer>().weapon;
 		
-		if(player.weapon == 6)
+		if(player.weapon == Weapon_Types.Bow)
 			player.Chamber = Handful;
 		else
 			Shuffle(Handful);
@@ -145,7 +145,7 @@ public class FieldManager : MonoBehaviour
 
 		if (pause)
 		{
-			if (player.weapon != 6)
+			if (player.weapon != Weapon_Types.Bow)
 			{
 				if (Input.GetButtonDown ("Cancel_Solo"))
 				{
@@ -268,7 +268,7 @@ public class FieldManager : MonoBehaviour
 			}
 		}
 
-		if (player.weapon != 6)
+		if (player.weapon != Weapon_Types.Bow)
 		{
 			//Removes the last bullet from the camber and places it back in he selection screen.
 			if (pause && Input.GetButtonDown ("Cancel_Solo"))
@@ -481,7 +481,7 @@ public class FieldManager : MonoBehaviour
 			spellSlots[i].GetComponent<Image>().sprite = defaultSlot;
 			spellSlots[i].GetComponent<Image>().color = Color.white;
 		}
-		if (player.weapon != 6)
+		if (player.weapon != Weapon_Types.Bow)
 		{
 			//removes the bullets used in the last round from the deck
 			for (int i = Temp.Count - 1; i > -1; i--)
@@ -561,7 +561,7 @@ public class FieldManager : MonoBehaviour
 				//r.runeDesc = curSpell.GetComponent<Spell> ().description;
 				r.runeDamage = curSpell.GetComponent<Spell>().damage.ToString();
 			}
-			if (player.weapon == 6)
+			if (player.weapon == Weapon_Types.Bow)
 			{
 				b.interactable = false;
 				EventSystem.current.SetSelectedGameObject (GameObject.Find("BattleButton"));
@@ -579,7 +579,7 @@ public class FieldManager : MonoBehaviour
 		player.myStatus.AddEffect (shotLag);
 		firstPause = false;
 
-		if (player.weapon != 6)
+		if (player.weapon != Weapon_Types.Bow)
 		{
 			//Adds the selected bullets to the chamber
 			for (int i = 0; i < Temp.Count; i++)
@@ -772,7 +772,7 @@ public class FieldManager : MonoBehaviour
 	}
 
 	//Chooses the Proper gun for the character and activates the cooresponding UI
-	public void chooseGun(int weapon, bool first)
+	public void chooseGun(Weapon_Types weapon, bool first)
 	{
 		if (first)
 		{
@@ -796,7 +796,7 @@ public class FieldManager : MonoBehaviour
 		}
 		switch (weapon)
 		{
-			case 1:
+			case Weapon_Types.Revolver:
 				weapons [0].SetActive (true);
 				spellSlots[0] = GameObject.Find ("ChamberSlot1");
 				spellSlots[1] = GameObject.Find ("ChamberSlot2");
@@ -808,7 +808,7 @@ public class FieldManager : MonoBehaviour
 				p1Gun = weapons [0];
 				weaponMax = 6;
 			break;
-			case 2:
+			case Weapon_Types.Rifle:
 				weapons[1].SetActive (true);
 				spellSlots[0] = GameObject.Find ("ChamberSlot1");
 				spellSlots[1] = GameObject.Find ("ChamberSlot2");
@@ -821,7 +821,7 @@ public class FieldManager : MonoBehaviour
 				p1Gun = weapons[1];
 				weaponMax = 8;
 			break;
-			case 3:
+			case Weapon_Types.Shotgun:
 				weapons [2].SetActive (true);
 				spellSlots [0] = GameObject.Find ("ChamberSlot1");
 				spellSlots [1] = GameObject.Find ("ChamberSlot2");
@@ -830,7 +830,7 @@ public class FieldManager : MonoBehaviour
 				p1Gun = weapons[2];
 				weaponMax = 4;
 			break;
-			case 4:
+			case Weapon_Types.Gatling:
 				weapons[1].SetActive (true);
 				spellSlots[0] = GameObject.Find ("ChamberSlot1");
 				spellSlots[1] = GameObject.Find ("ChamberSlot2");
@@ -844,10 +844,10 @@ public class FieldManager : MonoBehaviour
 				weaponMax = 8;
 
 			break;
-			case 5:
+			case Weapon_Types.Canegun:
 
 			break;
-			case 6:
+			case Weapon_Types.Bow:
 				weapons[4].SetActive (true);
 				p1Gun = weapons[4];
 			break;

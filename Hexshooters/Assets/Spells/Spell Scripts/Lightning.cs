@@ -24,24 +24,24 @@ public class Lightning : Spell {
 		foreach (GameObject p in enemyPanels) 
 		{
 			//Debug.Log(p.GetComponent<Collider2D> ());
-			if (GetComponent<Collider2D> ().IsTouching (p.GetComponent<Collider2D> ())  && weaponUsed == 1) 
+			if (GetComponent<Collider2D> ().IsTouching (p.GetComponent<Collider2D> ())  && weaponUsed == Weapon_Types.Revolver) 
 			{
-				hitBehavior (1);
+				hitBehavior (Weapon_Types.Revolver);
 			}
 		}
 	}
 
-	public override void movement(int weapon)
+	public override void movement(Weapon_Types weapon)
 	{
 		switch (weapon) 
 		{
 		//Revolver, Rifle, and Gatling Gun
 		//Moves Forward Indefinitely
-		case 1:
-			hitBehavior (1);
+		case Weapon_Types.Revolver:
+				hitBehavior (Weapon_Types.Revolver);
 			break;
-		case 2:
-		case 4:
+		case Weapon_Types.Rifle:
+		case Weapon_Types.Gatling:
 			if (PlayerNum == 1)
 			{
 				target = new Vector2 (transform.position.x, transform.position.y) + direction;
@@ -56,8 +56,7 @@ public class Lightning : Spell {
 			}
 			break;
 		//Shotgun
-		case 3:
-
+		case Weapon_Types.Shotgun:
 			if (PlayerNum == 1)
 			{
 				//Picks a target square to lerp to before activating effect
@@ -84,7 +83,7 @@ public class Lightning : Spell {
 			break;
 		//Cane Gun
 		//Hits a rectangular Area 3 squares tall in front of the user
-		case 5:
+		case Weapon_Types.Canegun:
 
 			if (PlayerNum == 1)
 			{
@@ -94,10 +93,10 @@ public class Lightning : Spell {
 			{
 				colliders = Physics2D.OverlapAreaAll (new Vector2 (transform.position.x-1, transform.position.y - 1.2f), new Vector2 (transform.position.x-1, transform.position.y + 1.2f));
 			}
-			hitBehavior (5);
+				hitBehavior (Weapon_Types.Canegun);
 			break;
 		//Bow
-		case 6:
+		case Weapon_Types.Bow:
 
 				if (PlayerNum == 1)
 				{
@@ -126,12 +125,12 @@ public class Lightning : Spell {
 		}
 	}
 
-	public override void hitBehavior(int weapon)
+	public override void hitBehavior(Weapon_Types weapon)
 	{
 		switch (weapon) 
 		{
 		//Revolver
-		case 1:
+		case Weapon_Types.Revolver:
 			// Hits the entire row ahead once it strikes and enemy object or enters the enemy side of the field. 
 			if(PlayerNum == 1)
 				colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x + 10, transform.position.y));
@@ -150,7 +149,7 @@ public class Lightning : Spell {
 				}
 				if (c.gameObject.tag == "Obstacle")
 				{
-					//c.gameObject.GetComponent<Obstacle>().takeDamage (damageCalc(damageTier, hitNum), attributes);
+						c.gameObject.GetComponent<Obstacle>().specialEffects(this);
 				}
 				else if(c.gameObject.tag == "Player" && PlayerNum == 2)
 				{
@@ -173,7 +172,7 @@ public class Lightning : Spell {
 			}
 			break;
 		//Rifle
-		case 2:
+		case Weapon_Types.Rifle:
 			//Inflicts Disable if it stirkes the enemy
 			colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
 			foreach (Collider2D c in colliders)
@@ -219,7 +218,7 @@ public class Lightning : Spell {
 			}
 			break;
 		//Shotgun
-		case 3:
+		case Weapon_Types.Shotgun:
 			//Creates shockwaves originating at each enemy hit by the bullet or shockwave.
 			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x+1, transform.position.y),1.25f);
 			foreach(Collider2D c in hitColliders)
@@ -272,7 +271,7 @@ public class Lightning : Spell {
 			markedForDeletion = false;
 			break;
 		//Gatling
-		case 4:
+		case Weapon_Types.Gatling:
 			//Changes direction randomly after hitting an opponent
 			colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
 			foreach (Collider2D c in colliders)
@@ -297,28 +296,28 @@ public class Lightning : Spell {
 							switch (decider)
 							{
 								case 1:
-									if (direction != new Vector2 (0, 1))
-										direction = new Vector2 (0, 1);
+									if(direction != new Vector2 (0,1))
+										direction = new Vector2 (0,1);
 									else
-										direction = new Vector2 (0, -1);
+										direction = new Vector2 (0,-1);
 								break;
 								case 2:
-									if (direction != new Vector2 (0, -1))
-										direction = new Vector2 (0, -1);
+									if(direction != new Vector2 (0,-1))
+										direction = new Vector2 (0,-1);
 									else
-										direction = new Vector2 (0, 1);
+										direction = new Vector2 (0,1);
 								break;
 								case 3:
-									if (direction != new Vector2 (1, 0))
-										direction = new Vector2 (1, 0);
+									if(direction != new Vector2 (1,0))
+										direction = new Vector2 (1,0);
 									else
-										direction = new Vector2 (-1, 0);
+										direction = new Vector2 (-1,0);
 								break;
 								case 4:
-									if (direction != new Vector2 (-1, 0))
-										direction = new Vector2 (-1, 0);
+									if(direction != new Vector2 (-1,0))
+										direction = new Vector2 (-1,0);
 									else
-										direction = new Vector2 (1, 0);
+										direction = new Vector2 (1,0);
 								break;
 							}
 						}
@@ -329,30 +328,30 @@ public class Lightning : Spell {
 					int decider = UnityEngine.Random.Range (1,5);
 					switch (decider)
 					{
-					case 1:
-						if(direction != new Vector2 (0,1))
-							direction = new Vector2 (0,1);
-						else
-							direction = new Vector2 (0,-1);
-						break;
-					case 2:
-						if(direction != new Vector2 (0,-1))
-							direction = new Vector2 (0,-1);
-						else
-							direction = new Vector2 (0,1);
-						break;
-					case 3:
-						if(direction != new Vector2 (1,0))
-							direction = new Vector2 (1,0);
-						else
-							direction = new Vector2 (-1,0);
-						break;
-					case 4:
-						if(direction != new Vector2 (-1,0))
-							direction = new Vector2 (-1,0);
-						else
-							direction = new Vector2 (1,0);
-						break;
+							case 1:
+								if(direction != new Vector2 (0,1))
+									direction = new Vector2 (0,1);
+								else
+									direction = new Vector2 (0,-1);
+							break;
+							case 2:
+								if(direction != new Vector2 (0,-1))
+									direction = new Vector2 (0,-1);
+								else
+									direction = new Vector2 (0,1);
+							break;
+							case 3:
+								if(direction != new Vector2 (1,0))
+									direction = new Vector2 (1,0);
+								else
+									direction = new Vector2 (-1,0);
+							break;
+							case 4:
+								if(direction != new Vector2 (-1,0))
+									direction = new Vector2 (-1,0);
+								else
+									direction = new Vector2 (1,0);
+							break;
 					}
 				}
 				if (c.gameObject.tag == "Player" && PlayerNum == 2 && hit)
@@ -362,30 +361,30 @@ public class Lightning : Spell {
 					int decider = UnityEngine.Random.Range (1,5);
 					switch (decider)
 					{
-					case 1:
-						if(direction != new Vector2 (0,1))
-							direction = new Vector2 (0,1);
-						else
-							direction = new Vector2 (0,-1);
-						break;
-					case 2:
-						if(direction != new Vector2 (0,-1))
-							direction = new Vector2 (0,-1);
-						else
-							direction = new Vector2 (0,1);
-						break;
-					case 3:
-						if(direction != new Vector2 (1,0))
-							direction = new Vector2 (1,0);
-						else
-							direction = new Vector2 (-1,0);
-						break;
-					case 4:
-						if(direction != new Vector2 (-1,0))
-							direction = new Vector2 (-1,0);
-						else
-							direction = new Vector2 (1,0);
-						break;
+							case 1:
+								if(direction != new Vector2 (0,1))
+									direction = new Vector2 (0,1);
+								else
+									direction = new Vector2 (0,-1);
+							break;
+							case 2:
+								if(direction != new Vector2 (0,-1))
+									direction = new Vector2 (0,-1);
+								else
+									direction = new Vector2 (0,1);
+							break;
+							case 3:
+								if(direction != new Vector2 (1,0))
+									direction = new Vector2 (1,0);
+								else
+									direction = new Vector2 (-1,0);
+							break;
+							case 4:
+								if(direction != new Vector2 (-1,0))
+									direction = new Vector2 (-1,0);
+								else
+									direction = new Vector2 (1,0);
+							break;
 					}
 				}
 				if (c.gameObject.tag == "Player2"&& PlayerNum == 1 && hit)
@@ -429,7 +428,7 @@ public class Lightning : Spell {
 			}
 			break;
 		//Cane Gun
-		case 5:
+		case Weapon_Types.Canegun:
 			//Disables enemes that are hit.
 			foreach (Collider2D c in colliders)
 			{
@@ -453,43 +452,43 @@ public class Lightning : Spell {
 			}
 			markedForDeletion = true;
 		break;
-		case 6:
+		case Weapon_Types.Bow:
 				Instantiate (Resources.Load ("Lightningrod"), transform.position, Quaternion.identity);
 				markedForDeletion = true;
 		break;
 		}
 	}
 
-	public override void setDescription(int weapon)
+	public override void setDescription(Weapon_Types weapon)
 	{
 		switch (weapon)
 		{
 		//Revolver
-		case 1:
+		case Weapon_Types.Revolver:
 				description = "After striking an object hits every panel ahead with a lightning bolt.";
 				damage = 10;
 			break;
 			//Rifle
-		case 2:
+		case Weapon_Types.Rifle:
 				description = "Hits the opponent with a shot that disables their shooting for a time.";
 				damage = 5;
 			break;
 			//Shotgun
-		case 3:
+		case Weapon_Types.Shotgun:
 				description = "Sends a shockwave out from each opponent that is hit.";
 				damage = 20;
 			break;
 			//Gatling
-		case 4:
+		case Weapon_Types.Gatling:
 				description = "The spell redirects after striking something.";
 				damage = 10;
 			break;
 			//Cane Gun
-		case 5:
+		case Weapon_Types.Canegun:
 			description = "";
 			break;
 				//Bow
-			case 6:
+			case Weapon_Types.Bow:
 				description = "Creates a lightning rod that counts down and the explodes.";
 			break;
 		}

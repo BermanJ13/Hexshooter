@@ -57,12 +57,12 @@ public class FieldManagerPVP : FieldManager
 		player.basic = true;
 		player2.basic = true;
 
-		if(player.weapon == 6)
+		if(player.weapon == Weapon_Types.Bow)
 			player.Chamber = Handful;
 		else
 			Shuffle(Handful);
 
-		if(player2.weapon == 6)
+		if(player2.weapon == Weapon_Types.Bow)
 			player2.Chamber = Handful_2;
 		else
 			Shuffle(Handful_2);
@@ -282,7 +282,7 @@ public class FieldManagerPVP : FieldManager
 				spellSlots[i].GetComponent<Image>().sprite = defaultSlot;
 				spellSlots[i].GetComponent<Image>().color = Color.white;
 			}
-			if (player.weapon != 6)
+			if (player.weapon != Weapon_Types.Bow)
 			{
 				for (int i = Temp.Count - 1; i > -1; i--)
 				{
@@ -350,7 +350,7 @@ public class FieldManagerPVP : FieldManager
 					r.runeDamage = curSpell.GetComponent<Spell>().damage.ToString();
 					//r.runeDesc = curSpell.GetComponent<Spell> ().description;
 				}
-				if (player.weapon == 6)
+				if (player.weapon == Weapon_Types.Bow)
 				{
 					b.interactable = false;
 					ES_P1.SetSelectedGameObject (GameObject.Find("BattleButton"));
@@ -368,7 +368,7 @@ public class FieldManagerPVP : FieldManager
 				spellSlots_2[i].GetComponent<Image>().sprite = defaultSlot;
 				spellSlots_2[i].GetComponent<Image>().color = Color.white;
 			}
-			if (player2.weapon != 6)
+			if (player2.weapon != Weapon_Types.Bow)
 			{
 				for (int i = Temp_2.Count - 1; i > -1; i--)
 				{
@@ -435,7 +435,7 @@ public class FieldManagerPVP : FieldManager
 					r.runeDamage = curSpell.GetComponent<Spell>().damage.ToString();
 					//r.runeDesc = curSpell.GetComponent<Spell> ().description;
 				}
-				if (player2.weapon == 6)
+				if (player2.weapon == Weapon_Types.Bow)
 				{
 					b.interactable = false;
 					ES_P2.SetSelectedGameObject (GameObject.Find("BattleButton"));
@@ -484,7 +484,7 @@ public class FieldManagerPVP : FieldManager
 				}
 			}
 		}
-		if (player.weapon != 6)
+		if (player.weapon != Weapon_Types.Bow)
 		{
 			if (pause && Input.GetButtonDown ("Cancel_P1"))
 			{
@@ -494,7 +494,7 @@ public class FieldManagerPVP : FieldManager
 				}
 			}
 		}
-		if (player2.weapon != 6)
+		if (player2.weapon != Weapon_Types.Bow)
 		{
 			if (pause && Input.GetButtonDown ("Cancel_P2"))
 			{
@@ -585,7 +585,7 @@ public class FieldManagerPVP : FieldManager
 			spellSlots_2[i].GetComponent<Image>().sprite = defaultSlot;
 			spellSlots_2[i].GetComponent<Image>().color = Color.white;
 		}
-		if (player.weapon != 6)
+		if (player.weapon != Weapon_Types.Bow)
 		{
 			for (int i = Temp.Count - 1; i > -1; i--)
 			{
@@ -600,7 +600,7 @@ public class FieldManagerPVP : FieldManager
 				}
 			}
 		}
-		if (player2.weapon != 6)
+		if (player2.weapon != Weapon_Types.Bow)
 		{
 			for (int i = Temp_2.Count - 1; i > -1; i--)
 			{
@@ -681,7 +681,7 @@ public class FieldManagerPVP : FieldManager
 				r.runeDamage = curSpell.GetComponent<Spell>().damage.ToString();
 				//r.runeDesc = curSpell.GetComponent<Spell> ().description;
 			}
-			if (player.weapon == 6)
+			if (player.weapon == Weapon_Types.Bow)
 			{
 				b.interactable = false;
 				ES_P1.SetSelectedGameObject (GameObject.Find("BattleButton"));
@@ -710,7 +710,7 @@ public class FieldManagerPVP : FieldManager
 				r.runeDamage = curSpell.GetComponent<Spell>().damage.ToString();
 				//r.runeDesc = curSpell.GetComponent<Spell> ().description;
 			}
-			if (player2.weapon == 6)
+			if (player2.weapon == Weapon_Types.Bow)
 			{
 				b.interactable = false;
 				ES_P2.SetSelectedGameObject (GameObject.Find("BattleButton"));
@@ -723,7 +723,7 @@ public class FieldManagerPVP : FieldManager
 	}
 	public void showBattleScreen()
 	{
-		if (player.weapon != 6)
+		if (player.weapon != Weapon_Types.Bow)
 		{
 			for (int i = 0; i < Temp.Count; i++)
 			{
@@ -734,7 +734,7 @@ public class FieldManagerPVP : FieldManager
 		{
 			g.SetActive (false);
 		}
-		if (player2.weapon != 6)
+		if (player2.weapon != Weapon_Types.Bow)
 		{
 			for (int i = 0; i < Temp_2.Count; i++)
 			{
@@ -1014,7 +1014,7 @@ public class FieldManagerPVP : FieldManager
 			Handful.Add(Resources.Load ("Lightning"));
 		}
 	}
-	public void chooseGun_2 (int weapon, bool first)
+	public void chooseGun_2 (Weapon_Types weapon, bool first)
 	{
 		if (first)
 		{
@@ -1038,7 +1038,7 @@ public class FieldManagerPVP : FieldManager
 		Debug.Log(weapons_2[2]);
 		switch (weapon)
 		{
-			case 1:
+			case Weapon_Types.Revolver:
 				weapons_2 [0].SetActive (true);
 				spellSlots_2[0] = GameObject.Find ("ChamberSlot1_2");
 				spellSlots_2[1] = GameObject.Find ("ChamberSlot2_2");
@@ -1049,7 +1049,7 @@ public class FieldManagerPVP : FieldManager
 				p2Gun = weapons_2 [0];
 				weaponMax_2 = 6;
 			break;
-			case 2:
+			case Weapon_Types.Rifle:
 				weapons_2 [1].SetActive (true);
 				spellSlots_2[0] = GameObject.Find ("ChamberSlot1_2");
 				spellSlots_2[1] = GameObject.Find ("ChamberSlot2_2");
@@ -1062,7 +1062,7 @@ public class FieldManagerPVP : FieldManager
 				p2Gun = weapons_2 [1];
 				weaponMax_2 = 8;
 			break;
-			case 3:
+			case Weapon_Types.Shotgun:
 				weapons_2[2].SetActive (true);
 				spellSlots_2[0] = GameObject.Find ("ChamberSlot1_2");
 				spellSlots_2[1] = GameObject.Find ("ChamberSlot2_2");
@@ -1071,7 +1071,7 @@ public class FieldManagerPVP : FieldManager
 				p2Gun = weapons_2[2];
 				weaponMax_2 = 4;
 			break;
-			case 4:
+			case Weapon_Types.Gatling:
 				weapons_2 [1].SetActive (true);
 				spellSlots_2[0] = GameObject.Find ("ChamberSlot1_2");
 				spellSlots_2[1] = GameObject.Find ("ChamberSlot2_2");
@@ -1085,10 +1085,10 @@ public class FieldManagerPVP : FieldManager
 				weaponMax_2 = 8;
 
 			break;
-			case 5:
+			case Weapon_Types.Canegun:
 
 			break;
-			case 6:
+			case Weapon_Types.Bow:
 				weapons_2[4].SetActive (true);
 				p2Gun = weapons_2[4];
 			break;

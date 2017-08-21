@@ -23,13 +23,13 @@ public class Water : Spell {
 		//Debug.Log (speed);
     }
 
-    public override void movement(int weapon)
+    public override void movement(Weapon_Types weapon)
     {
 		Vector2 target, position;
         switch (weapon)
         {
             //revolver
-		case 1:
+		case Weapon_Types.Revolver:
 			if (PlayerNum == 1)
 			{
 				 target = new Vector2 (transform.position.x , transform.position.y) + direction;
@@ -48,7 +48,7 @@ public class Water : Spell {
                 break;
 
             //rifle
-		case 2:
+		case Weapon_Types.Rifle:
 			if (PlayerNum == 1)
 			{
 				if ((transform.position.x - rifleOrigin.x) < 3)
@@ -58,7 +58,7 @@ public class Water : Spell {
 					transform.position = position;
 				} else
 				{
-					hitBehavior (2);
+						hitBehavior (Weapon_Types.Rifle);
 					spellTimer--;
 					if (spellTimer <= 0)
 					{
@@ -76,7 +76,7 @@ public class Water : Spell {
 					transform.position = position;
 				} else
 				{
-					hitBehavior (2);
+					hitBehavior (Weapon_Types.Rifle);
 					spellTimer--;
 					if (spellTimer <= 0)
 					{
@@ -88,7 +88,7 @@ public class Water : Spell {
                 break;
 
             //shotgun
-		case 3:
+		case Weapon_Types.Shotgun:
                 if (PlayerNum == 1)
                 {
                     target = new Vector2(transform.position.x, transform.position.y) + direction;
@@ -103,7 +103,7 @@ public class Water : Spell {
                 transform.position = position;
                 break;
             //gatling
-            case 4:
+            case Weapon_Types.Gatling:
                 if (PlayerNum == 1)
                 {
                     target = new Vector2(transform.position.x, transform.position.y) + direction;
@@ -118,7 +118,7 @@ public class Water : Spell {
                 transform.position = position;
                 break;
 				//cane gun - not priority
-			case 5:
+			case Weapon_Types.Canegun:
 				if (PlayerNum == 1)
 				{
 					target = new Vector2 (transform.position.x, transform.position.y) + direction;
@@ -131,7 +131,7 @@ public class Water : Spell {
 				transform.position = position;
 			break;
 
-			case 6:
+			case Weapon_Types.Bow:
 				if (PlayerNum == 1)
 				{
 					target = new Vector2 (transform.position.x, transform.position.y) + direction;
@@ -147,11 +147,11 @@ public class Water : Spell {
         }
     }
 
-    public override void hitBehavior(int weapon)
+    public override void hitBehavior(Weapon_Types weapon)
     {
         switch (weapon)
         {
-            case 1: //shot damages enemy, bounces off and then heals player if it hits them
+            case Weapon_Types.Revolver: //shot damages enemy, bounces off and then heals player if it hits them
                 Collider2D[] colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
                 foreach (Collider2D c in colliders)
                 {
@@ -160,30 +160,33 @@ public class Water : Spell {
 						if (PlayerNum == 1)
 						{
 							c.gameObject.GetComponent<Enemy> ().takeDamage (damageCalc (damageTier, hitNum),attributes);
+							Instantiate (Resources.Load ("Puddle"), new Vector2 (transform.position.x, transform.position.y), Quaternion.identity);
 							revolverMove = true;
 						}
 					} 
 					else if (c.gameObject.tag == "Obstacle")
 					{
 						c.GetComponent<Obstacle> ().specialEffects (this);
-					revolverMove = true;
+						Instantiate (Resources.Load ("Puddle"), new Vector2 (transform.position.x, transform.position.y), Quaternion.identity);
+						revolverMove = true;
 					} 
 					else if (c.gameObject.tag == "Player" && PlayerNum == 2)
 					{
-					c.gameObject.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
+						c.gameObject.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 						revolverMove = true;
-					
+						Instantiate (Resources.Load ("Puddle"));
 					} 
 					else if (c.gameObject.tag == "Player2" && PlayerNum == 1)
 					{
-					c.gameObject.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
+						c.gameObject.GetComponent<Player> ().takeDamage (damageCalc(damageTier, hitNum), attributes);
 						revolverMove = true;
+						Instantiate (Resources.Load ("Puddle"), new Vector2 (transform.position.x, transform.position.y), Quaternion.identity);
 					}
 					else if (c.gameObject.tag == "Player2" && PlayerNum == 2)
 					{
 						if (revolverMove)
 						{
-						c.gameObject.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum)*-1, attributes);
+							c.gameObject.GetComponent<Player>().takeDamage(damageCalc (damageTier, hitNum)*-1, attributes);
 							revolverMove = false;
 							markedForDeletion = true;
 						}
@@ -204,7 +207,7 @@ public class Water : Spell {
 					}
                 }
                 break;
-            case 2: //whirlpool shoots 3 squares ahead and drags enemy from adjacent squares
+            case Weapon_Types.Rifle: //whirlpool shoots 3 squares ahead and drags enemy from adjacent squares
                 colliders = Physics2D.OverlapCircleAll(transform.position, 1.5f);
                 foreach (Collider2D c in colliders)
                 {
@@ -242,7 +245,7 @@ public class Water : Spell {
 
                 }
                 break;
-            case 3: //shotgun makes them vulnerable to next attack
+            case Weapon_Types.Shotgun: //shotgun makes them vulnerable to next attack
                 colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
                 foreach (Collider2D c in colliders)
                 {
@@ -287,7 +290,7 @@ public class Water : Spell {
 					}
                 }
                 break;
-            case 4: //Fire hose
+            case Weapon_Types.Gatling: //Fire hose
                 colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x + 10, transform.position.y));
                 foreach (Collider2D c in colliders)
                 {
@@ -351,7 +354,7 @@ public class Water : Spell {
 					}
                 }
                 break;
-			case 6:
+			case Weapon_Types.Bow:
 				colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
 				foreach (Collider2D c in colliders)
 				{
@@ -385,36 +388,36 @@ public class Water : Spell {
         }
     }
 
-	public override void setDescription(int weapon)
+	public override void setDescription(Weapon_Types weapon)
 	{
 		switch (weapon)
 		{
 		//Revolver
-		case 1:
+		case Weapon_Types.Revolver:
 				description = "Bounces off the enemy and heals the player if contact is made with the spell.";
 				damage = 5;
 			break;
 			//Rifle
-		case 2:
+		case Weapon_Types.Rifle:
 				description = "Pulls a nearby enemy toward the panel.";
 				damage = 10;
 			break;
 			//Shotgun
-		case 3:
+		case Weapon_Types.Shotgun:
 				description = "Increases damage for a period of time after striking an enemy.";
 				damage = 15;
 			break;
 			//Gatling
-		case 4:
+		case Weapon_Types.Gatling:
 				description = "Uses a hose to push back the opponent.";
 				damage = 10;
 			break;
 			//Cane Gun
-		case 5:
+		case Weapon_Types.Canegun:
 			description = "";
 			break;
 				//Bow
-			case 6:
+			case Weapon_Types.Bow:
 				description = "Traps the opponent in a bvubble making them weak to lightning";
 			break;
 		}

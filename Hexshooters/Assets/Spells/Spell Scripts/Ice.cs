@@ -19,13 +19,13 @@ public class Ice : Spell {
         base.spellUpdate();
 	}
 
-    public override void movement(int weapon)
+    public override void movement(Weapon_Types weapon)
     {
         Vector2 position;
         switch (weapon)
         {
             //revolver
-            case 1:
+            case Weapon_Types.Revolver:
                 if (PlayerNum == 1)
                 {
                     target = new Vector2(transform.position.x, transform.position.y) + direction;
@@ -41,7 +41,7 @@ public class Ice : Spell {
                 break;
 
             //rifle
-            case 2:
+            case Weapon_Types.Rifle:
                 if (PlayerNum == 1)
                 {
                     target = new Vector2(transform.position.x, transform.position.y) + direction;
@@ -57,7 +57,7 @@ public class Ice : Spell {
                 break;
 
             //shotgun
-            case 3:
+            case Weapon_Types.Shotgun:
 				if(PlayerNum ==1)
 				{
 					target = new Vector2(transform.position.x , transform.position.y) + direction;
@@ -71,7 +71,7 @@ public class Ice : Spell {
                 break;
 
             //gatling
-            case 4:
+            case Weapon_Types.Gatling:
 				if(PlayerNum ==1)
 				{
 					target = new Vector2(transform.position.x, transform.position.y) + direction;
@@ -85,7 +85,7 @@ public class Ice : Spell {
                 break;
 
             //cane gun - not priority
-            case 5:
+            case Weapon_Types.Canegun:
 				if(PlayerNum ==1)
 				{
 					target = new Vector2(transform.position.x, transform.position.y) + direction;
@@ -97,7 +97,7 @@ public class Ice : Spell {
 			position = Vector2.Lerp(transform.position, target, (Time.deltaTime * speed));
                 transform.position = position;
                 break;
-			case 6:
+			case Weapon_Types.Bow:
 				//Player one
 				if (PlayerNum == 1)
 				{
@@ -121,18 +121,18 @@ public class Ice : Spell {
 
 				if (transform.position == new Vector3 (target.x, target.y, 0))
 				{
-					hitBehavior (6);
+					hitBehavior (Weapon_Types.Bow);
 				}
 			break;
         }
     }
 
-    public override void hitBehavior(int weapon)
+    public override void hitBehavior(Weapon_Types weapon)
 	{
 		Collider2D[] colliders;
 		switch (weapon)
 		{
-		case 1: //freeze row
+		case Weapon_Types.Revolver: //freeze row
 			if(PlayerNum == 1)
 			 colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x + 10, transform.position.y));
 			else
@@ -200,7 +200,7 @@ public class Ice : Spell {
 					}
 			}
 			break;
-		case 2: //freeze
+		case Weapon_Types.Rifle: //freeze
 			colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x, transform.position.y));
 			foreach (Collider2D c in colliders)
 			{
@@ -249,7 +249,7 @@ public class Ice : Spell {
 					}
                 }
                 break;
-            case 3: //Shield
+            case Weapon_Types.Shotgun: //Shield
                 colliders = Physics2D.OverlapAreaAll(transform.position, new Vector2(transform.position.x, transform.position.y));
                 foreach (Collider2D c in colliders)
                 {
@@ -274,7 +274,7 @@ public class Ice : Spell {
 					}
                 }
                 break;
-            case 4: //Stacking Damage
+            case Weapon_Types.Gatling: //Stacking Damage
 			if(PlayerNum == 1)
 				colliders = Physics2D.OverlapAreaAll (transform.position, new Vector2 (transform.position.x + 2, transform.position.y));
 			else
@@ -307,7 +307,7 @@ public class Ice : Spell {
 					}
                 }
                 break;
-			case 6:
+			case Weapon_Types.Bow:
 				Instantiate (Resources.Load ("Icicle"), new Vector2 (transform.position.x, transform.position.y-1), Quaternion.identity);
 				Instantiate (Resources.Load ("Icicle"), new Vector2 (transform.position.x, transform.position.y), Quaternion.identity);
 				Instantiate (Resources.Load ("Icicle"), new Vector2 (transform.position.x, transform.position.y+1), Quaternion.identity);
@@ -315,36 +315,36 @@ public class Ice : Spell {
 			break;
         }
     }
-	public override void setDescription(int weapon)
+	public override void setDescription(Weapon_Types weapon)
 	{
 		switch (weapon)
 		{
 		//Revolver
-		case 1:
+		case Weapon_Types.Revolver:
 				description = "Coats a Row in frost Slowing Enemy Movement";
 				damage = 15;
 			break;
 			//Rifle
-		case 2:
+		case Weapon_Types.Rifle:
 				description = "Freezes the opponent for an Instant.";
 				damage = 10;
 			break;
 			//Shotgun
-		case 3:
+		case Weapon_Types.Shotgun:
 				description = "Sield the player who uses the spell.";
 				damage = 0;
 			break;
 			//Gatling
-		case 4:
+		case Weapon_Types.Gatling:
 				description = "Does damage to the opponent that gets more powerful with each hit.";
 				damage = 5;
 			break;
 			//Cane Gun
-		case 5:
+		case Weapon_Types.Canegun:
 			description = "";
 			break;
 				//Bow
-			case 6:
+			case Weapon_Types.Bow:
 				description = "Creates 3 Icicles vertically 3 squares ahead.";
 			break;
 		}

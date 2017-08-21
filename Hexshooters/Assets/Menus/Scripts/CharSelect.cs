@@ -12,6 +12,8 @@ public class CharSelect : MonoBehaviour {
 	GameObject p2select;
 	bool horizontal = false;
 	bool horizontal2 = false;
+	public Weapon_Types p1Weap;
+	public Weapon_Types p2Weap;
 
 	void Awake()
 	{
@@ -23,6 +25,8 @@ public class CharSelect : MonoBehaviour {
 		p2select = GameObject.Find ("P2_Weapon");
 		p1 = 1;
 		p2 = 1;
+		p1Weap = Weapon_Types.Revolver;
+		p2Weap = Weapon_Types.Revolver;
 	}
 	
 	// Update is called once per frame
@@ -32,42 +36,52 @@ public class CharSelect : MonoBehaviour {
 			if (p1 == 1)
 			{
 				p1select.GetComponent<Text> ().text = "Revolver";
+				p1Weap = Weapon_Types.Revolver;
 			}
 			if (p1 == 2)
 			{
 				p1select.GetComponent<Text> ().text = "Rifle";
+				p1Weap = Weapon_Types.Rifle;
 			}
 			if (p1 == 3)
 			{
 				p1select.GetComponent<Text> ().text = "Shotgun";
+				p1Weap = Weapon_Types.Shotgun;
 			}
 			if (p1 == 4)
 			{
 				p1select.GetComponent<Text> ().text = "Gatling";
+				p1Weap = Weapon_Types.Gatling;
 			}
 			if (p1 == 6)
 			{
 				p1select.GetComponent<Text> ().text = "Bow";
+				p1Weap = Weapon_Types.Canegun;
 			}
 			if (p2 == 1)
 			{
 				p2select.GetComponent<Text> ().text = "Revolver";
+				p2Weap = Weapon_Types.Revolver;
 			}
 			if (p2 == 2)
 			{
 				p2select.GetComponent<Text> ().text = "Rifle";
+				p2Weap = Weapon_Types.Rifle;
 			}
 			if (p2 == 3)
 			{
 				p2select.GetComponent<Text> ().text = "Shotgun";
+				p2Weap = Weapon_Types.Shotgun;
 			}
 			if (p2 == 4)
 			{
 				p2select.GetComponent<Text> ().text = "Gatling";
+				p2Weap = Weapon_Types.Gatling;
 			}
 			if (p2 == 6)
 			{
 				p2select.GetComponent<Text> ().text = "Bow";
+				p2Weap = Weapon_Types.Bow;
 			}
 			float Horizontal = Input.GetAxisRaw ("Horizontal_P1");
 			float Horizontal2 = Input.GetAxisRaw ("Horizontal_P2");

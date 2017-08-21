@@ -11,7 +11,7 @@ public class Player : MonoBehaviour {
 	public List<Attributes> strengths = new List<Attributes>();
     public int health;
 	public Transform spell;
-	public int weapon;
+	public Weapon_Types weapon;
 	public List<Object> Chamber = new List<Object>();
 	public FieldManager field;
 	public bool reload;
@@ -64,11 +64,11 @@ public class Player : MonoBehaviour {
 
     }
 
-	public void weaponAbility(int weaponUsed)
+	public void weaponAbility(Weapon_Types weaponUsed)
 	{
 		switch (weaponUsed)
 		{
-			case 1:
+			case Weapon_Types.Revolver:
 				if (abilButton1 != null && abilButton2 != null)
 				{
 					if (Input.GetButtonDown (abilButton1))
@@ -81,13 +81,13 @@ public class Player : MonoBehaviour {
 					}
 				}
 			break;
-			case 2:
+			case Weapon_Types.Rifle:
 				//Fusion
 			break;
-			case 3:
+			case Weapon_Types.Shotgun:
 				
 			break;
-			case 4:
+			case Weapon_Types.Gatling:
 				if (shotLimiter == 10)
 				{
 					if (Input.GetButton ("Ability 1_P1") || Input.GetButton ("Ability 2_P1"))
@@ -115,10 +115,10 @@ public class Player : MonoBehaviour {
 					shotLimiter++;
 				}
 			break;
-			case 5:
+			case Weapon_Types.Canegun:
 
 			break;
-			case 6:
+			case Weapon_Types.Bow:
 
 			break;
 		}
@@ -557,7 +557,7 @@ public class Player : MonoBehaviour {
 	{
 		switch (weapon)
 		{
-			case 1:
+			case Weapon_Types.Revolver:
 				GetComponent<SpriteRenderer> ().sprite = playerImages [0];
 				if (playerDisplay != null)
 				{
@@ -565,9 +565,9 @@ public class Player : MonoBehaviour {
 					playerDisplay.color = new Color (255, 255, 255, 255);
 				}
 			break;
-			case 2:
+			case Weapon_Types.Rifle:
 			break;
-			case 3:
+			case Weapon_Types.Shotgun:
 				GetComponent<SpriteRenderer> ().sprite = playerImages [1];
 				if (playerDisplay != null)
 				{
@@ -575,12 +575,12 @@ public class Player : MonoBehaviour {
 					playerDisplay.color = new Color (255, 255, 255, 255);
 				}
 			break;
-			case 4:
+			case Weapon_Types.Gatling:
 			break;
-			case 5:
+			case Weapon_Types.Canegun:
 
 			break;
-			case 6:
+			case Weapon_Types.Bow:
 
 			break;
 		}
@@ -628,11 +628,11 @@ public class Player : MonoBehaviour {
 		{
 			if (PlayerNum == 1)
 			{
-				weapon = GameObject.Find ("CharSelect").GetComponent<CharSelect> ().p1;
+				weapon = GameObject.Find ("CharSelect").GetComponent<CharSelect> ().p1Weap;
 			}
 			else
 			{				
-				weapon = GameObject.Find ("CharSelect").GetComponent<CharSelect> ().p2;
+				weapon = GameObject.Find ("CharSelect").GetComponent<CharSelect> ().p2Weap;
 			}
 		}
 		myStatus = GetComponent<StatusManager>();
