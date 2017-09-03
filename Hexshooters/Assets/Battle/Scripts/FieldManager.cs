@@ -49,10 +49,13 @@ public class FieldManager : MonoBehaviour
 	public bool once;
 	protected UniversalSettings us;
 	public int style = 3;
-
+	OverPlayer op;
+	GameObject switchMenu;
+	Dictionary<Weapon_Types, List<Object>> Decks;
 	// Use this for initialization
 	public void Start () 
 	{
+		Decks = new Dictionary<Weapon_Types, List<Object>>();
 		us = GameObject.Find("__app").GetComponent<UniversalSettings> ();
 		mapFile = us.mapfile;
 		style = us.style;
@@ -65,11 +68,6 @@ public class FieldManager : MonoBehaviour
 		weapons = new GameObject[5];
 		ES_P1 = EventSystem.current;
 
-		//Hnadful= Deck
-		//Pass Deck In from Overworld Scene
-		//Placeholder Fils Deck with Lighnin and Eart Spells
-		buildDeck();
-
         //creates the map
         instantiateMap();
 
@@ -78,6 +76,10 @@ public class FieldManager : MonoBehaviour
 
 		// Retrieves the references to the alkl ofthe UI elements.
 		getUI ();
+		if (switchMenu != null)
+		{
+			switchMenu.SetActive (false);
+		}
 
 		//Updates the lists of enemies, spells, and obstacles to be used in the battle. 
 		updateEnemyList ();
@@ -85,12 +87,21 @@ public class FieldManager : MonoBehaviour
 		updateObstacleList ();
 
 		if (GameObject.Find ("OverPlayer") != null)
-			player.weapon = GameObject.Find ("OverPlayer").GetComponent<OverPlayer>().weapon;
-		
-		if(player.weapon == Weapon_Types.Bow)
-			player.Chamber = Handful;
-		else
-			Shuffle(Handful);
+		{
+			op = GameObject.Find ("OverPlayer").GetComponent<OverPlayer> ();
+			player.weapon = op.weapon;
+		}
+		if (op.availableWeapons.Count <= 1)
+		{
+			GameObject.Find ("Switch").SetActive(false);
+		}
+
+		buildDeck();
+
+		//if(player.weapon == Weapon_Types.Bow)
+		//	player.Chamber = Handful;
+		//else
+		//	Shuffle(Handful);
 
 		//Selects and enables the cooresponding UI based on the character
 		chooseGun (player.weapon, false);
@@ -126,7 +137,9 @@ public class FieldManager : MonoBehaviour
 		updateEnemyList ();
 		if(enemies.Length == 0)
 		{
-			GameObject.Find ("OverPlayer").GetComponent<OverPlayer> ().returnFromBattle = true;
+
+			OverPlayer op = GameObject.Find ("OverPlayer").GetComponent<OverPlayer> ();
+			op.returnFromBattle = true;
 			SceneManager.LoadScene ("Overworld");
 		}
 		//updateHealth ();
@@ -277,6 +290,15 @@ public class FieldManager : MonoBehaviour
 				{
 					removeBullet ();
 				}
+			}
+		}
+
+		//Checks to see if the swapping menuis active
+		if (switchMenu.activeSelf)
+		{
+			if(Input.GetButtonDown("Cancel_Solo"))
+			{
+				cancelSwap();
 			}
 		}
 
@@ -624,7 +646,7 @@ public class FieldManager : MonoBehaviour
 		}
 	}
 
-	//Adds a bullet ot te selected list and prevents it from being s;lected again
+	//Adds a bullet to the selected list and prevents it from being selected again
 	protected void addBullet(int num)
 	{
 		Debug.Log (p1Gun);
@@ -735,17 +757,37 @@ public class FieldManager : MonoBehaviour
 		displaySlots.Add (GameObject.Find ("SpellSlot6"));
 		displaySlots.Add (GameObject.Find ("SpellSlot7"));
 		displaySlots.Add (GameObject.Find ("SpellSlot8"));
+
+		switchMenu = GameObject.Find ("Switch Book");
 	}
 
 	//Builds the deck
 	public void buildDeck()
 	{
-		for (int i = 0; i < 10; i++)
+		foreach (Weapon_Types w in op.availableWeapons)
 		{
-			Handful.Add(Resources.Load ("Fire"));
-			Handful.Add(Resources.Load ("Earth"));
-			Handful.Add(Resources.Load ("Water"));
-			Handful.Add(Resources.Load ("Wind"));
+			List<Object> temp = new List<Object> ();
+			switch(op.characters[w].activeDeck)
+			{
+				case 0:
+					foreach (Object spell in op.characters[w].DeckA)
+					{
+						temp.Add (spell);
+					}
+				break;
+				case 1:
+					foreach (Object spell in op.characters[w].DeckB)
+					{
+						temp.Add (spell);
+					}
+				break;
+			}
+			Shuffle (temp);
+			Decks.Add (w, temp);
+			if (w == player.weapon)
+			{
+				Handful = Decks [w];
+			}
 		}
 	}
 
@@ -855,5 +897,149 @@ public class FieldManager : MonoBehaviour
 		}
 		player.updatePlayerImage ();
 	}
+	public void changeCharacter(int w)
+	{
+		op.characters [player.weapon].health = player.health;
+		Weapon_Types w2 =  Weapon_Types.Revolver;
+		switch (w)
+		{
+			case 0:
+				w2 = Weapon_Types.Revolver;
+			break;
+			case 1:
+				w2 = Weapon_Types.Shotgun;
+			break;
+			case 2:
+				w2 = Weapon_Types.Gatling;
+			break;
+			case 3:
+				w2 = Weapon_Types.Bow;
+			break;
+			case 4:
+				w2 = Weapon_Types.Rifle;
+			break;
+			case 5:
+				w2 = Weapon_Types.Canegun;
+			break;
+			case 6:
+				w2 = Weapon_Types.Revolver;
+			break;
+			case 7:
+				w2 = Weapon_Types.Revolver;
+			break;
+		}
 
+		Debug.Log (w2);
+		//Sets the player's weapon to the appropriate one
+		op.weapon =w2;
+		player.weapon = w2;
+
+		//Set Player's health to the proper character's
+		player.health = op.characters[w2].health;
+
+		//Subtract the appropriate amount from the user's health
+		int dam = (int)Mathf.Round(player.health/10);
+		player.takeDamage(dam, new Attributes[0]);
+
+		//Updates the health display to show the lost health
+		player.activeUpdate ();
+
+		//Swap to the Appropriate Deck
+		switch (op.characters [w2].activeDeck)
+		{
+			case 0:
+				Handful = op.characters [w2].DeckA;
+			break;
+			case 1:
+				Handful = op.characters [w2].DeckB;
+			break;
+		}
+
+		//Swap to the approprite UI
+		chooseGun (w2, false);
+
+		//Reactivates the buttons for the showReloadScreen menu
+
+		foreach (GameObject p in pauseObjects)
+		{
+			p.GetComponent<Button> ().interactable = true;
+		}
+		GameObject.Find("Switch").GetComponent<Button> ().interactable = true;
+
+		//Refresh the Reloading Screen
+		showReloadScreen ();
+
+		//Disable the swap screen
+		switchMenu.SetActive (false);
+	}
+	public void showSwapScreen()
+	{
+		switchMenu.SetActive (true);
+		GameObject.Find ("Rev").GetComponent<Button> ().interactable = false;
+		GameObject.Find ("Shot").GetComponent<Button> ().interactable = false;
+		GameObject.Find ("Gat").GetComponent<Button> ().interactable = false;
+		foreach(Weapon_Types we in op.availableWeapons)
+		{
+			switch (we)
+			{
+				case Weapon_Types.Revolver:
+					if (we != player.weapon)
+					{
+						GameObject.Find ("Rev").GetComponent<Button> ().interactable = true;
+						EventSystem.current.SetSelectedGameObject (GameObject.Find ("Rev"));
+					}
+					
+					GameObject.Find ("Rev Text").GetComponent<Text> ().text = "Revolver";
+					Image i = GameObject.Find ("Rev Image").GetComponent<Image> ();
+					i.sprite = Resources.Load<Sprite> ("Matt_Ft");
+					i.color = new Color (255, 255, 255, 1);
+				break;
+				case Weapon_Types.Shotgun:
+					if (we != player.weapon)
+					{
+						GameObject.Find ("Shot").GetComponent<Button> ().interactable = true;
+						EventSystem.current.SetSelectedGameObject (GameObject.Find ("Shot"));
+					}
+					
+					GameObject.Find ("Shot Text").GetComponent<Text>().text = "Shotgun";
+					Image i2 = GameObject.Find ("Shot Image").GetComponent<Image> ();
+					i2.sprite = Resources.Load<Sprite> ("John_Ft");
+					i2.color = new Color (255, 255, 255, 1);
+				break;
+				case Weapon_Types.Gatling:
+					if (we != player.weapon)
+					{
+						GameObject.Find ("Gat").GetComponent<Button> ().interactable = true;
+						EventSystem.current.SetSelectedGameObject (GameObject.Find ("Gat"));
+					}
+					GameObject.Find ("Gat Text").GetComponent<Text>().text = "Gatling Gun";
+					Image i3 = GameObject.Find ("Gat Image").GetComponent<Image> ();
+					i3.sprite = Resources.Load<Sprite> ("Matt_Ft");
+					i3.color = new Color (255, 255, 255, 1);
+				break;
+				case Weapon_Types.Bow:
+				break;
+				case Weapon_Types.Canegun:
+				break;
+				case Weapon_Types.Rifle:
+				break;
+			}
+		}
+		foreach (GameObject p in pauseObjects)
+		{
+			p.GetComponent<Button> ().interactable = false;
+		}
+		GameObject.Find("Switch").GetComponent<Button> ().interactable = false;
+	}
+				
+	public void cancelSwap()
+	{
+		switchMenu.SetActive (false);
+		foreach (GameObject p in pauseObjects)
+		{
+			p.GetComponent<Button> ().interactable = true;
+		}
+		GameObject.Find("Switch").GetComponent<Button> ().interactable = true;	
+		EventSystem.current.SetSelectedGameObject (GameObject.Find ("Switch"));
+	}
 }

@@ -72,7 +72,7 @@ public class Trigger : MonoBehaviour {
 			{
 				if(preRewardedItem == "John")
 				{
-					op.charUnlock = true;
+					op.availableWeapons.Add (Weapon_Types.Shotgun);
 				}
 			}
 		}
