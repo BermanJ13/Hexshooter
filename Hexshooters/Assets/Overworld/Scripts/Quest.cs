@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]//to edit in inspector for testing
 public class Quest : MonoBehaviour {
 	
-	private string title; //title/name of the quest
-	private string location; //what town is the quest given from
-	private string description; //description of the quest to be displayed in quest menu
-	private int typeofQuest; //to help display in quest menu if it's a "help", wanted", or "missing" background
-	private bool rank; //check if it's a rank up/story quest or not
-	private bool finished; //if the quest has been completed or not
-	private object reward; //reward to be given to the player when done
-	List<Trigger> taskList; //array or list of triggers that need to be done
+	public string title; //title/name of the quest
+	public string location; //what town is the quest given from
+	public string description; //description of the quest to be displayed in quest menu
+	public int typeofQuest; //to help display in quest menu if it's a "help", wanted", or "missing" background
+	public bool rank; //check if it's a rank up/story quest or not
+	public bool finished; //if the quest has been completed or not
+	public object reward; //reward to be given to the player when done
+	public List<Trigger> taskList; //array or list of triggers that need to be done
 
 	// Constructor that takes no arguments or a default quest
 	public Quest()
@@ -53,6 +54,10 @@ public class Quest : MonoBehaviour {
 		get{ return this.location;}
 	}
 
+	public bool Finished
+	{
+		get{return this.finished; }
+	}
 	//parameters: string
 	//purpose: change name of quest
 	//errors: unknonwn atm

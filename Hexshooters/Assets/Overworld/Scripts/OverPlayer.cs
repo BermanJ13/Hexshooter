@@ -24,7 +24,7 @@ public class OverPlayer : MonoBehaviour {
 	public int weaponMax;
 	public int currentCharacter;
 	UniversalSettings us;
-	public GameObject pause,deck;
+	public GameObject pause,deck,quest;
 	public Trigger currentTrig; 
 	public Trigger[] triggers; 
 	public List<string> activatedTriggers = new List<string>();
@@ -64,6 +64,7 @@ public class OverPlayer : MonoBehaviour {
 	Text WeapNAme;
 	List<Object>[] properLists;
 	public Dictionary <Weapon_Types,Character> characters;
+	public List<Quest> quests;
 
 
 	public void Awake()
@@ -99,6 +100,7 @@ public class OverPlayer : MonoBehaviour {
 		//Turn off the pause menu
 		pause.SetActive(false);
 		deck.SetActive(false);
+		quest.SetActive (false);
 
 		//Fill the Decks Initially
 		for (int i = 0; i < 30; i++)
@@ -257,15 +259,19 @@ public class OverPlayer : MonoBehaviour {
 				{
 					lastState = currentState;
 					currentState = Over_States.Menu;
+					/*
 					deck.SetActive (true);
 					EventSystem.current.SetSelectedGameObject (GameObject.Find("Right Image Button"));
 					getDeckUI ();
 					changeDeckDisplay (characters[weapon].activeDeck);
+					*/
+					quest.SetActive (true);
 				}
 
 			break;
 				
 			case Over_States.Menu:
+			/*
 				if (Input.GetButtonDown ("PauseOver"))
 				{
 					deck.SetActive (false);
@@ -281,8 +287,13 @@ public class OverPlayer : MonoBehaviour {
 						runeDisplay.GetComponent<Image> ().sprite = EventSystem.current.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
 					}
 				}
-				scrollDeck ();
-			break;
+				scrollDeck ();*/
+				if (Input.GetButtonDown ("PauseOver"))
+				{
+					quest.SetActive (false);
+					currentState = lastState;
+				}
+				break;
 				
 			case Over_States.Controls:
 			break;
