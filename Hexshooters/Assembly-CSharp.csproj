@@ -46,6 +46,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Enemies\Scripts\Attacks\BasicEnemyAttack.cs" />
+     <Compile Include="Assets\Enemies\Scripts\Attacks\BuffaloPlow.cs" />
+     <Compile Include="Assets\Enemies\Scripts\Attacks\EnemySpell.cs" />
+     <Compile Include="Assets\Enemies\Scripts\Attacks\ScorpionStrike.cs" />
+     <Compile Include="Assets\Enemies\Scripts\Attacks\WildCatStrike.cs" />
+     <Compile Include="Assets\Enemies\Scripts\Bandit.cs" />
+     <Compile Include="Assets\Enemies\Scripts\Bosses\Ransom.cs" />
+     <Compile Include="Assets\Enemies\Scripts\Bosses\Rob.cs" />
+     <Compile Include="Assets\Enemies\Scripts\Buffalo.cs" />
+     <Compile Include="Assets\Enemies\Scripts\Enemy.cs" />
+     <Compile Include="Assets\Enemies\Scripts\Mouse.cs" />
+     <Compile Include="Assets\Enemies\Scripts\Scorpion.cs" />
+     <Compile Include="Assets\Enemies\Scripts\Snake.cs" />
+     <Compile Include="Assets\Enemies\Scripts\WildCat.cs" />
      <Compile Include="Assets\Scripts\ActiveFieldManager.cs" />
      <Compile Include="Assets\Scripts\CameraSettings.cs" />
      <Compile Include="Assets\Scripts\CharSelect.cs" />
@@ -53,16 +67,6 @@
      <Compile Include="Assets\Scripts\ControllerRefocus.cs" />
      <Compile Include="Assets\Scripts\CursorLock.cs" />
      <Compile Include="Assets\Scripts\DialogueManager.cs" />
-     <Compile Include="Assets\Scripts\Enemies\Attacks\BasicEnemyAttack.cs" />
-     <Compile Include="Assets\Scripts\Enemies\Attacks\EnemySpell.cs" />
-     <Compile Include="Assets\Scripts\Enemies\Attacks\ScorpionStrike.cs" />
-     <Compile Include="Assets\Scripts\Enemies\Attacks\WildCatStrike.cs" />
-     <Compile Include="Assets\Scripts\Enemies\Bandit.cs" />
-     <Compile Include="Assets\Scripts\Enemies\Bosses\Ransom.cs" />
-     <Compile Include="Assets\Scripts\Enemies\Bosses\Rob.cs" />
-     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
-     <Compile Include="Assets\Scripts\Enemies\Scorpion.cs" />
-     <Compile Include="Assets\Scripts\Enemies\WildCat.cs" />
      <Compile Include="Assets\Scripts\FieldManager.cs" />
      <Compile Include="Assets\Scripts\GameInfo.cs" />
      <Compile Include="Assets\Scripts\GameResults.cs" />
@@ -112,6 +116,7 @@
      <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\OLDTVScreen.cs" />
      <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\OLDTVTube.cs" />
      <Compile Include="Assets\Vortex Game Studios\OLD TV Filter 2\Tutorial\CameraReflex.cs" />
+     <Compile Include="Assets\testanim.cs" />
      <None Include="Assets\Maps\Resources\DB2.txt" />
      <None Include="Assets\Maps\Resources\VSempty.txt" />
      <None Include="Assets\Dialogue\Text\Resources\Cutscene1c.txt" />
@@ -130,7 +135,7 @@
      <None Include="Assets\Maps\Resources\testmap.txt" />
      <None Include="Assets\Dialogue\Text\Resources\TestCutscene.txt" />
      <None Include="Assets\Maps\Resources\VScenterSideWall.txt" />
-     <None Include="Assets\Prefabs\Enemies\ProjectSettings\ProjectVersion.txt" />
+     <None Include="Assets\Enemies\ProjectSettings\ProjectVersion.txt" />
      <None Include="Assets\Dialogue\Text\Resources\TestTalk.txt" />
      <None Include="Assets\Maps\Resources\VSplayer2Poor.txt" />
      <None Include="Assets\Maps\Resources\base.txt" />

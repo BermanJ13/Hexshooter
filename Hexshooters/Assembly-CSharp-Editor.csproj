@@ -67,7 +67,7 @@
      <None Include="Assets\Maps\Resources\testmap.txt" />
      <None Include="Assets\Dialogue\Text\Resources\TestCutscene.txt" />
      <None Include="Assets\Maps\Resources\VScenterSideWall.txt" />
-     <None Include="Assets\Prefabs\Enemies\ProjectSettings\ProjectVersion.txt" />
+     <None Include="Assets\Enemies\ProjectSettings\ProjectVersion.txt" />
      <None Include="Assets\Dialogue\Text\Resources\TestTalk.txt" />
      <None Include="Assets\Maps\Resources\VSplayer2Poor.txt" />
      <None Include="Assets\Maps\Resources\base.txt" />
