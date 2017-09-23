@@ -120,8 +120,8 @@ public class questNameScrollList : MonoBehaviour {
 		{
 			name.text = EventSystem.current.currentSelectedGameObject.GetComponent<QuestInfo>().location;
 			description.text = EventSystem.current.currentSelectedGameObject.GetComponent<QuestInfo>().description;
-			print ("Menus/NPCImage/"+EventSystem.current.currentSelectedGameObject.GetComponent<QuestInfo>().poster);
-			person.sprite = (Sprite) Resources.Load("Assets/Menus/NPCImage/"+EventSystem.current.currentSelectedGameObject.GetComponent<QuestInfo>().poster);
+			print (EventSystem.current.currentSelectedGameObject.GetComponent<QuestInfo>().poster);
+			person.sprite = Resources.Load<Sprite>(EventSystem.current.currentSelectedGameObject.GetComponent<QuestInfo>().poster);
 
 			if (EventSystem.current.currentSelectedGameObject.GetComponent<QuestInfo> ().typeofQuest == 1) 
 			{
