@@ -254,24 +254,20 @@ public class OverPlayer : MonoBehaviour {
 				movement ();
 				interactTrigger ();
 
-				//Opens the Deck MEnu when th eo button is pressed
+				//Opens the Deck MEnu when the o button is pressed
 				if (Input.GetButtonDown ("PauseOver"))
 				{
 					lastState = currentState;
 					currentState = Over_States.Menu;
-					/*
-					deck.SetActive (true);
-					EventSystem.current.SetSelectedGameObject (GameObject.Find("Right Image Button"));
-					getDeckUI ();
-					changeDeckDisplay (characters[weapon].activeDeck);
-					*/
-					quest.SetActive (true);
+					pause.SetActive(true);
+					EventSystem.current.SetSelectedGameObject(GameObject.Find("DeckMenuButton"));
+					
 				}
 
 			break;
 				
 			case Over_States.Menu:
-			/*
+			
 				if (Input.GetButtonDown ("PauseOver"))
 				{
 					deck.SetActive (false);
@@ -287,12 +283,14 @@ public class OverPlayer : MonoBehaviour {
 						runeDisplay.GetComponent<Image> ().sprite = EventSystem.current.currentSelectedGameObject.GetComponent<RuneInfo> ().runeImage;
 					}
 				}
-				scrollDeck ();*/
+				scrollDeck ();
+
 				if (Input.GetButtonDown ("PauseOver"))
 				{
-					quest.SetActive (false);
+					pause.SetActive (false);
 					currentState = lastState;
 				}
+				
 				break;
 				
 			case Over_States.Controls:
@@ -1182,5 +1180,50 @@ public class OverPlayer : MonoBehaviour {
 		c2.health = 100;
 		c2.weapon = Weapon_Types.Shotgun;
 		characters.Add (c2.weapon,c2);
+	}
+
+
+
+	//Parameters: None
+	//Purpose: Takes the player to the Deck Building Section of the Menu
+	//Known Errors: None
+	public void ToDeck()
+	{
+		//In Theory only need to disable the main pause menu and active the deck Menu
+		//turns off title canvas and turns on level select canvas
+		pause.SetActive(false);
+		quest.SetActive(false);
+		deck.SetActive(true);
+		EventSystem.current.SetSelectedGameObject (GameObject.Find("Right Image Button"));
+		getDeckUI ();
+		changeDeckDisplay (characters[weapon].activeDeck);
+	}
+
+
+	/*
+    * Purpose of this section of code is for the quest log.
+    */
+
+	//Paramters: None
+	//Purpose: Takes the player to the list of Quest Section of the Menu
+	//Known Errors: None
+	public void ToQuests()
+	{
+		//In Theory only need to disable the main pause menu and active the deck Menu
+		//turns off title canvas and turns on level select canvas
+		pause.SetActive(false);
+		deck.SetActive(false);
+		quest.SetActive(true);
+
+	}
+
+	//Parameters: None
+	//Purpose: Generic Return function to main pause menu no matter where in the journal you are
+	//Known Errors: None
+	public void ToPause()
+	{
+		deck.SetActive(false);
+		quest.SetActive(false);
+		pause.SetActive(true);
 	}
 }

@@ -12,7 +12,6 @@ public class sampleQuestButton : MonoBehaviour {
 	public Sprite notDone;
 	public int type;
 
-	private QuestItemMenu item;
 	private questNameScrollList scrollList;
 
 	//real quest stuff;
@@ -22,19 +21,7 @@ public class sampleQuestButton : MonoBehaviour {
 		
 	}
 
-	public void Setup(QuestItemMenu currentItem, questNameScrollList currentScrollList)
-	{
-		item = currentItem;
-		name.text = item.questName;
-		if (item.complete) {
-			compeletion.sprite = done;
-		} else {
-			compeletion.sprite = notDone;
-		}
-		scrollList = currentScrollList;
-	}
-
-	public void RealSetup(Quest currentQuest, questNameScrollList currentScrollList)
+	public void Setup(Quest currentQuest, questNameScrollList currentScrollList)
 	{
 		quest = currentQuest;
 		this.gameObject.AddComponent<QuestInfo> ();
@@ -42,6 +29,7 @@ public class sampleQuestButton : MonoBehaviour {
 		info.title = quest.Title;
 		info.finished = quest.Finished;
 		info.description = quest.Description;
+		info.poster = quest.Poster;
 		info.typeofQuest = quest.typeofQuest;
 		info.location = quest.Location;
 

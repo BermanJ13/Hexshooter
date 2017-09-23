@@ -9,6 +9,7 @@ public class QuestInfo : MonoBehaviour {
 	public string description; //description of the quest to be displayed in quest menu
 	public int typeofQuest; //to help display in quest menu if it's a "help", wanted", or "missing" background
 	public bool finished; //if the quest has been completed or not
+	public string poster; //NPC Image
 	// Use this for initialization
 	void Start () 
 	{

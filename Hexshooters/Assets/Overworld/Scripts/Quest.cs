@@ -8,6 +8,7 @@ public class Quest : MonoBehaviour {
 	public string title; //title/name of the quest
 	public string location; //what town is the quest given from
 	public string description; //description of the quest to be displayed in quest menu
+	public string poster; //NPC Image that requested quest/dude need to hunt
 	public int typeofQuest; //to help display in quest menu if it's a "help", wanted", or "missing" background
 	public bool rank; //check if it's a rank up/story quest or not
 	public bool finished; //if the quest has been completed or not
@@ -27,11 +28,12 @@ public class Quest : MonoBehaviour {
 	}
 
 	//Constructor that takes arguements
-	public Quest(string name, string place, string describe, int type, bool story, bool done, object present, List<Trigger> toDO)
+	public Quest(string name, string place, string describe, string person, int type, bool story, bool done, object present, List<Trigger> toDO)
 	{
 		title = name;
 		location = place;
 		description = describe;
+		poster = person;
 		typeofQuest = type;
 		rank = story;
 		finished = done;
@@ -52,6 +54,11 @@ public class Quest : MonoBehaviour {
 	public string Location
 	{
 		get{ return this.location;}
+	}
+
+	public string Poster
+	{
+		get{ return this.poster;}
 	}
 
 	public bool Finished
