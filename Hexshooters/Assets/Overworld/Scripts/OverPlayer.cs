@@ -197,7 +197,7 @@ public class OverPlayer : MonoBehaviour {
 			{
 				if (moveRight)
 				{
-					transform.position = new Vector2 (transform.position.x + 0.15f, transform.position.y);
+					transform.position = new Vector2 (transform.position.x + 0.03f, transform.position.y);
 					this.gameObject.GetComponent<SpriteRenderer> ().sprite = playerImages[0];
 				}
 			}
@@ -225,7 +225,7 @@ public class OverPlayer : MonoBehaviour {
 			{
 				if (moveLeft)
 				{
-					transform.position = new Vector2 (transform.position.x - 0.15f, transform.position.y);
+					transform.position = new Vector2 (transform.position.x - 0.03f, transform.position.y);
 					this.gameObject.GetComponent<SpriteRenderer> ().sprite = playerImages[1];
 				}
 			}
@@ -251,7 +251,7 @@ public class OverPlayer : MonoBehaviour {
 			{
 				if (moveUp)
 				{
-					transform.position = new Vector2 (transform.position.x, transform.position.y + 0.15f);
+					transform.position = new Vector2 (transform.position.x, transform.position.y + 0.03f);
 					this.gameObject.GetComponent<SpriteRenderer> ().sprite = playerImages[2];
 				}
 			}
@@ -276,7 +276,7 @@ public class OverPlayer : MonoBehaviour {
 			{
 				if (moveDown)
 				{
-					transform.position = new Vector2 (transform.position.x, transform.position.y - 0.15f);
+					transform.position = new Vector2 (transform.position.x, transform.position.y - 0.03f);
 					this.gameObject.GetComponent<SpriteRenderer> ().sprite = playerImages[3];
 				}
 			}
