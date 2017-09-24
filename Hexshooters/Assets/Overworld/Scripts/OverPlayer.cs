@@ -11,60 +11,40 @@ public class OverPlayer : MonoBehaviour {
 
 	List<string> script;
 	public bool cutscene;
-	public Sprite[] playerImages;
+	public string[] playerImages;
 
 	public int style = 0; 
 	public DialogueManager dialog;
 	[SerializeField]
-	public bool battle;
-	public bool charUnlock;
-	public bool switchChar;
+	public bool battle, charUnlock, switchChar;
 
 	public Weapon_Types weapon;
-	public int weaponMax;
-	public int currentCharacter;
+	public int weaponMax, currentCharacter;
 	UniversalSettings us;
 	public GameObject pause,deck;
 	public Trigger currentTrig; 
 	public Trigger[] triggers; 
 	public List<string> activatedTriggers = new List<string>();
 	public List<Weapon_Types> availableWeapons = new List<Weapon_Types>();
-	public bool returnFromBattle;
-	public bool once = false;
-	public Over_States currentState = Over_States.Roam;
-	public Over_States lastState;
+	public bool returnFromBattle, once = false;
+	public Over_States currentState = Over_States.Roam, lastState;
 	SpriteRenderer spriteR;
-	List<GameObject> SlotsDeckA = new List<GameObject>();
-	List<GameObject> SlotsPack = new List<GameObject>();
-	List<GameObject> SlotsDeckB = new List<GameObject>();
+	List<GameObject> SlotsDeckA = new List<GameObject>(), SlotsPack = new List<GameObject>(), SlotsDeckB = new List<GameObject>();
 	public List<Object> groupPack = new List<Object>();
-	List<Image> ImagesDeckA = new List<Image>();
-	List<Image> ImagesPack = new List<Image>();
-	List<Image> ImagesDeckB = new List<Image>();
-	List<Text> NamesDeckA = new List<Text>();
-	List<Text> NamesPack = new List<Text>();
-	List<Text> NamesDeckB = new List<Text>();
-	Canvas DeckA;
-	Canvas DeckB; 
-	Canvas Pack;   
+	List<Image> ImagesDeckA = new List<Image>(), ImagesPack = new List<Image>(), ImagesDeckB = new List<Image>();
+	List<Text> NamesDeckA = new List<Text>(), NamesPack = new List<Text>(), NamesDeckB = new List<Text>();
+	Canvas DeckA, DeckB, Pack;   
 	int currentList;
 	public Sprite defaultSlot;
 	GameObject runeDisplay;
-	Text runeDamage;
-	Text runeName;
-	Text runeDesc;
-	int deckAIndex = 0;
-	int deckBIndex = 0;
-	int packIndex = 0;
+	Text runeDamage, runeName, runeDesc, CharNAme, WeapNAme;
+	int deckAIndex = 0, deckBIndex = 0, packIndex = 0;
 	bool inPack = false;
-	int selectedSpell = 100;
-	int originalMenu = 0;
+	int selectedSpell = 100, originalMenu = 0;
 	Image charImage;
-	Text CharNAme;
-	Text WeapNAme;
 	List<Object>[] properLists;
 	public Dictionary <Weapon_Types,Character> characters;
-
+	public Animator playerAnimator;
 
 	public void Awake()
 	{
@@ -88,7 +68,7 @@ public class OverPlayer : MonoBehaviour {
 		currentCharacter = 0;
 		weaponMax = 30;
 		cutscene = false;
-		switchChar = false;
+		switchChar = true;
 
 		//FInds the Dialouge Manager, Pause Menu and Settings Files
 		dialog = GameObject.FindGameObjectWithTag("DialogMngr").GetComponent<DialogueManager>();
@@ -109,6 +89,7 @@ public class OverPlayer : MonoBehaviour {
 			characters[Weapon_Types.Shotgun].DeckA.Add (Resources.Load ("Earth"));
 			characters[Weapon_Types.Shotgun].DeckB.Add (Resources.Load ("Water"));
 		}
+		playerAnimator = gameObject.GetComponent<Animator> ();
     }
 	
 	// Update is called once per frame
@@ -176,14 +157,15 @@ public class OverPlayer : MonoBehaviour {
 			{
 				case Weapon_Types.Revolver:
 					spriteR.color = new Color (255, 255, 255, 1);
-					playerImages [0] = Resources.Load<Sprite> ("Matt_Rt");
-					playerImages [1] = Resources.Load<Sprite> ("Matt_Lt");
-					playerImages [2] = Resources.Load<Sprite> ("Matt_Bk");
-					playerImages [3] = Resources.Load<Sprite> ("Matt_Ft");
+					playerImages [0] = "Matt_Right";
+					playerImages [1] = "Matt_Left";
+					playerImages [2] = "Matt_Up";
+					playerImages [3] = "Matt_Down";
+					playerImages [4] = "Matt_Idle";
 
 					if (currentState == Over_States.Menu)
 					{
-						charImage.sprite = Resources.Load<Sprite> ("Matt_Ft");
+						charImage.sprite = Resources.Load<Sprite> ("MattHead");
 						WeapNAme.text = "Revolver";
 						CharNAme.text = "Buckeye";
 						properLists [0] = characters[Weapon_Types.Revolver].DeckA;
@@ -194,14 +176,15 @@ public class OverPlayer : MonoBehaviour {
 				break;
 				case Weapon_Types.Shotgun:
 					spriteR.color = new Color (255, 255, 255, 1);
-					playerImages [0] = Resources.Load<Sprite> ("John_Rt");
-					playerImages [1] = Resources.Load<Sprite> ("John_Lt");
-					playerImages [2] = Resources.Load<Sprite> ("John_Bk");
-					playerImages [3] = Resources.Load<Sprite> ("John_Ft");
+					playerImages [0] = "John_Right";
+					playerImages [1] = "John_Left";
+					playerImages [2] = "John_Up";
+					playerImages [3] = "John_Down";
+					playerImages [4] = "John_Idle";
 
 					if (currentState == Over_States.Menu)
 					{
-						charImage.sprite = Resources.Load<Sprite> ("John_Ft");
+						charImage.sprite = Resources.Load<Sprite> ("JohnHead");
 						WeapNAme.text = "Shotgun";
 						CharNAme.text = "John";
 						properLists [0] = characters[Weapon_Types.Shotgun].DeckA;
@@ -214,7 +197,7 @@ public class OverPlayer : MonoBehaviour {
 					spriteR.color = new Color (0, 0, 255, 1);
 				break;
 			}
-			spriteR.sprite = playerImages[3];
+			playerAnimator.Play(playerImages[3]);
 
 			switchChar = false;
 		}
@@ -357,7 +340,7 @@ public class OverPlayer : MonoBehaviour {
 				if (moveRight)
 				{
 					transform.position = new Vector2 (transform.position.x + 0.15f, transform.position.y);
-					spriteR.sprite = playerImages[0];
+					playerAnimator.Play(playerImages[0]);
 				}
 			}
 		} 
@@ -385,15 +368,15 @@ public class OverPlayer : MonoBehaviour {
 				if (moveLeft)
 				{
 					transform.position = new Vector2 (transform.position.x - 0.15f, transform.position.y);
-					spriteR.sprite = playerImages[1];
+					playerAnimator.Play(playerImages[1]);
 				}
 			}
 		}
 		//Checks for Up and Down Movement
-		if (Input.GetAxisRaw ("Vertical_Solo") > 0) 
+		if (Input.GetAxisRaw ("Vertical_Solo") > 0)
 		{
-			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y + 0.1f),0.1f);
-			foreach( Collider2D c in hitColliders)
+			Collider2D[] hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x, transform.position.y + 0.1f), 0.1f);
+			foreach (Collider2D c in hitColliders)
 			{
 				//Checks whether or not something is in the way or if the desired spot is within the player.
 				if (c.gameObject.tag == "Map")
@@ -411,14 +394,15 @@ public class OverPlayer : MonoBehaviour {
 				if (moveUp)
 				{
 					transform.position = new Vector2 (transform.position.x, transform.position.y + 0.15f);
-					spriteR.sprite = playerImages[2];
+					playerAnimator.Play (playerImages [2]);
 				}
 			}
-		} 
-		else if (Input.GetAxisRaw ("Vertical_Solo") < 0) 
+		}
+		else
+		if (Input.GetAxisRaw ("Vertical_Solo") < 0)
 		{
-			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y - 0.1f),0.1f);
-			foreach( Collider2D c in hitColliders)
+			Collider2D[] hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x, transform.position.y - 0.1f), 0.1f);
+			foreach (Collider2D c in hitColliders)
 			{
 				//Checks whether or not something is in the way or if the desired spot is within the player.
 				if (c.gameObject.tag == "Map")
@@ -436,9 +420,14 @@ public class OverPlayer : MonoBehaviour {
 				if (moveDown)
 				{
 					transform.position = new Vector2 (transform.position.x, transform.position.y - 0.15f);
-					spriteR.sprite = playerImages[3];
+					playerAnimator.Play (playerImages [3]);
 				}
 			}
+		}
+		
+		if(Input.GetAxisRaw ("Vertical_Solo") == 0 && Input.GetAxisRaw ("Horizontal_Solo") == 0)
+		{
+				playerAnimator.Play (playerImages [4]);	
 		}
 	}
 
