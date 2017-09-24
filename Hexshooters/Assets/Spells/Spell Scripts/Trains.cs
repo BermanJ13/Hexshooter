@@ -65,16 +65,16 @@ public class Trains : Spell
         base.spellUpdate();
     }
 
-    public override void movement(int weapon)
+	public override void movement(Weapon_Types weapon)
     {
     }
 
-    public override void hitBehavior(int weapon)
+	public override void hitBehavior(Weapon_Types weapon)
     {
        
     }
 
-    public override void setDescription(int weapon)
+	public override void setDescription(Weapon_Types weapon)
     {
 
     }
