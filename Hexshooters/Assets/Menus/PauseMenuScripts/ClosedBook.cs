@@ -1,6 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using System.IO;
+
 
 public class ClosedBook : MonoBehaviour
 {
@@ -12,6 +17,7 @@ public class ClosedBook : MonoBehaviour
     public GameObject logCanvas; //log  Canvas
     public GameObject invenCanvas; //inventory canvas
     public GameObject checkQuitCanvas; //asking if the player is sure if want to quit
+	OverPlayer op;
     //bool to see if the decision the player made was sure
     public bool amSure = false;
     public bool nevermind = false;
@@ -26,7 +32,7 @@ public class ClosedBook : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+		op = GameObject.Find ("OverPlayer").GetComponent<OverPlayer>();
     }
 
     // Update is called once per frame
@@ -127,15 +133,11 @@ public class ClosedBook : MonoBehaviour
         //turns off title canvas and turns on level select canvas
         closedCanvas.SetActive(false);
         deckCanvas.SetActive(true);
+		questCanvas.SetActive(false);
+		logCanvas.SetActive(false);
+		invenCanvas.SetActive(false);
     }
 
-    /*
-    * ToDoList:
-    * Needs to go to display Character's Decks
-    * Need to be able to remove bullets from each character's decks
-    * Need to be able to add bullets into each character's deck from the list the player owns
-    * Save changes when leave?
-    */
 
     /*
     * Purpose of this section of code is for the quest log.
@@ -150,6 +152,9 @@ public class ClosedBook : MonoBehaviour
         //turns off title canvas and turns on level select canvas
         closedCanvas.SetActive(false);
         questCanvas.SetActive(true);
+		deckCanvas.SetActive(false);
+		logCanvas.SetActive(false);
+		invenCanvas.SetActive(false);
     }
 
     /*

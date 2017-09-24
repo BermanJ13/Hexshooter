@@ -81,6 +81,7 @@
      <Compile Include="Assets\Menus\PauseMenuScripts\DeckMenu.cs" />
      <Compile Include="Assets\Menus\PauseMenuScripts\QuestMenu.cs" />
      <Compile Include="Assets\Menus\PauseMenuScripts\QuestMenuScripts\DescriptionPanel.cs" />
+     <Compile Include="Assets\Menus\PauseMenuScripts\QuestMenuScripts\QuestInfo.cs" />
      <Compile Include="Assets\Menus\PauseMenuScripts\QuestMenuScripts\SimpleObjectPool.cs" />
      <Compile Include="Assets\Menus\PauseMenuScripts\QuestMenuScripts\TownName.cs" />
      <Compile Include="Assets\Menus\PauseMenuScripts\QuestMenuScripts\questNameScrollList.cs" />

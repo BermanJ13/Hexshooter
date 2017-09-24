@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]//to edit in inspector for testing
 public class QuestList : MonoBehaviour {
 
 	//location names atm are Idledale, Ragged Bend, Coal Creek atm
-	private List<Quest>idledale = new List<Quest>();
+	public List<Quest>idledale = new List<Quest>();
 	private List<Quest>raggedBend = new List<Quest>();
 	private List<Quest>coalCreek = new List<Quest>();
+	public List<Quest>all = new List<Quest>();
 
 	// Use this for initialization
 	void Start () {
