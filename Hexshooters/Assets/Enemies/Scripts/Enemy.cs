@@ -188,92 +188,78 @@ public abstract class Enemy : MonoBehaviour {
     public abstract void AIStep();
 
     /// <summary>
-    /// returns 0 when you cant go through
-    /// 1 when you can, but there is some kind of obstacle there
-    /// 2 when you can and there is nothing in the way
+    /// RETURN 0 for unable
+    /// RETURN 1 for partially-able
+    /// RETURN 2 for all-clear
     /// </summary>
     /// <param name="direction"></param>
     /// <returns></returns>
     public int movePossible(Direction direction)
     {
-        //Debug.Log(direction);
-        Collider2D[] hitColliders;
+        Collider2D[] hitColliders = new Collider2D[0];
+        //fill up the colliders array with the colliders in the correct derection
         switch (direction)
         {
             case Direction.Down:
                 hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y - 1), 0.2f);
-                foreach (Collider2D c in hitColliders)
-                {
-                    //Debug.Log(c.gameObject.tag);
-                    //Checks whether or not something is in the way or if the desired spot is within the enemy.
-                    if (c.gameObject.tag == "Obstacle" && c.gameObject.GetComponent<Obstacle>().canPass)
-                    {
-                        return 1;
-                    }
-                    if (c.gameObject.tag == "enemyZone")
-                    {
-                        return 2;
-                    }
-                    return 0;
-                }
-
                 break;
 
             case Direction.Up:
                 hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x, transform.position.y + 1), 0.2f);
-                foreach (Collider2D c in hitColliders)
-                {
-                    Debug.Log(c.gameObject.tag);
-                    //Checks whether or not something is in the way or if the desired spot is within the enemy.
-                    if (c.gameObject.tag == "Obstacle" && c.gameObject.GetComponent<Obstacle>().canPass)
-                    {
-                        return 1;
-                    }
-                    if (c.gameObject.tag == "enemyZone")
-                    {
-                        return 2;
-                    }
-                    return 0;
-                }
                 break;
 
             case Direction.Left:
                 hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x-1, transform.position.y), 0.2f);
-                foreach (Collider2D c in hitColliders)
-                {
-                    Debug.Log(c.gameObject.tag);
-                    //Checks whether or not something is in the way or if the desired spot is within the enemy.
-                    if (c.gameObject.tag == "Obstacle" && c.gameObject.GetComponent<Obstacle>().canPass)
-                    {
-                        return 1;
-                    }
-                    if (c.gameObject.tag == "enemyZone")
-                    {
-                        return 2;
-                    }
-                    return 0;
-                }
                 break;
 
             case Direction.Right:
                 hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x+1, transform.position.y), 0.2f);
-                foreach (Collider2D c in hitColliders)
-                {
-                    //Debug.Log(c.gameObject.tag);
-                    //Checks whether or not something is in the way or if the desired spot is within the enemy.
-                    if (c.gameObject.tag == "Obstacle" && c.gameObject.GetComponent<Obstacle>().canPass)
-                    {
-                        return 1;
-                    }
-                    if (c.gameObject.tag == "enemyZone")
-                    {
-                        return 2;
-                    }
-                    return 0;
-                }
                 break;
         }
-        return 0;
+        //go through each one to see what is in it
+        //first see if there is an enemy zone,
+        //then see if any obstacles are passable, if not return 0, which is a no
+        bool passable = true;
+        foreach (Collider2D c in hitColliders)
+        {
+			Debug.Log (hitColliders);
+			if (c.gameObject.tag == "playerZone") 
+			{
+				passable = false;
+			} 
+			else if (c.gameObject.GetComponent<Obstacle>() != null) 
+			{
+				if (!c.gameObject.GetComponent<Obstacle> ().canPass) 
+				{
+					passable = false;
+				}
+			}
+        }
+        if(!passable)
+        {
+            return 0;
+        }
+
+        //now we look for obstacles we can pass, but are a uninviting
+        //if there are any we return 1
+        foreach (Collider2D c in hitColliders)
+        {
+            if (c.gameObject.tag == "Obstacle" && c.gameObject.GetComponent<Obstacle>().canPass)
+            {
+                return 1;
+            }
+        }
+        //we hae now checked to see if it is an enemy zone we are moving into, and it is
+        //we have also seen that there are no obstacles so return 2
+
+		foreach (Collider2D c in hitColliders)
+		{
+			if (c.gameObject.tag == "enemyZone")
+			{
+				return 2;
+			}
+		}
+		return 0;
     }
 
     public virtual bool Move(Direction direction)
@@ -284,7 +270,6 @@ public abstract class Enemy : MonoBehaviour {
                     currentY--;
                     transform.position = PositionToWorldspace();
                     return true;
-
                 break;
 
             case Direction.Up:

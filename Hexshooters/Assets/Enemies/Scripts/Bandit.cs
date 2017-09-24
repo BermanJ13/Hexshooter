@@ -9,7 +9,10 @@ public class Bandit : Enemy
     private int attackCounter;
     public const int ATTACK_TIMEOUT = 3;// Waits two frames between attacks minimum.
     private bool canAttack;//If true, the enemy can currently attack, if false, cannot for some reason.
-    
+
+    private Transform playertrans;
+
+	UnityEngine.Random ran = new UnityEngine.Random();
     [SerializeField]
     public string[] spells;
     private int spellcount = 0;
@@ -34,91 +37,132 @@ public class Bandit : Enemy
         // Checking to make sure nothing is preventing attacking.
         canAttack = (attackCounter == 0) && !myStatus.IsAffected(StatusType.Disabled);//Being disabled prevents attacking
 
+
+        //collect data about the tiles around us
+        //2 is clear
+        //1 is passable, but an obsticale is still there
+        //0 is unpassable
+        int down = movePossible(Direction.Down);
+        int up = movePossible(Direction.Up);
+        int left = movePossible(Direction.Left);
+        int right = movePossible(Direction.Right);
+
         // This is where the actual action happens.
         if (!myStatus.IsAffected(StatusType.Bound)){
+            playertrans = GameObject.FindGameObjectWithTag("Player").transform;
 
-            if (canAttack)
-            {
-                if (decision < 0.5f)//50%
-                {
-                    Attack();
-                }
-                else if (decision < 0.65f)//15%
-                {
-                    if (movePossible(Direction.Up) == 2)
-                    {
-                        Move(Direction.Up);
-                    }
-                }
-                else if (decision < 0.80f)//15%
-                {
-                    if (movePossible(Direction.Down) == 2)
-                    {
-                        Move(Direction.Down);
-                    }
-                }
-                else if (decision < 0.85f)//5%
-                {
-                    if (movePossible(Direction.Left) == 2)
-                    {
-                        Move(Direction.Left);
-                    }
-                }
-                else if (decision < 0.90f)//5%
-                {
-                    if (movePossible(Direction.Right) == 2)
-                    {
-                        Move(Direction.Right);
-                    }
-                }
-                else//10%
-                {
-                    //Do nothing.
-                }
-            }
-            else
-            {
-                if(decision < 0.35f) //35%
-                {
-                    if (movePossible(Direction.Up) == 2)
-                    {
-                        Move(Direction.Up);
-                    }
-                }
-                else if(decision < 0.7f)//35%
-                {
-                    if (movePossible(Direction.Down) == 2)
-                    {
-                        Move(Direction.Down);
-                    }
-                }
-                else if(decision < 0.8f)//10%
-                {
-                    if (movePossible(Direction.Left) == 2)
-                    {
-                        Move(Direction.Left);
-                    }
-                }
-                else if (decision < 0.9f)//10%
-                {
-                    if (movePossible(Direction.Right) == 2)
-                    {
-                        Move(Direction.Right);
-                    }
-                }
-                else//10%
-                {
-                    //Do nothing.
-                }
-            }
 
-        }
-        else// Bound loop, can't move but still tries to attack.
-        {
-            if(canAttack)
-            {
-                Attack();
+			int rnd = UnityEngine.Random.Range(0, 100);
+
+            //if the enemy is above the player
+            if (gameObject.transform.position.y > playertrans.position.y)
+			{
+				//move down, or side to side
+				if (rnd < 50) 
+				{
+					if (down == 2)
+					{
+						Move(Direction.Down);
+					}
+				}
+                else
+                {
+                    if (rnd < 75)
+                    {
+                        //right
+                        if (right == 2)
+                        {
+                            Move(Direction.Right);
+                        }
+                        else if (left == 2)
+                        {
+                            //or left
+                            Move(Direction.Left);
+                        }
+                        else if (down == 2)
+                        {
+                            //move away at last resort
+                            Move(Direction.Down);
+                        }
+                    }
+                    else
+                    {
+                        //left
+                        if (left == 2)
+                        {
+                            Move(Direction.Left);
+                        }
+                        else if (right == 2)
+                        {
+                            //or right
+                            Move(Direction.Right);
+                        }
+                        else if (down == 2)
+                        {
+                            //move away at last resort
+                            Move(Direction.Down);
+                        }
+                    }
+
+                }
             }
+            else if (gameObject.transform.position.y < playertrans.position.y)
+            {
+                //if enemy is below the player
+                //move up, or side to side
+
+				if (rnd < 50) 
+				{
+					if (up == 2)
+					{
+						Move(Direction.Up);
+					}
+				}
+                else
+                {
+					if(rnd < 75)
+                    {
+                        //right
+                        if (right == 2)
+                        {
+                            Move(Direction.Right);
+                        }
+                        else if (left == 2)
+                        {
+                            //or left
+                            Move(Direction.Left);
+                        }
+                        else if (down == 2)
+                        {
+                            //move away at last resort
+                            Move(Direction.Up);
+                        }
+                    }
+                    else
+                    {
+                        //left
+                        if (left == 2)
+                        {
+                            Move(Direction.Left);
+                        }
+                        else if (right == 2)
+                        {
+                            //or right
+                            Move(Direction.Right);
+                        }
+                        else if (down == 2)
+                        {
+                            //move away at last resort
+                            Move(Direction.Up);
+                        }
+                    }
+                }
+            }
+			if (Math.Abs (gameObject.transform.position.y - playertrans.position.y) < 1.5) 
+			{
+				Attack ();
+			}
+            
         }
 
 
