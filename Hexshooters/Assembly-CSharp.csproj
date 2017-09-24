@@ -111,6 +111,7 @@
      <Compile Include="Assets\Preload\DDOL.cs" />
      <Compile Include="Assets\Preload\Load.cs" />
      <Compile Include="Assets\Scripts\Explosion.cs" />
+     <Compile Include="Assets\Scripts\LoadingShot.cs" />
      <Compile Include="Assets\Scripts\SparkParticles.cs" />
      <Compile Include="Assets\Spells\Component Scripts\Particle.cs" />
      <Compile Include="Assets\Spells\Component Scripts\RuneInfo.cs" />
