@@ -7,6 +7,7 @@ using System.IO;
 using UnityEngine.UI;
 
 public enum Over_States { Cutscene, Roam, Menu, Controls, Battle};
+public enum Face_Dir { Forward, Backward, Left, Right};
 public class OverPlayer : MonoBehaviour {
 
 	List<string> script;
@@ -46,6 +47,8 @@ public class OverPlayer : MonoBehaviour {
 	public Dictionary <Weapon_Types,Character> characters;
 	public Animator playerAnimator;
 	public List<Quest> quests;
+	public Face_Dir direction = Face_Dir.Forward;
+	GameObject boulder;
 
 
 	public void Awake()
@@ -316,7 +319,7 @@ public class OverPlayer : MonoBehaviour {
 				this.GetComponent<SpriteRenderer> ().color = new Color (255, 0, 0, 0);
 			break;
 		}
-			
+		Earth ();	
 	}
 
 	void movement()
@@ -330,6 +333,7 @@ public class OverPlayer : MonoBehaviour {
 		//Checks for Left and RIght Movement
 		if (Input.GetAxisRaw ("Horizontal_Solo") > 0) 
 		{
+			direction = Face_Dir.Right;
 			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x + 0.1f, transform.position.y),0.1f);
 			//Checks whether or not something is in the way or if the desired spot is within the player area.
 			foreach( Collider2D c in hitColliders)
@@ -356,6 +360,7 @@ public class OverPlayer : MonoBehaviour {
 		} 
 		else if (Input.GetAxisRaw ("Horizontal_Solo") < 0) 
 		{
+			direction = Face_Dir.Left;
 			Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(transform.position.x - 0.1f, transform.position.y),0.1f);
 			foreach( Collider2D c in hitColliders)
 			{
@@ -385,6 +390,7 @@ public class OverPlayer : MonoBehaviour {
 		//Checks for Up and Down Movement
 		if (Input.GetAxisRaw ("Vertical_Solo") > 0)
 		{
+			direction = Face_Dir.Backward;
 			Collider2D[] hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x, transform.position.y + 0.1f), 0.1f);
 			foreach (Collider2D c in hitColliders)
 			{
@@ -411,6 +417,7 @@ public class OverPlayer : MonoBehaviour {
 		else
 		if (Input.GetAxisRaw ("Vertical_Solo") < 0)
 		{
+			direction = Face_Dir.Forward;
 			Collider2D[] hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x, transform.position.y - 0.1f), 0.1f);
 			foreach (Collider2D c in hitColliders)
 			{
@@ -439,6 +446,8 @@ public class OverPlayer : MonoBehaviour {
 		{
 				playerAnimator.Play (playerImages [4]);	
 		}
+
+		print (direction);
 	}
 
 	//Changes the CHaracter to the next in the available list
@@ -1216,4 +1225,56 @@ public class OverPlayer : MonoBehaviour {
 		quest.SetActive(false);
 		pause.SetActive(true);
 	}
+
+	//Parameters: None
+	//Purpose: Shoot an Earth Bullet Obstacle 
+	//Known Errors: 
+	public void Earth()
+	{
+		//might be just an overworld ability function in general instead of earth. and check which character is being played
+
+		//the button is pressed to use ability
+		if(Input.GetKeyDown(KeyCode.Space))
+		{
+			//depending on the direction shoot a bullet 3 spaces in front
+			switch (direction) 
+			{
+				case Face_Dir.Forward:
+					print ("shoot forward");
+					if(boulder != null)
+					{
+						Destroy (boulder);
+					}
+					boulder = (GameObject) Instantiate (Resources.Load ("EarthWall"), new Vector2(transform.position.x, transform.position.y -1.30f), Quaternion.identity);
+					break;
+				case Face_Dir.Backward:
+					print ("shoot back");
+					if(boulder != null)
+					{
+						Destroy (boulder);
+					}
+					boulder = (GameObject) Instantiate (Resources.Load ("EarthWall"), new Vector2(transform.position.x, transform.position.y +1.30f), Quaternion.identity);
+					break;
+				case Face_Dir.Left:
+					print ("shoot left");
+					if(boulder != null)
+					{
+						Destroy (boulder);
+					}
+					boulder = (GameObject) Instantiate (Resources.Load ("EarthWall"), new Vector2(transform.position.x-1.30f, transform.position.y), Quaternion.identity);
+					break;
+				case Face_Dir.Right:
+					print ("shoot right");
+					if(boulder != null)
+					{
+						Destroy (boulder);
+					}
+					boulder =  (GameObject) Instantiate (Resources.Load ("EarthWall"), new Vector2(transform.position.x+1.30f, transform.position.y), Quaternion.identity);
+					break;
+			}
+			
+		}
+	}
+		
+
 }
