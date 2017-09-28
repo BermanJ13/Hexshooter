@@ -49,7 +49,7 @@ public class OverPlayer : MonoBehaviour {
 	public List<Quest> quests;
 	public Face_Dir direction = Face_Dir.Forward;
 	GameObject boulder;
-
+    int idleTimer = 0;
 
 	public void Awake()
 	{
@@ -102,8 +102,13 @@ public class OverPlayer : MonoBehaviour {
 	void Update () 
 	{	
 		//If this is the first time booting up the map Find all the triggers then prevent this from running again
+        //also reset boulders so when you leave a map you leave no trace
 		if (once)
 		{
+            if (boulder != null)
+            {
+                Destroy(boulder);
+            }
 			triggers = FindObjectsOfType<Trigger> ();
 			once = true;
 
@@ -319,7 +324,7 @@ public class OverPlayer : MonoBehaviour {
 				this.GetComponent<SpriteRenderer> ().color = new Color (255, 0, 0, 0);
 			break;
 		}
-		Earth ();	
+		overAbility ();	
 	}
 
 	void movement()
@@ -343,7 +348,7 @@ public class OverPlayer : MonoBehaviour {
 					inboundsX = true;
 				}
 
-				if (c.gameObject.tag == "Boundary")
+				if (c.gameObject.tag == "Boundary" || c.gameObject.tag == "Obstacle")
 				{
 					moveRight = false;
 				}
@@ -370,7 +375,7 @@ public class OverPlayer : MonoBehaviour {
 					//Debug.Log ("Damn");
 					inboundsX = true;
 				}
-				if (c.gameObject.tag == "Boundary")
+				if (c.gameObject.tag == "Boundary" || c.gameObject.tag == "Obstacle")
 				{
 					//Debug.Log ("Dammit");
 					moveLeft = false;
@@ -399,7 +404,7 @@ public class OverPlayer : MonoBehaviour {
 				{
 					inboundsY = true;
 				}
-				if (c.gameObject.tag == "Boundary")
+				if (c.gameObject.tag == "Boundary" || c.gameObject.tag == "Obstacle")
 				{
 					moveUp = false;
 				}
@@ -426,7 +431,7 @@ public class OverPlayer : MonoBehaviour {
 				{
 					inboundsY = true;
 				}
-				if (c.gameObject.tag == "Boundary")
+				if (c.gameObject.tag == "Boundary" || c.gameObject.tag == "Obstacle")
 				{
 					moveDown = false;
 				}
@@ -444,8 +449,13 @@ public class OverPlayer : MonoBehaviour {
 		
 		if(Input.GetAxisRaw ("Vertical_Solo") == 0 && Input.GetAxisRaw ("Horizontal_Solo") == 0)
 		{
-				playerAnimator.Play (playerImages [4]);	
-		}
+            idleTimer++;
+            if (idleTimer > 500)
+            {
+                idleTimer = 0;
+                playerAnimator.Play(playerImages[4]);
+            }
+        }
 
 		print (direction);
 	}
@@ -1229,48 +1239,72 @@ public class OverPlayer : MonoBehaviour {
 	//Parameters: None
 	//Purpose: Shoot an Earth Bullet Obstacle 
 	//Known Errors: 
-	public void Earth()
+	public void overAbility()
 	{
 		//might be just an overworld ability function in general instead of earth. and check which character is being played
 
 		//the button is pressed to use ability
 		if(Input.GetKeyDown(KeyCode.Space))
 		{
-			//depending on the direction shoot a bullet 3 spaces in front
-			switch (direction) 
-			{
-				case Face_Dir.Forward:
-					print ("shoot forward");
-					if(boulder != null)
-					{
-						Destroy (boulder);
-					}
-					boulder = (GameObject) Instantiate (Resources.Load ("EarthWall"), new Vector2(transform.position.x, transform.position.y -1.30f), Quaternion.identity);
-					break;
+            //depending on the direction shoot a bullet 3 spaces in front
+            switch (direction)
+            {
+                case Face_Dir.Forward:
+                    print("shoot forward");
+                    playerAnimator.Play(playerImages[3]);
+                    switch (weapon)
+                    {
+                        case Weapon_Types.Revolver:
+                            if (boulder != null)
+                            {
+                                Destroy(boulder);
+                            }
+                            boulder = (GameObject)Instantiate(Resources.Load("EarthWall"), new Vector2(transform.position.x, transform.position.y - 1.30f), Quaternion.identity);
+                            break;
+                    }
+                    break;
 				case Face_Dir.Backward:
 					print ("shoot back");
-					if(boulder != null)
-					{
-						Destroy (boulder);
-					}
-					boulder = (GameObject) Instantiate (Resources.Load ("EarthWall"), new Vector2(transform.position.x, transform.position.y +1.30f), Quaternion.identity);
-					break;
+                    playerAnimator.Play(playerImages[2]);
+                    switch (weapon)
+                    {
+                        case Weapon_Types.Revolver:
+                            if (boulder != null)
+                            {
+                                Destroy(boulder);
+                            }
+                            boulder = (GameObject)Instantiate(Resources.Load("EarthWall"), new Vector2(transform.position.x, transform.position.y + 1.30f), Quaternion.identity);
+                            break;
+                    }
+                    break;
 				case Face_Dir.Left:
 					print ("shoot left");
-					if(boulder != null)
-					{
-						Destroy (boulder);
-					}
-					boulder = (GameObject) Instantiate (Resources.Load ("EarthWall"), new Vector2(transform.position.x-1.30f, transform.position.y), Quaternion.identity);
-					break;
+                    playerAnimator.Play(playerImages[1]);
+                    switch (weapon)
+                    {
+                        case Weapon_Types.Revolver:
+                            if (boulder != null)
+                            {
+                                Destroy(boulder);
+                            }
+                            boulder = (GameObject)Instantiate(Resources.Load("EarthWall"), new Vector2(transform.position.x - 1.30f, transform.position.y), Quaternion.identity);
+                            break;
+                    }
+                    break;
 				case Face_Dir.Right:
 					print ("shoot right");
-					if(boulder != null)
-					{
-						Destroy (boulder);
-					}
-					boulder =  (GameObject) Instantiate (Resources.Load ("EarthWall"), new Vector2(transform.position.x+1.30f, transform.position.y), Quaternion.identity);
-					break;
+                    playerAnimator.Play(playerImages[0]);
+                    switch (weapon)
+                    {
+                        case Weapon_Types.Revolver:
+                            if (boulder != null)
+                            {
+                                Destroy(boulder);
+                            }
+                            boulder = (GameObject)Instantiate(Resources.Load("EarthWall"), new Vector2(transform.position.x + 1.30f, transform.position.y), Quaternion.identity);
+                            break;
+                    }
+                    break;
 			}
 			
 		}
