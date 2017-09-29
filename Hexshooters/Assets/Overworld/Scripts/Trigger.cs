@@ -8,6 +8,7 @@ public class Trigger : MonoBehaviour {
 	public string script;
 	public bool postBattle;
 	public string postBattleScript;
+	public string repeatScript;
 
 	[Header("Battle Settings")]
 	public string background;

@@ -18,9 +18,7 @@ public class FieldManager : MonoBehaviour
 	protected int weaponMax;
 	public bool firstPause;
 	protected bool updateStopper;
-	protected Transform playerPanel;
-	protected Transform enemyPanel;
-	protected Transform Testdummy;
+	protected Transform playerPanel, enemyPanel, Testdummy;
 	protected Spell[] spells;
 	protected Enemy[] enemies;
 	protected Obstacle[] obstacles;
@@ -36,13 +34,9 @@ public class FieldManager : MonoBehaviour
 	protected GameObject[] spellSlots = new GameObject[8];
 	protected List<GameObject> displaySlots = new List<GameObject>();
 	public Sprite defaultSlot;
-	protected GameObject runeDisplay;
-	protected GameObject selector;
-	protected Text runeDamage;
-	protected Text runeName;
-	protected Text runeDesc;
-	protected GameObject can;
-	protected GameObject p1Gun;
+	protected GameObject runeDisplay, selector;
+	protected Text runeDamage, runeName, runeDesc;
+	protected GameObject can, p1Gun;
 	public EventSystem ES_P1;
 	protected GameObject[] battleObjects;
 	public GameObject[] weapons;

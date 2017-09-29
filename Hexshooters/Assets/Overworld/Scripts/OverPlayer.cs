@@ -511,7 +511,11 @@ public class OverPlayer : MonoBehaviour {
 						if (currentTrig.interacted == false || (currentTrig.repeatable == true && currentTrig.interacted == true))
 						{
 							//Loads dialouge and sets it to interacted if it doesnt involve a battle.
-							dialog.Load (currentTrig.script);
+							if(currentTrig.repeatable == true && currentTrig.interacted == true && currentTrig.repeatScript != "")
+								dialog.Load (currentTrig.repeatScript);
+							else
+								dialog.Load (currentTrig.script);
+							
 							if (!currentTrig.battle)
 							{
 								currentTrig.interacted = true;
@@ -1311,4 +1315,65 @@ public class OverPlayer : MonoBehaviour {
 	}
 		
 
+	public void interactButton()
+	{
+		//might be just an overworld ability function in general instead of earth. and check which character is being played
+
+		//the button is pressed to use ability
+		if (Input.GetButtonDown ("Submit_Solo"))
+		{
+			Collider2D[] hitColliders;
+			//depending on the direction shoot a bullet 3 spaces in front
+			switch (direction)
+			{
+				case Face_Dir.Forward:
+					hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x, transform.position.y + 0.5f), 0.3f);
+				break;
+				case Face_Dir.Backward:
+					hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x, transform.position.y - 0.5f), 0.3f);
+				break;
+				case Face_Dir.Left:
+					hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x + 0.5f, transform.position.y), 0.3f);
+				break;
+				case Face_Dir.Right:
+					hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x - 0.5f, transform.position.y), 0.3f);
+				break;
+				default:
+					hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x - 0.5f, transform.position.y), 0.3f);
+				break;
+			}
+
+			if (hitColliders.Length != 0)
+			{
+				foreach (Collider2D hitCollider in hitColliders)
+				{
+					if (hitCollider.gameObject.tag == "Trigger")
+					{
+						//If the trigger you're overlapping with is touch activated
+						currentTrig = hitCollider.GetComponent<Trigger> ();
+						//Checks to see if the trigger is active and ready to be interacted with
+						if (currentTrig.active)
+						{
+							//Checks to see if it's already been interacted with or if it has, but is repeatable
+							if (currentTrig.interacted == false || (currentTrig.repeatable == true && currentTrig.interacted == true))
+							{
+								//Loads dialouge and sets it to interacted if it doesnt involve a battle.
+								if (currentTrig.repeatable == true && currentTrig.interacted == true && currentTrig.repeatScript != "")
+									dialog.Load (currentTrig.repeatScript);
+								else
+									dialog.Load (currentTrig.script);
+
+								if (!currentTrig.battle)
+								{
+									currentTrig.interacted = true;
+									activatedTriggers.Add (currentTrig.name);
+								}
+								//cutscene = true;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
