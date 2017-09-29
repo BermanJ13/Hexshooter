@@ -245,6 +245,8 @@ public class OverPlayer : MonoBehaviour {
 
 				movement ();
 				interactTrigger ();
+				interactButton ();
+				overAbility ();	
 
 				//Opens the Deck MEnu when the o button is pressed
 				if (Input.GetButtonDown ("PauseOver"))
@@ -324,7 +326,6 @@ public class OverPlayer : MonoBehaviour {
 				this.GetComponent<SpriteRenderer> ().color = new Color (255, 0, 0, 0);
 			break;
 		}
-		overAbility ();	
 	}
 
 	void movement()
