@@ -65,7 +65,7 @@ public class Trigger : MonoBehaviour {
 			}
 		}
 	}
-	public void preBattle()
+	public void preBattle(int count = 0)
 	{
 		if (preReward)
 		{
@@ -74,6 +74,13 @@ public class Trigger : MonoBehaviour {
 				if(preRewardedItem == "John")
 				{
 					op.availableWeapons.Add (Weapon_Types.Shotgun);
+				}
+				else if(preRewardChoice == RewardType.Spell)
+				{
+					for (int i = 0; i < count; i++)
+					{
+						op.groupPack.Add (Resources.Load (preRewardedItem));
+					}
 				}
 			}
 		}
