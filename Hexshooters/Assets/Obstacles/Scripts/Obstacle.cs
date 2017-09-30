@@ -17,6 +17,7 @@ public class Obstacle : MonoBehaviour {
 	public bool canPass;
 	public bool specialCondition; 
 	public bool hittable;
+    public bool overworld;
 	protected bool burning, shocked, wet, blown, frozen, quaked, overgrown, lit, darkened, metalled;
 
 	// Use this for initialization
@@ -41,7 +42,22 @@ public class Obstacle : MonoBehaviour {
 			MarkedforDeletion = true;
 		}
 	}
-	public virtual void takeDamage(int damage, Attributes[] effects) //created for "break" status
+    public void Update()
+    {
+        if (overworld)
+        {
+            if (direction != new Vector2(0, 0))
+            {
+                move();
+                collide();
+            }
+            if (health <= 0)
+            {
+                MarkedforDeletion = true;
+            }
+        }
+    }
+    public virtual void takeDamage(int damage, Attributes[] effects) //created for "break" status
 	{
 		int multipliers = 1;
 		if (this.stat == "break")
@@ -83,49 +99,76 @@ public class Obstacle : MonoBehaviour {
 		foreach (Collider2D d in colliders) 
 		{
 			Player p = d.GetComponent<Player> ();
-			//if collides with another obstacle, destroys both
-			if (d.gameObject.tag == "Obstacle") 
-			{
-				//Debug.Log (d.GetComponent<Obstacle> ().gameObject != this.gameObject);
-				if (d.GetComponent<Obstacle> ().gameObject != this.gameObject) 
-				{
-					d.GetComponent<Obstacle> ().MarkedforDeletion = true;
-					MarkedforDeletion = true;
-				}
-			}
-				//else means hit a player enemy
-			else if (d.gameObject.tag == "Enemy") 
-			{
-				Enemy e = d.GetComponent<Enemy> ();
-				e.takeDamage (damage, attributes); //enemy takes dmg
-				if (e.transform.position.x != 9) 
-				{
-					e.transform.position = new Vector3 (e.transform.position.x + 1, e.transform.position.y, e.transform.position.z);
-				}
-				//move  the piece somewhere, but where?
-			} 
-			else if (d.gameObject.tag == "Player2") 
-			{
-				d.GetComponent<Player> ().takeDamage (damage, attributes); //player takes dmg 
+            //if collides with another obstacle, destroys both
+            if (!overworld)
+            {
+                if (d.gameObject.tag == "Obstacle")
+                {
+                    //Debug.Log (d.GetComponent<Obstacle> ().gameObject != this.gameObject);
+                    if (d.GetComponent<Obstacle>().gameObject != this.gameObject)
+                    {
+                        d.GetComponent<Obstacle>().MarkedforDeletion = true;
+                        MarkedforDeletion = true;
+                    }
+                }
+                //else means hit a player enemy
+                else if (d.gameObject.tag == "Enemy")
+                {
+                    Enemy e = d.GetComponent<Enemy>();
+                    e.takeDamage(damage, attributes); //enemy takes dmg
+                    if (e.transform.position.x != 9)
+                    {
+                        e.transform.position = new Vector3(e.transform.position.x + 1, e.transform.position.y, e.transform.position.z);
+                    }
+                    //move  the piece somewhere, but where?
+                }
+                else if (d.gameObject.tag == "Player2")
+                {
+                    d.GetComponent<Player>().takeDamage(damage, attributes); //player takes dmg 
 
-					if (d.transform.position.x != 9)
-					{
-						d.transform.position += new Vector3 (1, 0, 0);
-					}
-				MarkedforDeletion = true;
+                    if (d.transform.position.x != 9)
+                    {
+                        d.transform.position += new Vector3(1, 0, 0);
+                    }
+                    MarkedforDeletion = true;
 
-			} 
-			else if(d.gameObject.tag == "Player")
-			{
-				d.GetComponent<Player> ().takeDamage (damage, attributes); //player takes dmg
+                }
+                else if (d.gameObject.tag == "Player")
+                {
+                    d.GetComponent<Player>().takeDamage(damage, attributes); //player takes dmg
 
 
-					if (d.GetComponent<Player> ().transform.position.x != 0) 
-					{
-						d.transform.position += new Vector3(-1f,0f,0f); 
-					}
-				MarkedforDeletion = true;
-			}
+                    if (d.GetComponent<Player>().transform.position.x != 0)
+                    {
+                        d.transform.position += new Vector3(-1f, 0f, 0f);
+                    }
+                    MarkedforDeletion = true;
+                }
+            }
+            else if (overworld)
+            {
+                if (d.gameObject.tag == "Obstacle")
+                {
+                    //Debug.Log (d.GetComponent<Obstacle> ().gameObject != this.gameObject);
+                    if (d.GetComponent<Obstacle>().gameObject != this.gameObject)
+                    {
+                        d.GetComponent<Obstacle>().direction = d.GetComponent<Obstacle>().direction;
+                        this.direction = this.direction * 0;
+                    }
+                }
+                else if (d.gameObject.tag == "Player")
+                {
+                    this.direction = this.direction * 0;
+                }
+                else if (d.gameObject.tag == "Boundary")
+                {
+                    this.direction = this.direction*0;
+                }
+                else if (d.gameObject.tag == "Enemy")
+                {
+                    this.direction = this.direction * 0;
+                }
+             }
 						
 		}
 	}

@@ -49,6 +49,8 @@ public class OverPlayer : MonoBehaviour {
 	public List<Quest> quests;
 	public Face_Dir direction = Face_Dir.Forward;
 	GameObject boulder;
+    Attributes[] blastAttributes;
+
     int idleTimer = 0;
 
 	public void Awake()
@@ -74,6 +76,8 @@ public class OverPlayer : MonoBehaviour {
 		weaponMax = 30;
 		cutscene = false;
 		switchChar = true;
+        blastAttributes = new Attributes[1];
+        blastAttributes[0] = Attributes.Fire;
 
 		//FInds the Dialouge Manager, Pause Menu and Settings Files
 		dialog = GameObject.FindGameObjectWithTag("DialogMngr").GetComponent<DialogueManager>();
@@ -1263,8 +1267,26 @@ public class OverPlayer : MonoBehaviour {
                             if (boulder != null)
                             {
                                 Destroy(boulder);
+                                
                             }
-                            boulder = (GameObject)Instantiate(Resources.Load("EarthWall"), new Vector2(transform.position.x, transform.position.y - 1.30f), Quaternion.identity);
+                            boulder = (GameObject)Instantiate(Resources.Load("overEarth"), new Vector2(transform.position.x, transform.position.y - 1.30f), Quaternion.identity);
+                            
+                            break;
+                        case Weapon_Types.Shotgun:
+                            int mapMask = ~(1 << LayerMask.NameToLayer("Map"));
+                            RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2(0, -1), 4.0f, mapMask);
+                            if (hit.collider != null)
+                            {
+                                if (hit.collider.gameObject.tag == "Obstacle")
+                                {
+                                    hit.collider.gameObject.GetComponent<Obstacle>().takeDamage(5, blastAttributes);
+                                    if (hit.collider.gameObject.GetComponent<Obstacle>().MarkedforDeletion)
+                                        Destroy(hit.collider.gameObject);
+
+                                    hit.collider.gameObject.GetComponent<Obstacle>().direction = new Vector2(0, -1.5f);
+                                    
+                                }
+                            }
                             break;
                     }
                     break;
@@ -1278,7 +1300,24 @@ public class OverPlayer : MonoBehaviour {
                             {
                                 Destroy(boulder);
                             }
-                            boulder = (GameObject)Instantiate(Resources.Load("EarthWall"), new Vector2(transform.position.x, transform.position.y + 1.30f), Quaternion.identity);
+                            boulder = (GameObject)Instantiate(Resources.Load("overEarth"), new Vector2(transform.position.x, transform.position.y + 1.30f), Quaternion.identity);
+                            
+                            break;
+                        case Weapon_Types.Shotgun:
+                            int mapMask = ~(1 << LayerMask.NameToLayer("Map"));
+                            RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2(0, +1), 4.0f, mapMask);
+                            if (hit.collider != null)
+                            {
+                                if (hit.collider.gameObject.tag == "Obstacle")
+                                {
+                                    hit.collider.gameObject.GetComponent<Obstacle>().takeDamage(5, blastAttributes);
+                                    if (hit.collider.gameObject.GetComponent<Obstacle>().MarkedforDeletion)
+                                        Destroy(hit.collider.gameObject);
+
+                                    hit.collider.gameObject.GetComponent<Obstacle>().direction = new Vector2(0, +1.5f);
+
+                                }
+                            }
                             break;
                     }
                     break;
@@ -1292,7 +1331,24 @@ public class OverPlayer : MonoBehaviour {
                             {
                                 Destroy(boulder);
                             }
-                            boulder = (GameObject)Instantiate(Resources.Load("EarthWall"), new Vector2(transform.position.x - 1.30f, transform.position.y), Quaternion.identity);
+                            boulder = (GameObject)Instantiate(Resources.Load("overEarth"), new Vector2(transform.position.x - 1.30f, transform.position.y), Quaternion.identity);
+                            
+                            break;
+                        case Weapon_Types.Shotgun:
+                            int mapMask = ~(1 << LayerMask.NameToLayer("Map"));
+                            RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2(-1, 0), 4.0f, mapMask);
+                            if (hit.collider != null)
+                            {
+                                if (hit.collider.gameObject.tag == "Obstacle")
+                                {
+                                    hit.collider.gameObject.GetComponent<Obstacle>().takeDamage(5, blastAttributes);
+                                    if (hit.collider.gameObject.GetComponent<Obstacle>().MarkedforDeletion)
+                                        Destroy(hit.collider.gameObject);
+
+                                    hit.collider.gameObject.GetComponent<Obstacle>().direction = new Vector2(-1.5f, 0);
+
+                                }
+                            }
                             break;
                     }
                     break;
@@ -1306,7 +1362,23 @@ public class OverPlayer : MonoBehaviour {
                             {
                                 Destroy(boulder);
                             }
-                            boulder = (GameObject)Instantiate(Resources.Load("EarthWall"), new Vector2(transform.position.x + 1.30f, transform.position.y), Quaternion.identity);
+                            boulder = (GameObject)Instantiate(Resources.Load("overEarth"), new Vector2(transform.position.x + 1.30f, transform.position.y), Quaternion.identity);
+                            
+                            break;
+                        case Weapon_Types.Shotgun:
+                            int mapMask = ~(1 << LayerMask.NameToLayer("Map"));
+                            RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2(+1, 0), 4.0f, mapMask);
+                            if (hit.collider != null)
+                            {
+                                if (hit.collider.gameObject.tag == "Obstacle")
+                                {
+                                    hit.collider.gameObject.GetComponent<Obstacle>().takeDamage(5, blastAttributes);
+                                    if (hit.collider.gameObject.GetComponent<Obstacle>().MarkedforDeletion)
+                                        Destroy(hit.collider.gameObject);
+
+                                    hit.collider.gameObject.GetComponent<Obstacle>().direction = new Vector2(+1.5f, 0);
+                                }
+                            }
                             break;
                     }
                     break;
