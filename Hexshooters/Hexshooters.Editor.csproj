@@ -195,6 +195,7 @@
     <None Include="Assets\Overworld\Dialogue\Text\Resources\festaPuzzle.txt" />
     <None Include="Assets\Overworld\Dialogue\Text\Resources\festaPuzzle2.txt" />
     <None Include="Assets\Overworld\Dialogue\Text\Resources\festaPuzzle3.txt" />
+    <None Include="Assets\Overworld\Dialogue\Text\Resources\festaSheriff.txt" />
     <None Include="Assets\Overworld\Dialogue\Text\Resources\festaTimmy.txt" />
     <None Include="Assets\Overworld\Dialogue\Text\Resources\festaTimmyR.txt" />
     <None Include="Assets\Overworld\Dialogue\Text\Resources\festaWomen.txt" />

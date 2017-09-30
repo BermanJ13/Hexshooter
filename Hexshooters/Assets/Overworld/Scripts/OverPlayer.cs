@@ -361,7 +361,7 @@ public class OverPlayer : MonoBehaviour {
 					inboundsX = true;
 				}
 
-				if (c.gameObject.tag == "Boundary" || c.gameObject.tag == "Obstacle")
+				if (c.gameObject.tag == "Boundary" || c.gameObject.tag == "Obstacle" || c.gameObject.tag == "Trigger")
 				{
 					moveRight = false;
 				}
@@ -388,7 +388,7 @@ public class OverPlayer : MonoBehaviour {
 					//Debug.Log ("Damn");
 					inboundsX = true;
 				}
-				if (c.gameObject.tag == "Boundary" || c.gameObject.tag == "Obstacle")
+				if (c.gameObject.tag == "Boundary" || c.gameObject.tag == "Obstacle" || c.gameObject.tag == "Trigger")
 				{
 					//Debug.Log ("Dammit");
 					moveLeft = false;
@@ -417,7 +417,7 @@ public class OverPlayer : MonoBehaviour {
 				{
 					inboundsY = true;
 				}
-				if (c.gameObject.tag == "Boundary" || c.gameObject.tag == "Obstacle")
+				if (c.gameObject.tag == "Boundary" || c.gameObject.tag == "Obstacle" || c.gameObject.tag == "Trigger")
 				{
 					moveUp = false;
 				}
@@ -444,7 +444,7 @@ public class OverPlayer : MonoBehaviour {
 				{
 					inboundsY = true;
 				}
-				if (c.gameObject.tag == "Boundary" || c.gameObject.tag == "Obstacle")
+				if (c.gameObject.tag == "Boundary" || c.gameObject.tag == "Obstacle" || c.gameObject.tag == "Trigger")
 				{
 					moveDown = false;
 				}
@@ -512,7 +512,7 @@ public class OverPlayer : MonoBehaviour {
 	void interactTrigger()
 	{
 		//Checks whether or not you're overlapping with a trigger
-		Collider2D[] hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x, transform.position.y), .2f);
+		Collider2D[] hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x, transform.position.y), 1.0f);
 		foreach (Collider2D hitCollider in hitColliders)
 		{
 			if (hitCollider.gameObject.tag == "Trigger")
