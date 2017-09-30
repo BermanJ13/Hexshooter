@@ -16,6 +16,7 @@ public class FieldManager : MonoBehaviour
     public List<string> rows = new List<string>();
 
 	protected int weaponMax;
+	public int weaponMax_2;
 	public bool firstPause;
 	protected bool updateStopper;
 	protected Transform playerPanel, enemyPanel, Testdummy;
@@ -23,6 +24,7 @@ public class FieldManager : MonoBehaviour
 	protected Enemy[] enemies;
 	protected Obstacle[] obstacles;
 	protected Player player;
+	protected Player player2;
 	public bool pause = false;
 	public List<Object> Handful = new List<Object>();
 	protected List<Object> Temp = new List<Object>();
@@ -32,6 +34,7 @@ public class FieldManager : MonoBehaviour
 	protected static GameObject[] pauseUI;
 	protected SpellHolder spellHold;
 	protected GameObject[] spellSlots = new GameObject[8];
+	protected GameObject[] spellSlots_2 = new GameObject[8];
 	protected List<GameObject> displaySlots = new List<GameObject>();
 	public Sprite defaultSlot;
 	protected GameObject runeDisplay, selector;
@@ -788,21 +791,47 @@ public class FieldManager : MonoBehaviour
 	//Update the spell images
 	public void updateChamberImages(int num)
 	{
-		for (int i = 0; i < weaponMax; i++)
+		if (num == 1)
 		{
-			if (player.Chamber.Count > i)
+			for (int i = 0; i < weaponMax; i++)
 			{
-				Image slot = spellSlots [i].GetComponent<Image> ();
-				Sprite rune = ((GameObject)Resources.Load (player.Chamber [i].name)).GetComponent<Spell> ().bulletImage;
-				if (rune != null)
+				if (player.Chamber.Count > i)
 				{
-					slot.sprite = rune;
+					Image slot = spellSlots [i].GetComponent<Image> ();
+					Sprite rune = ((GameObject)Resources.Load (player.Chamber [i].name)).GetComponent<Spell> ().bulletImage;
+					if (rune != null)
+					{
+						slot.sprite = rune;
+					}
+				}
+				else
+				{
+					Image slot = spellSlots [i].GetComponent<Image> ();
+					slot.sprite = defaultSlot;
 				}
 			}
-			else
+		}
+		else
+		{
+			if (player2 != null)
 			{
-				Image slot = spellSlots [i].GetComponent<Image> ();
-				slot.sprite = defaultSlot;
+				for (int i = 0; i < weaponMax_2; i++)
+				{
+					if (player2.Chamber.Count > i)
+					{
+						Image slot = spellSlots_2 [i].GetComponent<Image> ();
+						Sprite rune = ((GameObject)Resources.Load (player2.Chamber [i].name)).GetComponent<Spell> ().bulletImage;
+						if (rune != null)
+						{
+							slot.sprite = rune;
+						}
+					}
+					else
+					{
+						Image slot = spellSlots_2 [i].GetComponent<Image> ();
+						slot.sprite = defaultSlot;
+					}
+				}
 			}
 		}
 	}

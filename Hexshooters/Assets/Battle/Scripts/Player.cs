@@ -566,6 +566,7 @@ public class Player : MonoBehaviour {
 				}
 			break;
 			case Weapon_Types.Rifle:
+				GetComponent<SpriteRenderer> ().sprite = playerImages [0];
 			break;
 			case Weapon_Types.Shotgun:
 				GetComponent<SpriteRenderer> ().sprite = playerImages [1];
@@ -576,12 +577,13 @@ public class Player : MonoBehaviour {
 				}
 			break;
 			case Weapon_Types.Gatling:
+				GetComponent<SpriteRenderer> ().sprite = playerImages [0];
 			break;
 			case Weapon_Types.Canegun:
-
+				GetComponent<SpriteRenderer> ().sprite = playerImages [0];
 			break;
 			case Weapon_Types.Bow:
-
+				GetComponent<SpriteRenderer> ().sprite = playerImages [0];
 			break;
 		}
 	}
