@@ -50,6 +50,7 @@ public class OverPlayer : MonoBehaviour {
 	public Face_Dir direction = Face_Dir.Forward;
 	GameObject boulder;
     Attributes[] blastAttributes;
+	bool allowShot=true;
 
     int idleTimer = 0;
 	public List<Quest> questList;
@@ -1292,147 +1293,157 @@ public class OverPlayer : MonoBehaviour {
 	public void overAbility()
 	{
 		//might be just an overworld ability function in general instead of earth. and check which character is being played
-
-		//the button is pressed to use ability
-		if(Input.GetKeyDown(KeyCode.Space))
+		if (allowShot)
 		{
-            //depending on the direction shoot a bullet 3 spaces in front
-            switch (direction)
-            {
-                case Face_Dir.Forward:
-                    print("shoot forward");
-                    playerAnimator.Play(playerImages[3]);
-                    switch (weapon)
-                    {
-                        case Weapon_Types.Revolver:
-                            if (boulder != null)
-                            {
-                                Destroy(boulder);
+			//the button is pressed to use ability
+			if (Input.GetAxisRaw ("Fire_Solo") > 0)
+			{
+				//depending on the direction shoot a bullet 3 spaces in front
+				switch (direction)
+				{
+					case Face_Dir.Forward:
+						allowShot = false;
+						print ("shoot forward");
+						playerAnimator.Play (playerImages [3]);
+						switch (weapon)
+						{
+							case Weapon_Types.Revolver:
+								if (boulder != null)
+								{
+									Destroy (boulder);
                                 
-                            }
-                            boulder = (GameObject)Instantiate(Resources.Load("overEarth"), new Vector2(transform.position.x, transform.position.y - 1.30f), Quaternion.identity);
+								}
+								boulder = (GameObject)Instantiate (Resources.Load ("overEarth"), new Vector2 (transform.position.x, transform.position.y - 1.30f), Quaternion.identity);
                             
-                            break;
-                        case Weapon_Types.Shotgun:
-							int mapMask = ~(1 << LayerMask.NameToLayer("Map"));
-							createFire(new Vector3 (transform.position.x, transform.position.y - 0.5f, transform.position.z));
+							break;
+							case Weapon_Types.Shotgun:
+								int mapMask = ~(1 << LayerMask.NameToLayer ("Map"));
+								createFire (new Vector3 (transform.position.x, transform.position.y - 0.5f, transform.position.z));
 							
-                            RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2(0, -1), 4.0f, mapMask);
-                            if (hit.collider != null)
-                            {
-                                if (hit.collider.gameObject.tag == "Obstacle")
-                                {
-                                    hit.collider.gameObject.GetComponent<Obstacle>().takeDamage(5, blastAttributes);
-                                    if (hit.collider.gameObject.GetComponent<Obstacle>().MarkedforDeletion)
-                                        Destroy(hit.collider.gameObject);
+								RaycastHit2D hit = Physics2D.Raycast (new Vector2 (transform.position.x, transform.position.y), new Vector2 (0, -1), 4.0f, mapMask);
+								if (hit.collider != null)
+								{
+									if (hit.collider.gameObject.tag == "Obstacle")
+									{
+										hit.collider.gameObject.GetComponent<Obstacle> ().takeDamage (5, blastAttributes);
+										if (hit.collider.gameObject.GetComponent<Obstacle> ().MarkedforDeletion)
+											Destroy (hit.collider.gameObject);
 
-                                    hit.collider.gameObject.GetComponent<Obstacle>().direction = new Vector2(0, -1.5f);
+										hit.collider.gameObject.GetComponent<Obstacle> ().direction = new Vector2 (0, -1.5f);
                                     
-                                }
-                            }
-                            break;
-                    }
-                    break;
-				case Face_Dir.Backward:
-					print ("shoot back");
-                    playerAnimator.Play(playerImages[2]);
-                    switch (weapon)
-                    {
-                        case Weapon_Types.Revolver:
-                            if (boulder != null)
-                            {
-                                Destroy(boulder);
-                            }
-                            boulder = (GameObject)Instantiate(Resources.Load("overEarth"), new Vector2(transform.position.x, transform.position.y + 1.30f), Quaternion.identity);
+									}
+								}
+							break;
+						}
+					break;
+					case Face_Dir.Backward:
+						allowShot = false;
+						print ("shoot back");
+						playerAnimator.Play (playerImages [2]);
+						switch (weapon)
+						{
+							case Weapon_Types.Revolver:
+								if (boulder != null)
+								{
+									Destroy (boulder);
+								}
+								boulder = (GameObject)Instantiate (Resources.Load ("overEarth"), new Vector2 (transform.position.x, transform.position.y + 1.30f), Quaternion.identity);
                             
-                            break;
-                        case Weapon_Types.Shotgun:
-							int mapMask = ~(1 << LayerMask.NameToLayer("Map"));
-							createFire(new Vector3(transform.position.x, transform.position.y+0.5f, transform.position.z));
+							break;
+							case Weapon_Types.Shotgun:
+								int mapMask = ~(1 << LayerMask.NameToLayer ("Map"));
+								createFire (new Vector3 (transform.position.x, transform.position.y + 0.5f, transform.position.z));
 							
-                            RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2(0, +1), 4.0f, mapMask);
-                            if (hit.collider != null)
-                            {
-                                if (hit.collider.gameObject.tag == "Obstacle")
-                                {
-                                    hit.collider.gameObject.GetComponent<Obstacle>().takeDamage(5, blastAttributes);
-                                    if (hit.collider.gameObject.GetComponent<Obstacle>().MarkedforDeletion)
-                                        Destroy(hit.collider.gameObject);
+								RaycastHit2D hit = Physics2D.Raycast (new Vector2 (transform.position.x, transform.position.y), new Vector2 (0, +1), 4.0f, mapMask);
+								if (hit.collider != null)
+								{
+									if (hit.collider.gameObject.tag == "Obstacle")
+									{
+										hit.collider.gameObject.GetComponent<Obstacle> ().takeDamage (5, blastAttributes);
+										if (hit.collider.gameObject.GetComponent<Obstacle> ().MarkedforDeletion)
+											Destroy (hit.collider.gameObject);
 
-                                    hit.collider.gameObject.GetComponent<Obstacle>().direction = new Vector2(0, +1.5f);
+										hit.collider.gameObject.GetComponent<Obstacle> ().direction = new Vector2 (0, +1.5f);
 
-                                }
-                            }
-                            break;
-                    }
-                    break;
-				case Face_Dir.Left:
-					print ("shoot left");
-                    playerAnimator.Play(playerImages[1]);
-                    switch (weapon)
-                    {
-                        case Weapon_Types.Revolver:
-                            if (boulder != null)
-                            {
-                                Destroy(boulder);
-                            }
-                            boulder = (GameObject)Instantiate(Resources.Load("overEarth"), new Vector2(transform.position.x - 1.30f, transform.position.y), Quaternion.identity);
+									}
+								}
+							break;
+						}
+					break;
+					case Face_Dir.Left:
+						allowShot = false;
+						print ("shoot left");
+						playerAnimator.Play (playerImages [1]);
+						switch (weapon)
+						{
+							case Weapon_Types.Revolver:
+								if (boulder != null)
+								{
+									Destroy (boulder);
+								}
+								boulder = (GameObject)Instantiate (Resources.Load ("overEarth"), new Vector2 (transform.position.x - 1.30f, transform.position.y), Quaternion.identity);
                             
-                            break;
-                        case Weapon_Types.Shotgun:
-							int mapMask = ~(1 << LayerMask.NameToLayer("Map"));
-							createFire(new Vector3 (transform.position.x-0.5f, transform.position.y, transform.position.z));
+							break;
+							case Weapon_Types.Shotgun:
+								int mapMask = ~(1 << LayerMask.NameToLayer ("Map"));
+								createFire (new Vector3 (transform.position.x - 0.5f, transform.position.y, transform.position.z));
 							
-                            RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2(-1, 0), 4.0f, mapMask);
-                            if (hit.collider != null)
-                            {
-                                if (hit.collider.gameObject.tag == "Obstacle")
-                                {
-                                    hit.collider.gameObject.GetComponent<Obstacle>().takeDamage(5, blastAttributes);
-                                    if (hit.collider.gameObject.GetComponent<Obstacle>().MarkedforDeletion)
-                                        Destroy(hit.collider.gameObject);
+								RaycastHit2D hit = Physics2D.Raycast (new Vector2 (transform.position.x, transform.position.y), new Vector2 (-1, 0), 4.0f, mapMask);
+								if (hit.collider != null)
+								{
+									if (hit.collider.gameObject.tag == "Obstacle")
+									{
+										hit.collider.gameObject.GetComponent<Obstacle> ().takeDamage (5, blastAttributes);
+										if (hit.collider.gameObject.GetComponent<Obstacle> ().MarkedforDeletion)
+											Destroy (hit.collider.gameObject);
 
-                                    hit.collider.gameObject.GetComponent<Obstacle>().direction = new Vector2(-1.5f, 0);
+										hit.collider.gameObject.GetComponent<Obstacle> ().direction = new Vector2 (-1.5f, 0);
 
-                                }
-                            }
-                            break;
-                    }
-                    break;
-				case Face_Dir.Right:
-					print ("shoot right");
-                    playerAnimator.Play(playerImages[0]);
-                    switch (weapon)
-                    {
-                        case Weapon_Types.Revolver:
-                            if (boulder != null)
-                            {
-                                Destroy(boulder);
-                            }
-                            boulder = (GameObject)Instantiate(Resources.Load("overEarth"), new Vector2(transform.position.x + 1.30f, transform.position.y), Quaternion.identity);
+									}
+								}
+							break;
+						}
+					break;
+					case Face_Dir.Right:
+						allowShot = false;
+						print ("shoot right");
+						playerAnimator.Play (playerImages [0]);
+						switch (weapon)
+						{
+							case Weapon_Types.Revolver:
+								if (boulder != null)
+								{
+									Destroy (boulder);
+								}
+								boulder = (GameObject)Instantiate (Resources.Load ("overEarth"), new Vector2 (transform.position.x + 1.30f, transform.position.y), Quaternion.identity);
                             
-                            break;
-						case Weapon_Types.Shotgun:
-							createFire(new Vector3(transform.position.x + 0.5f, transform.position.y, transform.position.z));
+							break;
+							case Weapon_Types.Shotgun:
+								createFire (new Vector3 (transform.position.x + 0.5f, transform.position.y, transform.position.z));
 							
-                            int mapMask = ~(1 << LayerMask.NameToLayer("Map"));
-                            RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2(+1, 0), 4.0f, mapMask);
-                            if (hit.collider != null)
-                            {
-                                if (hit.collider.gameObject.tag == "Obstacle")
-                                {
-                                    hit.collider.gameObject.GetComponent<Obstacle>().takeDamage(5, blastAttributes);
-                                    if (hit.collider.gameObject.GetComponent<Obstacle>().MarkedforDeletion)
-                                        Destroy(hit.collider.gameObject);
+								int mapMask = ~(1 << LayerMask.NameToLayer ("Map"));
+								RaycastHit2D hit = Physics2D.Raycast (new Vector2 (transform.position.x, transform.position.y), new Vector2 (+1, 0), 4.0f, mapMask);
+								if (hit.collider != null)
+								{
+									if (hit.collider.gameObject.tag == "Obstacle")
+									{
+										hit.collider.gameObject.GetComponent<Obstacle> ().takeDamage (5, blastAttributes);
+										if (hit.collider.gameObject.GetComponent<Obstacle> ().MarkedforDeletion)
+											Destroy (hit.collider.gameObject);
 
-                                    hit.collider.gameObject.GetComponent<Obstacle>().direction = new Vector2(+1.5f, 0);
-                                }
-                            }
-                            break;
-                    }
-                    break;
-			}
+										hit.collider.gameObject.GetComponent<Obstacle> ().direction = new Vector2 (+1.5f, 0);
+									}
+								}
+							break;
+						}
+					break;
+				}
 			
+			}
+		}
+		else if(Input.GetAxisRaw("Fire_Solo") ==0)
+		{
+			allowShot = true;
 		}
 	}
 		
