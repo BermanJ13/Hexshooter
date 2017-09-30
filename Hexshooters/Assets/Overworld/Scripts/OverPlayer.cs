@@ -460,9 +460,9 @@ public class OverPlayer : MonoBehaviour {
 			}
 		}
 		
-		if(Input.GetAxisRaw ("Vertical_Solo") == 0 && Input.GetAxisRaw ("Horizontal_Solo") == 0)
+		if (Input.GetAxisRaw ("Vertical_Solo") == 0 && Input.GetAxisRaw ("Horizontal_Solo") == 0)
 		{
-            idleTimer++;
+			idleTimer++;
 			if (idleTimer > 500)
 			{
 				idleTimer = 0;
@@ -470,9 +470,9 @@ public class OverPlayer : MonoBehaviour {
 			}
 			else
 			{
-				playerAnimator.Stop ();
+				//playerAnimator.Stop ();
 			}
-        }
+		}
 
 		print (direction);
 	}
