@@ -370,11 +370,16 @@ public class OverPlayer : MonoBehaviour {
 					inboundsX = true;
 				}
 
-				if (c.gameObject.tag == "Boundary" || c.gameObject.tag == "Obstacle" || c.gameObject.tag == "Trigger")
+				if (c.gameObject.tag == "Boundary" || c.gameObject.tag == "Obstacle")
 				{
 					moveRight = false;
 				}
-			}
+                if (c.gameObject.tag == "Trigger")
+                {
+                    if (!c.gameObject.GetComponent<Trigger>().interacted || (c.gameObject.GetComponent<Trigger>().interacted && c.gameObject.GetComponent<Trigger>().repeatable == true))
+                        moveRight = false;
+                }
+            }
 			//Performs the movement if possible
 			if (inboundsX)
 			{
@@ -397,11 +402,16 @@ public class OverPlayer : MonoBehaviour {
 					//Debug.Log ("Damn");
 					inboundsX = true;
 				}
-				if (c.gameObject.tag == "Boundary" || c.gameObject.tag == "Obstacle" || c.gameObject.tag == "Trigger")
+				if (c.gameObject.tag == "Boundary" || c.gameObject.tag == "Obstacle")
 				{
 					//Debug.Log ("Dammit");
 					moveLeft = false;
 				}
+                if (c.gameObject.tag == "Trigger")
+                {
+                    if (!c.gameObject.GetComponent<Trigger>().interacted || (c.gameObject.GetComponent<Trigger>().interacted && c.gameObject.GetComponent<Trigger>().repeatable == true))
+                        moveLeft = false;
+                }
 
 			}
 			//Performs the movement if possible
@@ -426,11 +436,16 @@ public class OverPlayer : MonoBehaviour {
 				{
 					inboundsY = true;
 				}
-				if (c.gameObject.tag == "Boundary" || c.gameObject.tag == "Obstacle" || c.gameObject.tag == "Trigger")
+				if (c.gameObject.tag == "Boundary" || c.gameObject.tag == "Obstacle")
 				{
 					moveUp = false;
 				}
-			}
+                if (c.gameObject.tag == "Trigger")
+                {
+                    if (!c.gameObject.GetComponent<Trigger>().interacted || (c.gameObject.GetComponent<Trigger>().interacted && c.gameObject.GetComponent<Trigger>().repeatable == true))
+                        moveUp = false;
+                }
+            }
 			//Performs the movement if possible
 			if (inboundsY)
 			{
@@ -453,11 +468,16 @@ public class OverPlayer : MonoBehaviour {
 				{
 					inboundsY = true;
 				}
-				if (c.gameObject.tag == "Boundary" || c.gameObject.tag == "Obstacle" || c.gameObject.tag == "Trigger")
+				if (c.gameObject.tag == "Boundary" || c.gameObject.tag == "Obstacle")
 				{
 					moveDown = false;
 				}
-			}
+                if (c.gameObject.tag == "Trigger")
+                {
+                    if (!c.gameObject.GetComponent<Trigger>().interacted || (c.gameObject.GetComponent<Trigger>().interacted && c.gameObject.GetComponent<Trigger>().repeatable == true))
+                        moveDown = false;
+                }
+            }
 			//Performs the movement if possible
 			if (inboundsY)
 			{
@@ -521,7 +541,7 @@ public class OverPlayer : MonoBehaviour {
 	void interactTrigger()
 	{
 		//Checks whether or not you're overlapping with a trigger
-		Collider2D[] hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x, transform.position.y), 1.0f);
+		Collider2D[] hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x, transform.position.y), 0.3f);
 		foreach (Collider2D hitCollider in hitColliders)
 		{
 			if (hitCollider.gameObject.tag == "Trigger")
