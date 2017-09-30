@@ -92,10 +92,8 @@ public class CharSelect : MonoBehaviour {
 				{
 					horizontal2 = true;
 					p2--;
-					if (p2 == 5)
-						p2 = 4;
 					if (p2 < 1)
-						p2 = 6;
+						p2 = 4;
 				}
 			}
 			if (Horizontal2 > 0)
@@ -104,9 +102,7 @@ public class CharSelect : MonoBehaviour {
 				{
 					horizontal2 = true;
 					p2++;
-					if (p2 == 5)
-						p2 = 6;
-					if (p2 > 6)
+					if (p2 > 4)
 						p2 = 1;
 				}
 			}

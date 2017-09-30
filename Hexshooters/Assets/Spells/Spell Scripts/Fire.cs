@@ -314,7 +314,7 @@ public class Fire : Spell {
 					//burn them
 					StatusEffect burn = new StatusEffect (500);
 					burn.m_type = StatusType.Burn;
-					c.GetComponent<Enemy> ().myStatus.AddEffect (burn);
+					c.GetComponent<Player> ().myStatus.AddEffect (burn);
 					//while burned do 2 damage 
 					if (burn.m_timer % 100 == 0)
 					{

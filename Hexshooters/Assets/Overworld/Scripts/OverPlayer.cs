@@ -52,7 +52,7 @@ public class OverPlayer : MonoBehaviour {
     Attributes[] blastAttributes;
 
     int idleTimer = 0;
-
+	public List<Quest> questList;
 	public void Awake()
 	{
 		DontDestroyOnLoad (transform.gameObject);
@@ -257,11 +257,10 @@ public class OverPlayer : MonoBehaviour {
 				{
 					lastState = currentState;
 					currentState = Over_States.Menu;
-					pause.SetActive(true);
-					EventSystem.current.SetSelectedGameObject(GameObject.Find("DeckMenuButton"));
+					pause.SetActive (true);
+					EventSystem.current.SetSelectedGameObject (GameObject.Find ("DeckMenuButton"));
 					
 				}
-
 			break;
 				
 			case Over_States.Menu:
@@ -287,8 +286,17 @@ public class OverPlayer : MonoBehaviour {
 				{
 					pause.SetActive (false);
 					currentState = lastState;
+					EventSystem.current.SetSelectedGameObject (GameObject.Find("DeckMenuButton"));
 				}
-				
+
+				if (deck.activeSelf || quest.activeSelf)
+				{
+					if(Input.GetButtonDown("Cancel_Solo"))
+					{
+						ToPause ();
+						EventSystem.current.SetSelectedGameObject (GameObject.Find("DeckMenuButton"));
+					}
+				}
 				break;
 				
 			case Over_States.Controls:
@@ -455,11 +463,15 @@ public class OverPlayer : MonoBehaviour {
 		if(Input.GetAxisRaw ("Vertical_Solo") == 0 && Input.GetAxisRaw ("Horizontal_Solo") == 0)
 		{
             idleTimer++;
-            if (idleTimer > 500)
-            {
-                idleTimer = 0;
-                playerAnimator.Play(playerImages[4]);
-            }
+			if (idleTimer > 500)
+			{
+				idleTimer = 0;
+				playerAnimator.Play (playerImages [4]);
+			}
+			else
+			{
+				playerAnimator.Stop ();
+			}
         }
 
 		print (direction);

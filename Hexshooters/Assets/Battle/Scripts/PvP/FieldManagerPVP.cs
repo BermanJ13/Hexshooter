@@ -9,14 +9,12 @@ public class FieldManagerPVP : FieldManager
 {
     [Header("PVP")]
     [SerializeField]public string[] maps;
-    protected Player player2;
     public List<Object> Handful_2 = new List<Object>();
 	protected List<Object> Temp_2 = new List<Object>();
 	protected List<int> TempNum_2 = new List<int>();
 	protected static System.Random rand = new System.Random();  
 	protected static GameObject[] pauseObjects_p2;
 	protected SpellHolder spellHold_2;
-	protected GameObject[] spellSlots_2 = new GameObject[8];
 	protected List<GameObject> displaySlots_2 = new List<GameObject>();
 	protected GameObject runeDisplay_2;
 	protected Text runeDamage_2;
@@ -27,7 +25,6 @@ public class FieldManagerPVP : FieldManager
 	protected GameObject p2Gun;
 	protected Text curBullet_2;
 	public GameObject[] weapons_2;
-	public int weaponMax_2;
 	protected static GameObject[] pauseUI_2;
 	protected GameObject[] battleObjects_2;
 	public bool p1reload;
@@ -836,10 +833,12 @@ public class FieldManagerPVP : FieldManager
 	{
 		if (num == 1)
 		{
+			Debug.Log ("lp");
 			base.updateChamberImages (num);
 		}
 		else
 		{
+			Debug.Log ("elp");
 			for (int i = 0; i < weaponMax_2; i++)
 			{
 				if (player2.Chamber.Count > i)

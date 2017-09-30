@@ -34,6 +34,7 @@ public class Trigger : MonoBehaviour {
 	public string postRewardedItem;
 	public bool preRewardActivator;
 	public bool preReward;
+	public int preRewardCount;
 	public string preRewardedItem;
 
 	[Header("Boundary")]
@@ -65,7 +66,7 @@ public class Trigger : MonoBehaviour {
 			}
 		}
 	}
-	public void preBattle(int count = 0)
+	public void preBattle()
 	{
 		if (preReward)
 		{
@@ -77,7 +78,7 @@ public class Trigger : MonoBehaviour {
 				}
 				else if(preRewardChoice == RewardType.Spell)
 				{
-					for (int i = 0; i < count; i++)
+					for (int i = 0; i < preRewardCount; i++)
 					{
 						op.groupPack.Add (Resources.Load (preRewardedItem));
 					}
