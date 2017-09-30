@@ -97,6 +97,7 @@
      <Compile Include="Assets\Menus\Scripts\PvPStarter.cs" />
      <Compile Include="Assets\Menus\Scripts\StartMenu.cs" />
      <Compile Include="Assets\Menus\Scripts\UniversalSettings.cs" />
+     <Compile Include="Assets\Menus\Scripts\overExit.cs" />
      <Compile Include="Assets\Obstacles\Scripts\Flames.cs" />
      <Compile Include="Assets\Obstacles\Scripts\Icicle.cs" />
      <Compile Include="Assets\Obstacles\Scripts\Lightningrod.cs" />
