@@ -156,6 +156,12 @@ public class Obstacle : MonoBehaviour {
                         this.direction = this.direction * 0;
                     }
                 }
+                else if (d.gameObject.tag == "Hole")
+                {
+                    this.transform.position = new Vector2(d.gameObject.transform.position.x, d.gameObject.transform.position.y);
+                    this.direction = this.direction * 0;
+                    this.gameObject.tag = "Map";
+                }
                 else if (d.gameObject.tag == "Player")
                 {
                     this.direction = this.direction * 0;
