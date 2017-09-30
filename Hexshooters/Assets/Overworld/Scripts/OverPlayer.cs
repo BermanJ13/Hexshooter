@@ -91,13 +91,22 @@ public class OverPlayer : MonoBehaviour {
 		quest.SetActive (false);
 
 		//Fill the Decks Initially
-		for (int i = 0; i < 30; i++)
+		for (int i = 0; i < 15; i++)
 		{
 			characters[Weapon_Types.Revolver].DeckA.Add (Resources.Load ("Fire"));
+			characters[Weapon_Types.Revolver].DeckA.Add (Resources.Load ("Wind"));
 			characters[Weapon_Types.Revolver].DeckB.Add (Resources.Load ("Wind"));
-			groupPack.Add (Resources.Load ("Lightning"));
+			characters[Weapon_Types.Revolver].DeckB.Add (Resources.Load ("Wind"));
+
 			characters[Weapon_Types.Shotgun].DeckA.Add (Resources.Load ("Earth"));
-			characters[Weapon_Types.Shotgun].DeckB.Add (Resources.Load ("Water"));
+			characters[Weapon_Types.Shotgun].DeckA.Add (Resources.Load ("Water"));
+			characters[Weapon_Types.Shotgun].DeckB.Add (Resources.Load ("Earth"));
+			characters[Weapon_Types.Shotgun].DeckB.Add (Resources.Load ("Earth"));
+		}
+		//Fill the Decks Initially
+		for (int i = 0; i < 5; i++)
+		{
+			groupPack.Add (Resources.Load ("Lightning"));
 		}
 		playerAnimator = gameObject.GetComponent<Animator> ();
     }
@@ -1285,7 +1294,9 @@ public class OverPlayer : MonoBehaviour {
                             
                             break;
                         case Weapon_Types.Shotgun:
-                            int mapMask = ~(1 << LayerMask.NameToLayer("Map"));
+							int mapMask = ~(1 << LayerMask.NameToLayer("Map"));
+							createFire(new Vector3 (transform.position.x, transform.position.y - 0.5f, transform.position.z));
+							
                             RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2(0, -1), 4.0f, mapMask);
                             if (hit.collider != null)
                             {
@@ -1316,7 +1327,9 @@ public class OverPlayer : MonoBehaviour {
                             
                             break;
                         case Weapon_Types.Shotgun:
-                            int mapMask = ~(1 << LayerMask.NameToLayer("Map"));
+							int mapMask = ~(1 << LayerMask.NameToLayer("Map"));
+							createFire(new Vector3(transform.position.x, transform.position.y+0.5f, transform.position.z));
+							
                             RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2(0, +1), 4.0f, mapMask);
                             if (hit.collider != null)
                             {
@@ -1347,7 +1360,9 @@ public class OverPlayer : MonoBehaviour {
                             
                             break;
                         case Weapon_Types.Shotgun:
-                            int mapMask = ~(1 << LayerMask.NameToLayer("Map"));
+							int mapMask = ~(1 << LayerMask.NameToLayer("Map"));
+							createFire(new Vector3 (transform.position.x-0.5f, transform.position.y, transform.position.z));
+							
                             RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2(-1, 0), 4.0f, mapMask);
                             if (hit.collider != null)
                             {
@@ -1377,7 +1392,9 @@ public class OverPlayer : MonoBehaviour {
                             boulder = (GameObject)Instantiate(Resources.Load("overEarth"), new Vector2(transform.position.x + 1.30f, transform.position.y), Quaternion.identity);
                             
                             break;
-                        case Weapon_Types.Shotgun:
+						case Weapon_Types.Shotgun:
+							createFire(new Vector3(transform.position.x + 0.5f, transform.position.y, transform.position.z));
+							
                             int mapMask = ~(1 << LayerMask.NameToLayer("Map"));
                             RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), new Vector2(+1, 0), 4.0f, mapMask);
                             if (hit.collider != null)
@@ -1402,29 +1419,25 @@ public class OverPlayer : MonoBehaviour {
 
 	public void interactButton()
 	{
-		//might be just an overworld ability function in general instead of earth. and check which character is being played
-
-		//the button is pressed to use ability
 		if (Input.GetButtonDown ("Submit_Solo"))
 		{
 			Collider2D[] hitColliders;
-			//depending on the direction shoot a bullet 3 spaces in front
 			switch (direction)
 			{
 				case Face_Dir.Forward:
-					hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x, transform.position.y + 0.5f), 0.3f);
+					hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x, transform.position.y + 0.1f), 0.3f);
 				break;
 				case Face_Dir.Backward:
-					hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x, transform.position.y - 0.5f), 0.3f);
+					hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x, transform.position.y - 0.1f), 0.3f);
 				break;
 				case Face_Dir.Left:
-					hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x + 0.5f, transform.position.y), 0.3f);
+					hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x + 0.1f, transform.position.y), 0.3f);
 				break;
 				case Face_Dir.Right:
-					hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x - 0.5f, transform.position.y), 0.3f);
+					hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x - 0.1f, transform.position.y), 0.3f);
 				break;
 				default:
-					hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x - 0.5f, transform.position.y), 0.3f);
+					hitColliders = Physics2D.OverlapCircleAll (new Vector2 (transform.position.x - 0.1f, transform.position.y), 0.3f);
 				break;
 			}
 
@@ -1460,5 +1473,14 @@ public class OverPlayer : MonoBehaviour {
 				}
 			}
 		}
+	}
+	void createFire(Vector3 pos)
+	{
+		GameObject oldFIre = GameObject.FindWithTag ("FireEffect");
+		if (oldFIre != null)
+		{
+			GameObject.Destroy (oldFIre);
+		}
+		Instantiate (Resources.Load ("Fireball2"), pos, Quaternion.identity);
 	}
 }
