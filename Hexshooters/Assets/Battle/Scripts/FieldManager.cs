@@ -780,7 +780,8 @@ public class FieldManager : MonoBehaviour
 				break;
 			}
 			Shuffle (temp);
-			Decks.Add (w, temp);
+			if(!Decks.ContainsKey(w))
+				Decks.Add (w, temp);
 			if (w == player.weapon)
 			{
 				Handful = Decks [w];

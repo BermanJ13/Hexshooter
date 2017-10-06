@@ -80,6 +80,7 @@ public class Trigger : MonoBehaviour {
 				{
 					for (int i = 0; i < preRewardCount; i++)
 					{
+						Debug.Log("here");
 						op.groupPack.Add (Resources.Load (preRewardedItem));
 					}
 				}

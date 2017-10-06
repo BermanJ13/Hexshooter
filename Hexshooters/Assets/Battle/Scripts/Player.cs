@@ -128,9 +128,10 @@ public class Player : MonoBehaviour {
 	{
 		canMove = true;
 		updateCurrentSpell ();
-		if(Chamber.Count >=0)
+		if(Chamber.Count >=0 && field != null)
 			field.updateChamberImages (PlayerNum);
-		pHealth.text = health.ToString();
+		if(pHealth != null)
+			pHealth.text = health.ToString();
 		buttonPresed = false;
 
 		weaponAbility(weapon);

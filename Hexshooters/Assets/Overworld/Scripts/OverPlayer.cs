@@ -108,6 +108,7 @@ public class OverPlayer : MonoBehaviour {
 		for (int i = 0; i < 5; i++)
 		{
 			groupPack.Add (Resources.Load ("Lightning"));
+			groupPack.Add (Resources.Load ("Boomerang"));
 		}
 		playerAnimator = gameObject.GetComponent<Animator> ();
     }
@@ -236,7 +237,8 @@ public class OverPlayer : MonoBehaviour {
 				us.mapfile = currentTrig.scenario;
 				currentTrig.interacted = true;
 				activatedTriggers.Add(currentTrig.name);
-				SceneManager.LoadScene ("Battle");
+				if(!returnFromBattle)
+					SceneManager.LoadScene ("Battle");
 			}
 
 			if (currentTrig.exit)
@@ -567,6 +569,11 @@ public class OverPlayer : MonoBehaviour {
 							{
 								currentTrig.interacted = true;
 								activatedTriggers.Add (currentTrig.name);
+							}
+							else
+							{
+
+								currentTrig.interacted = true;
 							}
 							//cutscene = true;
 							Debug.Log ("made it");
